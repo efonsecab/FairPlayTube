@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PlayFairTube
+namespace FairPlayTube
 {
     public class Program
     {

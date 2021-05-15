@@ -1,0 +1,48 @@
+﻿{
+  "CodeGenerationMode": 0,
+  "ContextClassName": "FairplaytubeDatabaseContext",
+  "ContextNamespace": null,
+  "DefaultDacpacSchema": null,
+  "FilterSchemas": false,
+  "IncludeConnectionString": false,
+  "ModelNamespace": null,
+  "OutputContextPath": "Data",
+  "OutputPath": "Models",
+  "ProceduresReturnList": false,
+  "ProjectRootNamespace": "FairPlayTube.DataAccess",
+  "Schemas": null,
+  "SelectedHandlebarsLanguage": 0,
+  "SelectedToBeGenerated": 0,
+  "Tables": [
+    {
+      "Name": "[dbo].[ApplicationRole]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[ApplicationUser]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[ApplicationUserRole]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[ErrorLog]",
+      "ObjectType": 0
+    }
+  ],
+  "UiHint": "C:\\Projects\\Github\\FairPlayTube\\src\\FairPlayTube\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
+  "UseBoolPropertiesWithoutDefaultSql": false,
+  "UseDatabaseNames": false,
+  "UseDbContextSplitting": false,
+  "UseFluentApiOnly": false,
+  "UseHandleBars": false,
+  "UseInflector": false,
+  "UseLegacyPluralizer": false,
+  "UseNoConstructor": false,
+  "UseNoNavigations": false,
+  "UseNoObjectFilter": false,
+  "UseNodaTime": false,
+  "UseNullableReferences": false,
+  "UseSpatial": false
+}

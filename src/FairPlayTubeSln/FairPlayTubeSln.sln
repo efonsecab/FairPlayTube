@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlayFairTube", "PlayFairTube\PlayFairTube.csproj", "{3C9AB937-F459-4F72-A1A0-3703CA963160}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube", "FairPlayTube\FairPlayTube.csproj", "{3C9AB937-F459-4F72-A1A0-3703CA963160}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Services", "FairPlayTube.Services\FairPlayTube.Services.csproj", "{D1FAA241-5388-49B3-98BA-6FE48FDF27F9}"
 EndProject
