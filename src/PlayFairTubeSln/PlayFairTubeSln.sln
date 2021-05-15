@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayFairTube", "PlayFairTube\PlayFairTube.csproj", "{3C9AB937-F459-4F72-A1A0-3703CA963160}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayTube.Services", "FairPlayTube.Services\FairPlayTube.Services.csproj", "{D1FAA241-5388-49B3-98BA-6FE48FDF27F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayTube.SystemConfigurator", "FairPlayTube.SystemConfigurator\FairPlayTube.SystemConfigurator.csproj", "{1B9E1F63-52F8-4E94-A571-0C174C1F8D73}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "FairPlayTube.Database", "FairPlayTube.Database\FairPlayTube.Database.sqlproj", "{20DB7EBA-1D7F-4290-A98F-1D4DE6DCF373}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayTube.DataAccess", "FairPlayTube.DataAccess\FairPlayTube.DataAccess.csproj", "{E14D5567-4ADC-4F4A-8AD8-9AA592294794}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayTube.VideoIndexer", "FairPlayTube.VideoIndexer\FairPlayTube.VideoIndexer.csproj", "{09B27DDC-2D78-4B57-AF55-F5FF3023EC5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C9AB937-F459-4F72-A1A0-3703CA963160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C9AB937-F459-4F72-A1A0-3703CA963160}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C9AB937-F459-4F72-A1A0-3703CA963160}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C9AB937-F459-4F72-A1A0-3703CA963160}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1FAA241-5388-49B3-98BA-6FE48FDF27F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1FAA241-5388-49B3-98BA-6FE48FDF27F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1FAA241-5388-49B3-98BA-6FE48FDF27F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1FAA241-5388-49B3-98BA-6FE48FDF27F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B9E1F63-52F8-4E94-A571-0C174C1F8D73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B9E1F63-52F8-4E94-A571-0C174C1F8D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B9E1F63-52F8-4E94-A571-0C174C1F8D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B9E1F63-52F8-4E94-A571-0C174C1F8D73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20DB7EBA-1D7F-4290-A98F-1D4DE6DCF373}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20DB7EBA-1D7F-4290-A98F-1D4DE6DCF373}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20DB7EBA-1D7F-4290-A98F-1D4DE6DCF373}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{20DB7EBA-1D7F-4290-A98F-1D4DE6DCF373}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20DB7EBA-1D7F-4290-A98F-1D4DE6DCF373}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20DB7EBA-1D7F-4290-A98F-1D4DE6DCF373}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E14D5567-4ADC-4F4A-8AD8-9AA592294794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E14D5567-4ADC-4F4A-8AD8-9AA592294794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E14D5567-4ADC-4F4A-8AD8-9AA592294794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E14D5567-4ADC-4F4A-8AD8-9AA592294794}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09B27DDC-2D78-4B57-AF55-F5FF3023EC5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09B27DDC-2D78-4B57-AF55-F5FF3023EC5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09B27DDC-2D78-4B57-AF55-F5FF3023EC5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09B27DDC-2D78-4B57-AF55-F5FF3023EC5C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2F5128D2-633F-4208-8325-087B6B99BFA8}
+	EndGlobalSection
+EndGlobal
