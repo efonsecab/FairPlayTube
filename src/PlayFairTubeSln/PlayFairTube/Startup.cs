@@ -1,5 +1,7 @@
+using FairPlayTube.DataAccess.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -43,6 +45,36 @@ namespace PlayFairTube
                 app.UseHsts();
             }
 
+
+            app.UseExceptionHandler(cfg =>
+            {
+                cfg.Run(async context =>
+                {
+                    var exceptionHandlerPathFeature =
+                    context.Features.Get<IExceptionHandlerPathFeature>();
+                    var error = exceptionHandlerPathFeature.Error;
+                    if (error != null)
+                    {
+                        try
+                        {
+                            FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
+                            this.CreateDbContext(context.RequestServices);
+                            await fairplaytubeDatabaseContext.ErrorLog.AddAsync(new FairPlayTube.DataAccess.Models.ErrorLog()
+                            {
+                                FullException = error.ToString(),
+                                StackTrace = error.StackTrace,
+                                Message = error.Message
+                            });
+                            await fairplaytubeDatabaseContext.SaveChangesAsync();
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                    }
+                });
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -53,6 +85,11 @@ namespace PlayFairTube
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+        }
+
+        private FairplaytubeDatabaseContext CreateDbContext(IServiceProvider requestServices)
+        {
+            throw new NotImplementedException();
         }
     }
 }

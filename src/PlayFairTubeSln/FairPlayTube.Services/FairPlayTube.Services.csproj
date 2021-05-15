@@ -8,4 +8,8 @@
     <ProjectReference Include="..\FairPlayTube.DataAccess\FairPlayTube.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
