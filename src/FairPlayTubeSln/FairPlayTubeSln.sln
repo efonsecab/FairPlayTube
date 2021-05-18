@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.DataAccess", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.VideoIndexer", "FairPlayTube.VideoIndexer\FairPlayTube.VideoIndexer.csproj", "{09B27DDC-2D78-4B57-AF55-F5FF3023EC5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayTube.Common", "FairPlayTube.Common\FairPlayTube.Common.csproj", "{D0A0718E-A6C2-4284-9CA1-232F1D3D0C7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Common", "FairPlayTube.Common\FairPlayTube.Common.csproj", "{D0A0718E-A6C2-4284-9CA1-232F1D3D0C7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

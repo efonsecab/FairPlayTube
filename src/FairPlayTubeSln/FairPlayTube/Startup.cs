@@ -1,4 +1,5 @@
 using FairPlayTube.DataAccess.Data;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Diagnostics;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +32,22 @@ namespace FairPlayTube
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAdB2C"));
+
+            services.AddControllersWithViews()
+                .AddMicrosoftIdentityUI();
+
+            services.AddAuthorization(options =>
+            {
+                // By default, all incoming requests will be authorized according to the default policy
+                options.FallbackPolicy = options.DefaultPolicy;
+            });
+
+            services.AddServerSideBlazor()
+                .AddMicrosoftIdentityConsentHandler();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,6 +102,7 @@ namespace FairPlayTube
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
+                endpoints.MapControllers();
                 endpoints.MapFallbackToPage("/_Host");
             });
         }
