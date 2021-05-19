@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.VideoIndexer",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Common", "FairPlayTube.Common\FairPlayTube.Common.csproj", "{D0A0718E-A6C2-4284-9CA1-232F1D3D0C7B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayTube.Components", "FairPlayTube.Components\FairPlayTube.Components.csproj", "{7F3E1C65-FCA3-4835-9115-572AF5D662F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{D0A0718E-A6C2-4284-9CA1-232F1D3D0C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0A0718E-A6C2-4284-9CA1-232F1D3D0C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0A0718E-A6C2-4284-9CA1-232F1D3D0C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F3E1C65-FCA3-4835-9115-572AF5D662F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F3E1C65-FCA3-4835-9115-572AF5D662F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F3E1C65-FCA3-4835-9115-572AF5D662F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F3E1C65-FCA3-4835-9115-572AF5D662F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
