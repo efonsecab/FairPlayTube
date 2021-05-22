@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FairPlayTube.Controllers
@@ -26,13 +27,13 @@ namespace FairPlayTube.Controllers
         /// <param name="userAdB2CObjectId"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
-        public async Task<string> GetUserRole(Guid userAdB2CObjectId)
+        public async Task<string> GetUserRole(Guid userAdB2CObjectId, CancellationToken cancellationToken)
         {
             var role = await this.FairplaytubeDatabaseContext.ApplicationUserRole
                 .Include(p => p.ApplicationUser)
                 .Include(p => p.ApplicationRole)
                 .Where(p => p.ApplicationUser.AzureAdB2cobjectId == userAdB2CObjectId)
-                .Select(p => p.ApplicationRole.Name).SingleAsync();
+                .Select(p => p.ApplicationRole.Name).SingleAsync(cancellationToken:cancellationToken);
             return role;
         }
     }
