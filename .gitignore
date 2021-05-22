@@ -349,3 +349,4 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 /src/FairPlayTubeSln/FairPlayTube.Client/wwwroot/appsettings.Development.json
+/src/FairPlayTubeSln/FairPlayTube/Properties
