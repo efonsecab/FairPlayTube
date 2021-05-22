@@ -5,7 +5,9 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Identity;
 
 namespace FairPlayTube
 {
@@ -18,9 +20,21 @@ namespace FairPlayTube
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+            .ConfigureAppConfiguration((hostingContext, config) =>
+            {
+                config.AddUserSecrets<Program>(optional:true);
+                var configRoot = config.Build();
+                config.AddAzureAppConfiguration(options =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    var azureAppConfigConnectionString =
+                        configRoot["AzureAppConfigConnectionString"];
+                    options
+                        .Connect(azureAppConfigConnectionString);
                 });
+            })
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
     }
 }
