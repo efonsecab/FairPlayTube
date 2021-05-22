@@ -5,11 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FairPlayTube.DataAccess\FairPlayTube.DataAccess.csproj" />
+    <PackageReference Include="PTI.Microservices.Library" Version="1.0.3.10-preview" />
+    <PackageReference Include="PTI.Microservices.Library.Models" Version="1.0.3.10-preview" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\FairPlayTube.Common\FairPlayTube.Common.csproj" />
+    <ProjectReference Include="..\FairPlayTube.DataAccess\FairPlayTube.DataAccess.csproj" />
+    <ProjectReference Include="..\FairPlayTube.Models\FairPlayTube.Models.csproj" />
   </ItemGroup>
 
 </Project>

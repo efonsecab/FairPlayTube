@@ -1,0 +1,38 @@
+﻿@page "/"
+
+<h1>Welcome to FairPlayTube</h1> 
+
+<div class="mb-3">
+    <Card Width="100%">
+        <CardHeader>
+            What is FairPlayTube?
+        </CardHeader>
+        <CardBody>
+            FairPlayTube is the next generation of video sharing portal with a focus on users and transparency
+        </CardBody>
+    </Card>
+</div>
+
+@if (this.AllVideos != null)
+{
+    <div class="container">
+        <div class="row row-cols-3">
+            @foreach (var singleVideo in this.AllVideos)
+            {
+                <Card Width="33.3%">
+                    <CardBody>
+                        <div class="embed-responsive embed-responsive-1by1">
+                            <iframe class="embed-responsive-item"
+                                    src="@singleVideo.PublicPlayerUrl"
+                                    frameborder="0"
+                                    allowfullscreen></iframe>
+                        </div>
+                    </CardBody>
+                    <CardFooter>
+                        @singleVideo.Name
+                    </CardFooter>
+                </Card>
+            }
+        </div>
+    </div>
+}

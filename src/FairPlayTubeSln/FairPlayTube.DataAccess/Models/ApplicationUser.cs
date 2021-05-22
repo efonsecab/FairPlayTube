@@ -12,6 +12,11 @@ namespace FairPlayTube.DataAccess.Models
     [Index(nameof(AzureAdB2cobjectId), Name = "UI_ApplicationUser_AzureAdB2CObjectId", IsUnique = true)]
     public partial class ApplicationUser
     {
+        public ApplicationUser()
+        {
+            VideoInfo = new HashSet<VideoInfo>();
+        }
+
         [Key]
         public long ApplicationUserId { get; set; }
         [Required]
@@ -26,5 +31,7 @@ namespace FairPlayTube.DataAccess.Models
 
         [InverseProperty("ApplicationUser")]
         public virtual ApplicationUserRole ApplicationUserRole { get; set; }
+        [InverseProperty("ApplicationUser")]
+        public virtual ICollection<VideoInfo> VideoInfo { get; set; }
     }
 }

@@ -40,5 +40,11 @@ namespace FairPlayTube.CustomProviders
                 return user?.Identity.Name ?? USER_UNKNOWN;
             }
         }
+
+        public string GetObjectId()
+        {
+            var user = this.HttpContextAccessor.HttpContext.User;
+            return user.Claims.Single(p => p.Type == Common.Global.Constants.Claims.ObjectIdentifier).Value;
+        }
     }
 }

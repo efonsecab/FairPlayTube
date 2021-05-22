@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="d25b8a7b-5f35-474e-94f0-3bc6c72d885e" ChangeDateTime="05/19/2021 14:28:37">
+    <Property Name="ElementName" Value="[dbo].[VideoInfo].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VideoInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VideoInfoId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0742af41-e24a-4660-927f-79616cbf5acf" ChangeDateTime="05/19/2021 14:34:06">
+    <Property Name="ElementName" Value="[dbo].[VideoInfo].[OwnerId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VideoInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ApplicationUserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0e6aa9b3-a1e4-48ca-a037-437b7d26715d" ChangeDateTime="05/21/2021 22:58:18">
+    <Property Name="ElementName" Value="[dbo].[VideoIndexStatus].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VideoIndexStatus]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VideoIndexStatusId" />
+  </Operation>
+</Operations>

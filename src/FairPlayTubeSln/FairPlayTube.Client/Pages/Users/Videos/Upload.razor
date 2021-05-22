@@ -1,0 +1,28 @@
+﻿<h3>Upload</h3>
+
+@if (this.IsLoading)
+{
+    <Loading></Loading>
+}
+
+<EditForm Model="@UploadVideoModel" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <InputText class="form-control" @bind-Value="UploadVideoModel.Name"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <InputText class="form-control" @bind-Value="UploadVideoModel.Description"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Video File</label>
+        <InputFile class="form-control" OnChange="OnVideoFileSelectedAsync" accept="video/*"></InputFile>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</EditForm>
+
+<h2>VideoId: @VideoId</h2>

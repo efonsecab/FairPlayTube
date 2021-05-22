@@ -1,30 +1,28 @@
+using FairPlayTube.Common.Configuration;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.CustomProviders;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models;
+using FairPlayTube.Models.CustomHttpResponse;
 using FairPlayTube.Services;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using FairPlayTube.Services.BackgroundServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.UI;
 using PTI.Microservices.Library.Configuration;
 using PTI.Microservices.Library.Interceptors;
 using PTI.Microservices.Library.Services;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace FairPlayTube
 {
@@ -55,18 +53,22 @@ namespace FairPlayTube
             services.AddTransient<CustomHttpClient>();
 
             ConfigureAzureVideoIndexer(services);
+            ConfigureAzureBlobStorage(services);
+
+            DataStorageConfiguration dataStorageConfiguration =
+                Configuration.GetSection("DataStorageConfiguration").Get<DataStorageConfiguration>();
+            services.AddSingleton(dataStorageConfiguration);
 
             services.AddTransient<VideoService>();
 
-            services.AddTransient<ToastifyService>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAdB2C"));
 
-            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAdB2C"));
-
-            services.Configure<OpenIdConnectOptions>(OpenIdConnectDefaults.AuthenticationScheme, options =>
+            services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.TokenValidationParameters.NameClaimType = "name";
                 options.TokenValidationParameters.RoleClaimType = "Role";
+                options.SaveToken = true;
                 options.Events.OnTokenValidated = async (context) =>
                 {
                     FairplaytubeDatabaseContext fairplaytubeDatabaseContext = CreateFairPlayTubeDbContext(services);
@@ -107,17 +109,18 @@ namespace FairPlayTube
                 };
             });
 
-            services.AddControllersWithViews().AddMicrosoftIdentityUI();
+            //services.AddApiAuthorization(p=>p.);
 
-            services.AddAuthorization(options =>
+            services.AddControllersWithViews();
+
+            services.AddAutoMapper(configAction =>
             {
-                // By default, all incoming requests will be authorized according to the default policy
-                //options.FallbackPolicy = options.DefaultPolicy;
+                configAction.AddMaps(new[] { typeof(Startup).Assembly });
             });
 
-            services.AddServerSideBlazor()
-                .AddMicrosoftIdentityConsentHandler();
             services.AddRazorPages();
+
+            services.AddHostedService<VideoIndexStatusService>();
 
         }
 
@@ -130,12 +133,22 @@ namespace FairPlayTube
             services.AddTransient<AzureVideoIndexerService>();
         }
 
+        private void ConfigureAzureBlobStorage(IServiceCollection services)
+        {
+            AzureBlobStorageConfiguration azureBlobStorageConfiguration =
+                Configuration.GetSection($"AzureConfiguration:{nameof(AzureBlobStorageConfiguration)}")
+                .Get<AzureBlobStorageConfiguration>();
+            services.AddSingleton(azureBlobStorageConfiguration);
+            services.AddTransient<AzureBlobStorageService>();
+        }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseWebAssemblyDebugging();
             }
             else
             {
@@ -180,6 +193,7 @@ namespace FairPlayTube
             });
 
             app.UseHttpsRedirection();
+            app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -189,9 +203,12 @@ namespace FairPlayTube
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapBlazorHub();
+                //endpoints.MapBlazorHub();
+                //endpoints.MapControllers();
+                //endpoints.MapFallbackToPage("/_Host");
+                endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapFallbackToPage("/_Host");
+                endpoints.MapFallbackToFile("index.html");
             });
         }
 

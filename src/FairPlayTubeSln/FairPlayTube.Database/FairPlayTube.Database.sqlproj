@@ -66,8 +66,13 @@
     <Build Include="dbo\Tables\ApplicationRole.sql" />
     <Build Include="dbo\Tables\ApplicationUserRole.sql" />
     <Build Include="dbo\Tables\ErrorLog.sql" />
+    <Build Include="dbo\Tables\VideoInfo.sql" />
+    <Build Include="dbo\Tables\VideoIndexStatus.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="FairPlayTube.Database.refactorlog" />
   </ItemGroup>
 </Project>

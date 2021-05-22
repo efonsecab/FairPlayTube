@@ -23,6 +23,8 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<ApplicationUser> ApplicationUser { get; set; }
         public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
+        public virtual DbSet<VideoIndexStatus> VideoIndexStatus { get; set; }
+        public virtual DbSet<VideoInfo> VideoInfo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,6 +43,23 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey<ApplicationUserRole>(d => d.ApplicationUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ApplicationUserRole_ApplicationUser");
+            });
+
+            modelBuilder.Entity<VideoInfo>(entity =>
+            {
+                entity.Property(e => e.ApplicationUserId).HasComment("Video Owner Id");
+
+                entity.HasOne(d => d.ApplicationUser)
+                    .WithMany(p => p.VideoInfo)
+                    .HasForeignKey(d => d.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoInfo_ApplicationUser");
+
+                entity.HasOne(d => d.VideoIndexStatus)
+                    .WithMany(p => p.VideoInfo)
+                    .HasForeignKey(d => d.VideoIndexStatusId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoInfo_VideoIndexStatus");
             });
 
             OnModelCreatingPartial(modelBuilder);
