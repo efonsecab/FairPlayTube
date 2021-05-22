@@ -30,16 +30,18 @@ namespace FairPlayTube.Services.BackgroundServices
                 using (var scope = this.ServiceScopeFactory.CreateScope())
                 {
                     var videoService = scope.ServiceProvider.GetRequiredService<VideoService>();
-                    var pendingInDbVideos = await videoService.GetDatabaseProcessingVideosIdsAsync();
+                    var pendingInDbVideos = await videoService.GetDatabaseProcessingVideosIdsAsync(stoppingToken);
                     if (pendingInDbVideos.Length > 0)
                     {
-                        var videosIndex = await videoService.GetVideoIndexerStatus(pendingInDbVideos);
+                        var videosIndex = await videoService.GetVideoIndexerStatus(pendingInDbVideos, stoppingToken);
                         if (videosIndex.results.Length > 0)
                         {
-                            var indexCompleteVideos = videosIndex.results.Where(p => p.state == VideoIndexStatus.Processed.ToString());
+                            var indexCompleteVideos = videosIndex.results.Where(p =>
+                            p.state == VideoIndexStatus.Processed.ToString());
                             if (indexCompleteVideos.Count() > 0)
                             {
-                                await videoService.UpdateVideoIndexStatusAsync(indexCompleteVideos.Select(p => p.id).ToArray(), VideoIndexStatus.Processed);
+                                await videoService.UpdateVideoIndexStatusAsync(indexCompleteVideos.Select(p => p.id).ToArray(), VideoIndexStatus.Processed,
+                                    cancellationToken: stoppingToken);
                             }
                         }
                     }
