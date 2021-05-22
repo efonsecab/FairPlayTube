@@ -27,6 +27,13 @@ namespace FairPlayTube.Client.ClientServices
                 ApiRoutes.VideoController.GetPublicProcessedVideos);
         }
 
+        public async Task<VideoInfoModel[]> GetMyProcessedVideos()
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            return await authorizedHttpClient.GetFromJsonAsync<VideoInfoModel[]>(
+                ApiRoutes.VideoController.GetMyProcessedVideos);
+        }
+
         public async Task<string> UploadVideoAsync(UploadVideoModel uploadVideoModel)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
@@ -36,6 +43,13 @@ namespace FairPlayTube.Client.ClientServices
                 return await response.Content.ReadAsStringAsync();
             else
                 throw new Exception(response.ReasonPhrase);
+        }
+
+        public async Task<string> GetVideoEditAccessToken(string videoId)
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            return await authorizedHttpClient.GetStringAsync($"{ApiRoutes.VideoController.GetVideoEditAccessToken}" +
+                $"?videoId={videoId}");
         }
     }
 }

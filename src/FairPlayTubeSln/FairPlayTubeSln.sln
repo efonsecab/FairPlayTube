@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Components", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Client", "FairPlayTube.Client\FairPlayTube.Client.csproj", "{8D6DA153-B415-44D8-9D09-6427E7D4F547}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayTube.Models", "FairPlayTube.Models\FairPlayTube.Models.csproj", "{6C2571E2-2441-4400-9392-BCECF07ED4A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Models", "FairPlayTube.Models\FairPlayTube.Models.csproj", "{6C2571E2-2441-4400-9392-BCECF07ED4A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,78 @@
+﻿<h3>MyVideos</h3>
+
+@if (this.AllVideos != null)
+{
+    <div class="container">
+        <div class="row row-cols-3">
+            @foreach (var singleVideo in this.AllVideos)
+            {
+                <Card Width="33.3%">
+                    <CardHeader>
+                        <button type="button" @onclick="@(async ()=> await SelectVideo(singleVideo))">
+                            <i class="bi bi-eye-fill"></i>
+                        </button>
+                    </CardHeader>
+                    <CardBody>
+                        <div class="embed-responsive embed-responsive-1by1">
+                            <iframe class="embed-responsive-item"
+                                    src="@singleVideo.PublicPlayerUrl"
+                                    frameborder="0"
+                                    allowfullscreen></iframe>
+                        </div>
+                    </CardBody>
+                    <CardFooter>
+                        @singleVideo.Name
+                    </CardFooter>
+                </Card>
+            }
+        </div>
+        @if (this.ShowModal)
+        {
+            <div class="modal" tabindex="-1" role="dialog" style="display:block;">
+                <div class="modal-dialog modal-fullscreen" style="max-height:none; max-width:none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">@SelectedVideo.Name</h5>
+                            <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="CloseModal">
+                                <i class="bi bi-x-circle-fill"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row row-cols-2">
+                                <Card Width="50%">
+                                    <CardBody>
+                                        <div class="embed-responsive embed-responsive-1by1">
+                                            <iframe class="embed-responsive-item"
+                                                    src="@SelectedVideo.PublicPlayerUrl"
+                                                    frameborder="0"
+                                                    allowfullscreen></iframe>
+                                        </div>
+                                    </CardBody>
+                                    <CardFooter>
+                                        @SelectedVideo.Name
+                                    </CardFooter>
+                                </Card>
+                                <Card Width="50%">
+                                    <CardBody>
+                                        <div class="embed-responsive embed-responsive-1by1">
+                                            <iframe class="embed-responsive-item"
+                                                    src="@SelectedVideo.PrivateInsightsUrl"
+                                                    frameborder="0"
+                                                    allowfullscreen></iframe>
+                                        </div>
+                                    </CardBody>
+                                    <CardFooter>
+                                        @SelectedVideo.Name
+                                    </CardFooter>
+                                </Card>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="CloseModal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

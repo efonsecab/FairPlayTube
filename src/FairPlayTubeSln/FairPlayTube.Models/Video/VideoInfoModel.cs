@@ -14,5 +14,9 @@ namespace FairPlayTube.Models.Video
         public string AccountId { get; set; }
         public string PublicPlayerUrl => $"https://www.videoindexer.ai/embed/player/{AccountId}/{VideoId}" +
                 $"?&locale=en&location={Location}";
+        public string PublicInsightsUrl => $"https://www.videoindexer.ai/embed/insights/{AccountId}/{VideoId}" +
+            $"/?&locale=en&location={Location}";
+        public string EditAccessToken { get; set; }
+        public string PrivateInsightsUrl => $"{PublicInsightsUrl}&accessToken={EditAccessToken}";
     }
 }

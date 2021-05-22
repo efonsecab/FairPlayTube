@@ -60,16 +60,34 @@ namespace FairPlayTube.Services
                 .Select(p => p.VideoId).ToArrayAsync();
         }
 
-        public async Task<SearchVideosResponse> GetVideoIndexerStatus(string[] videoIds, CancellationToken cancellationToken=default)
+        public async Task<string> GetVideoEditAccessTokenAsync(string videoId)
+        {
+            var accessToken = await this.AzureVideoIndexerService.GetVideoAccessTokenStringAsync(videoId, allowEdit: true);
+            return accessToken;
+        }
+
+        public async Task<SearchVideosResponse> GetVideoIndexerStatus(string[] videoIds, CancellationToken cancellationToken = default)
         {
             return await this.AzureVideoIndexerService.SearchVideosByIdsAsync(videoIds, cancellationToken);
         }
 
         public IQueryable<VideoInfo> GetPublicProcessedVideosAsync(CancellationToken cancellationToken = default)
         {
-            return this.FairplaytubeDatabaseContext.VideoInfo.Where(p=>
+            return this.FairplaytubeDatabaseContext.VideoInfo.Where(p =>
             p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed);
         }
+
+        public IQueryable<VideoInfo> GetPublicProcessedVideosByUserIdAsync(
+            string azureAdB2cobjectId,
+            CancellationToken cancellationToken = default)
+        {
+            return this.FairplaytubeDatabaseContext.VideoInfo
+                .Include(p => p.ApplicationUser)
+                .Where(p => p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed &&
+                p.ApplicationUser.AzureAdB2cobjectId.ToString() == azureAdB2cobjectId);
+        }
+
+
 
         public async Task<string> UploadVideoAsync(UploadVideoModel uploadVideoModel,
             CancellationToken cancellationToken = default)
@@ -119,6 +137,15 @@ namespace FairPlayTube.Services
             });
             await this.FairplaytubeDatabaseContext.SaveChangesAsync();
             return indexVideoResponse.id;
+        }
+
+        public async Task<bool> IsVideoOwnerAsync(string videoId, string azureAdB2cobjectId,
+            CancellationToken cancellationToken = default)
+        {
+            bool isVideoOwner = await this.FairplaytubeDatabaseContext.VideoInfo
+                .Include(p => p.ApplicationUser)
+                .AnyAsync(p => p.VideoId == videoId && p.ApplicationUser.AzureAdB2cobjectId.ToString() == azureAdB2cobjectId);
+            return isVideoOwner;
         }
     }
 }
