@@ -38,7 +38,8 @@ namespace FairPlayTube.Client
             builder.Services.AddMsalAuthentication<RemoteAuthenticationState, CustomRemoteUserAccount>(options =>
             {
                 builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);
-                options.ProviderOptions.DefaultAccessTokenScopes.Add("https://pticostaricadev.onmicrosoft.com/525bccd5-2ac9-4ba7-9b55-e1e6be50c464/API.Access");
+                var defaultScope = builder.Configuration["AzureAdB2CScopes:DefaultScope"];
+                options.ProviderOptions.DefaultAccessTokenScopes.Add(defaultScope);
                 options.ProviderOptions.LoginMode = "redirect";
                 options.UserOptions.NameClaim = "name";
                 options.UserOptions.RoleClaim = "Role";
