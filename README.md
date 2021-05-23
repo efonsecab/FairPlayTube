@@ -7,4 +7,6 @@ In order to keep the project free, you can help with some of the costs using the
 
 [Check the Wiki](https://github.com/efonsecab/FairPlayTube/wiki)
 
+[Check the Project Intro](https://youtu.be/iUdjur6sl8g)
+
 ![](Images/FairPlayTubeInitialLayout.png?raw=true)
