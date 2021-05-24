@@ -14,7 +14,6 @@ namespace FairPlayTube.DataAccess.Models
         [Key]
         public long VideoInfoId { get; set; }
         public Guid AccountId { get; set; }
-        [Required]
         [StringLength(50)]
         public string VideoId { get; set; }
         [Required]
@@ -31,7 +30,6 @@ namespace FairPlayTube.DataAccess.Models
         [Required]
         [StringLength(500)]
         public string VideoBloblUrl { get; set; }
-        [Required]
         [StringLength(500)]
         public string IndexedVideoUrl { get; set; }
         /// <summary>

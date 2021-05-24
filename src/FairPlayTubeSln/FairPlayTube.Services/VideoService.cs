@@ -58,7 +58,7 @@ namespace FairPlayTube.Services
         public async Task<string[]> GetDatabaseProcessingVideosIdsAsync(CancellationToken cancellationToken)
         {
             return await this.FairplaytubeDatabaseContext.VideoInfo.Where(p => p.VideoIndexStatusId ==
-            (int)Common.Global.Enums.VideoIndexStatus.Processing)
+            (short)Common.Global.Enums.VideoIndexStatus.Processing)
                 .Select(p => p.VideoId).ToArrayAsync(cancellationToken: cancellationToken);
         }
 
@@ -91,7 +91,7 @@ namespace FairPlayTube.Services
 
 
 
-        public async Task<string> UploadVideoAsync(UploadVideoModel uploadVideoModel,
+        public async Task<bool> UploadVideoAsync(UploadVideoModel uploadVideoModel,
             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -116,15 +116,6 @@ namespace FairPlayTube.Services
             string fileUrl = $"https://{this.DataStorageConfiguration.AccountName}.blob.core.windows.net" +
                 $"/{this.DataStorageConfiguration.ContainerName}/{userAzueAdB2cObjectId}/{newFileName}";
             cancellationToken.ThrowIfCancellationRequested();
-            var allPersonModels = await this.AzureVideoIndexerService.GetAllPersonModelsAsync(cancellationToken);
-            var defaultPersonModel = allPersonModels.Single(p => p.isDefault == true);
-            cancellationToken.ThrowIfCancellationRequested();
-            var indexVideoResponse =
-            await this.AzureVideoIndexerService.UploadVideoAsync(new Uri(fileUrl),
-                uploadVideoModel.Name, uploadVideoModel.Description, newFileName,
-                personModelId: Guid.Parse(defaultPersonModel.id), privacy: AzureVideoIndexerService.VideoPrivacy.Public,
-                callBackUri: new Uri("https://fairplaytube.com"), cancellationToken: cancellationToken);
-            cancellationToken.ThrowIfCancellationRequested();
             var user = await this.FairplaytubeDatabaseContext.ApplicationUser
                 .SingleAsync(p => p.AzureAdB2cobjectId.ToString() == userAzueAdB2cObjectId);
             cancellationToken.ThrowIfCancellationRequested();
@@ -134,18 +125,18 @@ namespace FairPlayTube.Services
                 Description = uploadVideoModel.Description,
                 Location = this.AzureVideoIndexerConfiguration.Location,
                 Name = uploadVideoModel.Name,
-                VideoId = indexVideoResponse.id,
+                //VideoId = indexVideoResponse.id,
                 VideoBloblUrl = fileUrl,
-                IndexedVideoUrl = $"https://www.videoindexer.ai/embed/player/{this.AzureVideoIndexerConfiguration.AccountId}" +
-                $"/{indexVideoResponse.id}/" +
-                $"?&locale=en&location={this.AzureVideoIndexerConfiguration.Location}",
+                //IndexedVideoUrl = $"https://www.videoindexer.ai/embed/player/{this.AzureVideoIndexerConfiguration.AccountId}" +
+                //$"/{indexVideoResponse.id}/" +
+                //$"?&locale=en&location={this.AzureVideoIndexerConfiguration.Location}",
                 AccountId = Guid.Parse(this.AzureVideoIndexerConfiguration.AccountId),
                 FileName = uploadVideoModel.FileName,
-                VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Processing
+                VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Pending
             }, cancellationToken: cancellationToken);
             cancellationToken.ThrowIfCancellationRequested();
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
-            return indexVideoResponse.id;
+            return true;
         }
 
         public async Task<bool> IsVideoOwnerAsync(string videoId, string azureAdB2cobjectId,

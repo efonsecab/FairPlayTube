@@ -20,7 +20,6 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         private ToastifyService ToastifyService { get; set; }
         private UploadVideoModel UploadVideoModel = new UploadVideoModel();
         private bool IsLoading { get; set; } = false;
-        private string VideoId { get; set; }
 
         private async Task OnVideoFileSelectedAsync(InputFileChangeEventArgs e)
         {
@@ -38,7 +37,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             try
             {
                 this.IsLoading = true;
-                this.VideoId = await this.VideoClientService.UploadVideoAsync(this.UploadVideoModel);
+                await this.VideoClientService.UploadVideoAsync(this.UploadVideoModel);
                 await this.ToastifyService.DisplaySuccessNotification($"Your video has been uploaded. " +
                     $"It will take some minutes for it to finish being processed");
                 this.UploadVideoModel = new UploadVideoModel();

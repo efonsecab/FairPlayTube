@@ -1,7 +1,10 @@
 ﻿using FairPlayTube.Common.Global.Enums;
+using FairPlayTube.DataAccess.Data;
+using FairPlayTube.DataAccess.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PTI.Microservices.Library.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,23 +33,65 @@ namespace FairPlayTube.Services.BackgroundServices
                 using (var scope = this.ServiceScopeFactory.CreateScope())
                 {
                     var videoService = scope.ServiceProvider.GetRequiredService<VideoService>();
-                    var pendingInDbVideos = await videoService.GetDatabaseProcessingVideosIdsAsync(stoppingToken);
-                    if (pendingInDbVideos.Length > 0)
+                    var azureVideoIndexerService = scope.ServiceProvider.GetRequiredService<AzureVideoIndexerService>();
+                    FairplaytubeDatabaseContext fairplaytubeDatabaseContext = scope.ServiceProvider.GetRequiredService<FairplaytubeDatabaseContext>();
+                    try
                     {
-                        var videosIndex = await videoService.GetVideoIndexerStatus(pendingInDbVideos, stoppingToken);
-                        if (videosIndex.results.Length > 0)
+                        await CheckProcessingVideos(videoService, stoppingToken);
+                        var pendingIndexingVideos = fairplaytubeDatabaseContext.VideoInfo.Where(p => p.VideoIndexStatusId ==
+                        (short)Common.Global.Enums.VideoIndexStatus.Pending)
+                            .OrderBy(p => p.VideoInfoId)
+                            .Take(50);
+                        foreach (var singleVideo in pendingIndexingVideos)
                         {
-                            var indexCompleteVideos = videosIndex.results.Where(p =>
-                            p.state == VideoIndexStatus.Processed.ToString());
-                            if (indexCompleteVideos.Count() > 0)
-                            {
-                                await videoService.UpdateVideoIndexStatusAsync(indexCompleteVideos.Select(p => p.id).ToArray(), VideoIndexStatus.Processed,
-                                    cancellationToken: stoppingToken);
-                            }
+                            var allPersonModels = await azureVideoIndexerService.GetAllPersonModelsAsync(stoppingToken);
+                            var defaultPersonModel = allPersonModels.Single(p => p.isDefault == true);
+                            stoppingToken.ThrowIfCancellationRequested();
+                            var indexVideoResponse =
+                            await azureVideoIndexerService.UploadVideoAsync(new Uri(singleVideo.VideoBloblUrl),
+                                singleVideo.Name, singleVideo.Description, singleVideo.FileName,
+                                personModelId: Guid.Parse(defaultPersonModel.id), privacy: AzureVideoIndexerService.VideoPrivacy.Public,
+                                callBackUri: new Uri("https://fairplaytube.com"), cancellationToken: stoppingToken);
+                            singleVideo.VideoId = indexVideoResponse.id;
+                            singleVideo.IndexedVideoUrl = $"https://www.videoindexer.ai/embed/player/{singleVideo.AccountId}" +
+                                $"/{indexVideoResponse.id}/" +
+                                $"?&locale=en&location={singleVideo.Location}";
+                            singleVideo.VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Processing;
+                            await fairplaytubeDatabaseContext.SaveChangesAsync();
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        await fairplaytubeDatabaseContext.ErrorLog.AddAsync(new ErrorLog()
+                        {
+                            FullException = ex.ToString(),
+                            StackTrace = ex.StackTrace,
+                            Message = ex.Message
+                        });
+                        await fairplaytubeDatabaseContext.SaveChangesAsync();
                     }
                 }
                 await Task.Delay(TimeSpan.FromMinutes(1));
+            }
+        }
+
+        private static async Task CheckProcessingVideos(VideoService videoService, CancellationToken stoppingToken)
+        {
+            var processingInDB = await videoService.GetDatabaseProcessingVideosIdsAsync(stoppingToken);
+            if (processingInDB.Length > 0)
+            {
+                var videosIndex = await videoService.GetVideoIndexerStatus(processingInDB, stoppingToken);
+                if (videosIndex.results.Length > 0)
+                {
+                    var indexCompleteVideos = videosIndex.results.Where(p =>
+                    p.state == Common.Global.Enums.VideoIndexStatus.Processed.ToString());
+                    if (indexCompleteVideos.Count() > 0)
+                    {
+                        await videoService.UpdateVideoIndexStatusAsync(indexCompleteVideos.Select(p => p.id).ToArray(),
+                            Common.Global.Enums.VideoIndexStatus.Processed,
+                            cancellationToken: stoppingToken);
+                    }
+                }
             }
         }
     }
