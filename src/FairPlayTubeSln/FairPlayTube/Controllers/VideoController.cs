@@ -44,9 +44,12 @@ namespace FairPlayTube.Controllers
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         [DisableRequestSizeLimit]
         [RequestSizeLimit(1073741824)] //1GB
-        public async Task<string> UploadVideo(UploadVideoModel uploadVideoModel, CancellationToken cancellationToken)
+        public async Task<IActionResult> UploadVideo(UploadVideoModel uploadVideoModel, CancellationToken cancellationToken)
         {
-            return await this.VideoService.UploadVideoAsync(uploadVideoModel, cancellationToken:cancellationToken);
+            if (await this.VideoService.UploadVideoAsync(uploadVideoModel, cancellationToken: cancellationToken))
+                return Ok();
+            else
+                throw new Exception("An error occurred trying to upload your video");
         }
 
 

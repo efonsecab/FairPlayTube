@@ -34,13 +34,13 @@ namespace FairPlayTube.Client.ClientServices
                 ApiRoutes.VideoController.GetMyProcessedVideos);
         }
 
-        public async Task<string> UploadVideoAsync(UploadVideoModel uploadVideoModel)
+        public async Task<bool> UploadVideoAsync(UploadVideoModel uploadVideoModel)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             authorizedHttpClient.Timeout = TimeSpan.FromMinutes(15);
             var response = await authorizedHttpClient.PostAsJsonAsync(ApiRoutes.VideoController.UploadVideo, uploadVideoModel);
             if (response.IsSuccessStatusCode)
-                return await response.Content.ReadAsStringAsync();
+                return true;
             else
                 throw new Exception(response.ReasonPhrase);
         }

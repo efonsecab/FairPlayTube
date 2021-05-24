@@ -18,7 +18,12 @@ END
 SET IDENTITY_INSERT [dbo].[ApplicationRole] OFF
 
 SET IDENTITY_INSERT [dbo].[VideoIndexStatus] ON
-DECLARE @VIDEO_INDEX_STATUS NVARCHAR(50) = 'Processing'
+DECLARE @VIDEO_INDEX_STATUS NVARCHAR(50) = 'Pending'
+IF NOT EXISTS (SELECT * FROM [dbo].[VideoIndexStatus] VIS WHERE [VIS].[Name] = @VIDEO_INDEX_STATUS)
+BEGIN
+    INSERT INTO [dbo].[VideoIndexStatus]([VideoIndexStatusId],[Name]) VALUES(0, @VIDEO_INDEX_STATUS)
+END
+SET @VIDEO_INDEX_STATUS = 'Pending'
 IF NOT EXISTS (SELECT * FROM [dbo].[VideoIndexStatus] VIS WHERE [VIS].[Name] = @VIDEO_INDEX_STATUS)
 BEGIN
     INSERT INTO [dbo].[VideoIndexStatus]([VideoIndexStatusId],[Name]) VALUES(1, @VIDEO_INDEX_STATUS)
