@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Client", "Fair
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Models", "FairPlayTube.Models\FairPlayTube.Models.csproj", "{6C2571E2-2441-4400-9392-BCECF07ED4A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayTube.Tests", "FairPlayTube.Tests\FairPlayTube.Tests.csproj", "{39B44143-6745-44E2-93AF-5FF6C28746BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{6C2571E2-2441-4400-9392-BCECF07ED4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C2571E2-2441-4400-9392-BCECF07ED4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C2571E2-2441-4400-9392-BCECF07ED4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39B44143-6745-44E2-93AF-5FF6C28746BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39B44143-6745-44E2-93AF-5FF6C28746BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39B44143-6745-44E2-93AF-5FF6C28746BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39B44143-6745-44E2-93AF-5FF6C28746BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
