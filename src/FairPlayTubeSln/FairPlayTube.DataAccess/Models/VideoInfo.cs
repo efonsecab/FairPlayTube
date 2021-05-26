@@ -11,6 +11,11 @@ namespace FairPlayTube.DataAccess.Models
 {
     public partial class VideoInfo
     {
+        public VideoInfo()
+        {
+            VideoIndexKeyword = new HashSet<VideoIndexKeyword>();
+        }
+
         [Key]
         public long VideoInfoId { get; set; }
         public Guid AccountId { get; set; }
@@ -44,5 +49,7 @@ namespace FairPlayTube.DataAccess.Models
         [ForeignKey(nameof(VideoIndexStatusId))]
         [InverseProperty("VideoInfo")]
         public virtual VideoIndexStatus VideoIndexStatus { get; set; }
+        [InverseProperty("VideoInfo")]
+        public virtual ICollection<VideoIndexKeyword> VideoIndexKeyword { get; set; }
     }
 }

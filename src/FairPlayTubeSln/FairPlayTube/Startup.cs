@@ -39,6 +39,7 @@ namespace FairPlayTube
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            GlobalPackageConfiguration.EnableHttpRequestInformationLog = false;
             GlobalPackageConfiguration.RapidApiKey = Configuration.GetValue<string>("RapidApiKey");
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
@@ -49,8 +50,8 @@ namespace FairPlayTube
             });
 
 
-            services.AddTransient<CustomHttpClientHandler>();
-            services.AddTransient<CustomHttpClient>();
+            services.AddScoped<CustomHttpClientHandler>();
+            services.AddScoped<CustomHttpClient>();
 
             ConfigureAzureVideoIndexer(services);
             ConfigureAzureBlobStorage(services);
@@ -59,7 +60,7 @@ namespace FairPlayTube
                 Configuration.GetSection("DataStorageConfiguration").Get<DataStorageConfiguration>();
             services.AddSingleton(dataStorageConfiguration);
 
-            services.AddTransient<VideoService>();
+            services.AddScoped<VideoService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAdB2C"));
@@ -130,7 +131,7 @@ namespace FairPlayTube
                 Configuration.GetSection($"AzureConfiguration:{nameof(AzureVideoIndexerConfiguration)}")
                 .Get<AzureVideoIndexerConfiguration>();
             services.AddSingleton(azureVideoIndexerConfiguration);
-            services.AddTransient<AzureVideoIndexerService>();
+            services.AddScoped<AzureVideoIndexerService>();
         }
 
         private void ConfigureAzureBlobStorage(IServiceCollection services)
@@ -139,7 +140,7 @@ namespace FairPlayTube
                 Configuration.GetSection($"AzureConfiguration:{nameof(AzureBlobStorageConfiguration)}")
                 .Get<AzureBlobStorageConfiguration>();
             services.AddSingleton(azureBlobStorageConfiguration);
-            services.AddTransient<AzureBlobStorageService>();
+            services.AddScoped<AzureBlobStorageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

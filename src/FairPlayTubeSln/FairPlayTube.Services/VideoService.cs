@@ -5,6 +5,7 @@ using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.Video;
 using Microsoft.EntityFrameworkCore;
 using PTI.Microservices.Library.Configuration;
+using PTI.Microservices.Library.Models.AzureVideoIndexerService;
 using PTI.Microservices.Library.Models.AzureVideoIndexerService.SearchVideos;
 using PTI.Microservices.Library.Services;
 using System;
@@ -53,6 +54,12 @@ namespace FairPlayTube.Services
             }
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
             return true;
+        }
+
+        public async Task<List<KeywordInfoModel>> GetIndexedVideoKeywordsAsync(string videoId, CancellationToken cancellationToken)
+        {
+            return await this.AzureVideoIndexerService.GetVideoKeywordsAsync(videoId, cancellationToken);
+
         }
 
         public async Task<string[]> GetDatabaseProcessingVideosIdsAsync(CancellationToken cancellationToken)
@@ -137,6 +144,24 @@ namespace FairPlayTube.Services
             cancellationToken.ThrowIfCancellationRequested();
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
             return true;
+        }
+
+        public async Task SaveIndexedVideoKeywordsAsync(string videoId, CancellationToken cancellationToken)
+        {
+            var keywordsResponse = await this.GetIndexedVideoKeywordsAsync(videoId, cancellationToken);
+            if (keywordsResponse.Count > 0)
+            {
+                var videoInfoEntity = await this.FairplaytubeDatabaseContext.VideoInfo.Where(p => p.VideoId == videoId).SingleAsync();
+                foreach (var singleKeyword in keywordsResponse)
+                {
+                    await this.FairplaytubeDatabaseContext.VideoIndexKeyword.AddAsync(new VideoIndexKeyword()
+                    {
+                        VideoInfoId = videoInfoEntity.VideoInfoId,
+                        Keyword = singleKeyword.Keyword
+                    });
+                }
+                await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+            }
         }
 
         public async Task<bool> IsVideoOwnerAsync(string videoId, string azureAdB2cobjectId,
