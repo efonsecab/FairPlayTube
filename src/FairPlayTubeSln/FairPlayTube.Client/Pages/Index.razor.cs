@@ -9,12 +9,14 @@ namespace FairPlayTube.Client.Pages
 {
     public partial class Index
     {
-        public VideoInfoModel[] AllVideos { get; private set; }
+        private VideoInfoModel[] AllVideos { get; set; }
+        private VideoInfoModel SelectedVideo { get; set; }
         [Inject]
         private VideoClientService VideoClientService { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
         private bool IsLoading { get; set; }
+        private bool ShowInsights { get; set; }
         protected async override Task OnInitializedAsync()
         {
             try
@@ -30,6 +32,18 @@ namespace FairPlayTube.Client.Pages
             {
                 IsLoading = false;
             }
+        }
+
+        private async Task SelectVideo(VideoInfoModel videoInfoModel)
+        {
+            this.SelectedVideo = videoInfoModel;
+            this.ShowInsights = true;
+        }
+
+        private void HideInsights()
+        {
+            this.ShowInsights = false;
+            this.SelectedVideo = null;
         }
     }
 }
