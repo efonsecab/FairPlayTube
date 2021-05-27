@@ -1,6 +1,6 @@
 ﻿@page "/"
 
-<h1>Welcome to FairPlayTube</h1> 
+<h1>Welcome to FairPlayTube</h1>
 
 <Loading IsLoading="IsLoading"></Loading>
 
@@ -24,6 +24,9 @@
                 <Card Width="33.3%">
                     <CardHeader>
                         <strong>Duration: </strong>@singleVideo.VideoDuration
+                        <button type="button" @onclick="@(async ()=> await SelectVideo(singleVideo))">
+                            <i class="bi bi-eye-fill"></i>
+                        </button>
                     </CardHeader>
                     <CardBody>
                         <div class="embed-responsive embed-responsive-1by1">
@@ -38,6 +41,55 @@
                     </CardFooter>
                 </Card>
             }
+        </div>
+    </div>
+}
+
+@if (this.ShowInsights)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display:block;">
+        <div class="modal-dialog modal-fullscreen" style="max-height:none; max-width:none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@SelectedVideo.Name</h5>
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="HideInsights">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row row-cols-2">
+                        <Card Width="50%">
+                            <CardBody>
+                                <div class="embed-responsive embed-responsive-1by1">
+                                    <iframe class="embed-responsive-item"
+                                            src="@SelectedVideo.PublicPlayerUrl"
+                                            frameborder="0"
+                                            allowfullscreen></iframe>
+                                </div>
+                            </CardBody>
+                            <CardFooter>
+                                @SelectedVideo.Name
+                            </CardFooter>
+                        </Card>
+                        <Card Width="50%">
+                            <CardBody>
+                                <div class="embed-responsive embed-responsive-1by1">
+                                    <iframe class="embed-responsive-item"
+                                            src="@SelectedVideo.PublicInsightsUrl"
+                                            frameborder="0"
+                                            allowfullscreen></iframe>
+                                </div>
+                            </CardBody>
+                            <CardFooter>
+                                @SelectedVideo.Name
+                            </CardFooter>
+                        </Card>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="HideInsights">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 }
