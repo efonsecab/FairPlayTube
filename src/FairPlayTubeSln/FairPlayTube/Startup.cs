@@ -216,23 +216,25 @@ namespace FairPlayTube
         private FairplaytubeDatabaseContext CreateFairPlayTubeDbContext(IServiceCollection services)
         {
             var sp = services.BuildServiceProvider();
-            DbContextOptionsBuilder<FairplaytubeDatabaseContext> dbContextOptionsBuilder =
-                new();
-            FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
-            new(dbContextOptionsBuilder.UseSqlServer(Configuration.GetConnectionString("Default"),
-            sqlServerOptionsAction: (serverOptions) => serverOptions.EnableRetryOnFailure(3)).Options,
-            sp.GetService<ICurrentUserProvider>());
-            return fairplaytubeDatabaseContext;
+            var currentUserProvider = sp.GetService<ICurrentUserProvider>();
+            return ConfigureFairPlayTubeDataContext(currentUserProvider);
         }
 
         private FairplaytubeDatabaseContext CreateFairPlayTubeDbContext(IServiceProvider serviceProvider)
         {
+            var currentUserProvider = serviceProvider.GetService<ICurrentUserProvider>();
+            return ConfigureFairPlayTubeDataContext(currentUserProvider);
+        }
+
+        private FairplaytubeDatabaseContext ConfigureFairPlayTubeDataContext(ICurrentUserProvider currentUserProvider)
+        {
             DbContextOptionsBuilder<FairplaytubeDatabaseContext> dbContextOptionsBuilder =
-                            new();
+                new();
             FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
             new(dbContextOptionsBuilder.UseSqlServer(Configuration.GetConnectionString("Default"),
-            sqlServerOptionsAction: (serverOptions) => serverOptions.EnableRetryOnFailure(3)).Options,
-            serviceProvider.GetService<ICurrentUserProvider>());
+            sqlServerOptionsAction: (serverOptions) => serverOptions
+            .EnableRetryOnFailure(3, TimeSpan.FromSeconds(5), null)).Options,
+            currentUserProvider);
             return fairplaytubeDatabaseContext;
         }
     }
