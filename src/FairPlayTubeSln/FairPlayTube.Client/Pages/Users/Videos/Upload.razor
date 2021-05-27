@@ -1,9 +1,6 @@
 ﻿<h3>Upload</h3>
 
-@if (this.IsLoading)
-{
-    <Loading></Loading>
-}
+<Loading IsLoading="IsLoading"></Loading>
 
 <EditForm Model="@UploadVideoModel" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator></DataAnnotationsValidator>
