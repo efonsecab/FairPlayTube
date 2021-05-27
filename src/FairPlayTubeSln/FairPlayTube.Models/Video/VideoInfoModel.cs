@@ -18,5 +18,7 @@ namespace FairPlayTube.Models.Video
             $"/?&locale=en&location={Location}";
         public string EditAccessToken { get; set; }
         public string PrivateInsightsUrl => $"{PublicInsightsUrl}&accessToken={EditAccessToken}";
+        public float VideoDurationInSeconds { get; set; }
+        public TimeSpan VideoDuration => TimeSpan.FromSeconds(VideoDurationInSeconds);
     }
 }

@@ -50,7 +50,10 @@ namespace FairPlayTube.Services
             var query = this.FairplaytubeDatabaseContext.VideoInfo.Where(p => videoIds.Contains(p.VideoId));
             foreach (var singleVideoEntity in query)
             {
+                var singleVideoIndex = await this.AzureVideoIndexerService
+                    .GetVideoIndexAsync(singleVideoEntity.VideoId, cancellationToken);
                 singleVideoEntity.VideoIndexStatusId = (short)videoIndexStatus;
+                singleVideoEntity.VideoDurationInSeconds = singleVideoIndex.summarizedInsights.duration.seconds;
             }
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
             return true;

@@ -42,6 +42,7 @@ namespace FairPlayTube.DataAccess.Models
         /// </summary>
         public long ApplicationUserId { get; set; }
         public short VideoIndexStatusId { get; set; }
+        public double VideoDurationInSeconds { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("VideoInfo")]
