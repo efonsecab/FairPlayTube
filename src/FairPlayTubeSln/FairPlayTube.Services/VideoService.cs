@@ -5,6 +5,7 @@ using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.Video;
 using Microsoft.EntityFrameworkCore;
 using PTI.Microservices.Library.Configuration;
+using PTI.Microservices.Library.Interceptors;
 using PTI.Microservices.Library.Models.AzureVideoIndexerService;
 using PTI.Microservices.Library.Models.AzureVideoIndexerService.SearchVideos;
 using PTI.Microservices.Library.Services;
@@ -28,11 +29,13 @@ namespace FairPlayTube.Services
         private ICurrentUserProvider CurrentUserProvider { get; set; }
         private FairplaytubeDatabaseContext FairplaytubeDatabaseContext { get; }
         private AzureVideoIndexerConfiguration AzureVideoIndexerConfiguration { get; }
+        private CustomHttpClient CustomHttpClient { get; }
 
         public VideoService(AzureVideoIndexerService azureVideoIndexerService, AzureBlobStorageService azureBlobStorageService,
             DataStorageConfiguration dataStorageConfiguration, ICurrentUserProvider currentUserProvider,
             FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
-            AzureVideoIndexerConfiguration azureVideoIndexerConfiguration
+            AzureVideoIndexerConfiguration azureVideoIndexerConfiguration,
+            CustomHttpClient customHttpClient
             )
         {
             this.AzureVideoIndexerService = azureVideoIndexerService;
@@ -41,6 +44,7 @@ namespace FairPlayTube.Services
             this.CurrentUserProvider = currentUserProvider;
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
             this.AzureVideoIndexerConfiguration = azureVideoIndexerConfiguration;
+            this.CustomHttpClient = customHttpClient;
         }
 
         public async Task<bool> UpdateVideoIndexStatusAsync(string[] videoIds,
@@ -104,8 +108,13 @@ namespace FairPlayTube.Services
         public async Task<bool> UploadVideoAsync(UploadVideoModel uploadVideoModel,
             CancellationToken cancellationToken)
         {
+            MemoryStream stream = null;
+            if (!String.IsNullOrWhiteSpace(uploadVideoModel.SourceUrl))
+            {
+                uploadVideoModel.FileBytes = await this.CustomHttpClient.GetByteArrayAsync(uploadVideoModel.SourceUrl);
+            }
+            stream = new MemoryStream(uploadVideoModel.FileBytes);
             cancellationToken.ThrowIfCancellationRequested();
-            MemoryStream stream = new MemoryStream(uploadVideoModel.FileBytes);
             var userAzueAdB2cObjectId = this.CurrentUserProvider.GetObjectId();
             string extension = Path.GetExtension(uploadVideoModel.FileName);
             string newFileName = $"{uploadVideoModel.Name}{extension}";
