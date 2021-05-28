@@ -10,3 +10,7 @@ In order to keep the project free, you can help with some of the costs using the
 [Check the Project Intro](https://youtu.be/iUdjur6sl8g)
 
 ![](Images/FairPlayTubeInitialLayout.png?raw=true)
+
+## Code of conduct
+
+See [CODE-OF-CONDUCT](./CODE-OF-CONDUCT.md)
