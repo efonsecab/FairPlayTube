@@ -10,6 +10,14 @@
         <InputText class="form-control" @bind-Value="UploadVideoModel.Name"></InputText>
     </div>
     <div class="mb-3">
+        <label class="form-label">FileName</label>
+        <InputText class="form-control" @bind-Value="UploadVideoModel.FileName"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">FileUrl</label>
+        <InputText class="form-control" @bind-Value="UploadVideoModel.SourceUrl" @oninput="OnSourceUrlChanged"></InputText>
+    </div>
+    <div class="mb-3">
         <label class="form-label">Description</label>
         <InputText class="form-control" @bind-Value="UploadVideoModel.Description"></InputText>
     </div>
@@ -17,6 +25,7 @@
         <label class="form-label">Video File</label>
         <InputFile class="form-control" OnChange="OnVideoFileSelectedAsync" accept="video/*"></InputFile>
     </div>
+    <UploadVideoModelValidator></UploadVideoModelValidator>
     <div class="mb-3">
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>

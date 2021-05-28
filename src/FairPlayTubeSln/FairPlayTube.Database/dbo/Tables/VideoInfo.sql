@@ -4,7 +4,7 @@
     [AccountId] UNIQUEIDENTIFIER NOT NULL, 
     [VideoId] NVARCHAR(50) NULL, 
     [Location] NVARCHAR(50) NOT NULL, 
-    [Name] NVARCHAR(50) NOT NULL, 
+    [Name] NVARCHAR(100) NOT NULL, 
     [Description] NVARCHAR(500) NULL, 
     [FileName] NVARCHAR(50) NOT NULL, 
     [VideoBloblUrl] NVARCHAR(500) NOT NULL,
