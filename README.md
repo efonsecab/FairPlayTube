@@ -13,4 +13,4 @@ In order to keep the project free, you can help with some of the costs using the
 
 ## Code of conduct
 
-See [CODE-OF-CONDUCT](./CODE-OF-CONDUCT.md)
+See [CODE-OF-CONDUCT](CODE_OF_CONDUCT.md)
