@@ -6,7 +6,7 @@ We encourage community contribution so that all can create a great system togeth
 How To Contribute
 ------------
 
-* Use the Discussions section to let inform us you'd like to contribute.
+* Use the Discussions section to inform us you'd like to contribute.
 * Check the Issues section and decide in which issues you'd like to contribute
 * Use the Discussions section to post your ideas
 * Share the repo on your social networks (Twitter, Facebook, LinkedIn, etc)
