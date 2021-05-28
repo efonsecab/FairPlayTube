@@ -11,6 +11,9 @@ In order to keep the project free, you can help with some of the costs using the
 
 ![](Images/FairPlayTubeInitialLayout.png?raw=true)
 
+## How To Contribute
+See [CONTRIBUTING](CONTRIBUTING.md)
+
 ## Code of conduct
 
 See [CODE-OF-CONDUCT](CODE_OF_CONDUCT.md)
