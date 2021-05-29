@@ -11,6 +11,10 @@ namespace FairPlayTube.Common.Global
         public class Claims
         {
             public const string ObjectIdentifier = "http://schemas.microsoft.com/identity/claims/objectidentifier";
+            public const string Name = "name";
+            public const string GivenName = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname";
+            public const string SurName = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname";
+            public const string Emails = "emails";
         }
         public class Roles
         {

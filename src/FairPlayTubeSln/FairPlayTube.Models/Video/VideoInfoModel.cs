@@ -20,5 +20,6 @@ namespace FairPlayTube.Models.Video
         public string PrivateInsightsUrl => $"{PublicInsightsUrl}&accessToken={EditAccessToken}";
         public float VideoDurationInSeconds { get; set; }
         public TimeSpan VideoDuration => TimeSpan.FromSeconds(VideoDurationInSeconds);
+        public string Publisher { get; set; }
     }
 }

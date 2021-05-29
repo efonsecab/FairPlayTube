@@ -80,9 +80,13 @@ namespace FairPlayTube
                     .ThenInclude(p => p.ApplicationRole)
                     .Where(p => p.AzureAdB2cobjectId.ToString() == userObjectIdClaim.Value)
                     .SingleOrDefaultAsync();
+                    var fullName = claimsIdentity.FindFirst(Common.Global.Constants.Claims.GivenName).Value;
+                    var emailAddress = claimsIdentity.FindFirst(Common.Global.Constants.Claims.Emails).Value;
                     if (user != null && user.ApplicationUserRole != null)
                     {
                         claimsIdentity.AddClaim(new Claim("Role", user.ApplicationUserRole.ApplicationRole.Name));
+                        user.LastLogIn = DateTimeOffset.UtcNow;
+                        await fairplaytubeDatabaseContext.SaveChangesAsync();
                     }
                     else
                     {
@@ -92,8 +96,8 @@ namespace FairPlayTube
                             user = new ApplicationUser()
                             {
                                 LastLogIn = DateTimeOffset.UtcNow,
-                                FullName = "Test1",
-                                EmailAddress = "Test2",
+                                FullName = fullName,
+                                EmailAddress = emailAddress,
                                 AzureAdB2cobjectId = Guid.Parse(userObjectIdClaim.Value)
                             };
                             await fairplaytubeDatabaseContext.ApplicationUser.AddAsync(user);
@@ -109,8 +113,6 @@ namespace FairPlayTube
                     }
                 };
             });
-
-            //services.AddApiAuthorization(p=>p.);
 
             services.AddControllersWithViews();
 
