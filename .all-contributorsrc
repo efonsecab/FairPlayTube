@@ -1,0 +1,42 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "LuisiitoDev",
+      "name": "Luis Sandoval Monestel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79773016?v=4",
+      "profile": "https://github.com/LuisiitoDev",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "efonsecab",
+      "name": "Eduardo Fonseca",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3481899?v=4",
+      "profile": "https://allmylinks.com/efonsecabcr",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "pticostarica",
+      "name": "pticostarica",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23109368?v=4",
+      "profile": "https://github.com/pticostarica",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "FairPlayTube",
+  "projectOwner": "efonsecab",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
