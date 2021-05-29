@@ -80,7 +80,7 @@ namespace FairPlayTube.Services.BackgroundServices
                         }
                     }
                 }
-                await Task.Delay(TimeSpan.FromMinutes(1));
+                await Task.Delay(TimeSpan.FromMinutes(10));
             }
         }
 

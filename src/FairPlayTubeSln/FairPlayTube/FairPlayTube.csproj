@@ -6,6 +6,11 @@
     <UserSecretsId>82bf58f6-6b2c-44c4-800b-b2be4ae13d2e</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Identity" Version="1.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.6" />

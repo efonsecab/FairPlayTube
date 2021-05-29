@@ -1,5 +1,6 @@
 ﻿using FairPlayTube.Client.ClientServices;
 using FairPlayTube.Common.Extensions;
+using FairPlayTube.Common.Global;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication.Internal;
 using System;
@@ -31,8 +32,9 @@ namespace FairPlayTube.Client.CustomClaims
                 ClaimsIdentity claimsIdentity = userClaimsPrincipal.Identity as ClaimsIdentity;
                 var userObjectId = claimsIdentity.Claims.GetAzureAdB2CUserObjectId();
                 var httpClient = this.HttpClientService.CreateAuthorizedClient();
-                var userRole = await httpClient.GetStringAsync($"api/User/GetUserRole?userAdB2CObjectId={userObjectId}");
-                claimsIdentity.AddClaim(new Claim("Role", userRole));
+                var userRole = await httpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyRole);
+                if (!string.IsNullOrWhiteSpace(userRole))
+                    claimsIdentity.AddClaim(new Claim("Role", userRole));
             }
             return userClaimsPrincipal;
         }

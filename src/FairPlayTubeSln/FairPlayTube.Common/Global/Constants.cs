@@ -39,7 +39,7 @@ namespace FairPlayTube.Common.Global
             }
             public class UserController
             {
-                public const string GetUserRole = "api/User/GetUserRole";
+                public const string GetMyRole = "api/User/GetMyRole";
             }
         }
     }
