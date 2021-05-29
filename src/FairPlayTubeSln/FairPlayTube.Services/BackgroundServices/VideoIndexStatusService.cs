@@ -99,10 +99,10 @@ namespace FairPlayTube.Services.BackgroundServices
                         await videoService.UpdateVideoIndexStatusAsync(indexCompleteVideos.Select(p => p.id).ToArray(),
                             Common.Global.Enums.VideoIndexStatus.Processed,
                             cancellationToken: stoppingToken);
-                        //foreach (var singleIndexedVideo in indexCompleteVideos)
-                        //{
-                        //    await videoService.SaveIndexedVideoKeywordsAsync(singleIndexedVideo.id, stoppingToken);
-                        //}
+                        foreach (var singleIndexedVideo in indexCompleteVideos)
+                        {
+                            await videoService.SaveIndexedVideoKeywordsAsync(singleIndexedVideo.id, stoppingToken);
+                        }
                     }
                 }
             }
