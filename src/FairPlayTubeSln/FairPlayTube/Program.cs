@@ -22,6 +22,7 @@ namespace FairPlayTube
             Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration((hostingContext, config) =>
             {
+                config.AddEnvironmentVariables(prefix: "SERVER_");
                 config.AddUserSecrets<Program>(optional:true);
                 var configRoot = config.Build();
                 config.AddAzureAppConfiguration(options =>
