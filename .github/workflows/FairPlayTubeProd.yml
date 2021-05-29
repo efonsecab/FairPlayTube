@@ -1,12 +1,12 @@
-name: Build and deploy .NET Core app to Windows WebApp FairPlayTubeDev
+name: Build and deploy .NET Core app to Windows WebApp FairPlayTubeProd
 on:
   push:
     branches:
     - main
 env:
-  AZURE_WEBAPP_NAME: FairPlayTubeDev
+  AZURE_WEBAPP_NAME: FairPlayTubeProd
   AZURE_WEBAPP_PACKAGE_PATH: FairPlayTube/publish
-  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.FairPlayTubeDev_a7c1 }}
+  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.FairPlayTubeProd_fc52 }}
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 5.0.x
   WORKING_DIRECTORY: src/FairPlayTubeSln/FairPlayTube

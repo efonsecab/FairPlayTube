@@ -24,7 +24,7 @@
                 <Card Width="33.3%">
                     <CardHeader>
                         <strong>Duration: </strong>@singleVideo.VideoDuration
-                        <button type="button" @onclick="@(async ()=> await SelectVideo(singleVideo))">
+                        <button type="button" @onclick="@( ()=> SelectVideo(singleVideo))">
                             <i class="bi bi-eye-fill"></i>
                         </button>
                     </CardHeader>

@@ -34,7 +34,7 @@ namespace FairPlayTube.Client.Pages
             }
         }
 
-        private async Task SelectVideo(VideoInfoModel videoInfoModel)
+        private void SelectVideo(VideoInfoModel videoInfoModel)
         {
             this.SelectedVideo = videoInfoModel;
             this.ShowInsights = true;
