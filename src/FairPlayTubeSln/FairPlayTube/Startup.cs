@@ -80,11 +80,13 @@ namespace FairPlayTube
                     .ThenInclude(p => p.ApplicationRole)
                     .Where(p => p.AzureAdB2cobjectId.ToString() == userObjectIdClaim.Value)
                     .SingleOrDefaultAsync();
-                    var fullName = claimsIdentity.FindFirst(Common.Global.Constants.Claims.GivenName).Value;
+                    var fullName = claimsIdentity.FindFirst(Common.Global.Constants.Claims.Name).Value;
                     var emailAddress = claimsIdentity.FindFirst(Common.Global.Constants.Claims.Emails).Value;
                     if (user != null && user.ApplicationUserRole != null)
                     {
                         claimsIdentity.AddClaim(new Claim("Role", user.ApplicationUserRole.ApplicationRole.Name));
+                        user.FullName = fullName;
+                        user.EmailAddress = emailAddress;
                         user.LastLogIn = DateTimeOffset.UtcNow;
                         await fairplaytubeDatabaseContext.SaveChangesAsync();
                     }
