@@ -24,13 +24,19 @@ namespace FairPlayTube.Client.Pages.Users.Videos
 
         private async Task OnVideoFileSelectedAsync(InputFileChangeEventArgs e)
         {
-            int maxMBs = 50;
-            int maxSizeInBytes = 1024 * maxMBs * 1000;
-            var videoFileStream = e.File.OpenReadStream(maxAllowedSize: maxSizeInBytes);
-            this.UploadVideoModel.FileName = e.File.Name;
-            MemoryStream memoryStream = new MemoryStream();
-            await videoFileStream.CopyToAsync(memoryStream);
-            this.UploadVideoModel.FileBytes = memoryStream.ToArray();
+            try
+            {
+                int maxSizeInBytes = 838860800; //800Mbs
+                var videoFileStream = e.File.OpenReadStream(maxAllowedSize: maxSizeInBytes);
+                this.UploadVideoModel.FileName = e.File.Name;
+                MemoryStream memoryStream = new MemoryStream();
+                await videoFileStream.CopyToAsync(memoryStream);
+                this.UploadVideoModel.FileBytes = memoryStream.ToArray();
+            }
+            catch (Exception ex)
+            {
+                await this.ToastifyService.DisplayErrorNotification(ex.Message);
+            }
         }
 
         private async Task OnValidSubmit()
