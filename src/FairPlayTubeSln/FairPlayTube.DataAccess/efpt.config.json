@@ -31,6 +31,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[VideoIndexKeyword]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoIndexStatus]",
          "ObjectType": 0
       },

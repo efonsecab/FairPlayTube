@@ -12,7 +12,13 @@ namespace FairPlayTube.AutoMapperProfiles
     {
         public GlobalMappingProfile()
         {
-            this.CreateMap<VideoInfo, VideoInfoModel>();
+            this.CreateMap<VideoInfo, VideoInfoModel>().AfterMap(afterFunction: (source,dest)=> 
+            {
+                if (source.ApplicationUser != null)
+                {
+                    dest.Publisher = source.ApplicationUser.FullName;
+                }
+            });
         }
     }
 }
