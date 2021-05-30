@@ -30,6 +30,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[UserExternalMonetization]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoIndexKeyword]",
          "ObjectType": 0
       },
