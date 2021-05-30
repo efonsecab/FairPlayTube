@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlayTube.DataAccess.Models
 {
+    [Index(nameof(Name), Name = "UI_Brand_Name", IsUnique = true)]
     public partial class Brand
     {
         [Key]
