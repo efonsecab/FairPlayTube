@@ -8,7 +8,6 @@
    "ModelNamespace": null,
    "OutputContextPath": "Data",
    "OutputPath": "Models",
-   "ProceduresReturnList": false,
    "ProjectRootNamespace": "FairPlayTube.DataAccess",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
@@ -56,5 +55,6 @@
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": false,
+   "UseSchemaFolders": false,
    "UseSpatial": false
 }

@@ -79,8 +79,8 @@ namespace FairPlayTube.Services.BackgroundServices
                             //TODO: Add Email Notification
                         }
                     }
+                    await Task.Delay(TimeSpan.FromMinutes(10));
                 }
-                await Task.Delay(TimeSpan.FromMinutes(10));
             }
         }
 

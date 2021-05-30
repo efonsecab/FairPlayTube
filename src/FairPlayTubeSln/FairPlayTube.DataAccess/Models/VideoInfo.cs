@@ -30,7 +30,7 @@ namespace FairPlayTube.DataAccess.Models
         [StringLength(500)]
         public string Description { get; set; }
         [Required]
-        [StringLength(160)]
+        [StringLength(50)]
         public string FileName { get; set; }
         [Required]
         [StringLength(500)]
