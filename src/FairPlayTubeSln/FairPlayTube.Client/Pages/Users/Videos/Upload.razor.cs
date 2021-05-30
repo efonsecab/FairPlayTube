@@ -20,7 +20,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         private ToastifyService ToastifyService { get; set; }
         private UploadVideoModel UploadVideoModel = new UploadVideoModel();
         private bool IsLoading { get; set; } = false;
-        private bool IsSubmitting { get; set; } = true;
+        private bool IsSubmitting { get; set; } = false;
 
         private async Task OnVideoFileSelectedAsync(InputFileChangeEventArgs e)
         {
