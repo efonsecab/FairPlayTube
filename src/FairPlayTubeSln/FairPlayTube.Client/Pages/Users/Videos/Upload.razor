@@ -23,10 +23,17 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Video File</label>
-        <InputFile class="form-control" OnChange="OnVideoFileSelectedAsync" accept="video/*"></InputFile>
+        <InputFile class="form-control" OnChange="OnVideoFileSelectedAsync" accept="video/*" disabled="@(!IsLoading)"></InputFile>
     </div>
     <UploadVideoModelValidator></UploadVideoModelValidator>
+    @if (ShowSubmitButton)
+    {
     <div class="mb-3">
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
+    }
 </EditForm>
+<div class="mb-3">
+    <strong>Note: Once uploaded, videos will be visible until they finish processing, it could take up to 10 minutes for small videos.
+    The longer the video, the longer the processing time will take</strong>
+</div>

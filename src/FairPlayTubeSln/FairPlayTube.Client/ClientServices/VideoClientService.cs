@@ -1,4 +1,6 @@
-﻿using FairPlayTube.Models.Video;
+﻿using FairPlayTube.Client.Services;
+using FairPlayTube.Models.CustomHttpResponse;
+using FairPlayTube.Models.Video;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,9 +16,12 @@ namespace FairPlayTube.Client.ClientServices
     public class VideoClientService
     {
         private HttpClientService HttpClientService { get; }
-        public VideoClientService(HttpClientService httpClientService)
+        private ToastifyService ToastifyService { get; }
+
+        public VideoClientService(HttpClientService httpClientService, ToastifyService toastifyService)
         {
             this.HttpClientService = httpClientService;
+            this.ToastifyService = toastifyService;
         }
 
 
@@ -34,15 +39,19 @@ namespace FairPlayTube.Client.ClientServices
                 ApiRoutes.VideoController.GetMyProcessedVideos);
         }
 
-        public async Task<bool> UploadVideoAsync(UploadVideoModel uploadVideoModel)
+        public async Task UploadVideoAsync(UploadVideoModel uploadVideoModel)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             authorizedHttpClient.Timeout = TimeSpan.FromMinutes(15);
             var response = await authorizedHttpClient.PostAsJsonAsync(ApiRoutes.VideoController.UploadVideo, uploadVideoModel);
-            if (response.IsSuccessStatusCode)
-                return true;
-            else
-                throw new Exception(response.ReasonPhrase);
+            if (!response.IsSuccessStatusCode)
+            {
+                ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
+                if (problemHttpResponse != null)
+                    await this.ToastifyService.DisplayErrorNotification(problemHttpResponse.Detail);
+                else
+                    throw new Exception(response.ReasonPhrase);
+            }
         }
 
         public async Task<string> GetVideoEditAccessToken(string videoId)

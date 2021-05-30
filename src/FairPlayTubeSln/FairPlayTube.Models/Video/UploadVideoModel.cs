@@ -10,14 +10,16 @@ namespace FairPlayTube.Models.Video
     public class UploadVideoModel
     {
         [Required]
-        [StringLength(100)]
+        [StringLength(150)]
         public string Name { get; set; }
         [StringLength(500)]
         public string Description { get; set; }
         [Required]
+        [StringLength(160)]
         public string FileName { get; set; }
         public byte[] FileBytes { get; set; }
         [Url]
+        [StringLength(500)]
         public string SourceUrl { get; set; }
     }
 }
