@@ -25,7 +25,7 @@ namespace FairPlayTube.DataAccess.Models
         [StringLength(50)]
         public string Location { get; set; }
         [Required]
-        [StringLength(150)]
+        [StringLength(50)]
         public string Name { get; set; }
         [StringLength(500)]
         public string Description { get; set; }
