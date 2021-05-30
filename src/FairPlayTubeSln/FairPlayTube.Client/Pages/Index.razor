@@ -1,16 +1,26 @@
 ﻿@page "/"
+@using Common.Global
 
-<h1>Welcome to FairPlayTube</h1>
+<h1>Welcome to @Constants.Titles.AppTitle</h1>
 
 <Loading IsLoading="IsLoading"></Loading>
 
 <div class="mb-3">
     <Card Width="100%">
         <CardHeader>
-            What is FairPlayTube?
+            What is @Constants.Titles.AppTitle?
         </CardHeader>
         <CardBody>
-            FairPlayTube is the next generation of video sharing portal with a focus on users and transparency
+            <p>
+                @Constants.Titles.AppTitle is the next generation of video sharing portals with a focus on users and transparency.
+            </p>
+            <p>
+                @Constants.Titles.AppTitle is a 100% Open Source project, and you can contribute to it.
+            </p>
+            <p>
+                Visit the @Constants.Titles.AppTitle Repository on Github
+                <a href="https://github.com/efonsecab/FairPlayTube" target="_blank">https://github.com/efonsecab/FairPlayTube</a>
+            </p>
         </CardBody>
     </Card>
 </div>

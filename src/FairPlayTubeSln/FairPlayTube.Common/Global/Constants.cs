@@ -8,6 +8,10 @@ namespace FairPlayTube.Common.Global
 {
     public class Constants
     {
+        public class Titles
+        {
+            public const string AppTitle = "FairPlayTube";
+        }
         public class Claims
         {
             public const string ObjectIdentifier = "http://schemas.microsoft.com/identity/claims/objectidentifier";
