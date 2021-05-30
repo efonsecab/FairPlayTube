@@ -69,6 +69,7 @@
     <Build Include="dbo\Tables\VideoInfo.sql" />
     <Build Include="dbo\Tables\VideoIndexStatus.sql" />
     <Build Include="dbo\Tables\Brand.sql" />
+    <Build Include="dbo\Tables\VideoIndexKeyword.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

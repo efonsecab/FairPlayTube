@@ -51,5 +51,11 @@ namespace FairPlayTube.Client.Pages.Users.Videos
                 this.IsLoading = false;
             }
         }
+
+        private void OnSourceUrlChanged(ChangeEventArgs e)
+        {
+            string fileName = System.IO.Path.GetFileName(e.Value.ToString());
+            this.UploadVideoModel.FileName = fileName;
+        }
     }
 }

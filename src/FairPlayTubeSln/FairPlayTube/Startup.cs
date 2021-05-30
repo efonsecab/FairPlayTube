@@ -39,6 +39,7 @@ namespace FairPlayTube
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            GlobalPackageConfiguration.EnableHttpRequestInformationLog = false;
             GlobalPackageConfiguration.RapidApiKey = Configuration.GetValue<string>("RapidApiKey");
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
@@ -49,8 +50,8 @@ namespace FairPlayTube
             });
 
 
-            services.AddTransient<CustomHttpClientHandler>();
-            services.AddTransient<CustomHttpClient>();
+            services.AddScoped<CustomHttpClientHandler>();
+            services.AddScoped<CustomHttpClient>();
 
             ConfigureAzureVideoIndexer(services);
             ConfigureAzureBlobStorage(services);
@@ -59,7 +60,7 @@ namespace FairPlayTube
                 Configuration.GetSection("DataStorageConfiguration").Get<DataStorageConfiguration>();
             services.AddSingleton(dataStorageConfiguration);
 
-            services.AddTransient<VideoService>();
+            services.AddScoped<VideoService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAdB2C"));
@@ -79,9 +80,15 @@ namespace FairPlayTube
                     .ThenInclude(p => p.ApplicationRole)
                     .Where(p => p.AzureAdB2cobjectId.ToString() == userObjectIdClaim.Value)
                     .SingleOrDefaultAsync();
+                    var fullName = claimsIdentity.FindFirst(Common.Global.Constants.Claims.Name).Value;
+                    var emailAddress = claimsIdentity.FindFirst(Common.Global.Constants.Claims.Emails).Value;
                     if (user != null && user.ApplicationUserRole != null)
                     {
                         claimsIdentity.AddClaim(new Claim("Role", user.ApplicationUserRole.ApplicationRole.Name));
+                        user.FullName = fullName;
+                        user.EmailAddress = emailAddress;
+                        user.LastLogIn = DateTimeOffset.UtcNow;
+                        await fairplaytubeDatabaseContext.SaveChangesAsync();
                     }
                     else
                     {
@@ -91,8 +98,8 @@ namespace FairPlayTube
                             user = new ApplicationUser()
                             {
                                 LastLogIn = DateTimeOffset.UtcNow,
-                                FullName = "Test1",
-                                EmailAddress = "Test2",
+                                FullName = fullName,
+                                EmailAddress = emailAddress,
                                 AzureAdB2cobjectId = Guid.Parse(userObjectIdClaim.Value)
                             };
                             await fairplaytubeDatabaseContext.ApplicationUser.AddAsync(user);
@@ -108,8 +115,6 @@ namespace FairPlayTube
                     }
                 };
             });
-
-            //services.AddApiAuthorization(p=>p.);
 
             services.AddControllersWithViews();
 
@@ -130,7 +135,7 @@ namespace FairPlayTube
                 Configuration.GetSection($"AzureConfiguration:{nameof(AzureVideoIndexerConfiguration)}")
                 .Get<AzureVideoIndexerConfiguration>();
             services.AddSingleton(azureVideoIndexerConfiguration);
-            services.AddTransient<AzureVideoIndexerService>();
+            services.AddScoped<AzureVideoIndexerService>();
         }
 
         private void ConfigureAzureBlobStorage(IServiceCollection services)
@@ -139,7 +144,7 @@ namespace FairPlayTube
                 Configuration.GetSection($"AzureConfiguration:{nameof(AzureBlobStorageConfiguration)}")
                 .Get<AzureBlobStorageConfiguration>();
             services.AddSingleton(azureBlobStorageConfiguration);
-            services.AddTransient<AzureBlobStorageService>();
+            services.AddScoped<AzureBlobStorageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -215,23 +220,25 @@ namespace FairPlayTube
         private FairplaytubeDatabaseContext CreateFairPlayTubeDbContext(IServiceCollection services)
         {
             var sp = services.BuildServiceProvider();
-            DbContextOptionsBuilder<FairplaytubeDatabaseContext> dbContextOptionsBuilder =
-                new();
-            FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
-            new(dbContextOptionsBuilder.UseSqlServer(Configuration.GetConnectionString("Default"),
-            sqlServerOptionsAction: (serverOptions) => serverOptions.EnableRetryOnFailure(3)).Options,
-            sp.GetService<ICurrentUserProvider>());
-            return fairplaytubeDatabaseContext;
+            var currentUserProvider = sp.GetService<ICurrentUserProvider>();
+            return ConfigureFairPlayTubeDataContext(currentUserProvider);
         }
 
         private FairplaytubeDatabaseContext CreateFairPlayTubeDbContext(IServiceProvider serviceProvider)
         {
+            var currentUserProvider = serviceProvider.GetService<ICurrentUserProvider>();
+            return ConfigureFairPlayTubeDataContext(currentUserProvider);
+        }
+
+        private FairplaytubeDatabaseContext ConfigureFairPlayTubeDataContext(ICurrentUserProvider currentUserProvider)
+        {
             DbContextOptionsBuilder<FairplaytubeDatabaseContext> dbContextOptionsBuilder =
-                            new();
+                new();
             FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
             new(dbContextOptionsBuilder.UseSqlServer(Configuration.GetConnectionString("Default"),
-            sqlServerOptionsAction: (serverOptions) => serverOptions.EnableRetryOnFailure(3)).Options,
-            serviceProvider.GetService<ICurrentUserProvider>());
+            sqlServerOptionsAction: (serverOptions) => serverOptions
+            .EnableRetryOnFailure(3, TimeSpan.FromSeconds(5), null)).Options,
+            currentUserProvider);
             return fairplaytubeDatabaseContext;
         }
     }

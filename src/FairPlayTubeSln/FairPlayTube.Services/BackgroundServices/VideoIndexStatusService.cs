@@ -1,6 +1,7 @@
 ﻿using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -27,14 +28,14 @@ namespace FairPlayTube.Services.BackgroundServices
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            using (var scope = this.ServiceScopeFactory.CreateScope())
             {
-                //Check https://stackoverflow.com/questions/48368634/how-should-i-inject-a-dbcontext-instance-into-an-ihostedservice
-                using (var scope = this.ServiceScopeFactory.CreateScope())
+                var videoService = scope.ServiceProvider.GetRequiredService<VideoService>();
+                var azureVideoIndexerService = scope.ServiceProvider.GetRequiredService<AzureVideoIndexerService>();
+                FairplaytubeDatabaseContext fairplaytubeDatabaseContext = scope.ServiceProvider.GetRequiredService<FairplaytubeDatabaseContext>();
+                while (!stoppingToken.IsCancellationRequested)
                 {
-                    var videoService = scope.ServiceProvider.GetRequiredService<VideoService>();
-                    var azureVideoIndexerService = scope.ServiceProvider.GetRequiredService<AzureVideoIndexerService>();
-                    FairplaytubeDatabaseContext fairplaytubeDatabaseContext = scope.ServiceProvider.GetRequiredService<FairplaytubeDatabaseContext>();
+                    //Check https://stackoverflow.com/questions/48368634/how-should-i-inject-a-dbcontext-instance-into-an-ihostedservice
                     try
                     {
                         await CheckProcessingVideos(videoService, stoppingToken);
@@ -62,16 +63,24 @@ namespace FairPlayTube.Services.BackgroundServices
                     }
                     catch (Exception ex)
                     {
-                        await fairplaytubeDatabaseContext.ErrorLog.AddAsync(new ErrorLog()
+                        try
                         {
-                            FullException = ex.ToString(),
-                            StackTrace = ex.StackTrace,
-                            Message = ex.Message
-                        });
-                        await fairplaytubeDatabaseContext.SaveChangesAsync();
+                            fairplaytubeDatabaseContext.ChangeTracker.Clear();
+                            await fairplaytubeDatabaseContext.ErrorLog.AddAsync(new ErrorLog()
+                            {
+                                FullException = ex.ToString(),
+                                StackTrace = ex.StackTrace,
+                                Message = ex.Message
+                            });
+                            await fairplaytubeDatabaseContext.SaveChangesAsync();
+                        }
+                        catch (Exception)
+                        {
+                            //TODO: Add Email Notification
+                        }
                     }
                 }
-                await Task.Delay(TimeSpan.FromMinutes(1));
+                await Task.Delay(TimeSpan.FromMinutes(10));
             }
         }
 
@@ -90,6 +99,10 @@ namespace FairPlayTube.Services.BackgroundServices
                         await videoService.UpdateVideoIndexStatusAsync(indexCompleteVideos.Select(p => p.id).ToArray(),
                             Common.Global.Enums.VideoIndexStatus.Processed,
                             cancellationToken: stoppingToken);
+                        foreach (var singleIndexedVideo in indexCompleteVideos)
+                        {
+                            await videoService.SaveIndexedVideoKeywordsAsync(singleIndexedVideo.id, stoppingToken);
+                        }
                     }
                 }
             }

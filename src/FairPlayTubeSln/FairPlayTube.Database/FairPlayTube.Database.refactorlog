@@ -21,4 +21,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="VideoIndexStatusId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="890ab980-c382-4740-b508-f621e9c74205" ChangeDateTime="05/26/2021 13:04:28">
+    <Property Name="ElementName" Value="[dbo].[VideoIndexKeyword].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VideoIndexKeyword]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VideoIndexKwywordId" />
+  </Operation>
 </Operations>

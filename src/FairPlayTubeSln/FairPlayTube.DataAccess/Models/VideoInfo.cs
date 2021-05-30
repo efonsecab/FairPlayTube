@@ -11,6 +11,11 @@ namespace FairPlayTube.DataAccess.Models
 {
     public partial class VideoInfo
     {
+        public VideoInfo()
+        {
+            VideoIndexKeyword = new HashSet<VideoIndexKeyword>();
+        }
+
         [Key]
         public long VideoInfoId { get; set; }
         public Guid AccountId { get; set; }
@@ -20,7 +25,7 @@ namespace FairPlayTube.DataAccess.Models
         [StringLength(50)]
         public string Location { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(100)]
         public string Name { get; set; }
         [StringLength(500)]
         public string Description { get; set; }
@@ -37,6 +42,7 @@ namespace FairPlayTube.DataAccess.Models
         /// </summary>
         public long ApplicationUserId { get; set; }
         public short VideoIndexStatusId { get; set; }
+        public double VideoDurationInSeconds { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("VideoInfo")]
@@ -44,5 +50,7 @@ namespace FairPlayTube.DataAccess.Models
         [ForeignKey(nameof(VideoIndexStatusId))]
         [InverseProperty("VideoInfo")]
         public virtual VideoIndexStatus VideoIndexStatus { get; set; }
+        [InverseProperty("VideoInfo")]
+        public virtual ICollection<VideoIndexKeyword> VideoIndexKeyword { get; set; }
     }
 }
