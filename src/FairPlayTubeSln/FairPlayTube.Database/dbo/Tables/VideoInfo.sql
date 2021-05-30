@@ -12,6 +12,7 @@
     [ApplicationUserId] BIGINT NOT NULL, 
     [VideoIndexStatusId] SMALLINT NOT NULL, 
     [VideoDurationInSeconds] FLOAT NOT NULL DEFAULT 0, 
+    [VideoIndexSourceClass] NVARCHAR(500) NULL, 
     CONSTRAINT [FK_VideoInfo_ApplicationUser] FOREIGN KEY ([ApplicationUserId]) REFERENCES [ApplicationUser]([ApplicationUserId]), 
     CONSTRAINT [FK_VideoInfo_VideoIndexStatus] FOREIGN KEY ([VideoIndexStatusId]) REFERENCES [VideoIndexStatus]([VideoIndexStatusId])
 )

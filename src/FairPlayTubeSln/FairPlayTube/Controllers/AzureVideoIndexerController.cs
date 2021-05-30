@@ -36,6 +36,7 @@ namespace FairPlayTube.Controllers
                 if (videoInfoEntity != null)
                 {
                     videoInfoEntity.VideoIndexStatusId = (int)Common.Global.Enums.VideoIndexStatus.Processed;
+                    videoInfoEntity.VideoIndexSourceClass = this.GetType().FullName;
                     await this.FairplaytubeDatabaseContext.SaveChangesAsync();
                     await VideoService.SaveIndexedVideoKeywordsAsync(id, cancellationToken);
                 }

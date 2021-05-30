@@ -56,6 +56,7 @@ namespace FairPlayTube.Services
             {
                 var singleVideoIndex = await this.AzureVideoIndexerService
                     .GetVideoIndexAsync(singleVideoEntity.VideoId, cancellationToken);
+                singleVideoEntity.VideoIndexSourceClass = this.GetType().FullName;
                 singleVideoEntity.VideoIndexStatusId = (short)videoIndexStatus;
                 singleVideoEntity.VideoDurationInSeconds = singleVideoIndex.summarizedInsights.duration.seconds;
             }
