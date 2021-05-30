@@ -2,6 +2,7 @@
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -33,6 +34,9 @@ namespace FairPlayTube.Services.BackgroundServices
                 var videoService = scope.ServiceProvider.GetRequiredService<VideoService>();
                 var azureVideoIndexerService = scope.ServiceProvider.GetRequiredService<AzureVideoIndexerService>();
                 FairplaytubeDatabaseContext fairplaytubeDatabaseContext = scope.ServiceProvider.GetRequiredService<FairplaytubeDatabaseContext>();
+                var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+                var videoIndexerBaseCallbackUrl = config["VideoIndexerCallbackUrl"];
+                var videoIndexerCallbackUrl = $"{videoIndexerBaseCallbackUrl}/api/AzureVideoIndexer/OnVideoIndexed";
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     //Check https://stackoverflow.com/questions/48368634/how-should-i-inject-a-dbcontext-instance-into-an-ihostedservice
@@ -52,7 +56,7 @@ namespace FairPlayTube.Services.BackgroundServices
                             await azureVideoIndexerService.UploadVideoAsync(new Uri(singleVideo.VideoBloblUrl),
                                 singleVideo.Name, singleVideo.Description, singleVideo.FileName,
                                 personModelId: Guid.Parse(defaultPersonModel.id), privacy: AzureVideoIndexerService.VideoPrivacy.Public,
-                                callBackUri: new Uri("https://fairplaytube.com"), cancellationToken: stoppingToken);
+                                callBackUri: new Uri(videoIndexerCallbackUrl), cancellationToken: stoppingToken);
                             singleVideo.VideoId = indexVideoResponse.id;
                             singleVideo.IndexedVideoUrl = $"https://www.videoindexer.ai/embed/player/{singleVideo.AccountId}" +
                                 $"/{indexVideoResponse.id}/" +
