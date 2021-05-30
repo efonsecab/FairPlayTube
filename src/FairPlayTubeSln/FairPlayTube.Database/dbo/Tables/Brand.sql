@@ -6,3 +6,7 @@
 	[ApplicationUserId] BIGINT NOT NULL,
 	CONSTRAINT FK_Brand_ApplicationUserId FOREIGN KEY ([ApplicationUserId]) REFERENCES [dbo].[ApplicationUser]([ApplicationUserId])
 )
+
+GO
+
+CREATE UNIQUE INDEX [UI_Brand_Name] ON [dbo].[Brand] ([Name])
