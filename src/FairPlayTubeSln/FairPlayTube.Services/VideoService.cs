@@ -13,11 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AzureVideoIndexerModels = PTI.Microservices.Library.Models.AzureVideoIndexerService;
 
 namespace FairPlayTube.Services
 {
@@ -68,6 +65,17 @@ namespace FairPlayTube.Services
         {
             return await this.AzureVideoIndexerService.GetVideoKeywordsAsync(videoId, cancellationToken);
 
+        }
+
+        public async Task<GlobalKeywordModel[]> ListAllKeywordsAsync(CancellationToken cancellationToken)
+        {
+            return await this.FairplaytubeDatabaseContext.VideoIndexKeyword
+                .GroupBy(p => p.Keyword)
+                .Select(p=> new GlobalKeywordModel() 
+                {
+                    Keyword = p.Key,
+                    Appeareances = p.Count()
+                }).ToArrayAsync();
         }
 
         public async Task<string[]> GetDatabaseProcessingVideosIdsAsync(CancellationToken cancellationToken)

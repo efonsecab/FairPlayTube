@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace FairPlayTube.Services.BackgroundServices
 {
@@ -52,9 +53,11 @@ namespace FairPlayTube.Services.BackgroundServices
                             var allPersonModels = await azureVideoIndexerService.GetAllPersonModelsAsync(stoppingToken);
                             var defaultPersonModel = allPersonModels.Single(p => p.isDefault == true);
                             stoppingToken.ThrowIfCancellationRequested();
+                            string encodedName = HttpUtility.UrlEncode(singleVideo.Name);
+                            string encodedDescription = HttpUtility.UrlEncode(singleVideo.Description);
                             var indexVideoResponse =
                             await azureVideoIndexerService.UploadVideoAsync(new Uri(singleVideo.VideoBloblUrl),
-                                singleVideo.Name, singleVideo.Description, singleVideo.FileName,
+                                encodedName, encodedDescription, singleVideo.FileName,
                                 personModelId: Guid.Parse(defaultPersonModel.id), privacy: AzureVideoIndexerService.VideoPrivacy.Public,
                                 callBackUri: new Uri(videoIndexerCallbackUrl), cancellationToken: stoppingToken);
                             singleVideo.VideoId = indexVideoResponse.id;
@@ -83,7 +86,7 @@ namespace FairPlayTube.Services.BackgroundServices
                             //TODO: Add Email Notification
                         }
                     }
-                    await Task.Delay(TimeSpan.FromMinutes(10));
+                    await Task.Delay(TimeSpan.FromMinutes(5));
                 }
             }
         }
