@@ -30,6 +30,7 @@ namespace FairPlayTube.Common.Global
         {
             public const string UploadVideo = "/Users/Videos/Upload";
             public const string MyVideos = "/Users/Videos/MyVideos";
+            public const string ProfileMonetization = "/Users/Profile/Monetization";
         }
 
         public class ApiRoutes
@@ -44,6 +45,12 @@ namespace FairPlayTube.Common.Global
             public class UserController
             {
                 public const string GetMyRole = "api/User/GetMyRole";
+            }
+
+            public class UserProfileController
+            {
+                public const string SaveMonetization = "api/UserProfile/SaveMonetization";
+                public const string GetMyMonetizationInfo = "api/UserProfile/GetMyMonetizationInfo";
             }
         }
     }
