@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PTI.Microservices.Library.Models.AzureVideoIndexerService;
 using System;
 using System.IO;
 using System.Linq;
@@ -75,6 +76,12 @@ namespace FairPlayTube.Controllers
                 throw new Exception("You are not allowed to edit this video");
             string accessToken = await this.VideoService.GetVideoEditAccessTokenAsync(videoId:videoId);
             return accessToken;
+        }
+
+        [HttpGet("[action]")]
+        public async Task<GlobalKeywordModel[]> ListAllKeywords(CancellationToken cancellationToken)
+        {
+            return await this.VideoService.ListAllKeywordsAsync(cancellationToken: cancellationToken);
         }
     }
 }
