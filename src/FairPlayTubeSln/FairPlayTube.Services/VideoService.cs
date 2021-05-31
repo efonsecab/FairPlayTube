@@ -91,7 +91,9 @@ namespace FairPlayTube.Services
 
         public IQueryable<VideoInfo> GetPublicProcessedVideos()
         {
-            return this.FairplaytubeDatabaseContext.VideoInfo.Include(p=>p.ApplicationUser).Where(p =>
+            return this.FairplaytubeDatabaseContext.VideoInfo.Include(p=>p.ApplicationUser)
+                .ThenInclude(p=>p.UserExternalMonetization)
+                .Where(p =>
             p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed);
         }
 
