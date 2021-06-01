@@ -7,6 +7,7 @@
 
     <div class="main">
         <div class="top-row px-4">
+            <i class="bi bi-question-circle-fill" style="cursor:pointer;" @onclick="OpenSupportBot"></i>
             <LoginDisplay></LoginDisplay>
         </div>
 
@@ -15,3 +16,46 @@
         </div>
     </div>
 </div>
+
+@if (this.ShowSupportBot)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display:block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Knowledge Base</h5>
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="CloseSupportBot">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row row-cols-2">
+                        <FairPlayTube.Components.Bootstrap.Card>
+                            <CardBody>
+                                <iframe src='https://webchat.botframework.com/embed/fptubeprodbot?s=mxZ4-AwYVkE.Q0CYuDsFuxTOxwKMv91W4h_MXXfTSL4zZMxBr7uViSQ'
+                                        style='min-width: 400px; width: 100%; min-height: 500px;'></iframe>
+                            </CardBody>
+                        </FairPlayTube.Components.Bootstrap.Card>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="CloseSupportBot">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code{
+    private bool ShowSupportBot { get; set; } = false;
+
+    private void OpenSupportBot()
+    {
+        this.ShowSupportBot = true;
+    }
+
+    private void CloseSupportBot()
+    {
+        this.ShowSupportBot = false;
+    }
+}
