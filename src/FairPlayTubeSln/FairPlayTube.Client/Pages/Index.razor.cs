@@ -17,8 +17,6 @@ namespace FairPlayTube.Client.Pages
         [Inject]
         private ToastifyService ToastifyService { get; set; }
         private bool IsLoading { get; set; }
-        private bool ShowInsights { get; set; }
-        private bool ShowMonetizationLinks { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
@@ -35,30 +33,6 @@ namespace FairPlayTube.Client.Pages
             {
                 IsLoading = false;
             }
-        }
-
-        private void SelectVideo(VideoInfoModel videoInfoModel)
-        {
-            this.SelectedVideo = videoInfoModel;
-            this.ShowInsights = true;
-        }
-
-        private void HideInsights()
-        {
-            this.ShowInsights = false;
-            this.SelectedVideo = null;
-        }
-
-        private void OnMonetizationIconClicked(VideoInfoModel videoInfoModel)
-        {
-            this.SelectedVideo = videoInfoModel;
-            this.ShowMonetizationLinks = true;
-        }
-
-        private void HideMonetizationModal()
-        {
-            this.SelectedVideo = null;
-            this.ShowMonetizationLinks = false;
         }
     }
 }

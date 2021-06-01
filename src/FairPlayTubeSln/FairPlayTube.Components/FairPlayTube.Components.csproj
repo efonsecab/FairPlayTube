@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FairPlayTube.Models\FairPlayTube.Models.csproj" />
+  </ItemGroup>
+
 </Project>
