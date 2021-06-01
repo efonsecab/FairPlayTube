@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Web;
 using ApiRoutes = FairPlayTube.Common.Global.Constants.ApiRoutes;
 
 namespace FairPlayTube.Client.ClientServices
@@ -24,12 +25,19 @@ namespace FairPlayTube.Client.ClientServices
             this.ToastifyService = toastifyService;
         }
 
-
         public async Task<VideoInfoModel[]> GetPublicProcessedVideosAsync()
         {
             var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
             return await anonymousHttpClient.GetFromJsonAsync<VideoInfoModel[]>(
                 ApiRoutes.VideoController.GetPublicProcessedVideos);
+        }
+
+        public async Task<VideoInfoModel[]> ListVideosByKeywordAsync(string Keyword)
+        {
+            var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
+            return await anonymousHttpClient.GetFromJsonAsync<VideoInfoModel[]>(
+                $"{ApiRoutes.VideoController.ListVideosByKeyword}" +
+                $"?keyword={HttpUtility.UrlEncode(Keyword)}");
         }
 
         public async Task<VideoInfoModel[]> GetMyProcessedVideos()
@@ -59,6 +67,13 @@ namespace FairPlayTube.Client.ClientServices
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             return await authorizedHttpClient.GetStringAsync($"{ApiRoutes.VideoController.GetVideoEditAccessToken}" +
                 $"?videoId={videoId}");
+        }
+
+        public async Task<GlobalKeywordModel[]> ListAllKeywordsAsync()
+        {
+            var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
+            return await anonymousHttpClient.GetFromJsonAsync<GlobalKeywordModel[]>
+                (ApiRoutes.VideoController.ListAllKeywords);
         }
     }
 }

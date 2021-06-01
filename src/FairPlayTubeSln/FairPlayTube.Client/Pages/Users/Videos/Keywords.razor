@@ -1,0 +1,21 @@
+﻿<h1>Keywords</h1>
+
+<Loading IsLoading="IsLoading"></Loading>
+
+@if (this.AllKeywords != null)
+{
+    <div class="mb-3">
+        <label class="form-label">Search</label>
+        <input type="text" class="form-control" list="keywordDataList" @oninput="OnKeywordSearchChanged" />
+    </div>
+
+    <datalist id="keywordDataList">
+        @foreach (var singleKwyword in this.AllKeywords)
+        {
+            @*<option value="@singleKwyword.Keyword">@($"{(singleKwyword.Appeareances)} videos - {singleKwyword.Keyword}")</option>*@
+            <option value="@singleKwyword.Keyword">@($"{(singleKwyword.Appeareances)} video(s)")</option>
+        }
+    </datalist>
+}
+
+<FairPlayTube.Components.Videos.VideoList AllVideos="FoundVideos"></FairPlayTube.Components.Videos.VideoList>

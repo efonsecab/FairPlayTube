@@ -105,6 +105,15 @@ namespace FairPlayTube.Services
             p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed);
         }
 
+        public IQueryable<VideoInfo> GetPublicProcessedVideosByKeyword(string keyword)
+        {
+            return this.FairplaytubeDatabaseContext.VideoInfo.Include(p => p.ApplicationUser)
+                .ThenInclude(p => p.UserExternalMonetization)
+                .Include(p => p.VideoIndexKeyword)
+                .Where(p => p.VideoIndexKeyword.Any(k=> k.Keyword.Contains(keyword)) &&
+            p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed);
+        }
+
         public IQueryable<VideoInfo> GetPublicProcessedVideosByUserId(
             string azureAdB2cobjectId)
         {
