@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-
+@inject Common.Configuration.AzureQnABotConfiguration AzureQnABotConfiguration
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -30,9 +30,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="row row-cols-2">
-                        <FairPlayTube.Components.Bootstrap.Card>
+                        <FairPlayTube.Components.Bootstrap.Card Width="100%">
                             <CardBody>
-                                <iframe src='https://webchat.botframework.com/embed/fptubeprodbot?s=mxZ4-AwYVkE.Q0CYuDsFuxTOxwKMv91W4h_MXXfTSL4zZMxBr7uViSQ'
+                                <iframe src='https://webchat.botframework.com/embed/fptubeprodbot?s=@AzureQnABotConfiguration.Key'
                                         style='min-width: 400px; width: 100%; min-height: 500px;'></iframe>
                             </CardBody>
                         </FairPlayTube.Components.Bootstrap.Card>
