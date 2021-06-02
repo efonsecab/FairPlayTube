@@ -22,6 +22,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<ApplicationRole> ApplicationRole { get; set; }
         public virtual DbSet<ApplicationUser> ApplicationUser { get; set; }
         public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }
+        public virtual DbSet<Brand> Brand { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
         public virtual DbSet<UserExternalMonetization> UserExternalMonetization { get; set; }
         public virtual DbSet<VideoIndexKeyword> VideoIndexKeyword { get; set; }
@@ -66,6 +67,17 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.VideoInfoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VideoIndexKeyword_VideoInfo");
+            });
+
+            modelBuilder.Entity<Brand>(entity =>
+            {
+                entity.Property(e => e.BrandId).ValueGeneratedNever();
+
+                entity.HasOne(d => d.ApplicationUser)
+                    .WithMany(p => p.Brand)
+                    .HasForeignKey(d => d.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Brand_ApplicationUserId");
             });
 
             modelBuilder.Entity<VideoInfo>(entity =>
