@@ -14,6 +14,7 @@ namespace FairPlayTube.DataAccess.Models
     {
         public ApplicationUser()
         {
+            UserExternalMonetization = new HashSet<UserExternalMonetization>();
             VideoInfo = new HashSet<VideoInfo>();
         }
 
@@ -31,6 +32,8 @@ namespace FairPlayTube.DataAccess.Models
 
         [InverseProperty("ApplicationUser")]
         public virtual ApplicationUserRole ApplicationUserRole { get; set; }
+        [InverseProperty("ApplicationUser")]
+        public virtual ICollection<UserExternalMonetization> UserExternalMonetization { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<VideoInfo> VideoInfo { get; set; }
     }

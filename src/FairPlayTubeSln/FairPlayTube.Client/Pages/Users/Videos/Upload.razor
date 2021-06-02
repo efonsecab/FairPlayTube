@@ -11,7 +11,7 @@
     </div>
     <div class="mb-3">
         <label class="form-label">FileName</label>
-        <InputText class="form-control" @bind-Value="UploadVideoModel.FileName" readonly></InputText>
+        <InputText class="form-control" @bind-Value="UploadVideoModel.FileName"></InputText>
     </div>
     <div class="mb-3">
         <label class="form-label">FileUrl</label>
@@ -21,12 +21,24 @@
         <label class="form-label">Description</label>
         <InputText class="form-control" @bind-Value="UploadVideoModel.Description"></InputText>
     </div>
-    <div class="mb-3">
-        <label class="form-label">Video File</label>
-        <InputFile class="form-control" OnChange="OnVideoFileSelectedAsync" accept="video/*"></InputFile>
-    </div>
+    @if (!this.IsSubmitting)
+    {
+        <div class="mb-3">
+            <label class="form-label">Video File</label>
+            <InputFile class="form-control" OnChange="OnVideoFileSelectedAsync" accept="video/*"></InputFile>
+        </div>
+    }
     <UploadVideoModelValidator></UploadVideoModelValidator>
-    <div class="mb-3">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
+    @if (!IsSubmitting)
+    {
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    }
 </EditForm>
+<div class="mb-3">
+    <strong>
+        Note: Once uploaded, videos will be visible until they finish processing, it could take up to 10 minutes for small videos.
+        The longer the video, the longer the processing time will take
+    </strong>
+</div>

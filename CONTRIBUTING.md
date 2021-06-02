@@ -11,6 +11,14 @@ How To Contribute
 * Use the Discussions section to post your ideas
 * Share the repo on your social networks (Twitter, Facebook, LinkedIn, etc)
 
+How To Push changes
+------------
+* Fork the repository
+* Select a task from the Issues section, and add a comment letting us know you'll be working on it
+* Add a brief description on how you'll be solving the task
+* Once the proposal has been approved, and the issue has been assigned to you, create a new branch for that task, in the forked repo
+* Once all of your changes are done, do a Pull Request.
+
 
 DOs and DON'Ts
 --------------

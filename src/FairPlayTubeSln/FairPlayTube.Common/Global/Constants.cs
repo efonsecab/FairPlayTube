@@ -8,6 +8,10 @@ namespace FairPlayTube.Common.Global
 {
     public class Constants
     {
+        public class Titles
+        {
+            public const string AppTitle = "FairPlayTube";
+        }
         public class Claims
         {
             public const string ObjectIdentifier = "http://schemas.microsoft.com/identity/claims/objectidentifier";
@@ -26,6 +30,8 @@ namespace FairPlayTube.Common.Global
         {
             public const string UploadVideo = "/Users/Videos/Upload";
             public const string MyVideos = "/Users/Videos/MyVideos";
+            public const string Keywords = "/Users/Videos/Keywords";
+            public const string ProfileMonetization = "/Users/Profile/Monetization";
         }
 
         public class ApiRoutes
@@ -33,13 +39,21 @@ namespace FairPlayTube.Common.Global
             public class VideoController
             {
                 public const string GetPublicProcessedVideos = "api/Video/GetPublicProcessedVideos";
+                public const string ListVideosByKeyword = "api/Video/ListVideosByKeyword";
                 public const string UploadVideo = "api/Video/UploadVideo";
                 public const string GetMyProcessedVideos = "api/Video/GetMyProcessedVideos";
                 public const string GetVideoEditAccessToken = "api/Video/GetVideoEditAccessToken";
+                public const string ListAllKeywords = "api/Video/ListAllKeywords";
             }
             public class UserController
             {
                 public const string GetMyRole = "api/User/GetMyRole";
+            }
+
+            public class UserProfileController
+            {
+                public const string SaveMonetization = "api/UserProfile/SaveMonetization";
+                public const string GetMyMonetizationInfo = "api/UserProfile/GetMyMonetizationInfo";
             }
         }
     }

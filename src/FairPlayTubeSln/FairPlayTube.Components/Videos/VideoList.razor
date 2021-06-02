@@ -1,0 +1,122 @@
+﻿@if (this.AllVideos != null)
+{
+    <div class="container">
+        <div class="row row-cols-3">
+            @foreach (var singleVideo in this.AllVideos)
+            {
+                <FairPlayTube.Components.Bootstrap.Card Width="33.3%">
+                    <CardHeader>
+                        <strong>Duration: </strong>@singleVideo.VideoDuration
+                        <button type="button" @onclick="@( ()=> SelectVideo(singleVideo))">
+                            <i class="bi bi-eye-fill"></i>
+                        </button>
+                        <button type="button" @onclick="@(  ()=> OnMonetizationIconClicked(singleVideo))">
+                            <i class="bi bi-currency-dollar"></i>
+                        </button>
+                    </CardHeader>
+                    <CardBody>
+                        <div class="embed-responsive embed-responsive-1by1">
+                            <iframe class="embed-responsive-item"
+                                    src="@singleVideo.PublicPlayerUrl"
+                                    frameborder="0"
+                                    allowfullscreen></iframe>
+                        </div>
+                    </CardBody>
+                    <CardFooter>
+                        <ul class="list-group">
+                            <li><string>Name: </string>@singleVideo.Name</li>
+                            <li><string>Publisher: </string>@singleVideo.Publisher</li>
+                        </ul>
+                    </CardFooter>
+                </FairPlayTube.Components.Bootstrap.Card>
+            }
+        </div>
+    </div>
+}
+
+@if (this.ShowInsights)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display:block;">
+        <div class="modal-dialog modal-fullscreen" style="max-height:none; max-width:none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@SelectedVideo.Name</h5>
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="HideInsights">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row row-cols-2">
+                        <FairPlayTube.Components.Bootstrap.Card Width="50%">
+                            <CardBody>
+                                <div class="embed-responsive embed-responsive-1by1">
+                                    <iframe class="embed-responsive-item"
+                                            src="@SelectedVideo.PublicPlayerUrl"
+                                            frameborder="0"
+                                            allowfullscreen></iframe>
+                                </div>
+                            </CardBody>
+                            <CardFooter>
+                                @SelectedVideo.Name
+                            </CardFooter>
+                        </FairPlayTube.Components.Bootstrap.Card>
+                        <FairPlayTube.Components.Bootstrap.Card Width="50%">
+                            <CardBody>
+                                <div class="embed-responsive embed-responsive-1by1">
+                                    <iframe class="embed-responsive-item"
+                                            src="@SelectedVideo.PublicInsightsUrl"
+                                            frameborder="0"
+                                            allowfullscreen></iframe>
+                                </div>
+                            </CardBody>
+                            <CardFooter>
+                                @SelectedVideo.Name
+                            </CardFooter>
+                        </FairPlayTube.Components.Bootstrap.Card>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="HideInsights">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (this.ShowMonetizationLinks)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display:block;">
+        <div class="modal-dialog modal-fullscreen" style="max-height:none; max-width:none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@SelectedVideo.Name</h5>
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="HideMonetizationModal">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @if (
+                   this.SelectedVideo.UserGlobalMonetization != null &&
+                   this.SelectedVideo.UserGlobalMonetization.MonetizationItems.Count > 0)
+                    {
+                        <ul>
+                            @foreach (var singleMonetizationItem in this.SelectedVideo.UserGlobalMonetization.MonetizationItems)
+                            {
+                                <li>
+                                    <a href="@singleMonetizationItem.MonetizationUrl" target="_blank">@singleMonetizationItem.MonetizationUrl</a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <strong>Video owner does not have global monetization items configured</strong>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="HideMonetizationModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -40,6 +40,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{E7149C
 		SettingsPlaceHolders\Server\appsettings.json = SettingsPlaceHolders\Server\appsettings.json
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Tests", "FairPlayTube.Tests\FairPlayTube.Tests.csproj", "{39B44143-6745-44E2-93AF-5FF6C28746BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B8872542-CEA0-4156-8E70-0460F92E8766}"
+	ProjectSection(SolutionItems) = preProject
+		SettingsPlaceHolders\Tests\secrets.json = SettingsPlaceHolders\Tests\secrets.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +95,10 @@ Global
 		{6C2571E2-2441-4400-9392-BCECF07ED4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C2571E2-2441-4400-9392-BCECF07ED4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C2571E2-2441-4400-9392-BCECF07ED4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39B44143-6745-44E2-93AF-5FF6C28746BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39B44143-6745-44E2-93AF-5FF6C28746BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39B44143-6745-44E2-93AF-5FF6C28746BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39B44143-6745-44E2-93AF-5FF6C28746BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +107,7 @@ Global
 		{9C5A9463-0E0B-4D8B-9EFF-5558EAEBA2DC} = {8C1ABB81-F613-45C5-9E8B-306B3D78D40A}
 		{493AE485-9E38-4C3B-B520-EB721D50BC28} = {8C1ABB81-F613-45C5-9E8B-306B3D78D40A}
 		{E7149CCF-F826-4795-AC11-30BA9BC86710} = {8C1ABB81-F613-45C5-9E8B-306B3D78D40A}
+		{B8872542-CEA0-4156-8E70-0460F92E8766} = {8C1ABB81-F613-45C5-9E8B-306B3D78D40A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2F5128D2-633F-4208-8325-087B6B99BFA8}
