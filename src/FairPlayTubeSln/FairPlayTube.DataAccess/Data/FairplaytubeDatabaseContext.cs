@@ -48,6 +48,17 @@ namespace FairPlayTube.DataAccess.Data
                     .HasConstraintName("FK_ApplicationUserRole_ApplicationUser");
             });
 
+            modelBuilder.Entity<Brand>(entity =>
+            {
+                entity.Property(e => e.BrandId).ValueGeneratedNever();
+
+                entity.HasOne(d => d.ApplicationUser)
+                    .WithMany(p => p.Brand)
+                    .HasForeignKey(d => d.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Brand_ApplicationUserId");
+            });
+
             modelBuilder.Entity<UserExternalMonetization>(entity =>
             {
                 entity.HasOne(d => d.ApplicationUser)
@@ -67,17 +78,6 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.VideoInfoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VideoIndexKeyword_VideoInfo");
-            });
-
-            modelBuilder.Entity<Brand>(entity =>
-            {
-                entity.Property(e => e.BrandId).ValueGeneratedNever();
-
-                entity.HasOne(d => d.ApplicationUser)
-                    .WithMany(p => p.Brand)
-                    .HasForeignKey(d => d.ApplicationUserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Brand_ApplicationUserId");
             });
 
             modelBuilder.Entity<VideoInfo>(entity =>
