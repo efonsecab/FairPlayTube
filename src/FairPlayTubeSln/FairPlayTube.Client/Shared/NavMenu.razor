@@ -1,5 +1,7 @@
 ﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">FairPlayTube</a>
+    <a class="navbar-brand" href="">FairPlayTube<br />
+    <small>Beta</small>
+    </a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -12,6 +14,11 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.Keywords">
+                <span class="oi oi-list" aria-hidden="true"></span> Keywords
+            </NavLink>
+        </li>
         <AuthorizeView Roles="@Common.Global.Constants.Roles.User">
             <Authorized>
                 <li class="nav-item px-3">
@@ -22,6 +29,11 @@
                 <li class="nav-item px-3">
                     <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.UploadVideo">
                         <span class="oi oi-plus" aria-hidden="true"></span> Upload Video
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.ProfileMonetization">
+                        <span class="oi oi-plus" aria-hidden="true"></span> External Monetization
                     </NavLink>
                 </li>
             </Authorized>

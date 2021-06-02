@@ -25,7 +25,7 @@ namespace FairPlayTube.DataAccess.Models
         [StringLength(50)]
         public string Location { get; set; }
         [Required]
-        [StringLength(100)]
+        [StringLength(50)]
         public string Name { get; set; }
         [StringLength(500)]
         public string Description { get; set; }
@@ -43,6 +43,10 @@ namespace FairPlayTube.DataAccess.Models
         public long ApplicationUserId { get; set; }
         public short VideoIndexStatusId { get; set; }
         public double VideoDurationInSeconds { get; set; }
+        [StringLength(500)]
+        public string VideoIndexSourceClass { get; set; }
+        [Column(TypeName = "money")]
+        public decimal Price { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("VideoInfo")]

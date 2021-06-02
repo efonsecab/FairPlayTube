@@ -70,6 +70,7 @@
     <Build Include="dbo\Tables\VideoIndexStatus.sql" />
     <Build Include="dbo\Tables\Brand.sql" />
     <Build Include="dbo\Tables\VideoIndexKeyword.sql" />
+    <Build Include="dbo\Tables\UserExternalMonetization.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

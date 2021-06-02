@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FairPlayTube.Models.UserProfile;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,5 +22,6 @@ namespace FairPlayTube.Models.Video
         public float VideoDurationInSeconds { get; set; }
         public TimeSpan VideoDuration => TimeSpan.FromSeconds(VideoDurationInSeconds);
         public string Publisher { get; set; }
+        public GlobalMonetizationModel UserGlobalMonetization { get; set; }
     }
 }

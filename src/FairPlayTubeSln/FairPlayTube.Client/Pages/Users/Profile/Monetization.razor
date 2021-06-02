@@ -1,0 +1,31 @@
+﻿<h3>Profile Monetization</h3>
+
+<Loading IsLoading="IsLoading"></Loading>
+
+<EditForm Model="@GlobalMonetizationModel" OnValidSubmit="OnValidSubmit">
+    <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    @if (this.GlobalMonetizationModel != null && this.GlobalMonetizationModel.MonetizationItems.Count > 0)
+    {
+        foreach (var singleItem in this.GlobalMonetizationModel.MonetizationItems)
+        {
+            <div class="row">
+                <div class="col-1">
+                    <button type="button" @onclick="@( () => RemoveItem(singleItem))">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </button>
+                </div>
+                <div class="col-11">
+                    <InputText class="form-control" @bind-Value="@singleItem.MonetizationUrl"></InputText>
+                </div>
+            </div>
+        }
+    }
+    <button type="button" @onclick="AddItem">
+        <i class="bi bi-plus-circle-fill"></i>
+    </button>
+    Add New Item
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</EditForm>
