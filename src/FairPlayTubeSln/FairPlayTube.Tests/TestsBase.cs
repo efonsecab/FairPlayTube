@@ -24,9 +24,10 @@ namespace FairPlayTube.Tests
         TestServer Server { get; }
         protected IMapper Mapper { get; }
         internal static IHttpContextAccessor HttpContextAccessor { get; set; }
-        internal static string TestImageFilePath { get; set; }
+        internal static string TestVideoBloblUrl { get; set; }
         internal static DataStorageConfiguration DataStorageConfiguration { get; set; }
         internal static TestAzureAdB2CAuthConfiguration TestAzureAdB2CAuthConfiguration { get; set; }
+        internal static AzureVideoIndexerConfiguration AzureVideoIndexerConfiguration { get; set; }
         internal static AzureBlobStorageConfiguration AzureBlobStorageConfiguration { get; set; }
         private static IConfiguration Configuration { get; set; }
         public HttpClient UserRoleAuthorizedHttpClient { get; private set; }
@@ -37,7 +38,15 @@ namespace FairPlayTube.Tests
         {
             ConfigurationBuilder configurationBuilder = new();
             configurationBuilder.AddJsonFile("appsettings.json")
-                .AddUserSecrets("b59b6219-c1e3-49f7-bf68-a0b2c3ea122b");
+                .AddUserSecrets("74135dc8-e371-4439-8744-4493c94df36e");
+            var configRoot = configurationBuilder.Build();
+            configurationBuilder.AddAzureAppConfiguration(options =>
+            {
+                var azureAppConfigConnectionString =
+                    configRoot["AzureAppConfigConnectionString"];
+                options
+                    .Connect(azureAppConfigConnectionString);
+            });
             IConfiguration configuration = configurationBuilder.Build();
             Configuration = configuration;
             Server = new TestServer(new WebHostBuilder()
@@ -57,12 +66,11 @@ namespace FairPlayTube.Tests
                 .UseStartup<Startup>());
             this.Mapper = Server.Services.GetRequiredService<IMapper>();
             HttpContextAccessor = Server.Services.GetRequiredService<IHttpContextAccessor>();
-            string appDirectory = AppContext.BaseDirectory;
-            string testImageFilePath = Path.Combine(appDirectory, @"ResourceFiles\Images\thumbnail_IMG_2501.jpg");
-            TestImageFilePath = testImageFilePath;
             DataStorageConfiguration = Server.Services.GetRequiredService<DataStorageConfiguration>();
             AzureBlobStorageConfiguration = Server.Services.GetRequiredService<AzureBlobStorageConfiguration>();
             TestAzureAdB2CAuthConfiguration = Configuration.GetSection("TestAzureAdB2CAuthConfiguration").Get<TestAzureAdB2CAuthConfiguration>();
+            AzureVideoIndexerConfiguration = Server.Services.GetRequiredService<AzureVideoIndexerConfiguration>();
+            TestVideoBloblUrl = configRoot.GetValue<string>("TestVideoBloblUrl");
         }
 
         public static FairplaytubeDatabaseContext CreateDbContext()
@@ -81,6 +89,12 @@ namespace FairPlayTube.Tests
             Admin,
             User
         }
+
+        protected HttpClient CreateAnonymousClient()
+        {
+            return this.Server.CreateClient();
+        }
+
         protected async Task<HttpClient> CreateAuthorizedClientAsync(Role role)
         {
 
