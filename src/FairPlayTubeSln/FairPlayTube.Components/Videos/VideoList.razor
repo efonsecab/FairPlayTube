@@ -6,12 +6,12 @@
             {
                 <FairPlayTube.Components.Bootstrap.Card Width="33.3%">
                     <CardHeader>
-                        <strong>Duration: </strong>@singleVideo.VideoDuration
+                        <strong>Duration: </strong>@singleVideo.VideoDurationFormatted
                         <button type="button" @onclick="@( ()=> SelectVideo(singleVideo))">
                             <i class="bi bi-eye-fill"></i>
                         </button>
                         <button type="button" @onclick="@(  ()=> OnMonetizationIconClicked(singleVideo))">
-                            <i class="bi bi-currency-dollar"></i>
+                            <i class="bi bi-currency-dollar blink_me"></i>
                         </button>
                     </CardHeader>
                     <CardBody>
