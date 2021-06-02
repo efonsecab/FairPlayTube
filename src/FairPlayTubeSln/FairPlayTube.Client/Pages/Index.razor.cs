@@ -1,5 +1,6 @@
 ﻿using FairPlayTube.Client.ClientServices;
 using FairPlayTube.Client.Services;
+using FairPlayTube.Models.UserProfile;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -16,7 +17,7 @@ namespace FairPlayTube.Client.Pages
         [Inject]
         private ToastifyService ToastifyService { get; set; }
         private bool IsLoading { get; set; }
-        private bool ShowInsights { get; set; }
+
         protected async override Task OnInitializedAsync()
         {
             try
@@ -32,18 +33,6 @@ namespace FairPlayTube.Client.Pages
             {
                 IsLoading = false;
             }
-        }
-
-        private void SelectVideo(VideoInfoModel videoInfoModel)
-        {
-            this.SelectedVideo = videoInfoModel;
-            this.ShowInsights = true;
-        }
-
-        private void HideInsights()
-        {
-            this.ShowInsights = false;
-            this.SelectedVideo = null;
         }
     }
 }

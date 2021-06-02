@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PTI.Microservices.Library.Models.AzureVideoIndexerService;
 using System;
 using System.IO;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace FairPlayTube.Controllers
         public async Task<VideoInfoModel[]> GetPublicProcessedVideos(CancellationToken cancellationToken)
         {
             var result = await this.VideoService.GetPublicProcessedVideos()
-                .Select(p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p)).ToArrayAsync(cancellationToken:cancellationToken);
+                .Select(p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p)).ToArrayAsync(cancellationToken: cancellationToken);
             return result;
         }
 
@@ -70,11 +71,29 @@ namespace FairPlayTube.Controllers
         {
             var azureAdB2cobjectId = this.CurrentUserProvider.GetObjectId();
             bool isVideoOwner = await VideoService.IsVideoOwnerAsync(videoId: videoId, azureAdB2cobjectId: azureAdB2cobjectId,
-                cancellationToken:cancellationToken);
+                cancellationToken: cancellationToken);
             if (!isVideoOwner)
                 throw new Exception("You are not allowed to edit this video");
-            string accessToken = await this.VideoService.GetVideoEditAccessTokenAsync(videoId:videoId);
+            string accessToken = await this.VideoService.GetVideoEditAccessTokenAsync(videoId: videoId);
             return accessToken;
+        }
+
+        [HttpGet("[action]")]
+        [AllowAnonymous]
+        public async Task<GlobalKeywordModel[]> ListAllKeywords(CancellationToken cancellationToken)
+        {
+            return await this.VideoService.ListAllKeywordsAsync(cancellationToken: cancellationToken);
+        }
+
+        [HttpGet("[action]")]
+        [AllowAnonymous]
+        public async Task<VideoInfoModel[]> ListVideosByKeyword(string keyword,
+            CancellationToken cancellationToken)
+        {
+            var result = await this.VideoService.GetPublicProcessedVideosByKeyword(keyword)
+                .Select(p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p))
+                .ToArrayAsync(cancellationToken: cancellationToken);
+            return result;
         }
     }
 }

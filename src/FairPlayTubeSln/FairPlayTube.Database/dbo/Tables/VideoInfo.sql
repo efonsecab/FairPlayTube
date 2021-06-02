@@ -4,7 +4,7 @@
     [AccountId] UNIQUEIDENTIFIER NOT NULL, 
     [VideoId] NVARCHAR(50) NULL, 
     [Location] NVARCHAR(50) NOT NULL, 
-    [Name] NVARCHAR(100) NOT NULL, 
+    [Name] NVARCHAR(50) NOT NULL, 
     [Description] NVARCHAR(500) NULL, 
     [FileName] NVARCHAR(50) NOT NULL, 
     [VideoBloblUrl] NVARCHAR(500) NOT NULL,
@@ -12,6 +12,7 @@
     [ApplicationUserId] BIGINT NOT NULL, 
     [VideoIndexStatusId] SMALLINT NOT NULL, 
     [VideoDurationInSeconds] FLOAT NOT NULL DEFAULT 0, 
+    [VideoIndexSourceClass] NVARCHAR(500) NULL, 
     CONSTRAINT [FK_VideoInfo_ApplicationUser] FOREIGN KEY ([ApplicationUserId]) REFERENCES [ApplicationUser]([ApplicationUserId]), 
     CONSTRAINT [FK_VideoInfo_VideoIndexStatus] FOREIGN KEY ([VideoIndexStatusId]) REFERENCES [VideoIndexStatus]([VideoIndexStatusId])
 )

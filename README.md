@@ -11,7 +11,7 @@ In order to keep the project free, you can help with some of the costs using the
 ![](Images/FairPlayTubeInitialLayout.png?raw=true)
 
 ## Live Demo Website
-You can check the Live Demo of the latest progress here: https://fairplaytubeprod.azurewebsites.net/
+You can check the Live Demo of the latest progress here: https://fairplaytube.pticostarica.com
 
 ## Wiki
 
