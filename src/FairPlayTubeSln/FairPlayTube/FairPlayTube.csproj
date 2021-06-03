@@ -19,6 +19,7 @@
     <PackageReference Include="PTI.Microservices.Library" Version="1.0.3.10-preview" />
     <PackageReference Include="PTI.Microservices.Library.Models" Version="1.0.3.10-preview" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
   </ItemGroup>
 
   <ItemGroup>

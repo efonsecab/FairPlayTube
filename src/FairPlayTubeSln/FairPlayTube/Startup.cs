@@ -7,7 +7,9 @@ using FairPlayTube.Models;
 using FairPlayTube.Models.CustomHttpResponse;
 using FairPlayTube.Services;
 using FairPlayTube.Services.BackgroundServices;
+using FairPlayTube.Swagger.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -17,10 +19,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
+using Microsoft.OpenApi.Models;
 using PTI.Microservices.Library.Configuration;
 using PTI.Microservices.Library.Interceptors;
 using PTI.Microservices.Library.Services;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
@@ -126,6 +131,31 @@ namespace FairPlayTube
             services.AddRazorPages();
 
             services.AddHostedService<VideoIndexStatusService>();
+            var azureAdB2CInstance = Configuration["AzureAdB2C:Instance"];
+            var azureAdB2CDomain = Configuration["AzureAdB2C:Domain"];
+            var azureAdB2CClientAppClientId = Configuration["AzureAdB2C:ClientAppClientId"];
+            var azureAdB2ClientAppDefaultScope = Configuration["AzureAdB2C:ClientAppDefaultScope"];
+            services.AddSwaggerGen(c =>
+           {
+               c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "FairPlayTube API" });
+               c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
+               {
+                   Type = Microsoft.OpenApi.Models.SecuritySchemeType.OAuth2,
+                   Flows = new Microsoft.OpenApi.Models.OpenApiOAuthFlows()
+                   {
+                       Implicit = new Microsoft.OpenApi.Models.OpenApiOAuthFlow()
+                       {
+                           AuthorizationUrl = new Uri($"{azureAdB2CInstance}/{azureAdB2CDomain}/oauth2/v2.0/authorize"),
+                           TokenUrl = new Uri($"{azureAdB2CInstance}/{azureAdB2CDomain}/oauth2/v2.0/token"),
+                           Scopes = new Dictionary<string, string>
+                           {
+                               {azureAdB2ClientAppDefaultScope, "Access APIs" }
+                           }
+                       },
+                   }
+               });
+               c.OperationFilter<SecurityRequirementsOperationFilter>();
+           });
 
         }
 
@@ -150,6 +180,16 @@ namespace FairPlayTube
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "FairPlayTube API");
+                c.OAuthClientId(Configuration["AzureAdB2C:ClientAppClientId"]);
+                c.OAuthAdditionalQueryStringParams(new System.Collections.Generic.Dictionary<string, string>()
+                {
+                    {"p", Configuration["AzureAdB2C:SignUpSignInPolicyId"] }
+                });
+            });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
