@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using PTI.Microservices.Library.Configuration;
 using PTI.Microservices.Library.Interceptors;
 using PTI.Microservices.Library.Models.AzureVideoIndexerService;
+using PTI.Microservices.Library.Models.AzureVideoIndexerService.GetVideoIndex;
 using PTI.Microservices.Library.Models.AzureVideoIndexerService.SearchVideos;
 using PTI.Microservices.Library.Services;
 using System;
@@ -95,6 +96,12 @@ namespace FairPlayTube.Services
             CancellationToken cancellationToken)
         {
             return await this.AzureVideoIndexerService.SearchVideosByIdsAsync(videoIds, cancellationToken);
+        }
+
+        public async Task<GetVideoIndexResponse> GetVideoIndexerStatus(string videoId,
+            CancellationToken cancellationToken)
+        {
+            return await this.AzureVideoIndexerService.GetVideoIndexAsync(videoId, cancellationToken);
         }
 
         public IQueryable<VideoInfo> GetPublicProcessedVideos()
