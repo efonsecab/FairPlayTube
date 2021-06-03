@@ -24,13 +24,13 @@ jobs:
       run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
     - name: Build
       run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-    - name: Test with dotnet
-      run: dotnet test "${{ env.TESTS_DIRECTORY }}" --logger trx --results-directory "TestResults"
-    - name: Upload dotnet test results
-      uses: actions/upload-artifact@v2
-      with:
-        name: dotnet-results
-        path: TestResults
+    #- name: Test with dotnet
+    #  run: dotnet test "${{ env.TESTS_DIRECTORY }}" --logger trx --results-directory "TestResults"
+    #- name: Upload dotnet test results
+    #  uses: actions/upload-artifact@v2
+    #  with:
+    #    name: dotnet-results
+    #    path: TestResults
     - name: Publish
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
     - name: Deploy to Azure WebApp
