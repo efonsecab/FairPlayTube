@@ -180,16 +180,20 @@ namespace FairPlayTube
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            bool enableSwagger = Convert.ToBoolean(Configuration["EnableSwaggerUI"]) || env.IsDevelopment();
+            if (enableSwagger)
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "FairPlayTube API");
-                c.OAuthClientId(Configuration["AzureAdB2C:ClientAppClientId"]);
-                c.OAuthAdditionalQueryStringParams(new System.Collections.Generic.Dictionary<string, string>()
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
                 {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "FairPlayTube API");
+                    c.OAuthClientId(Configuration["AzureAdB2C:ClientAppClientId"]);
+                    c.OAuthAdditionalQueryStringParams(new System.Collections.Generic.Dictionary<string, string>()
+                    {
                     {"p", Configuration["AzureAdB2C:SignUpSignInPolicyId"] }
+                    });
                 });
-            });
+            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
