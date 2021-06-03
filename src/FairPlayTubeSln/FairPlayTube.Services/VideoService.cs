@@ -72,7 +72,7 @@ namespace FairPlayTube.Services
         {
             return await this.FairplaytubeDatabaseContext.VideoIndexKeyword
                 .GroupBy(p => p.Keyword)
-                .Select(p=> new GlobalKeywordModel() 
+                .Select(p => new GlobalKeywordModel()
                 {
                     Keyword = p.Key,
                     Appeareances = p.Count()
@@ -106,8 +106,8 @@ namespace FairPlayTube.Services
 
         public IQueryable<VideoInfo> GetPublicProcessedVideos()
         {
-            return this.FairplaytubeDatabaseContext.VideoInfo.Include(p=>p.ApplicationUser)
-                .ThenInclude(p=>p.UserExternalMonetization)
+            return this.FairplaytubeDatabaseContext.VideoInfo.Include(p => p.ApplicationUser)
+                .ThenInclude(p => p.UserExternalMonetization)
                 .Where(p =>
             p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed);
         }
@@ -117,7 +117,7 @@ namespace FairPlayTube.Services
             return this.FairplaytubeDatabaseContext.VideoInfo.Include(p => p.ApplicationUser)
                 .ThenInclude(p => p.UserExternalMonetization)
                 .Include(p => p.VideoIndexKeyword)
-                .Where(p => p.VideoIndexKeyword.Any(k=> k.Keyword.Contains(keyword)) &&
+                .Where(p => p.VideoIndexKeyword.Any(k => k.Keyword.Contains(keyword)) &&
             p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed);
         }
 
@@ -191,6 +191,17 @@ namespace FairPlayTube.Services
             if (keywordsResponse.Count > 0)
             {
                 var videoInfoEntity = await this.FairplaytubeDatabaseContext.VideoInfo.Where(p => p.VideoId == videoId).SingleAsync();
+                var existentKeywords =
+                    this.FairplaytubeDatabaseContext.VideoIndexKeyword
+                    .Where(p => p.VideoInfoId == videoInfoEntity.VideoInfoId);
+                if (existentKeywords.Count() > 0)
+                {
+                    foreach (var singleExistentKeyword in existentKeywords)
+                    {
+                        this.FairplaytubeDatabaseContext.VideoIndexKeyword.Remove(singleExistentKeyword);
+                    }
+                    await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+                }
                 foreach (var singleKeyword in keywordsResponse)
                 {
                     await this.FairplaytubeDatabaseContext.VideoIndexKeyword.AddAsync(new VideoIndexKeyword()
