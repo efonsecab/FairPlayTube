@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using FairPlayTube.Common.Configuration;
+using FairPlayTube.Common.Global;
 using FairPlayTube.DataAccess.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.Extensions.DependencyInjection;
 using PTI.Microservices.Library.Configuration;
 using System;
@@ -23,15 +25,15 @@ namespace FairPlayTube.Tests
     {
         TestServer Server { get; }
         protected IMapper Mapper { get; }
-        internal static IHttpContextAccessor HttpContextAccessor { get; set; }
+        private static IHttpContextAccessor HttpContextAccessor { get; set; }
         internal static string TestVideoBloblUrl { get; set; }
         internal static DataStorageConfiguration DataStorageConfiguration { get; set; }
         internal static TestAzureAdB2CAuthConfiguration TestAzureAdB2CAuthConfiguration { get; set; }
         internal static AzureVideoIndexerConfiguration AzureVideoIndexerConfiguration { get; set; }
         internal static AzureBlobStorageConfiguration AzureBlobStorageConfiguration { get; set; }
-        private static IConfiguration Configuration { get; set; }
-        public HttpClient UserRoleAuthorizedHttpClient { get; private set; }
-        public HttpClient AdminRoleAuthorizedHttpClient { get; private set; }
+        protected static IConfiguration Configuration { get; set; }
+        private HttpClient UserRoleAuthorizedHttpClient { get; set; }
+        private HttpClient AdminRoleAuthorizedHttpClient { get; set; }
 
 
         public TestsBase()
@@ -43,18 +45,17 @@ namespace FairPlayTube.Tests
             configurationBuilder.AddAzureAppConfiguration(options =>
             {
                 var azureAppConfigConnectionString =
-                    configRoot["AzureAppConfigConnectionString"];
-                options
-                    .Connect(azureAppConfigConnectionString);
+                    configRoot[Constants.ConfigurationKeysNames.AzureAppConfigConnectionString];
+                options.Connect(azureAppConfigConnectionString);
             });
             IConfiguration configuration = configurationBuilder.Build();
-            Configuration = configuration;
             Server = new TestServer(new WebHostBuilder()
                 .ConfigureAppConfiguration((hostingContext, configurationBuilder) =>
                 {
                     IConfigurationRoot configurationRoot = configurationBuilder.Build();
 
-                    var defaultConnectionString = configurationRoot.GetConnectionString("Default");
+                    var defaultConnectionString = configurationRoot.GetConnectionString(
+                        Common.Global.Constants.ConfigurationKeysNames.DefaultConnectionString);
                     DbContextOptionsBuilder<FairplaytubeDatabaseContext> dbContextOptionsBuilder = new();
 
                     using FairplaytubeDatabaseContext FairplaytubeDatabaseContext =
@@ -64,6 +65,7 @@ namespace FairPlayTube.Tests
                 })
                 .UseConfiguration(configuration)
                 .UseStartup<Startup>());
+            Configuration = Server.Services.GetRequiredService<IConfiguration>();
             this.Mapper = Server.Services.GetRequiredService<IMapper>();
             HttpContextAccessor = Server.Services.GetRequiredService<IHttpContextAccessor>();
             DataStorageConfiguration = Server.Services.GetRequiredService<DataStorageConfiguration>();

@@ -8,6 +8,11 @@ namespace FairPlayTube.Common.Global
 {
     public class Constants
     {
+        public class ConfigurationKeysNames
+        {
+            public const string AzureAppConfigConnectionString = "AzureAppConfigConnectionString";
+            public const string DefaultConnectionString = "Default";
+        }
         public class Titles
         {
             public const string AppTitle = "FairPlayTube";
