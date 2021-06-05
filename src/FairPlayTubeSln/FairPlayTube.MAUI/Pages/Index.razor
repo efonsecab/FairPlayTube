@@ -1,7 +1,18 @@
 @page "/"
 
-<h1>Hello, world!</h1>
+<h1>Welcome to FairPlayTube: The MAUI version</h1>
 
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+@if (!String.IsNullOrWhiteSpace(Result))
+{
+    <div>
+        @Result
+    </div>
+}
+else
+{
+    <p>No Data</p>
+}

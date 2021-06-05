@@ -15,7 +15,7 @@ namespace FairPlayTube.MAUI.Pages
         private ClientServices.VideoClientService VideoClientService { get; set; }
 
         protected override async Task OnInitializedAsync()
-        {
+            {
             this.AllPublicVideos = await this.VideoClientService.GetPublicProcessedVideosAsync();
         }
     }
