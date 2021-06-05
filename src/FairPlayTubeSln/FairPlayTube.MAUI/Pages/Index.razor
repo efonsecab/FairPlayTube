@@ -6,13 +6,4 @@ Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 
-@if (!String.IsNullOrWhiteSpace(Result))
-{
-    <div>
-        @Result
-    </div>
-}
-else
-{
-    <p>No Data</p>
-}
+<FairPlayTube.Components.Videos.VideoList AllVideos="AllPublicVideos"></FairPlayTube.Components.Videos.VideoList>

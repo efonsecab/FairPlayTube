@@ -28,7 +28,7 @@ namespace FairPlayTube.MAUI
 					services.AddSingleton<WeatherForecastService>();
 					services.AddHttpClient();
 					services.AddScoped(sp => 
-					new HttpClient { BaseAddress = new Uri("https://petstore.swagger.io") });
+					new HttpClient { BaseAddress = new Uri("https://localhost:44373") });
 					services.AddScoped<ClientServices.HttpClientService>();
 					services.AddScoped<ClientServices.VideoClientService>();
 				});
