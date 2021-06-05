@@ -27,7 +27,7 @@ namespace FairPlayTube.MAUI
 					var assemblyName = "FairPlayTube";
 					services.AddBlazorWebView();
 					services.AddSingleton<WeatherForecastService>();
-					Uri baseAddress = new Uri("https://fairplaytube.pticostarica.com/");
+					Uri baseAddress = new Uri("http://fairplaytube.pticostarica.com/");
 
 					services.AddHttpClient($"{assemblyName}.ServerAPI.Anonymous", client =>
 					client.BaseAddress = baseAddress);
