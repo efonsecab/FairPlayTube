@@ -180,6 +180,7 @@ namespace FairPlayTube
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            bool useHttpsRedirection = Convert.ToBoolean(Configuration["UseHttpsRedirection"]);
             bool enableSwagger = Convert.ToBoolean(Configuration["EnableSwaggerUI"]) || env.IsDevelopment();
             if (enableSwagger)
             {
@@ -203,7 +204,8 @@ namespace FairPlayTube
             {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                if (useHttpsRedirection)
+                    app.UseHsts();
             }
 
 
@@ -240,7 +242,6 @@ namespace FairPlayTube
                     }
                 });
             });
-            bool useHttpsRedirection = Convert.ToBoolean(Configuration["UseHttpsRedirection"]);
             //For MAUI in .NET 6 preview 4 using HTTPs is not working
             if (useHttpsRedirection)
                 app.UseHttpsRedirection();
