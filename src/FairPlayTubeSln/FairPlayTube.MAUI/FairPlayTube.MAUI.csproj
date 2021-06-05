@@ -36,12 +36,12 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="6.0.100-preview.4.*" />
-		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0-preview.4.*" />
-		<PackageReference Include="Microsoft.Maui" Version="6.0.100-preview.4.*" />
+    	<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0-preview.4.21253.5" />
+    	<PackageReference Include="Microsoft.Maui" Version="6.0.100-preview.4.*" />
+    	<PackageReference Include="Microsoft.Maui.Controls" Version="6.0.100-preview.4.*" />
+    	<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="6.0.100-preview.4.*" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0-preview.4.21253.7" />
 		<PackageReference Include="System.Net.Http.Json" Version="6.0.0-preview.4.21253.7" />
-
-
 	</ItemGroup>
 
 	<PropertyGroup>

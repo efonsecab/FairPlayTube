@@ -24,11 +24,17 @@ namespace FairPlayTube.MAUI
 				})
 				.ConfigureServices(services =>
 				{
+					var assemblyName = "FairPlayTube";
 					services.AddBlazorWebView();
 					services.AddSingleton<WeatherForecastService>();
-					services.AddHttpClient();
-					services.AddScoped(sp => 
-					new HttpClient { BaseAddress = new Uri("https://localhost:44373") });
+					Uri baseAddress = new Uri("https://fairplaytube.pticostarica.com/");
+
+					services.AddHttpClient($"{assemblyName}.ServerAPI.Anonymous", client =>
+					client.BaseAddress = baseAddress);
+
+					services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
+					.CreateClient($"{assemblyName}.ServerAPI.Anonymous"));
+					
 					services.AddScoped<ClientServices.HttpClientService>();
 					services.AddScoped<ClientServices.VideoClientService>();
 				});
