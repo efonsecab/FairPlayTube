@@ -24,6 +24,8 @@ namespace FairPlayTube.MAUI
 				{
 					services.AddBlazorWebView();
 					services.AddSingleton<WeatherForecastService>();
+					services.AddScoped<ClientServices.HttpClientService>();
+					services.AddScoped<ClientServices.VideoClientService>();
 				});
 		}
 	}

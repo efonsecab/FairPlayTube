@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace FairPlayTube.Client.ClientServices
+namespace FairPlayTube.ClientServices
 {
     public class HttpClientService
     {

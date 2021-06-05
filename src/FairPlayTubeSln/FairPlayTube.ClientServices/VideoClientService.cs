@@ -1,28 +1,20 @@
-﻿using FairPlayTube.Client.Services;
-using FairPlayTube.Models.CustomHttpResponse;
+﻿using FairPlayTube.Models.CustomHttpResponse;
 using FairPlayTube.Models.Video;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
 using ApiRoutes = FairPlayTube.Common.Global.Constants.ApiRoutes;
 
-namespace FairPlayTube.Client.ClientServices
+namespace FairPlayTube.ClientServices
 {
     public class VideoClientService
     {
         private HttpClientService HttpClientService { get; }
-        private ToastifyService ToastifyService { get; }
 
-        public VideoClientService(HttpClientService httpClientService, ToastifyService toastifyService)
+        public VideoClientService(HttpClientService httpClientService)
         {
             this.HttpClientService = httpClientService;
-            this.ToastifyService = toastifyService;
         }
 
         public async Task<VideoInfoModel[]> GetPublicProcessedVideosAsync()
@@ -56,7 +48,7 @@ namespace FairPlayTube.Client.ClientServices
             {
                 ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
                 if (problemHttpResponse != null)
-                    await this.ToastifyService.DisplayErrorNotification(problemHttpResponse.Detail);
+                    throw new Exception(problemHttpResponse.Detail);
                 else
                     throw new Exception(response.ReasonPhrase);
             }

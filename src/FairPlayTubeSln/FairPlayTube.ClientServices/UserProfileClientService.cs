@@ -1,25 +1,20 @@
-﻿using FairPlayTube.Client.Services;
-using FairPlayTube.Common.Global;
+﻿using FairPlayTube.Common.Global;
 using FairPlayTube.Models.CustomHttpResponse;
 using FairPlayTube.Models.UserProfile;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using static FairPlayTube.Common.Global.Constants;
 
-namespace FairPlayTube.Client.ClientServices
+namespace FairPlayTube.ClientServices
 {
     public class UserProfileClientService
     {
         private HttpClientService HttpClientService { get; }
-        private ToastifyService ToastifyService { get; }
 
-        public UserProfileClientService(HttpClientService httpClientService, ToastifyService toastifyService)
+        public UserProfileClientService(HttpClientService httpClientService)
         {
             this.HttpClientService = httpClientService;
-            this.ToastifyService = toastifyService;
         }
 
         public async Task SaveMonetizationAsync(GlobalMonetizationModel globalMonetizationModel)
@@ -31,7 +26,7 @@ namespace FairPlayTube.Client.ClientServices
             {
                 ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
                 if (problemHttpResponse != null)
-                    await this.ToastifyService.DisplayErrorNotification(problemHttpResponse.Detail);
+                    throw new Exception(problemHttpResponse.Detail);
                 else
                     throw new Exception(response.ReasonPhrase);
             }

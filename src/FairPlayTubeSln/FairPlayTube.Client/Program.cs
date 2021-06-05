@@ -1,4 +1,4 @@
-using FairPlayTube.Client.ClientServices;
+using FairPlayTube.ClientServices;
 using FairPlayTube.Client.CustomClaims;
 using FairPlayTube.Client.Services;
 using FairPlayTube.Common.Configuration;
