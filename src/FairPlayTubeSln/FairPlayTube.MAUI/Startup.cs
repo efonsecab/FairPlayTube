@@ -4,6 +4,8 @@ using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using Microsoft.Maui.Controls.Compatibility;
 using FairPlayTube.MAUI.Data;
+using System.Net.Http;
+using System;
 
 namespace FairPlayTube.MAUI
 {
@@ -25,6 +27,8 @@ namespace FairPlayTube.MAUI
 					services.AddBlazorWebView();
 					services.AddSingleton<WeatherForecastService>();
 					services.AddHttpClient();
+					services.AddScoped(sp => 
+					new HttpClient { BaseAddress = new Uri("https://petstore.swagger.io") });
 				});
 		}
 	}

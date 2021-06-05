@@ -14,7 +14,8 @@ namespace FairPlayTube.MAUI.Pages
         {
             try
             {
-                this.Result = await http.GetStringAsync("https://petstore.swagger.io/v2/store/inventory");
+                //this.Result = await http.GetStringAsync("https://petstore.swagger.io/v2/store/inventory");
+                this.Result = await http.GetStringAsync("/v2/store/inventory");
             }
             catch (Exception ex)
             {
