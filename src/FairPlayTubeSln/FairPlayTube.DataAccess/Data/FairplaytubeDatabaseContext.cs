@@ -51,8 +51,6 @@ namespace FairPlayTube.DataAccess.Data
 
             modelBuilder.Entity<Brand>(entity =>
             {
-                entity.Property(e => e.BrandId).ValueGeneratedNever();
-
                 entity.HasOne(d => d.ApplicationUser)
                     .WithMany(p => p.Brand)
                     .HasForeignKey(d => d.ApplicationUserId)
@@ -62,8 +60,6 @@ namespace FairPlayTube.DataAccess.Data
 
             modelBuilder.Entity<BrandVideo>(entity =>
             {
-                entity.Property(e => e.BrandVideoId).ValueGeneratedNever();
-
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.BrandVideo)
                     .HasForeignKey(d => d.BrandId)

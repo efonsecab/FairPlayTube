@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[BrandVideo]
 (
-	[BrandVideoId] BIGINT NOT NULL CONSTRAINT PK_BrandVideo PRIMARY KEY, 
+	[BrandVideoId] BIGINT NOT NULL IDENTITY CONSTRAINT PK_BrandVideo PRIMARY KEY, 
     [BrandId] BIGINT NOT NULL, 
     [VideoInfoId] BIGINT NOT NULL,
     [RowCreationDateTime] DATETIMEOFFSET NOT NULL, 
