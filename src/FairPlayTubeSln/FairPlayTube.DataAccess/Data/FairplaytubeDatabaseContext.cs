@@ -71,8 +71,6 @@ namespace FairPlayTube.DataAccess.Data
 
             modelBuilder.Entity<UserFeedback>(entity =>
             {
-                entity.Property(e => e.UserFeedbackId).ValueGeneratedNever();
-
                 entity.HasOne(d => d.ApplicationUser)
                     .WithMany(p => p.UserFeedback)
                     .HasForeignKey(d => d.ApplicationUserId)

@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[UserFeedback]
 (
-	[UserFeedbackId] BIGINT NOT NULL CONSTRAINT PK_UserFeedback PRIMARY KEY,
+	[UserFeedbackId] BIGINT NOT NULL IDENTITY CONSTRAINT PK_UserFeedback PRIMARY KEY,
 	[ShortDescription] NVARCHAR(500) NOT NULL,
 	[DetailedDescription] NVARCHAR(MAX) NOT NULL,
 	[ScreenshotUrl] NVARCHAR(1000) NOT NULL,
