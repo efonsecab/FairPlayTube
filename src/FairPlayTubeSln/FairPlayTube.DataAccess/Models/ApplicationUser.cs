@@ -31,6 +31,8 @@ namespace FairPlayTube.DataAccess.Models
         public DateTimeOffset LastLogIn { get; set; }
         [Column("AzureAdB2CObjectId")]
         public Guid AzureAdB2cobjectId { get; set; }
+        [Column(TypeName = "money")]
+        public decimal AvailableFunds { get; set; }
 
         [InverseProperty("ApplicationUser")]
         public virtual ApplicationUserRole ApplicationUserRole { get; set; }
