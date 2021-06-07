@@ -30,11 +30,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[BrandVideo]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ErrorLog]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[UserExternalMonetization]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserFeedback]",
          "ObjectType": 0
       },
       {

@@ -15,6 +15,10 @@
                                 @onclick="@(  ()=> OnMonetizationIconClicked(singleVideo))">
                             <i class="bi bi-currency-dollar blink_me"></i>
                         </button>
+                        <button type="button" class="btn btn-info rounded-circle"
+                                @onclick="@(  ()=> OnVideoDescriptionClicked(singleVideo))">
+                            <i class="bi bi-card-text"></i>
+                        </button>
                     </CardHeader>
                     <CardBody>
                         <div class="embed-responsive embed-responsive-1by1">
@@ -98,8 +102,8 @@
                 </div>
                 <div class="modal-body">
                     @if (
-                   this.SelectedVideo.UserGlobalMonetization != null &&
-                   this.SelectedVideo.UserGlobalMonetization.MonetizationItems.Count > 0)
+                 this.SelectedVideo.UserGlobalMonetization != null &&
+                 this.SelectedVideo.UserGlobalMonetization.MonetizationItems.Count > 0)
                     {
                         <ul>
                             @foreach (var singleMonetizationItem in this.SelectedVideo.UserGlobalMonetization.MonetizationItems)
@@ -117,6 +121,30 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="HideMonetizationModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (this.ShowVideoDescription)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display:block;">
+        <div class="modal-dialog modal-fullscreen" style="max-height:none; max-width:none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@SelectedVideo.Name</h5>
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="HideVideoDescriptionModal">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="row-cols-2">@SelectedVideo.Description</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="HideVideoDescriptionModal">Close</button>
                 </div>
             </div>
         </div>
