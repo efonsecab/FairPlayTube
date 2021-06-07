@@ -131,31 +131,35 @@ namespace FairPlayTube
             services.AddRazorPages();
 
             services.AddHostedService<VideoIndexStatusService>();
-            var azureAdB2CInstance = Configuration["AzureAdB2C:Instance"];
-            var azureAdB2CDomain = Configuration["AzureAdB2C:Domain"];
-            var azureAdB2CClientAppClientId = Configuration["AzureAdB2C:ClientAppClientId"];
-            var azureAdB2ClientAppDefaultScope = Configuration["AzureAdB2C:ClientAppDefaultScope"];
-            services.AddSwaggerGen(c =>
-           {
-               c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "FairPlayTube API" });
-               c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
+            bool enableSwagger = Convert.ToBoolean(Configuration["EnableSwaggerUI"]);
+            if (enableSwagger)
+            {
+                var azureAdB2CInstance = Configuration["AzureAdB2C:Instance"];
+                var azureAdB2CDomain = Configuration["AzureAdB2C:Domain"];
+                var azureAdB2CClientAppClientId = Configuration["AzureAdB2C:ClientAppClientId"];
+                var azureAdB2ClientAppDefaultScope = Configuration["AzureAdB2C:ClientAppDefaultScope"];
+                services.AddSwaggerGen(c =>
                {
-                   Type = Microsoft.OpenApi.Models.SecuritySchemeType.OAuth2,
-                   Flows = new Microsoft.OpenApi.Models.OpenApiOAuthFlows()
+                   c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "FairPlayTube API" });
+                   c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
                    {
-                       Implicit = new Microsoft.OpenApi.Models.OpenApiOAuthFlow()
+                       Type = Microsoft.OpenApi.Models.SecuritySchemeType.OAuth2,
+                       Flows = new Microsoft.OpenApi.Models.OpenApiOAuthFlows()
                        {
-                           AuthorizationUrl = new Uri($"{azureAdB2CInstance}/{azureAdB2CDomain}/oauth2/v2.0/authorize"),
-                           TokenUrl = new Uri($"{azureAdB2CInstance}/{azureAdB2CDomain}/oauth2/v2.0/token"),
-                           Scopes = new Dictionary<string, string>
+                           Implicit = new Microsoft.OpenApi.Models.OpenApiOAuthFlow()
                            {
+                               AuthorizationUrl = new Uri($"{azureAdB2CInstance}/{azureAdB2CDomain}/oauth2/v2.0/authorize"),
+                               TokenUrl = new Uri($"{azureAdB2CInstance}/{azureAdB2CDomain}/oauth2/v2.0/token"),
+                               Scopes = new Dictionary<string, string>
+                               {
                                {azureAdB2ClientAppDefaultScope, "Access APIs" }
-                           }
-                       },
-                   }
+                               }
+                           },
+                       }
+                   });
+                   c.OperationFilter<SecurityRequirementsOperationFilter>();
                });
-               c.OperationFilter<SecurityRequirementsOperationFilter>();
-           });
+            }
 
         }
 
@@ -181,7 +185,7 @@ namespace FairPlayTube
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             bool useHttpsRedirection = Convert.ToBoolean(Configuration["UseHttpsRedirection"]);
-            bool enableSwagger = Convert.ToBoolean(Configuration["EnableSwaggerUI"]) || env.IsDevelopment();
+            bool enableSwagger = Convert.ToBoolean(Configuration["EnableSwaggerUI"]);
             if (enableSwagger)
             {
                 app.UseSwagger();
