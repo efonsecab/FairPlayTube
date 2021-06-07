@@ -11,10 +11,9 @@
                                 @onclick="@( ()=> SelectVideo(singleVideo))">
                             <i class="bi bi-eye-fill"></i>
                         </button>
-                        <button type="button" class="btn btn-info rounded-circle"
-                                @onclick="@(  ()=> OnMonetizationIconClicked(singleVideo))">
-                            <i class="bi bi-currency-dollar blink_me"></i>
-                        </button>
+                        <MonetizationIconButton
+                                                OnClicked="@(  ()=> OnMonetizationIconClicked(singleVideo))">
+                        </MonetizationIconButton>
                         <button type="button" class="btn btn-info rounded-circle"
                                 @onclick="@(  ()=> OnVideoDescriptionClicked(singleVideo))">
                             <i class="bi bi-card-text"></i>
