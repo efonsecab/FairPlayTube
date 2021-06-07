@@ -71,6 +71,7 @@
     <Build Include="dbo\Tables\Brand.sql" />
     <Build Include="dbo\Tables\VideoIndexKeyword.sql" />
     <Build Include="dbo\Tables\UserExternalMonetization.sql" />
+    <Build Include="dbo\Tables\BrandVideo.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />
