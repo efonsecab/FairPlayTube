@@ -16,6 +16,7 @@ namespace FairPlayTube.DataAccess.Models
         {
             Brand = new HashSet<Brand>();
             UserExternalMonetization = new HashSet<UserExternalMonetization>();
+            UserFeedback = new HashSet<UserFeedback>();
             VideoInfo = new HashSet<VideoInfo>();
         }
 
@@ -37,6 +38,8 @@ namespace FairPlayTube.DataAccess.Models
         public virtual ICollection<Brand> Brand { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<UserExternalMonetization> UserExternalMonetization { get; set; }
+        [InverseProperty("ApplicationUser")]
+        public virtual ICollection<UserFeedback> UserFeedback { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<VideoInfo> VideoInfo { get; set; }
     }

@@ -42,6 +42,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[UserFeedback]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoIndexKeyword]",
          "ObjectType": 0
       },
