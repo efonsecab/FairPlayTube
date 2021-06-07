@@ -16,6 +16,7 @@ namespace FairPlayTube.Components.Videos
         private bool IsLoading { get; set; }
         private bool ShowInsights { get; set; }
         private bool ShowMonetizationLinks { get; set; }
+        private bool ShowVideoDescription { get; set; }
 
         private void SelectVideo(VideoInfoModel videoInfoModel)
         {
@@ -35,10 +36,21 @@ namespace FairPlayTube.Components.Videos
             this.ShowMonetizationLinks = true;
         }
 
+        private void OnVideoDescriptionClicked(VideoInfoModel videoInfoModel)
+        {
+            this.SelectedVideo = videoInfoModel;
+            this.ShowVideoDescription = true;
+        }
+
         private void HideMonetizationModal()
         {
             this.SelectedVideo = null;
             this.ShowMonetizationLinks = false;
+        }
+        private void HideVideoDescriptionModal()
+        {
+            this.SelectedVideo = null;
+            this.ShowVideoDescription = false;
         }
     }
 }

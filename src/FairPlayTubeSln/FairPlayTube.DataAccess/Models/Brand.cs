@@ -12,6 +12,11 @@ namespace FairPlayTube.DataAccess.Models
     [Index(nameof(Name), Name = "UI_Brand_Name", IsUnique = true)]
     public partial class Brand
     {
+        public Brand()
+        {
+            BrandVideo = new HashSet<BrandVideo>();
+        }
+
         [Key]
         public long BrandId { get; set; }
         [Required]
@@ -25,5 +30,7 @@ namespace FairPlayTube.DataAccess.Models
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("Brand")]
         public virtual ApplicationUser ApplicationUser { get; set; }
+        [InverseProperty("Brand")]
+        public virtual ICollection<BrandVideo> BrandVideo { get; set; }
     }
 }

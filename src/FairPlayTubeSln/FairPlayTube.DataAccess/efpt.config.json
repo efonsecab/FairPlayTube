@@ -30,6 +30,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[BrandVideo]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ErrorLog]",
          "ObjectType": 0
       },
