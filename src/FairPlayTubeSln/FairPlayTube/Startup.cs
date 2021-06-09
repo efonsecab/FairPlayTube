@@ -141,12 +141,12 @@ namespace FairPlayTube
                 services.AddSwaggerGen(c =>
                {
                    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "FairPlayTube API" });
-                   c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
+                   c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                    {
-                       Type = Microsoft.OpenApi.Models.SecuritySchemeType.OAuth2,
-                       Flows = new Microsoft.OpenApi.Models.OpenApiOAuthFlows()
+                       Type = SecuritySchemeType.OAuth2,
+                       Flows = new OpenApiOAuthFlows()
                        {
-                           Implicit = new Microsoft.OpenApi.Models.OpenApiOAuthFlow()
+                           Implicit = new OpenApiOAuthFlow()
                            {
                                AuthorizationUrl = new Uri($"{azureAdB2CInstance}/{azureAdB2CDomain}/oauth2/v2.0/authorize"),
                                TokenUrl = new Uri($"{azureAdB2CInstance}/{azureAdB2CDomain}/oauth2/v2.0/token"),
@@ -193,7 +193,7 @@ namespace FairPlayTube
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "FairPlayTube API");
                     c.OAuthClientId(Configuration["AzureAdB2C:ClientAppClientId"]);
-                    c.OAuthAdditionalQueryStringParams(new System.Collections.Generic.Dictionary<string, string>()
+                    c.OAuthAdditionalQueryStringParams(new Dictionary<string, string>()
                     {
                     {"p", Configuration["AzureAdB2C:SignUpSignInPolicyId"] }
                     });
