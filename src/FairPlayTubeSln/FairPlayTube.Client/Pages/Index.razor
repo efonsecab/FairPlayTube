@@ -5,28 +5,41 @@
 
 <Loading IsLoading="IsLoading"></Loading>
 
-<div class="mb-3">
-    <Card Width="100%">
-        <CardHeader>
-            What is @Constants.Titles.AppTitle?
-        </CardHeader>
-        <CardBody>
-            <p>
-                @Constants.Titles.AppTitle is the next generation of video sharing portals with a focus on users and transparency.
-            </p>
-            <p>
-                @Constants.Titles.AppTitle is a 100% Open Source project, and you can contribute to it.
-            </p>
-            <p>
-                You can help keeping the project free and without ads by donating
-            </p>
-            <PayPalDonateButton></PayPalDonateButton>
-            <p>
-                Visit the @Constants.Titles.AppTitle Repository on Github
-                <a href="https://github.com/efonsecab/FairPlayTube" target="_blank">https://github.com/efonsecab/FairPlayTube</a>
-            </p>
-        </CardBody>
-    </Card>
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                About @Constants.Titles.AppTitle
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="mb-3">
+                    <Card Width="100%">
+                        <CardHeader>
+                            What is @Constants.Titles.AppTitle?
+                        </CardHeader>
+                        <CardBody>
+                            <p>
+                                @Constants.Titles.AppTitle is the next generation of video sharing portals with a focus on users and transparency.
+                            </p>
+                            <p>
+                                @Constants.Titles.AppTitle is a 100% Open Source project, and you can contribute to it.
+                            </p>
+                            <p>
+                                You can help keeping the project free and without ads by donating
+                            </p>
+                            <PayPalDonateButton></PayPalDonateButton>
+                            <p>
+                                Visit the @Constants.Titles.AppTitle Repository on Github
+                                <a href="https://github.com/efonsecab/FairPlayTube" target="_blank">https://github.com/efonsecab/FairPlayTube</a>
+                            </p>
+                        </CardBody>
+                    </Card>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <FairPlayTube.Components.Videos.VideoList AllVideos="this.AllVideos"></FairPlayTube.Components.Videos.VideoList>
