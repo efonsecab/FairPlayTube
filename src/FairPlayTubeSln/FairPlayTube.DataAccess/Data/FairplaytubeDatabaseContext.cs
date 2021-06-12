@@ -27,6 +27,8 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
         public virtual DbSet<UserExternalMonetization> UserExternalMonetization { get; set; }
         public virtual DbSet<UserFeedback> UserFeedback { get; set; }
+        public virtual DbSet<UserMessage> UserMessage { get; set; }
+        public virtual DbSet<UserProfile> UserProfile { get; set; }
         public virtual DbSet<VideoIndexKeyword> VideoIndexKeyword { get; set; }
         public virtual DbSet<VideoIndexStatus> VideoIndexStatus { get; set; }
         public virtual DbSet<VideoInfo> VideoInfo { get; set; }
@@ -90,6 +92,30 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.ApplicationUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserFeedback_ApplicationUserId");
+            });
+
+            modelBuilder.Entity<UserMessage>(entity =>
+            {
+                entity.HasOne(d => d.FromApplicationUser)
+                    .WithMany(p => p.UserMessageFromApplicationUser)
+                    .HasForeignKey(d => d.FromApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FromApplicationUserId_ApplicationUser");
+
+                entity.HasOne(d => d.ToApplicationUser)
+                    .WithMany(p => p.UserMessageToApplicationUser)
+                    .HasForeignKey(d => d.ToApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ToApplicationUserId_ApplicationUser");
+            });
+
+            modelBuilder.Entity<UserProfile>(entity =>
+            {
+                entity.HasOne(d => d.ApplicationUser)
+                    .WithMany(p => p.UserProfile)
+                    .HasForeignKey(d => d.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ApplicationUserId_UserProfile");
             });
 
             modelBuilder.Entity<VideoIndexKeyword>(entity =>
