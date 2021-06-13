@@ -27,6 +27,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
         public virtual DbSet<UserExternalMonetization> UserExternalMonetization { get; set; }
         public virtual DbSet<UserFeedback> UserFeedback { get; set; }
+        public virtual DbSet<UserInvitation> UserInvitation { get; set; }
         public virtual DbSet<VideoIndexKeyword> VideoIndexKeyword { get; set; }
         public virtual DbSet<VideoIndexStatus> VideoIndexStatus { get; set; }
         public virtual DbSet<VideoInfo> VideoInfo { get; set; }
@@ -90,6 +91,15 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.ApplicationUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserFeedback_ApplicationUserId");
+            });
+
+            modelBuilder.Entity<UserInvitation>(entity =>
+            {
+                entity.HasOne(d => d.InvitingApplicationUser)
+                    .WithMany(p => p.UserInvitation)
+                    .HasForeignKey(d => d.InvitingApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserInvitation_InvitingApplicationUserId");
             });
 
             modelBuilder.Entity<VideoIndexKeyword>(entity =>
