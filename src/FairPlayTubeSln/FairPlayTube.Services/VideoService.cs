@@ -3,6 +3,8 @@ using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.Video;
+using FairPlayTube.Notifications.Hubs;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using PTI.Microservices.Library.Configuration;
 using PTI.Microservices.Library.Interceptors;
@@ -28,12 +30,14 @@ namespace FairPlayTube.Services
         private FairplaytubeDatabaseContext FairplaytubeDatabaseContext { get; }
         private AzureVideoIndexerConfiguration AzureVideoIndexerConfiguration { get; }
         private CustomHttpClient CustomHttpClient { get; }
+        private IHubContext<NotificationHub, INotificationHub> HubContext { get; }
 
         public VideoService(AzureVideoIndexerService azureVideoIndexerService, AzureBlobStorageService azureBlobStorageService,
             DataStorageConfiguration dataStorageConfiguration, ICurrentUserProvider currentUserProvider,
             FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             AzureVideoIndexerConfiguration azureVideoIndexerConfiguration,
-            CustomHttpClient customHttpClient
+            CustomHttpClient customHttpClient,
+            IHubContext<NotificationHub, INotificationHub> hubContext
             )
         {
             this.AzureVideoIndexerService = azureVideoIndexerService;
@@ -43,13 +47,15 @@ namespace FairPlayTube.Services
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
             this.AzureVideoIndexerConfiguration = azureVideoIndexerConfiguration;
             this.CustomHttpClient = customHttpClient;
+            this.HubContext = hubContext;
         }
 
         public async Task<bool> UpdateVideoIndexStatusAsync(string[] videoIds,
             Common.Global.Enums.VideoIndexStatus videoIndexStatus,
             CancellationToken cancellationToken)
         {
-            var query = this.FairplaytubeDatabaseContext.VideoInfo.Where(p => videoIds.Contains(p.VideoId));
+            var query = this.FairplaytubeDatabaseContext.VideoInfo
+                .Include(p=>p.ApplicationUser).Where(p => videoIds.Contains(p.VideoId));
             foreach (var singleVideoEntity in query)
             {
                 var singleVideoIndex = await this.AzureVideoIndexerService
@@ -59,6 +65,14 @@ namespace FairPlayTube.Services
                 singleVideoEntity.VideoDurationInSeconds = singleVideoIndex.summarizedInsights.duration.seconds;
             }
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
+            foreach (var singleVideoEntity in query)
+            {
+                await this.HubContext.Clients.User(singleVideoEntity.ApplicationUser.AzureAdB2cobjectId.ToString())
+                    .ReceiveMessage(new Models.Notifications.NotificationModel() 
+                    {
+                        Message = $"Your video: '{singleVideoEntity.Name}' has been processed"
+                    });
+            }
             return true;
         }
 

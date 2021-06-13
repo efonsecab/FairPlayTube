@@ -1,5 +1,7 @@
-﻿using FairPlayTube.Models.Notifications;
+﻿using FairPlayTube.Client.Services;
+using FairPlayTube.Models.Notifications;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
@@ -13,22 +15,35 @@ namespace FairPlayTube.Client.CustomComponents.SignalR
 
         [Inject]
         private NavigationManager NavigationManager { get; set; }
+        [Inject]
+        private IAccessTokenProvider AccessTokenProvider { get; set; }
+        [Inject]
+        private ToastifyService ToastifyService { get; set; }
         private HubConnection HubConnection { get; set; }
         private List<NotificationModel> ReceivedNotifications { get; set; } = new List<NotificationModel>();
         private bool ShowNotifications { get; set; } = false;
         protected async override Task OnInitializedAsync()
         {
-            HubConnection = new HubConnectionBuilder()
-                        .WithUrl(NavigationManager.ToAbsoluteUri(Common.Global.Constants.Hubs.NotificationHub))
-                        .Build();
-
-            HubConnection.On<NotificationModel>(Common.Global.Constants.Hubs.ReceiveMessage, (model) =>
+            var accessToken = await this.AccessTokenProvider.RequestAccessToken();
+            if (accessToken.TryGetToken(out var token))
             {
-                ReceivedNotifications.Add(model);
-                StateHasChanged();
-            });
+                HubConnection = new HubConnectionBuilder()
+                            .WithUrl(NavigationManager.ToAbsoluteUri(Common.Global.Constants.Hubs.NotificationHub),
+                            options =>
+                            {
+                                options.AccessTokenProvider = () => Task.FromResult(token.Value);
+                            })
+                            .Build();
 
-            await HubConnection.StartAsync();
+                HubConnection.On<NotificationModel>(Common.Global.Constants.Hubs.ReceiveMessage, async (model) =>
+                {
+                    ReceivedNotifications.Add(model);
+                    await ToastifyService.DisplaySuccessNotification(model.Message);
+                    StateHasChanged();
+                });
+
+                await HubConnection.StartAsync();
+            }
         }
 
         private async Task Send(NotificationModel model)
