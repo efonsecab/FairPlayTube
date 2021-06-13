@@ -46,6 +46,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[UserFollower]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoIndexKeyword]",
          "ObjectType": 0
       },
@@ -58,7 +62,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "C:\\Projects\\Github\\FairPlayTube\\src\\FairPlayTubeSln\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
+   "UiHint": "C:\\Users\\flucia\\Source\\Repos\\FairPlayTube\\src\\FairPlayTubeSln\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,
