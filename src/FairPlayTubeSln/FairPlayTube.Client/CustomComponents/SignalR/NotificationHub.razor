@@ -1,7 +1,13 @@
-﻿<div class="mb-3">
-    @*<button @onclick="OnShowNotificationClick">
-        <i class="bi bi-bell-fill"></i>
-    </button>*@
+﻿<AuthorizeView>
+    <Authorized>
+    </Authorized>
+</AuthorizeView>
+
+<div class="mb-3">
+    <button @onclick="OnShowNotificationClick">
+        <i class="bi bi-bell-fill"></i>@this.ReceivedNotifications?.Count
+    </button>
+    @*<button @onclick="OnSendClick">Send</button>*@
 </div>
 @if (this.ShowNotifications)
 {

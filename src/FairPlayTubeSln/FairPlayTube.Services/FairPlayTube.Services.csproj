@@ -18,6 +18,7 @@
     <ProjectReference Include="..\FairPlayTube.Common\FairPlayTube.Common.csproj" />
     <ProjectReference Include="..\FairPlayTube.DataAccess\FairPlayTube.DataAccess.csproj" />
     <ProjectReference Include="..\FairPlayTube.Models\FairPlayTube.Models.csproj" />
+    <ProjectReference Include="..\FairPlayTube.Notifications\FairPlayTube.Notifications.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,9 @@
 ﻿using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
+using FairPlayTube.Notifications.Hubs;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,6 +23,7 @@ namespace FairPlayTube.Services.BackgroundServices
     {
         private ILogger<VideoIndexStatusService> Logger { get; }
         private IServiceScopeFactory ServiceScopeFactory { get; }
+
         public VideoIndexStatusService(ILogger<VideoIndexStatusService> logger,
             IServiceScopeFactory serviceScopeFactory)
         {
@@ -91,7 +94,7 @@ namespace FairPlayTube.Services.BackgroundServices
             }
         }
 
-        private static async Task CheckProcessingVideos(VideoService videoService, CancellationToken stoppingToken)
+        private async Task CheckProcessingVideos(VideoService videoService, CancellationToken stoppingToken)
         {
             var processingInDB = await videoService.GetDatabaseProcessingVideosIdsAsync(stoppingToken);
             if (processingInDB.Length > 0)

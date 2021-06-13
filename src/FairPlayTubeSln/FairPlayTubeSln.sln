@@ -47,6 +47,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B8872542
 		SettingsPlaceHolders\Tests\secrets.json = SettingsPlaceHolders\Tests\secrets.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayTube.Notifications", "FairPlayTube.Notifications\FairPlayTube.Notifications.csproj", "{AACAD2D2-BC6B-457D-A95E-B6F5BFC34C4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{39B44143-6745-44E2-93AF-5FF6C28746BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39B44143-6745-44E2-93AF-5FF6C28746BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39B44143-6745-44E2-93AF-5FF6C28746BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AACAD2D2-BC6B-457D-A95E-B6F5BFC34C4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AACAD2D2-BC6B-457D-A95E-B6F5BFC34C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AACAD2D2-BC6B-457D-A95E-B6F5BFC34C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AACAD2D2-BC6B-457D-A95E-B6F5BFC34C4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
