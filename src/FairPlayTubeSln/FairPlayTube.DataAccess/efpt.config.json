@@ -50,6 +50,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[UserInvitation]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoIndexKeyword]",
          "ObjectType": 0
       },
