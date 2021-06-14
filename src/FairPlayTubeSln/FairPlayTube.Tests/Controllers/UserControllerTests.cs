@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using FairPlayTube.Tests;
 using FairPlayTube.Common.Global;
+using System.Net.Http.Json;
+using FairPlayTube.Models.UserProfile;
 
 namespace FairPlayTube.Controllers.Tests
 {
@@ -25,6 +27,14 @@ namespace FairPlayTube.Controllers.Tests
             //var result = await authorizedHttpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyRole);
             //Assert.IsNotNull(result);
             //Assert.AreEqual(result, Role.Admin);
+        }
+
+        [TestMethod()]
+        public async Task ListUsersTest()
+        {
+            var authorizedHttpClient = await base.CreateAuthorizedClientAsync(Role.User);
+            var result = await authorizedHttpClient.GetFromJsonAsync<UserModel[]>(Constants.ApiRoutes.UserController.ListUsers);
+            Assert.IsNotNull(result);
         }
     }
 }
