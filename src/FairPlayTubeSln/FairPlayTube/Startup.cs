@@ -8,6 +8,7 @@ using FairPlayTube.Models.CustomHttpResponse;
 using FairPlayTube.Notifications.Hubs;
 using FairPlayTube.Services;
 using FairPlayTube.Services.BackgroundServices;
+using FairPlayTube.Services.Configuration;
 using FairPlayTube.Swagger.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -64,10 +65,10 @@ namespace FairPlayTube
 
             ConfigureAzureVideoIndexer(services);
             ConfigureAzureBlobStorage(services);
-
-            DataStorageConfiguration dataStorageConfiguration =
-                Configuration.GetSection("DataStorageConfiguration").Get<DataStorageConfiguration>();
-            services.AddSingleton(dataStorageConfiguration);
+            ConfigureDataStorage(services);
+            var smtpConfiguration = Configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
+            services.AddSingleton(smtpConfiguration);
+            services.AddTransient<EmailService>();
 
             services.AddScoped<VideoService>();
 
@@ -162,28 +163,35 @@ namespace FairPlayTube
                 var azureAdB2CClientAppClientId = Configuration["AzureAdB2C:ClientAppClientId"];
                 var azureAdB2ClientAppDefaultScope = Configuration["AzureAdB2C:ClientAppDefaultScope"];
                 services.AddSwaggerGen(c =>
-               {
-                   c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "FairPlayTube API" });
-                   c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-                   {
-                       Type = SecuritySchemeType.OAuth2,
-                       Flows = new OpenApiOAuthFlows()
-                       {
-                           Implicit = new OpenApiOAuthFlow()
-                           {
-                               AuthorizationUrl = new Uri($"{azureAdB2CInstance}/{azureAdB2CDomain}/oauth2/v2.0/authorize"),
-                               TokenUrl = new Uri($"{azureAdB2CInstance}/{azureAdB2CDomain}/oauth2/v2.0/token"),
-                               Scopes = new Dictionary<string, string>
+                {
+                    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "FairPlayTube API" });
+                    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                    {
+                        Type = SecuritySchemeType.OAuth2,
+                        Flows = new OpenApiOAuthFlows()
+                        {
+                            Implicit = new OpenApiOAuthFlow()
+                            {
+                                AuthorizationUrl = new Uri($"{azureAdB2CInstance}/{azureAdB2CDomain}/oauth2/v2.0/authorize"),
+                                TokenUrl = new Uri($"{azureAdB2CInstance}/{azureAdB2CDomain}/oauth2/v2.0/token"),
+                                Scopes = new Dictionary<string, string>
                                {
                                {azureAdB2ClientAppDefaultScope, "Access APIs" }
                                }
-                           },
-                       }
-                   });
-                   c.OperationFilter<SecurityRequirementsOperationFilter>();
-               });
+                            },
+                        }
+                    });
+                    c.OperationFilter<SecurityRequirementsOperationFilter>();
+                });
             }
 
+        }
+
+        private void ConfigureDataStorage(IServiceCollection services)
+        {
+            DataStorageConfiguration dataStorageConfiguration =
+                            Configuration.GetSection("DataStorageConfiguration").Get<DataStorageConfiguration>();
+            services.AddSingleton(dataStorageConfiguration);
         }
 
         private void ConfigureAzureVideoIndexer(IServiceCollection services)
