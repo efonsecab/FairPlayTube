@@ -56,8 +56,6 @@ namespace FairPlayTube.DataAccess.Models
         [InverseProperty("VideoInfo")]
         public virtual VideoIndexStatus VideoIndexStatus { get; set; }
         [InverseProperty("VideoInfo")]
-        public virtual UserVideoRating UserVideoRating { get; set; }
-        [InverseProperty("VideoInfo")]
         public virtual ICollection<BrandVideo> BrandVideo { get; set; }
         [InverseProperty("VideoInfo")]
         public virtual ICollection<VideoIndexKeyword> VideoIndexKeyword { get; set; }

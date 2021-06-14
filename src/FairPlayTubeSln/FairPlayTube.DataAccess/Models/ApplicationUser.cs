@@ -40,8 +40,6 @@ namespace FairPlayTube.DataAccess.Models
         [InverseProperty("ApplicationUser")]
         public virtual ApplicationUserRole ApplicationUserRole { get; set; }
         [InverseProperty("ApplicationUser")]
-        public virtual UserVideoRating UserVideoRating { get; set; }
-        [InverseProperty("ApplicationUser")]
         public virtual ICollection<Brand> Brand { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<UserExternalMonetization> UserExternalMonetization { get; set; }
