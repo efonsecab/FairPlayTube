@@ -54,6 +54,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[UserVideoRating]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoIndexKeyword]",
          "ObjectType": 0
       },
