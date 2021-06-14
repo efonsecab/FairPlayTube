@@ -73,6 +73,7 @@
     <Build Include="dbo\Tables\UserExternalMonetization.sql" />
     <Build Include="dbo\Tables\BrandVideo.sql" />
     <Build Include="dbo\Tables\UserFeedback.sql" />
+    <Build Include="dbo\Tables\UserFollower.sql" />
     <Build Include="dbo\Tables\UserInvitation.sql" />
   </ItemGroup>
   <ItemGroup>
