@@ -7,7 +7,15 @@
 
     <div class="main">
         <div class="top-row px-4">
+            <div class="mx-auto">
+                <img class="img-thumbnail" src="images/ptilogo.png" style="height:45px;" />
+            </div>
             <i class="bi bi-question-circle-fill" style="cursor:pointer;" @onclick="OpenSupportBot"></i>
+            <AuthorizeView>
+                <Authorized>
+                    <FairPlayTube.Client.CustomComponents.SignalR.NotificationHub></FairPlayTube.Client.CustomComponents.SignalR.NotificationHub>
+                </Authorized>
+            </AuthorizeView>
             <LoginDisplay></LoginDisplay>
         </div>
 

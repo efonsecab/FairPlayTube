@@ -3,7 +3,8 @@
     [FullName] NVARCHAR(150) NOT NULL, 
     [EmailAddress] NVARCHAR(150) NOT NULL, 
     [LastLogIn] DATETIMEOFFSET NOT NULL, 
-    [AzureAdB2CObjectId] UNIQUEIDENTIFIER NOT NULL
+    [AzureAdB2CObjectId] UNIQUEIDENTIFIER NOT NULL,
+    [AvailableFunds] MONEY NOT NULL DEFAULT 0
 );
 
 

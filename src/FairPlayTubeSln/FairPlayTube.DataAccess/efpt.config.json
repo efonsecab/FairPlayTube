@@ -30,11 +30,31 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[BrandVideo]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ErrorLog]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[UserExternalMonetization]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserFeedback]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserFollower]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserInvitation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserVideoRating]",
          "ObjectType": 0
       },
       {

@@ -23,8 +23,13 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<ApplicationUser> ApplicationUser { get; set; }
         public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }
         public virtual DbSet<Brand> Brand { get; set; }
+        public virtual DbSet<BrandVideo> BrandVideo { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
         public virtual DbSet<UserExternalMonetization> UserExternalMonetization { get; set; }
+        public virtual DbSet<UserFeedback> UserFeedback { get; set; }
+        public virtual DbSet<UserFollower> UserFollower { get; set; }
+        public virtual DbSet<UserInvitation> UserInvitation { get; set; }
+        public virtual DbSet<UserVideoRating> UserVideoRating { get; set; }
         public virtual DbSet<VideoIndexKeyword> VideoIndexKeyword { get; set; }
         public virtual DbSet<VideoIndexStatus> VideoIndexStatus { get; set; }
         public virtual DbSet<VideoInfo> VideoInfo { get; set; }
@@ -50,13 +55,26 @@ namespace FairPlayTube.DataAccess.Data
 
             modelBuilder.Entity<Brand>(entity =>
             {
-                entity.Property(e => e.BrandId).ValueGeneratedNever();
-
                 entity.HasOne(d => d.ApplicationUser)
                     .WithMany(p => p.Brand)
                     .HasForeignKey(d => d.ApplicationUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Brand_ApplicationUserId");
+            });
+
+            modelBuilder.Entity<BrandVideo>(entity =>
+            {
+                entity.HasOne(d => d.Brand)
+                    .WithMany(p => p.BrandVideo)
+                    .HasForeignKey(d => d.BrandId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_BrandVideo_Brand");
+
+                entity.HasOne(d => d.VideoInfo)
+                    .WithMany(p => p.BrandVideo)
+                    .HasForeignKey(d => d.VideoInfoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_BrandVideo_VideoInfo");
             });
 
             modelBuilder.Entity<UserExternalMonetization>(entity =>
@@ -66,6 +84,54 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.ApplicationUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserExternalMonetization_ApplicationUser");
+            });
+
+            modelBuilder.Entity<UserFeedback>(entity =>
+            {
+                entity.HasOne(d => d.ApplicationUser)
+                    .WithMany(p => p.UserFeedback)
+                    .HasForeignKey(d => d.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserFeedback_ApplicationUserId");
+            });
+
+            modelBuilder.Entity<UserFollower>(entity =>
+            {
+                entity.HasOne(d => d.FollowedApplicationUser)
+                    .WithMany(p => p.UserFollowerFollowedApplicationUser)
+                    .HasForeignKey(d => d.FollowedApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserFollower_FollowedApplicationUserId");
+
+                entity.HasOne(d => d.FollowerApplicationUser)
+                    .WithMany(p => p.UserFollowerFollowerApplicationUser)
+                    .HasForeignKey(d => d.FollowerApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserFollower_FollowerApplicationUserId");
+            });
+
+            modelBuilder.Entity<UserInvitation>(entity =>
+            {
+                entity.HasOne(d => d.InvitingApplicationUser)
+                    .WithMany(p => p.UserInvitation)
+                    .HasForeignKey(d => d.InvitingApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserInvitation_InvitingApplicationUserId");
+            });
+
+            modelBuilder.Entity<UserVideoRating>(entity =>
+            {
+                entity.HasOne(d => d.ApplicationUser)
+                    .WithOne(p => p.UserVideoRating)
+                    .HasForeignKey<UserVideoRating>(d => d.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserVideoRating_ApplicationUserId");
+
+                entity.HasOne(d => d.VideoInfo)
+                    .WithOne(p => p.UserVideoRating)
+                    .HasForeignKey<UserVideoRating>(d => d.VideoInfoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserVideoRating_VideoInfoId");
             });
 
             modelBuilder.Entity<VideoIndexKeyword>(entity =>

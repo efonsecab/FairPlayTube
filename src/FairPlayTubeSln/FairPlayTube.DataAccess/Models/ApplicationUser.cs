@@ -16,6 +16,10 @@ namespace FairPlayTube.DataAccess.Models
         {
             Brand = new HashSet<Brand>();
             UserExternalMonetization = new HashSet<UserExternalMonetization>();
+            UserFeedback = new HashSet<UserFeedback>();
+            UserFollowerFollowedApplicationUser = new HashSet<UserFollower>();
+            UserFollowerFollowerApplicationUser = new HashSet<UserFollower>();
+            UserInvitation = new HashSet<UserInvitation>();
             VideoInfo = new HashSet<VideoInfo>();
         }
 
@@ -30,13 +34,25 @@ namespace FairPlayTube.DataAccess.Models
         public DateTimeOffset LastLogIn { get; set; }
         [Column("AzureAdB2CObjectId")]
         public Guid AzureAdB2cobjectId { get; set; }
+        [Column(TypeName = "money")]
+        public decimal AvailableFunds { get; set; }
 
         [InverseProperty("ApplicationUser")]
         public virtual ApplicationUserRole ApplicationUserRole { get; set; }
         [InverseProperty("ApplicationUser")]
+        public virtual UserVideoRating UserVideoRating { get; set; }
+        [InverseProperty("ApplicationUser")]
         public virtual ICollection<Brand> Brand { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<UserExternalMonetization> UserExternalMonetization { get; set; }
+        [InverseProperty("ApplicationUser")]
+        public virtual ICollection<UserFeedback> UserFeedback { get; set; }
+        [InverseProperty(nameof(UserFollower.FollowedApplicationUser))]
+        public virtual ICollection<UserFollower> UserFollowerFollowedApplicationUser { get; set; }
+        [InverseProperty(nameof(UserFollower.FollowerApplicationUser))]
+        public virtual ICollection<UserFollower> UserFollowerFollowerApplicationUser { get; set; }
+        [InverseProperty("InvitingApplicationUser")]
+        public virtual ICollection<UserInvitation> UserInvitation { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<VideoInfo> VideoInfo { get; set; }
     }
