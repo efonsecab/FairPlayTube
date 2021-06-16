@@ -1,0 +1,38 @@
+﻿<div class="mb-3">
+    <button @onclick="OnShowNotificationClick">
+        <i class="bi bi-bell-fill"></i>@this.ReceivedNotifications?.Count
+    </button>
+    @*<button @onclick="OnSendClick">Send</button>*@
+</div>
+@if (this.ShowNotifications)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display:block;">
+        <div class="modal-dialog modal-fullscreen" style="max-height:none; max-width:none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Notifications</h5>
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="HideNotifications">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row row-cols-2">
+                        <FairPlayTube.Components.Bootstrap.Card>
+                            <CardBody>
+                                <ul class="list-group">
+                                    @foreach (var singleNotification in ReceivedNotifications)
+                                    {
+                                        <li class="list-group-item">@singleNotification.Message</li>
+                                    }
+                                </ul>
+                            </CardBody>
+                        </FairPlayTube.Components.Bootstrap.Card>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="HideNotifications">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

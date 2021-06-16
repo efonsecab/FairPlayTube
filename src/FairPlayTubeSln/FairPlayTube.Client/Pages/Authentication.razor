@@ -1,9 +1,17 @@
 ﻿@page "/authentication/{action}"
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 
-<RemoteAuthenticatorView Action="@Action" />
+<RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="OnLogInSucceeded" />
 
 @code {
     [Parameter]
     public string Action { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    private async Task OnLogInSucceeded(RemoteAuthenticationState remoteAuthenticationState)
+    {
+        var state = await AuthenticationStateTask;
+        var claims = state.User.Claims.ToList();
+    }
 }

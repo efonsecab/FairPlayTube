@@ -1,39 +1,40 @@
 ﻿@if (this.AllVideos != null)
 {
     <div class="container">
-        <div class="row row-cols-3">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
             @foreach (var singleVideo in this.AllVideos)
             {
-                <FairPlayTube.Components.Bootstrap.Card Width="33.3%">
-                    <CardHeader>
-                        <strong>Duration: </strong>@singleVideo.VideoDurationFormatted
-                        <button type="button" class="btn btn-info rounded-circle"
-                                @onclick="@( ()=> SelectVideo(singleVideo))">
-                            <i class="bi bi-eye-fill"></i>
-                        </button>
-                        <MonetizationIconButton
-                                                OnClicked="@(  ()=> OnMonetizationIconClicked(singleVideo))">
-                        </MonetizationIconButton>
-                        <button type="button" class="btn btn-info rounded-circle"
-                                @onclick="@(  ()=> OnVideoDescriptionClicked(singleVideo))">
-                            <i class="bi bi-card-text"></i>
-                        </button>
-                    </CardHeader>
-                    <CardBody>
-                        <div class="embed-responsive embed-responsive-1by1">
-                            <iframe class="embed-responsive-item"
-                                    src="@singleVideo.PublicPlayerUrl"
-                                    frameborder="0"
-                                    allowfullscreen></iframe>
-                        </div>
-                    </CardBody>
-                    <CardFooter>
-                        <ul class="list-group">
-                            <li><string>Name: </string>@singleVideo.Name</li>
-                            <li><string>Publisher: </string>@singleVideo.Publisher</li>
-                        </ul>
-                    </CardFooter>
-                </FairPlayTube.Components.Bootstrap.Card>
+                <div class="col">
+                    <FairPlayTube.Components.Bootstrap.Card Width="100%">
+                        <CardHeader>
+                            <strong>Duration: </strong>@singleVideo.VideoDurationFormatted
+                            <button type="button" class="btn btn-info rounded-circle"
+                                    @onclick="@( ()=> SelectVideo(singleVideo))">
+                                <i class="bi bi-eye-fill"></i>
+                            </button>
+                            <MonetizationIconButton OnClicked="@(  ()=> OnMonetizationIconClicked(singleVideo))">
+                            </MonetizationIconButton>
+                            <button type="button" class="btn btn-info rounded-circle"
+                                    @onclick="@(  ()=> OnVideoDescriptionClicked(singleVideo))">
+                                <i class="bi bi-card-text"></i>
+                            </button>
+                        </CardHeader>
+                        <CardBody>
+                            <div class="embed-responsive embed-responsive-1by1">
+                                <iframe class="embed-responsive-item"
+                                        src="@singleVideo.PublicPlayerUrl"
+                                        frameborder="0"
+                                        allowfullscreen></iframe>
+                            </div>
+                        </CardBody>
+                        <CardFooter>
+                            <ul class="list-group">
+                                <li><string>Name: </string>@singleVideo.Name</li>
+                                <li><string>Publisher: </string>@singleVideo.Publisher</li>
+                            </ul>
+                        </CardFooter>
+                    </FairPlayTube.Components.Bootstrap.Card>
+                </div>
             }
         </div>
     </div>
@@ -51,33 +52,37 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="row row-cols-2">
-                        <FairPlayTube.Components.Bootstrap.Card Width="50%">
-                            <CardBody>
-                                <div class="embed-responsive embed-responsive-1by1">
-                                    <iframe class="embed-responsive-item"
-                                            src="@SelectedVideo.PublicPlayerUrl"
-                                            frameborder="0"
-                                            allowfullscreen></iframe>
-                                </div>
-                            </CardBody>
-                            <CardFooter>
-                                @SelectedVideo.Name
-                            </CardFooter>
-                        </FairPlayTube.Components.Bootstrap.Card>
-                        <FairPlayTube.Components.Bootstrap.Card Width="50%">
-                            <CardBody>
-                                <div class="embed-responsive embed-responsive-1by1">
-                                    <iframe class="embed-responsive-item"
-                                            src="@SelectedVideo.PublicInsightsUrl"
-                                            frameborder="0"
-                                            allowfullscreen></iframe>
-                                </div>
-                            </CardBody>
-                            <CardFooter>
-                                @SelectedVideo.Name
-                            </CardFooter>
-                        </FairPlayTube.Components.Bootstrap.Card>
+                    <div class="row row-cols-1 row-cols-md-2">
+                        <div class="col">
+                            <FairPlayTube.Components.Bootstrap.Card Width="100%">
+                                <CardBody>
+                                    <div class="embed-responsive embed-responsive-1by1">
+                                        <iframe class="embed-responsive-item" style="width:100%; height:350px;"
+                                                src="@SelectedVideo.PublicPlayerUrl"
+                                                frameborder="0"
+                                                allowfullscreen></iframe>
+                                    </div>
+                                </CardBody>
+                                <CardFooter>
+                                    @SelectedVideo.Name
+                                </CardFooter>
+                            </FairPlayTube.Components.Bootstrap.Card>
+                        </div>
+                        <div class="col">
+                            <FairPlayTube.Components.Bootstrap.Card Width="100%">
+                                <CardBody>
+                                    <div class="embed-responsive embed-responsive-1by1">
+                                        <iframe class="embed-responsive-item" style="width:100%; height:350px;"
+                                                src="@SelectedVideo.PublicInsightsUrl"
+                                                frameborder="0"
+                                                allowfullscreen></iframe>
+                                    </div>
+                                </CardBody>
+                                <CardFooter>
+                                    @SelectedVideo.Name
+                                </CardFooter>
+                            </FairPlayTube.Components.Bootstrap.Card>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -101,8 +106,8 @@
                 </div>
                 <div class="modal-body">
                     @if (
-                 this.SelectedVideo.UserGlobalMonetization != null &&
-                 this.SelectedVideo.UserGlobalMonetization.MonetizationItems.Count > 0)
+                this.SelectedVideo.UserGlobalMonetization != null &&
+                this.SelectedVideo.UserGlobalMonetization.MonetizationItems.Count > 0)
                     {
                         <ul>
                             @foreach (var singleMonetizationItem in this.SelectedVideo.UserGlobalMonetization.MonetizationItems)

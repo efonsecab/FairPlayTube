@@ -8,6 +8,13 @@ namespace FairPlayTube.Common.Global
 {
     public class Constants
     {
+        public class Hubs
+        {
+            public const string NotificationHub = "/NotificationHub";
+            public const string ReceiveMessage = "ReceiveMessage";
+            public const string SendMessage = "SendMessage";
+        }
+
         public class ConfigurationKeysNames
         {
             public const string AzureAppConfigConnectionString = "AzureAppConfigConnectionString";
@@ -53,6 +60,7 @@ namespace FairPlayTube.Common.Global
             public class UserController
             {
                 public const string GetMyRole = "api/User/GetMyRole";
+                public const string ListUsers = "api/User/ListUsers";
             }
 
             public class UserProfileController

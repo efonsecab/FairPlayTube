@@ -1,7 +1,10 @@
 ﻿using FairPlayTube.DataAccess.Data;
+using FairPlayTube.Models.Notifications;
+using FairPlayTube.Notifications.Hubs;
 using FairPlayTube.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,12 +20,14 @@ namespace FairPlayTube.Controllers
     {
         private FairplaytubeDatabaseContext FairplaytubeDatabaseContext { get; }
         private VideoService VideoService { get; }
+        private IHubContext<NotificationHub, INotificationHub> HubContext { get; }
 
         public AzureVideoIndexerController(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
-            VideoService videoService)
+            VideoService videoService, IHubContext<NotificationHub, INotificationHub> hubContext)
         {
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
             this.VideoService = videoService;
+            this.HubContext = hubContext;
         }
 
         [HttpPost("[action]")]
