@@ -76,6 +76,8 @@
     <Build Include="dbo\Tables\UserFollower.sql" />
     <Build Include="dbo\Tables\UserInvitation.sql" />
     <Build Include="dbo\Tables\UserVideoRating.sql" />
+    <Build Include="dbo\Tables\UserProfile.sql" />
+    <Build Include="dbo\Tables\UserMessage.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

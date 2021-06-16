@@ -29,6 +29,8 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<UserFeedback> UserFeedback { get; set; }
         public virtual DbSet<UserFollower> UserFollower { get; set; }
         public virtual DbSet<UserInvitation> UserInvitation { get; set; }
+        public virtual DbSet<UserMessage> UserMessage { get; set; }
+        public virtual DbSet<UserProfile> UserProfile { get; set; }
         public virtual DbSet<UserVideoRating> UserVideoRating { get; set; }
         public virtual DbSet<VideoIndexKeyword> VideoIndexKeyword { get; set; }
         public virtual DbSet<VideoIndexStatus> VideoIndexStatus { get; set; }
@@ -117,6 +119,30 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.InvitingApplicationUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserInvitation_InvitingApplicationUserId");
+            });
+
+            modelBuilder.Entity<UserMessage>(entity =>
+            {
+                entity.HasOne(d => d.FromApplicationUser)
+                    .WithMany(p => p.UserMessageFromApplicationUser)
+                    .HasForeignKey(d => d.FromApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FromApplicationUserId_ApplicationUser");
+
+                entity.HasOne(d => d.ToApplicationUser)
+                    .WithMany(p => p.UserMessageToApplicationUser)
+                    .HasForeignKey(d => d.ToApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ToApplicationUserId_ApplicationUser");
+            });
+
+            modelBuilder.Entity<UserProfile>(entity =>
+            {
+                entity.HasOne(d => d.ApplicationUser)
+                    .WithMany(p => p.UserProfile)
+                    .HasForeignKey(d => d.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ApplicationUserId_UserProfile");
             });
 
             modelBuilder.Entity<UserVideoRating>(entity =>

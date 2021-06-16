@@ -54,6 +54,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[UserMessage]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserProfile]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[UserVideoRating]",
          "ObjectType": 0
       },
