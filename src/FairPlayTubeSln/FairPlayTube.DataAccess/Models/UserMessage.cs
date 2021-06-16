@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using FairPlayTube.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 #nullable disable

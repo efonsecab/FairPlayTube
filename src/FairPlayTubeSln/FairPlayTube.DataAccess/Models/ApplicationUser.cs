@@ -17,6 +17,9 @@ namespace FairPlayTube.DataAccess.Models
             Brand = new HashSet<Brand>();
             UserExternalMonetization = new HashSet<UserExternalMonetization>();
             UserFeedback = new HashSet<UserFeedback>();
+            UserFollowerFollowedApplicationUser = new HashSet<UserFollower>();
+            UserFollowerFollowerApplicationUser = new HashSet<UserFollower>();
+            UserInvitation = new HashSet<UserInvitation>();
             UserMessageFromApplicationUser = new HashSet<UserMessage>();
             UserMessageToApplicationUser = new HashSet<UserMessage>();
             UserProfile = new HashSet<UserProfile>();
@@ -40,11 +43,19 @@ namespace FairPlayTube.DataAccess.Models
         [InverseProperty("ApplicationUser")]
         public virtual ApplicationUserRole ApplicationUserRole { get; set; }
         [InverseProperty("ApplicationUser")]
+        public virtual UserVideoRating UserVideoRating { get; set; }
+        [InverseProperty("ApplicationUser")]
         public virtual ICollection<Brand> Brand { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<UserExternalMonetization> UserExternalMonetization { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<UserFeedback> UserFeedback { get; set; }
+        [InverseProperty(nameof(UserFollower.FollowedApplicationUser))]
+        public virtual ICollection<UserFollower> UserFollowerFollowedApplicationUser { get; set; }
+        [InverseProperty(nameof(UserFollower.FollowerApplicationUser))]
+        public virtual ICollection<UserFollower> UserFollowerFollowerApplicationUser { get; set; }
+        [InverseProperty("InvitingApplicationUser")]
+        public virtual ICollection<UserInvitation> UserInvitation { get; set; }
         [InverseProperty(nameof(UserMessage.FromApplicationUser))]
         public virtual ICollection<UserMessage> UserMessageFromApplicationUser { get; set; }
         [InverseProperty(nameof(UserMessage.ToApplicationUser))]
