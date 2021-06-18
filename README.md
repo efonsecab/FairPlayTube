@@ -22,7 +22,9 @@ You can check the Live Demo of the latest progress here: https://fairplaytube.pt
 [Check the Project Intro](https://youtu.be/iUdjur6sl8g)
 
 ## How To Contribute
-See [CONTRIBUTING](CONTRIBUTING.md)
+One way of helping the project is by giving it a Star :star: and sharing it on your social media profiles (Facebook, Twitter, LinkedIn, etc)
+
+If you'd like to do code contribution see [CONTRIBUTING](CONTRIBUTING.md)
 
 ## Code of conduct
 
