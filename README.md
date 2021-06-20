@@ -17,6 +17,9 @@ You can check the Live Demo of the latest progress here: https://fairplaytube.pt
 
 [Check the Wiki](https://github.com/efonsecab/FairPlayTube/wiki)
 
+## Social Profiles
+Facebook: https://www.facebook.com/Fairplaytube-106615948308091
+
 ## Project Intro
 
 [Check the Project Intro](https://youtu.be/iUdjur6sl8g)
