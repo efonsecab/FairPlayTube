@@ -44,6 +44,7 @@ namespace FairPlayTube.Common.Global
             public const string MyVideos = "/Users/Videos/MyVideos";
             public const string Keywords = "/Users/Videos/Keywords";
             public const string ProfileMonetization = "/Users/Profile/Monetization";
+            public const string List = "/Users/List";
         }
 
         public class ApiRoutes
