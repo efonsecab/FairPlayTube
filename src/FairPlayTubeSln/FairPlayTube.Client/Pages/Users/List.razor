@@ -1,0 +1,27 @@
+﻿<h3>List</h3>
+
+<Loading IsLoading="IsLoading"></Loading>
+
+@if (this.AllUsers != null)
+{
+    <div class="container">
+        <div class="row row-cols-3">
+            @foreach (var user in this.AllUsers)
+            {
+                <Card Width="33.3%">
+                    <CardHeader>
+                        @user.Name
+                    </CardHeader>
+                    <CardBody>
+                        <p>
+                            Videos: @user.VideosCount
+                        </p>
+                        <p>
+                            Brands: @user.BrandsCount
+                        </p>
+                    </CardBody>
+                </Card>
+            }
+        </div>
+    </div>
+}

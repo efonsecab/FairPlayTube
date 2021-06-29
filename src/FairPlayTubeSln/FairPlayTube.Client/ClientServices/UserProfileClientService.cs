@@ -43,5 +43,12 @@ namespace FairPlayTube.Client.ClientServices
             return await authorizedHttpClient.GetFromJsonAsync<GlobalMonetizationModel>(
                 Constants.ApiRoutes.UserProfileController.GetMyMonetizationInfo);
         }
+
+        public async Task<UserModel[]> ListUsers()
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            return await authorizedHttpClient.GetFromJsonAsync<UserModel[]>(
+                Constants.ApiRoutes.UserController.ListUsers);
+        }
     }
 }
