@@ -123,7 +123,8 @@ namespace FairPlayTube.Services
             return this.FairplaytubeDatabaseContext.VideoInfo.Include(p => p.ApplicationUser)
                 .ThenInclude(p => p.UserExternalMonetization)
                 .Where(p =>
-            p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed);
+            p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed)
+                .OrderByDescending(p=>p.VideoInfoId);
         }
 
         public IQueryable<VideoInfo> GetPublicProcessedVideosByKeyword(string keyword)
