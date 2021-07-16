@@ -281,6 +281,7 @@ namespace FairPlayTube
             //For MAUI in .NET 6 preview 4 using HTTPs is not working
             if (useHttpsRedirection)
                 app.UseHttpsRedirection();
+
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
