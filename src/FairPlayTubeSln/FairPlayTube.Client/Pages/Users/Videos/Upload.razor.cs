@@ -22,23 +22,6 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         private bool IsLoading { get; set; } = false;
         private bool IsSubmitting { get; set; } = false;
 
-        private async Task OnVideoFileSelectedAsync(InputFileChangeEventArgs e)
-        {
-            try
-            {
-                int maxSizeInBytes = 838860800; //800Mbs
-                var videoFileStream = e.File.OpenReadStream(maxAllowedSize: maxSizeInBytes);
-                this.UploadVideoModel.FileName = e.File.Name;
-                MemoryStream memoryStream = new MemoryStream();
-                await videoFileStream.CopyToAsync(memoryStream);
-                this.UploadVideoModel.FileBytes = memoryStream.ToArray();
-            }
-            catch (Exception ex)
-            {
-                await this.ToastifyService.DisplayErrorNotification(ex.Message);
-            }
-        }
-
         private async Task OnValidSubmit()
         {
             try
@@ -59,12 +42,6 @@ namespace FairPlayTube.Client.Pages.Users.Videos
                 this.IsLoading = false;
                 this.IsSubmitting = false;
             }
-        }
-
-        private void OnSourceUrlChanged(ChangeEventArgs e)
-        {
-            string fileName = System.IO.Path.GetFileName(e.Value.ToString());
-            this.UploadVideoModel.FileName = fileName;
         }
     }
 }

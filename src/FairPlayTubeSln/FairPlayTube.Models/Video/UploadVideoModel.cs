@@ -15,12 +15,9 @@ namespace FairPlayTube.Models.Video
         [StringLength(500)]
         [Required]
         public string Description { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string FileName { get; set; }
-        public byte[] FileBytes { get; set; }
         [Url]
         [StringLength(500)]
+        [Required]
         public string SourceUrl { get; set; }
     }
 }
