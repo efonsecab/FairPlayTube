@@ -34,6 +34,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<UserVideoRating> UserVideoRating { get; set; }
         public virtual DbSet<VideoIndexKeyword> VideoIndexKeyword { get; set; }
         public virtual DbSet<VideoIndexStatus> VideoIndexStatus { get; set; }
+        public virtual DbSet<VideoIndexingCost> VideoIndexingCost { get; set; }
         public virtual DbSet<VideoInfo> VideoInfo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

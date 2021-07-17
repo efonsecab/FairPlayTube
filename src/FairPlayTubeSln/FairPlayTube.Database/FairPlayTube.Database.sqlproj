@@ -78,6 +78,7 @@
     <Build Include="dbo\Tables\UserVideoRating.sql" />
     <Build Include="dbo\Tables\UserProfile.sql" />
     <Build Include="dbo\Tables\UserMessage.sql" />
+    <Build Include="dbo\Tables\VideoIndexingCost.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />
