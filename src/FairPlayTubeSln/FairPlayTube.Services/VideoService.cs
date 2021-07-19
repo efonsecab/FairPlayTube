@@ -151,26 +151,27 @@ namespace FairPlayTube.Services
             CancellationToken cancellationToken)
         {
             MemoryStream stream = null;
-            if (!String.IsNullOrWhiteSpace(uploadVideoModel.SourceUrl))
-            {
-                uploadVideoModel.FileBytes = await this.CustomHttpClient.GetByteArrayAsync(uploadVideoModel.SourceUrl);
-            }
-            stream = new MemoryStream(uploadVideoModel.FileBytes);
-            cancellationToken.ThrowIfCancellationRequested();
-            var userAzueAdB2cObjectId = this.CurrentUserProvider.GetObjectId();
-            string extension = Path.GetExtension(uploadVideoModel.FileName);
-            string newFileName = $"{uploadVideoModel.Name}{extension}";
-            var existentVideo = await this.FairplaytubeDatabaseContext.VideoInfo
-                .Include(p => p.ApplicationUser)
+            var fileExtension = Path.GetExtension(uploadVideoModel.SourceUrl);
+            if (String.IsNullOrWhiteSpace(fileExtension))
+                throw new Exception("Please make sure the source file has a valid extension like .mp4");
+            var existentVideoName = await this.FairplaytubeDatabaseContext.VideoInfo
                 .SingleOrDefaultAsync(p =>
             p.AccountId.ToString() == this.AzureVideoIndexerConfiguration.AccountId &&
             p.Location == this.AzureVideoIndexerConfiguration.Location &&
-            p.ApplicationUser.AzureAdB2cobjectId.ToString() == userAzueAdB2cObjectId &&
-            p.FileName == newFileName, cancellationToken: cancellationToken);
-            if (existentVideo != null)
-                throw new Exception($"You already have a video named: {newFileName}. Please use another name and try again");
+            p.Name == uploadVideoModel.Name, cancellationToken: cancellationToken);
+            if (existentVideoName != null)
+                throw new Exception($"Unable to use the Name: {uploadVideoModel.Name}. Please use another name and try again");
+            byte[] fileBytes = null;
+            if (!String.IsNullOrWhiteSpace(uploadVideoModel.SourceUrl))
+            {
+                fileBytes = await this.CustomHttpClient.GetByteArrayAsync(uploadVideoModel.SourceUrl);
+            }
+            stream = new MemoryStream(fileBytes);
+            cancellationToken.ThrowIfCancellationRequested();
+            var userAzueAdB2cObjectId = this.CurrentUserProvider.GetObjectId();
             stream.Position = 0;
             cancellationToken.ThrowIfCancellationRequested();
+            var newFileName = $"{uploadVideoModel.Name}{fileExtension}";
             await this.AzureBlobStorageService.UploadFileAsync(this.DataStorageConfiguration.ContainerName,
                 $"{userAzueAdB2cObjectId}/{newFileName}",
                 stream, cancellationToken: cancellationToken);
@@ -192,7 +193,7 @@ namespace FairPlayTube.Services
                 //$"/{indexVideoResponse.id}/" +
                 //$"?&locale=en&location={this.AzureVideoIndexerConfiguration.Location}",
                 AccountId = Guid.Parse(this.AzureVideoIndexerConfiguration.AccountId),
-                FileName = uploadVideoModel.FileName,
+                FileName = newFileName,
                 VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Pending
             }, cancellationToken: cancellationToken);
             cancellationToken.ThrowIfCancellationRequested();
