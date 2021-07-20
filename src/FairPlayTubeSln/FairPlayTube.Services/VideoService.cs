@@ -239,5 +239,22 @@ namespace FairPlayTube.Services
                 cancellationToken: cancellationToken);
             return isVideoOwner;
         }
+
+        public async Task AddVideoIndexTransactionsAsync(string[] videoIds,
+            CancellationToken cancellationToken)
+        {
+            var query = this.FairplaytubeDatabaseContext.VideoInfo
+                .Include(p => p.ApplicationUser).Where(p => videoIds.Contains(p.VideoId));
+
+            foreach (var singleVideoEntity in query)
+            {
+                await this.FairplaytubeDatabaseContext.VideoIndexingTransaction.AddAsync(new VideoIndexingTransaction()
+                {
+                    VideoInfoId = singleVideoEntity.VideoInfoId
+                }, cancellationToken);
+            }
+
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
+        }
     }
 }
