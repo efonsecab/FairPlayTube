@@ -66,6 +66,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[VideoIndexingCost]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoIndexingTransaction]",
          "ObjectType": 0
       },
@@ -82,7 +86,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "C:\\Users\\Federico Jose Lucia\\source\\repos\\PTICR\\src\\FairPlayTubeSln\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
+   "UiHint": "C:\\Projects\\PTI\\GitHub\\FairPlayTube\\src\\FairPlayTubeSln\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,
