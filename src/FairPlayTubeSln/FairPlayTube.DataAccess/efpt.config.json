@@ -70,6 +70,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[VideoIndexingMargin]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoIndexingTransaction]",
          "ObjectType": 0
       },
