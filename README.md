@@ -6,7 +6,7 @@
 
 Hopefully this project is very useful to you.
 
-In order to keep the project free, you can help with some of the costs using the Sponsos link.
+In order to keep the project free, you can help with some of the costs using the Sponsor link.
 
 ![](Images/FairPlayTubeInitialLayout.png?raw=true)
 
@@ -25,7 +25,7 @@ Facebook: https://www.facebook.com/Fairplaytube-106615948308091
 [Check the Project Intro](https://youtu.be/iUdjur6sl8g)
 
 ## How To Contribute
-One way of helping the project is by giving it a Star :star: and sharing it on your social media profiles (Facebook, Twitter, LinkedIn, etc)
+One way of helping the project is by giving it a Star :star: and sharing it on your social media profiles (Facebook, Twitter, LinkedIn, etc), please use the hashtag #FairPlayTube
 
 If you'd like to do code contribution see [CONTRIBUTING](CONTRIBUTING.md)
 
