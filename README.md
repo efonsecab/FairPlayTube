@@ -5,6 +5,7 @@
 <!-- CUSTOM-BADGES:START-->
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/efonsecab/FairPlayTube?style=flat-square)
 ![GitHub followers](https://img.shields.io/github/followers/efonsecab?style=flat-square)
+![GitHub forks](https://img.shields.io/github/forks/efonsecab/FairPlayTube?style=flat-square)
 <!-- CUSTOM-BADGES:END -->
 ## The Next Generation of Video Sharing Portals
 
