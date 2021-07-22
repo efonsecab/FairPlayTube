@@ -2,6 +2,10 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+<!-- CUSTOM-BADGES:START-->
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/efonsecab/FairPlayTube?style=flat-square)
+![GitHub followers](https://img.shields.io/github/followers/efonsecab?style=flat-square)
+<!-- CUSTOM-BADGES:END -->
 ## The Next Generation of Video Sharing Portals
 
 Hopefully this project is very useful to you.
