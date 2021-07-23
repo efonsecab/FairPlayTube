@@ -95,5 +95,19 @@ namespace FairPlayTube.Controllers
                 .ToArrayAsync(cancellationToken: cancellationToken);
             return result;
         }
+
+
+        [HttpPut("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task<IActionResult> UpdateMyVideo(string videoId, UpdateVideoModel model,
+            CancellationToken cancellationToken)
+        {
+            var userObjectId = this.CurrentUserProvider.GetObjectId();
+
+            if (!await this.VideoService.IsVideoOwnerAsync(videoId, userObjectId, cancellationToken))
+                throw new Exception($"User {userObjectId} is not allowed to modify Video: {videoId}");
+            await this.VideoService.UpdateVideo(videoId, model);
+            return Ok();
+        }
     }
 }
