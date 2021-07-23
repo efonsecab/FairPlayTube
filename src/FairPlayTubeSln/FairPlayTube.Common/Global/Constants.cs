@@ -8,6 +8,15 @@ namespace FairPlayTube.Common.Global
 {
     public class Constants
     {
+        public class PriceLimits
+        {
+            public const int MinVideoPrice = 0;
+            public const int MaxVideoPrice = 100;
+        }
+        public class CurrencySymbols
+        {
+            public const string Dollars = "$";
+        }
         public class Hubs
         {
             public const string NotificationHub = "/NotificationHub";

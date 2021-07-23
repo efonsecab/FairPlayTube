@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FairPlayTube.Common.Global;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
@@ -19,5 +20,8 @@ namespace FairPlayTube.Models.Video
         [StringLength(500)]
         [Required]
         public string SourceUrl { get; set; }
+        [Required]
+        [Range(Constants.PriceLimits.MinVideoPrice, Constants.PriceLimits.MaxVideoPrice)]
+        public int Price { get; set; }
     }
 }

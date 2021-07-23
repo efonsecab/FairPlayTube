@@ -187,6 +187,7 @@ namespace FairPlayTube.Services
                 Description = uploadVideoModel.Description,
                 Location = this.AzureVideoIndexerConfiguration.Location,
                 Name = uploadVideoModel.Name,
+                Price = uploadVideoModel.Price,
                 //VideoId = indexVideoResponse.id,
                 VideoBloblUrl = fileUrl,
                 //IndexedVideoUrl = $"https://www.videoindexer.ai/embed/player/{this.AzureVideoIndexerConfiguration.AccountId}" +
