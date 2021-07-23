@@ -55,7 +55,7 @@ namespace FairPlayTube.Services
             CancellationToken cancellationToken)
         {
             var query = this.FairplaytubeDatabaseContext.VideoInfo
-                .Include(p=>p.ApplicationUser).Where(p => videoIds.Contains(p.VideoId));
+                .Include(p => p.ApplicationUser).Where(p => videoIds.Contains(p.VideoId));
             foreach (var singleVideoEntity in query)
             {
                 var singleVideoIndex = await this.AzureVideoIndexerService
@@ -68,7 +68,7 @@ namespace FairPlayTube.Services
             foreach (var singleVideoEntity in query)
             {
                 await this.HubContext.Clients.User(singleVideoEntity.ApplicationUser.AzureAdB2cobjectId.ToString())
-                    .ReceiveMessage(new Models.Notifications.NotificationModel() 
+                    .ReceiveMessage(new Models.Notifications.NotificationModel()
                     {
                         Message = $"Your video: '{singleVideoEntity.Name}' has been processed"
                     });
@@ -124,7 +124,7 @@ namespace FairPlayTube.Services
                 .ThenInclude(p => p.UserExternalMonetization)
                 .Where(p =>
             p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed)
-                .OrderByDescending(p=>p.VideoInfoId);
+                .OrderByDescending(p => p.VideoInfoId);
         }
 
         public IQueryable<VideoInfo> GetPublicProcessedVideosByKeyword(string keyword)
@@ -256,6 +256,16 @@ namespace FairPlayTube.Services
             }
 
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
+        }
+
+        public async Task UpdateVideo(string videoId, UpdateVideoModel model)
+        {
+            var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
+                .SingleOrDefaultAsync(p => p.VideoId == videoId);
+            if (videoEntity == null)
+                throw new Exception($"Unable to find video with Id: {videoId}");
+            videoEntity.Price = model.Price;
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync();
         }
     }
 }
