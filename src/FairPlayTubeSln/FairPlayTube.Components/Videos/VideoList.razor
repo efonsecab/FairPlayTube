@@ -29,8 +29,9 @@
                         </CardBody>
                         <CardFooter>
                             <ul class="list-group">
-                                <li><string>Name: </string>@singleVideo.Name</li>
-                                <li><string>Publisher: </string>@singleVideo.Publisher</li>
+                                <li><strong>Name: </strong>@singleVideo.Name</li>
+                                <li><strong>Publisher: </strong>@singleVideo.Publisher</li>
+                                <li><strong>Price: </strong>@( $"{Constants.CurrencySymbols.Dollars}{singleVideo.Price}")</li>
                             </ul>
                         </CardFooter>
                     </FairPlayTube.Components.Bootstrap.Card>
@@ -106,8 +107,8 @@
                 </div>
                 <div class="modal-body">
                     @if (
-                this.SelectedVideo.UserGlobalMonetization != null &&
-                this.SelectedVideo.UserGlobalMonetization.MonetizationItems.Count > 0)
+               this.SelectedVideo.UserGlobalMonetization != null &&
+               this.SelectedVideo.UserGlobalMonetization.MonetizationItems.Count > 0)
                     {
                         <ul>
                             @foreach (var singleMonetizationItem in this.SelectedVideo.UserGlobalMonetization.MonetizationItems)

@@ -25,5 +25,6 @@ namespace FairPlayTube.Models.Video
         public string VideoDurationFormatted => VideoDuration.ToString(@"hh\:mm\:ss");
         public string Publisher { get; set; }
         public GlobalMonetizationModel UserGlobalMonetization { get; set; }
+        public int Price { get; set; }
     }
 }
