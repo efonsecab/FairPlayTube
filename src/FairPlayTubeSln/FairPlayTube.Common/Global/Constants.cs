@@ -8,6 +8,10 @@ namespace FairPlayTube.Common.Global
 {
     public class Constants
     {
+        public class Commissions
+        {
+            public const decimal VideoAccess = 0.05M;//5% 
+        }
         public class PriceLimits
         {
             public const int MinVideoPrice = 0;
@@ -70,6 +74,7 @@ namespace FairPlayTube.Common.Global
                 public const string ListAllKeywords = "api/Video/ListAllKeywords";
                 public const string UpdateMyVideo = "api/Video/UpdateMyVideo";
                 public const string GetVideo = "api/Video/GetVideo";
+                public const string BuyVideoAccess = "/api/Video/BuyVideoAccess";
             }
             public class UserController
             {

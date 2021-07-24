@@ -25,13 +25,20 @@ namespace FairPlayTube.Controllers.Tests
             VideoIndexStatusId = (int)Common.Global.Enums.VideoIndexStatus.Processed,
             VideoBloblUrl = TestsBase.TestVideoBloblUrl,
             Location = TestsBase.AzureVideoIndexerConfiguration.Location,
-            AccountId = Guid.Parse(TestsBase.AzureVideoIndexerConfiguration.AccountId)
+            AccountId = Guid.Parse(TestsBase.AzureVideoIndexerConfiguration.AccountId),
+            Price=5,
+            VideoId=Guid.NewGuid().ToString()
         };
 
         [ClassCleanup]
         public static async Task CleanTests()
         {
             using var dbContext = TestsBase.CreateDbContext();
+            foreach (var singleVideoAccessTransaction in dbContext.VideoAccessTransaction)
+            {
+                dbContext.VideoAccessTransaction.Remove(singleVideoAccessTransaction);
+            }
+            await dbContext.SaveChangesAsync();
             var testEntity = await dbContext.VideoInfo.Where(p => p.Name == TestVideo.Name).SingleAsync();
             dbContext.VideoInfo.Remove(testEntity);
             await dbContext.SaveChangesAsync();
@@ -86,6 +93,27 @@ namespace FairPlayTube.Controllers.Tests
         public void ListVideosByKeywordTest()
         {
             Assert.Inconclusive();
+        }
+
+        [TestMethod()]
+        public async Task BuyVideoAccessTest()
+        {
+            var dbContext = TestsBase.CreateDbContext();
+            var userEntity = await dbContext.ApplicationUser.Where(p => p.AzureAdB2cobjectId.ToString() ==
+            TestsBase.TestAzureAdB2CAuthConfiguration.AzureAdUserObjectId).SingleAsync();
+            userEntity.AvailableFunds = 25;
+            await dbContext.SaveChangesAsync();
+            TestVideo.ApplicationUserId = userEntity.ApplicationUserId;
+            await dbContext.VideoInfo.AddAsync(TestVideo);
+            await dbContext.SaveChangesAsync();
+            var authorizedHttpClient = await base.CreateAuthorizedClientAsync(Role.User);
+            var response = await authorizedHttpClient.PostAsync($"{Constants.ApiRoutes.VideoController.BuyVideoAccess}" +
+                $"?videoId={TestVideo.VideoId}",null);
+            if (!response.IsSuccessStatusCode)
+            {
+                var message = await response.Content.ReadAsStringAsync();
+                Assert.Fail(message);
+            }
         }
     }
 }
