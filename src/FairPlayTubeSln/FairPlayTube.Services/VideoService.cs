@@ -100,6 +100,11 @@ namespace FairPlayTube.Services
                 .Select(p => p.VideoId).ToArrayAsync(cancellationToken: cancellationToken);
         }
 
+        public  IQueryable<VideoInfo> GetvideoAsync(string videoId)
+        {
+            return this.FairplaytubeDatabaseContext.VideoInfo.Where(p => p.VideoId == videoId);
+        }
+
         public async Task<string> GetVideoEditAccessTokenAsync(string videoId)
         {
             var accessToken = await this.AzureVideoIndexerService.GetVideoAccessTokenStringAsync(videoId, allowEdit: true);

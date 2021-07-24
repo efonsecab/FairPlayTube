@@ -109,5 +109,13 @@ namespace FairPlayTube.Controllers
             await this.VideoService.UpdateVideo(videoId, model);
             return Ok();
         }
+
+        [HttpGet("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task<VideoInfoModel> GetVideo(string videoId, CancellationToken cancellationToken)
+        {
+            return await this.VideoService.GetvideoAsync(videoId).Select(
+                p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p)).SingleOrDefaultAsync();
+        }
     }
 }

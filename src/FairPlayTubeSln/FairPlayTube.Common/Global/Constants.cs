@@ -55,6 +55,7 @@ namespace FairPlayTube.Common.Global
             public const string ProfileMonetization = "/Users/Profile/Monetization";
             public const string List = "/Users/List";
             public const string MyFunds = "/Users/MyFunds";
+            public const string Details = "/Users/Videos/Details/{VideoId}";
         }
 
         public class ApiRoutes
@@ -67,6 +68,8 @@ namespace FairPlayTube.Common.Global
                 public const string GetMyProcessedVideos = "api/Video/GetMyProcessedVideos";
                 public const string GetVideoEditAccessToken = "api/Video/GetVideoEditAccessToken";
                 public const string ListAllKeywords = "api/Video/ListAllKeywords";
+                public const string UpdateMyVideo = "api/Video/UpdateMyVideo";
+                public const string GetVideo = "api/Video/GetVideo";
             }
             public class UserController
             {
