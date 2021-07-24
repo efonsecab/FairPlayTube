@@ -1,0 +1,18 @@
+﻿<EditForm Model="@UpdateVideoModel" OnValidSubmit="OnValidSubmit">
+    <div class="mb-3">
+        <Loading IsLoading="IsSubmitting"></Loading>
+    </div>
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <div class="mb-3">
+        <label class="form-label">Price (@Common.Global.Constants.CurrencySymbols.Dollars) - (@Constants.PriceLimits.MinVideoPrice, @Constants.PriceLimits.MaxVideoPrice)</label>
+        <InputNumber class="form-control" @bind-Value="UpdateVideoModel.Price"
+                     ParsingErrorMessage="The Price must be a valid integer number"></InputNumber>
+    </div>
+    @if (!IsSubmitting)
+    {
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    }
+</EditForm>
