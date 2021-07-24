@@ -81,6 +81,7 @@
     <Build Include="dbo\Tables\VideoIndexingCost.sql" />
     <Build Include="dbo\Tables\VideoIndexingTransaction.sql" />
     <Build Include="dbo\Tables\VideoIndexingMargin.sql" />
+    <Build Include="dbo\Tables\VideoAccessTransaction.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />
