@@ -117,5 +117,13 @@ namespace FairPlayTube.Controllers
             return await this.VideoService.GetvideoAsync(videoId).Select(
                 p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p)).SingleOrDefaultAsync();
         }
+
+        [HttpPost("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task BuyVideoAccess(string videoId, CancellationToken cancellationToken)
+        {
+            var userObjectId = this.CurrentUserProvider.GetObjectId();
+            await VideoService.BuyVideoAccessAsync(azureAdB2CObjectId: userObjectId, videoId: videoId, cancellationToken: cancellationToken);
+        }
     }
 }

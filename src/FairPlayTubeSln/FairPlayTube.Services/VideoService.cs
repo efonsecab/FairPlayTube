@@ -111,6 +111,30 @@ namespace FairPlayTube.Services
             return accessToken;
         }
 
+        public async Task BuyVideoAccessAsync(string azureAdB2CObjectId, string videoId, CancellationToken cancellationToken)
+        {
+            var userEntity = await this.FairplaytubeDatabaseContext.ApplicationUser.SingleAsync(p => p.AzureAdB2cobjectId.ToString() == azureAdB2CObjectId);
+            var videoInfoEntity = await this.FairplaytubeDatabaseContext.VideoInfo.SingleAsync(p => p.VideoId == videoId);
+            var videoPrice = videoInfoEntity.Price;
+            var userAvailableFunds = userEntity.AvailableFunds;
+            var commissionToApply = Common.Global.Constants.Commissions.VideoAccess;
+            var totalPrice = videoPrice + (videoPrice * commissionToApply);
+            if (userAvailableFunds < totalPrice)
+            {
+                string message = $"User {azureAdB2CObjectId} cannot buy access to video: {videoId}. Total Price: {totalPrice}. Available Funds: {userAvailableFunds}";
+                throw new Exception(message);
+            }
+            await this.FairplaytubeDatabaseContext.VideoAccessTransaction.AddAsync(new VideoAccessTransaction() 
+            {
+                AppliedPrice=videoPrice,
+                BuyerApplicationUserId=userEntity.ApplicationUserId,
+                AppliedCommission=commissionToApply,
+                TotalPrice=totalPrice,
+                VideoInfoId=videoInfoEntity.VideoInfoId
+            });
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+        }
+
         public async Task<SearchVideosResponse> GetVideoIndexerStatus(string[] videoIds,
             CancellationToken cancellationToken)
         {
