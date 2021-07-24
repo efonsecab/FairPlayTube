@@ -1,6 +1,4 @@
-﻿@inject IJSRuntime JSRuntime
-
-<div>
+﻿<div>
     <div id="smart-button-container">
         <div style="text-align: center;">
             <div style="margin-bottom: 1.25rem;">
@@ -12,15 +10,3 @@
         </div>
     </div>
 </div>
-
-@code{
-
-    protected async override Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await JSRuntime.InvokeVoidAsync("initPayPalButton");
-            StateHasChanged();
-        }
-    }
-}

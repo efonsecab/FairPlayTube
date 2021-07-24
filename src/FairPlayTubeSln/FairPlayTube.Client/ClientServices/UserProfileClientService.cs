@@ -50,5 +50,20 @@ namespace FairPlayTube.Client.ClientServices
             return await authorizedHttpClient.GetFromJsonAsync<UserModel[]>(
                 Constants.ApiRoutes.UserController.ListUsers);
         }
+
+        public async Task AddFunds(string paypalOrderId)
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            string requestUrl = $"{Constants.ApiRoutes.UserProfileController.AddFunds}?orderId={paypalOrderId}";
+            var response = await authorizedHttpClient.PostAsync(requestUrl, null);
+            if (!response.IsSuccessStatusCode)
+            {
+                ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
+                if (problemHttpResponse != null)
+                    await this.ToastifyService.DisplayErrorNotification(problemHttpResponse.Detail);
+                else
+                    throw new Exception(response.ReasonPhrase);
+            }
+        }
     }
 }

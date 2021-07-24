@@ -66,11 +66,13 @@ namespace FairPlayTube
             ConfigureAzureVideoIndexer(services);
             ConfigureAzureBlobStorage(services);
             ConfigureDataStorage(services);
+            ConfigurePayPal(services);
+
             var smtpConfiguration = Configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
             services.AddSingleton(smtpConfiguration);
-            services.AddTransient<EmailService>();
-
+            services.AddScoped<EmailService>();
             services.AddScoped<VideoService>();
+            services.AddScoped<PaymentService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAdB2C"));
@@ -187,6 +189,14 @@ namespace FairPlayTube
 
         }
 
+        private void ConfigurePayPal(IServiceCollection services)
+        {
+            PaypalConfiguration paypalConfiguration = Configuration.GetSection(nameof(PaypalConfiguration))
+                            .Get<PaypalConfiguration>();
+            services.AddSingleton(paypalConfiguration);
+            services.AddScoped<PaypalService>();
+        }
+
         private void ConfigureDataStorage(IServiceCollection services)
         {
             DataStorageConfiguration dataStorageConfiguration =
@@ -295,7 +305,10 @@ namespace FairPlayTube
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
                 endpoints.MapHub<NotificationHub>(Common.Global.Constants.Hubs.NotificationHub);
-                endpoints.MapFallbackToFile("index.html");
+                if (env.IsProduction())
+                    endpoints.MapFallbackToFile("index.html");
+                else
+                    endpoints.MapFallbackToFile("index.Development.html");
             });
         }
 

@@ -204,7 +204,7 @@ namespace FairPlayTube.Services
             var newFileName = $"{uploadVideoModel.Name}{fileExtension}";
             await this.AzureBlobStorageService.UploadFileAsync(this.DataStorageConfiguration.ContainerName,
                 $"{userAzueAdB2cObjectId}/{newFileName}",
-                stream, cancellationToken: cancellationToken);
+                stream, overwrite:false, cancellationToken: cancellationToken);
             string fileUrl = $"https://{this.DataStorageConfiguration.AccountName}.blob.core.windows.net" +
                 $"/{this.DataStorageConfiguration.ContainerName}/{userAzueAdB2cObjectId}/{newFileName}";
             cancellationToken.ThrowIfCancellationRequested();
