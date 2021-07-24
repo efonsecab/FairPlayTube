@@ -42,4 +42,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="BrandVideoId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="6981ca18-c4e3-4c96-8932-be5a4e137976" ChangeDateTime="07/24/2021 15:03:41">
+    <Property Name="ElementName" Value="[dbo].[VideoAccessTransaction].[AppliedCommission]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VideoAccessTransaction]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AppliedMarginId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="15c903e7-6a1b-4856-9bdf-3b9a5d9d5a52" ChangeDateTime="07/24/2021 15:04:04">
+    <Property Name="ElementName" Value="[dbo].[VideoAccessTransaction].[AppliedMarginId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VideoAccessTransaction]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AppliedCommission" />
+  </Operation>
 </Operations>

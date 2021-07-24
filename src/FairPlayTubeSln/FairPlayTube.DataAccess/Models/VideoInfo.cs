@@ -14,6 +14,7 @@ namespace FairPlayTube.DataAccess.Models
         public VideoInfo()
         {
             BrandVideo = new HashSet<BrandVideo>();
+            VideoAccessTransaction = new HashSet<VideoAccessTransaction>();
             VideoIndexKeyword = new HashSet<VideoIndexKeyword>();
             VideoIndexingTransaction = new HashSet<VideoIndexingTransaction>();
         }
@@ -60,6 +61,8 @@ namespace FairPlayTube.DataAccess.Models
         public virtual UserVideoRating UserVideoRating { get; set; }
         [InverseProperty("VideoInfo")]
         public virtual ICollection<BrandVideo> BrandVideo { get; set; }
+        [InverseProperty("VideoInfo")]
+        public virtual ICollection<VideoAccessTransaction> VideoAccessTransaction { get; set; }
         [InverseProperty("VideoInfo")]
         public virtual ICollection<VideoIndexKeyword> VideoIndexKeyword { get; set; }
         [InverseProperty("VideoInfo")]
