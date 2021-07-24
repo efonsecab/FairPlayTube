@@ -7,21 +7,31 @@
                 <div class="col">
                     <FairPlayTube.Components.Bootstrap.Card Width="100%">
                         <CardHeader>
-                            <strong>Duration: </strong>@singleVideo.VideoDurationFormatted
-                            <button type="button" class="btn btn-info rounded-circle"
-                                    @onclick="@( ()=> SelectVideo(singleVideo))">
-                                <i class="bi bi-eye-fill"></i>
-                            </button>
-                            <MonetizationIconButton OnClicked="@(  ()=> OnMonetizationIconClicked(singleVideo))">
-                            </MonetizationIconButton>
-                            <button type="button" class="btn btn-info rounded-circle"
-                                    @onclick="@(  ()=> OnVideoDescriptionClicked(singleVideo))">
-                                <i class="bi bi-card-text"></i>
-                            </button>
+                            <div>
+                                <strong>Duration: </strong>@singleVideo.VideoDurationFormatted
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-info rounded-circle"
+                                        @onclick="@( ()=> SelectVideo(singleVideo))">
+                                    <i class="bi bi-eye-fill"></i>
+                                </button>
+                                <MonetizationIconButton OnClicked="@(  ()=> OnMonetizationIconClicked(singleVideo))">
+                                </MonetizationIconButton>
+                                <button type="button" class="btn btn-info rounded-circle"
+                                        @onclick="@(  ()=> OnVideoDescriptionClicked(singleVideo))">
+                                    <i class="bi bi-card-text"></i>
+                                </button>
+                                @if (singleVideo.Price > 0)
+                                {
+                                    <button type="button" class="btn btn-info rounded-circle">
+                                        <i class="bi bi-cart-plus-fill"></i>
+                                    </button>
+                                }
+                            </div>
                         </CardHeader>
                         <CardBody>
                             <div class="embed-responsive embed-responsive-1by1">
-                                <iframe class="embed-responsive-item"
+                                <iframe class="embed-responsive-item" style="width:100%;"
                                         src="@singleVideo.PublicPlayerUrl"
                                         frameborder="0"
                                         allowfullscreen></iframe>
@@ -107,8 +117,8 @@
                 </div>
                 <div class="modal-body">
                     @if (
-               this.SelectedVideo.UserGlobalMonetization != null &&
-               this.SelectedVideo.UserGlobalMonetization.MonetizationItems.Count > 0)
+              this.SelectedVideo.UserGlobalMonetization != null &&
+              this.SelectedVideo.UserGlobalMonetization.MonetizationItems.Count > 0)
                     {
                         <ul>
                             @foreach (var singleMonetizationItem in this.SelectedVideo.UserGlobalMonetization.MonetizationItems)
