@@ -132,6 +132,7 @@ namespace FairPlayTube.Services
                 TotalPrice=totalPrice,
                 VideoInfoId=videoInfoEntity.VideoInfoId
             });
+            userEntity.AvailableFunds -= totalPrice;
             await this.FairplaytubeDatabaseContext.SaveChangesAsync();
         }
 
