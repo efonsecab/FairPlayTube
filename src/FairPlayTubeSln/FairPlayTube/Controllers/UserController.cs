@@ -113,5 +113,6 @@ namespace FairPlayTube.Controllers
                     Message = $"You have a new message from: {sender.FullName}"
                 });
         }
+
     }
 }

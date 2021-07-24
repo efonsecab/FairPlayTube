@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace FairPlayTube.Models.Paypal
 {
 
-    public class PaypalApprovedCheckoutDetails
+    public class PaypalCheckoutApprovedDetailsModel
     {
         public string id { get; set; }
         public string intent { get; set; }

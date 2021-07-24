@@ -10,8 +10,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-    <PackageReference Include="PTI.Microservices.Library" Version="1.0.3.10-preview" />
-    <PackageReference Include="PTI.Microservices.Library.Models" Version="1.0.3.10-preview" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
+    <PackageReference Include="PTI.Microservices.Library.AzureBlobStorage" Version="2.0.0-preview" />
+    <PackageReference Include="PTI.Microservices.Library.AzureVideoIndexer" Version="2.0.0-preview" />
+    <PackageReference Include="PTI.Microservices.Library.PayPal" Version="2.0.0.1-preview" />
   </ItemGroup>
 
   <ItemGroup>

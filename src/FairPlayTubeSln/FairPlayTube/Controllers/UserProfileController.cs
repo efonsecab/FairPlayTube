@@ -1,8 +1,9 @@
 ﻿using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Data;
+using FairPlayTube.Models.Paypal;
 using FairPlayTube.Models.UserProfile;
+using FairPlayTube.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,12 +21,14 @@ namespace FairPlayTube.Controllers
     {
         private FairplaytubeDatabaseContext FairplaytubeDatabaseContext { get; }
         private ICurrentUserProvider CurrentUserProvider { get; }
+        private PaymentService PaymentService { get; }
 
         public UserProfileController(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
-            ICurrentUserProvider currentUserProvider)
+            ICurrentUserProvider currentUserProvider, PaymentService paymentService)
         {
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
             this.CurrentUserProvider = currentUserProvider;
+            this.PaymentService = paymentService;
         }
 
         [HttpPost("[action]")]
@@ -84,6 +87,14 @@ namespace FairPlayTube.Controllers
 
                     }
                 };
+        }
+
+        [HttpPost("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task AddFunds(string orderId, CancellationToken cancellationToken)
+        {
+            var azureAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
+            await this.PaymentService.AddFundsAsync(azureAdB2CObjectId: azureAdB2CObjectId, orderId, cancellationToken);
         }
     }
 }

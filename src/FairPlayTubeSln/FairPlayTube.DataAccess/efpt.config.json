@@ -38,6 +38,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[PaypalTransaction]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[UserExternalMonetization]",
          "ObjectType": 0
       },
