@@ -102,7 +102,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "C:\\Projects\\PTI\\GitHub\\FairPlayTube\\src\\FairPlayTubeSln\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
+   "UiHint": "C:\\Users\\Federico Jose Lucia\\source\\repos\\PTICR\\FairPlayTube\\src\\FairPlayTubeSln\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,

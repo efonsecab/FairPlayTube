@@ -13,7 +13,8 @@ namespace FairPlayTube.DataAccess.Models
     {
         [Key]
         public long VideoIndexingMarginId { get; set; }
-        public byte Margin { get; set; }
+        [Column(TypeName = "decimal(5, 4)")]
+        public decimal Margin { get; set; }
         public DateTimeOffset RowCreationDateTime { get; set; }
         [Required]
         [StringLength(256)]
