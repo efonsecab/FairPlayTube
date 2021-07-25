@@ -45,7 +45,15 @@ Solves #1
 
 Documentation Contributors Required
 ---------------
+
 We are looking for persons who'd like to collaborate with system documentation in the following areas
 * Keeping GitHub documentation up to date
 * Recording videos on How to setup the system
 * Recording videos on How to use the system
+
+UX & UI Experts Contributors Required
+---------------
+
+We are looking for UX and UI to collaborate with the design for the system.
+We plan to have a UI that would work for both Desktop and mobile devices, using Blazor and Bootstrap.
+We plan the UI to also look good on MAUI Blazor.
