@@ -1,4 +1,5 @@
 ﻿using FairPlayTube.Common.Interfaces;
+using FairPlayTube.Common.Providers;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace FairPlayTube.DataAccess.Data
             string rowCretionUser = String.Empty;
             if (entities.Any(p => p is IOriginatorInfo))
             {
-                ipAddresses = String.Join(",", GetCurrentHostIPv4Addresses());
+                ipAddresses = String.Join(",", IpAddressProvider.GetCurrentHostIPv4Addresses());
                 assemblyFullName = System.Reflection.Assembly.GetEntryAssembly().FullName;
                 rowCretionUser = this.CurrentUserProvider.GetUsername();
             }
@@ -91,36 +92,6 @@ namespace FairPlayTube.DataAccess.Data
                     validationContext,
                     validateAllProperties: true);
             }
-        }
-
-        public static List<string> GetCurrentHostIPv4Addresses()
-        {
-            //Check https://stackoverflow.com/questions/50386546/net-core-2-x-how-to-get-the-current-active-local-network-ipv4-address
-            // order interfaces by speed and filter out down and loopback
-            // take first of the remaining
-            var allUpInterfaces = NetworkInterface.GetAllNetworkInterfaces()
-                .OrderByDescending(c => c.Speed)
-                .Where(c => c.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
-                c.OperationalStatus == OperationalStatus.Up).ToList();
-            List<string> lstIps = new();
-            if (allUpInterfaces != null && allUpInterfaces.Count > 0)
-            {
-                foreach (var singleUpInterface in allUpInterfaces)
-                {
-                    var props = singleUpInterface.GetIPProperties();
-                    // get first IPV4 address assigned to this interface
-                    var allIpV4Address = props.UnicastAddresses
-                        .Where(c => c.Address.AddressFamily == AddressFamily.InterNetwork)
-                        .Select(c => c.Address)
-                        .ToList();
-                    allIpV4Address.ForEach((IpV4Address) =>
-                    {
-                        lstIps.Add(IpV4Address.ToString());
-                    });
-                }
-            }
-
-            return lstIps;
         }
     }
 }

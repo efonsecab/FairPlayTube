@@ -13,6 +13,7 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
     <PackageReference Include="PTI.Microservices.Library.AzureBlobStorage" Version="2.0.0-preview" />
     <PackageReference Include="PTI.Microservices.Library.AzureVideoIndexer" Version="2.0.0-preview" />
+    <PackageReference Include="PTI.Microservices.Library.IpStack" Version="2.0.0-preview" />
     <PackageReference Include="PTI.Microservices.Library.PayPal" Version="2.0.0.1-preview" />
   </ItemGroup>
 

@@ -67,12 +67,14 @@ namespace FairPlayTube
             ConfigureAzureBlobStorage(services);
             ConfigureDataStorage(services);
             ConfigurePayPal(services);
+            ConfigureIpStackService(services);
 
             var smtpConfiguration = Configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
             services.AddSingleton(smtpConfiguration);
             services.AddScoped<EmailService>();
             services.AddScoped<VideoService>();
             services.AddScoped<PaymentService>();
+            services.AddScoped<VisitorTrackingService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAdB2C"));
@@ -187,6 +189,15 @@ namespace FairPlayTube
                 });
             }
 
+        }
+
+        private void ConfigureIpStackService(IServiceCollection services)
+        {
+            IpStackConfiguration ipStackConfiguration =
+                            Configuration.GetSection(nameof(IpStackConfiguration))
+                            .Get<IpStackConfiguration>();
+            services.AddSingleton(ipStackConfiguration);
+            services.AddScoped<IpStackService>();
         }
 
         private void ConfigurePayPal(IServiceCollection services)
