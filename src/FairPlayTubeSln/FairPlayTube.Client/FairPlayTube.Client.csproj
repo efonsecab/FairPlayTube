@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FairPlayTube.ClientServices\FairPlayTube.ClientServices.csproj" />
     <ProjectReference Include="..\FairPlayTube.Common\FairPlayTube.Common.csproj" />
     <ProjectReference Include="..\FairPlayTube.Components\FairPlayTube.Components.csproj" />
     <ProjectReference Include="..\FairPlayTube.Models\FairPlayTube.Models.csproj" />
@@ -27,6 +28,10 @@
     <Content Update="Pages\Index.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientServices\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties wwwroot_4appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

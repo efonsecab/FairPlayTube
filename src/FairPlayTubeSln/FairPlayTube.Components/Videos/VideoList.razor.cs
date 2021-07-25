@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Models.Video;
+﻿using FairPlayTube.ClientServices;
+using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,23 @@ namespace FairPlayTube.Components.Videos
     {
         [Parameter]
         public VideoInfoModel[] AllVideos { get; set; }
+        [Parameter]
+        public bool AllowEdit { get; set; } = false;
+        [Inject]
+        private VideoClientService VideoClientService { get; set; }
         private VideoInfoModel SelectedVideo { get; set; }
         private bool IsLoading { get; set; }
         private bool ShowInsights { get; set; }
         private bool ShowMonetizationLinks { get; set; }
         private bool ShowVideoDescription { get; set; }
 
-        private void SelectVideo(VideoInfoModel videoInfoModel)
+        private async Task SelectVideo(VideoInfoModel videoInfoModel)
         {
             this.SelectedVideo = videoInfoModel;
+            if (AllowEdit)
+            {
+                this.SelectedVideo.EditAccessToken = await this.VideoClientService.GetVideoEditAccessToken(videoInfoModel.VideoId);
+            }
             this.ShowInsights = true;
         }
 
@@ -51,6 +60,18 @@ namespace FairPlayTube.Components.Videos
         {
             this.SelectedVideo = null;
             this.ShowVideoDescription = false;
+        }
+
+        private string GetVideoInsightsUrl(VideoInfoModel model)
+        {
+            if (this.AllowEdit)
+            {
+                return model.PrivateInsightsUrl;
+            }
+            else
+            {
+                return model.PublicInsightsUrl;
+            }
         }
     }
 }

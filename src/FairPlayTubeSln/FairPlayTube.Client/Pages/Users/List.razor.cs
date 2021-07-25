@@ -1,4 +1,4 @@
-﻿using FairPlayTube.Client.ClientServices;
+﻿using FairPlayTube.ClientServices;
 using FairPlayTube.Client.Services;
 using FairPlayTube.Models.UserProfile;
 using Microsoft.AspNetCore.Authorization;
