@@ -1,6 +1,7 @@
 ﻿using FairPlayTube.Models.CustomHttpResponse;
 using FairPlayTube.Models.Video;
 using System;
+using System.Collections.Generic;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Web;
@@ -22,6 +23,13 @@ namespace FairPlayTube.ClientServices
             var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
             return await anonymousHttpClient.GetFromJsonAsync<VideoInfoModel[]>(
                 ApiRoutes.VideoController.GetPublicProcessedVideos);
+        }
+
+        public async Task<List<VideoStatusModel>> GetMyPendingVideosQueue()
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            return await authorizedHttpClient.GetFromJsonAsync<List<VideoStatusModel>>(
+                ApiRoutes.VideoController.GetMyPendingVideosQueue);
         }
 
         public async Task<VideoInfoModel[]> ListVideosByKeywordAsync(string Keyword)

@@ -304,7 +304,7 @@ namespace FairPlayTube.Services
                 .Include(p => p.ApplicationUser)
                 .Include(p=>p.VideoIndexStatus)
                 .Where(p => p.ApplicationUser.AzureAdB2cobjectId.ToString() == azureAdB2cobjectId
-                //&& p.VideoIndexStatusId != (short) Common.Global.Enums.VideoIndexStatus.Processed
+                && p.VideoIndexStatusId != (short) Common.Global.Enums.VideoIndexStatus.Processed
                 )
                 .OrderByDescending(p=>p.VideoId)
                 .ToListAsync();
