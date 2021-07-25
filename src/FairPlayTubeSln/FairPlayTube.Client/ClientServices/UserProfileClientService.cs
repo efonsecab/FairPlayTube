@@ -25,7 +25,7 @@ namespace FairPlayTube.Client.ClientServices
         public async Task SaveMonetizationAsync(GlobalMonetizationModel globalMonetizationModel)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
-            var response = await authorizedHttpClient.PostAsJsonAsync(ApiRoutes.UserProfileController.SaveMonetization, 
+            var response = await authorizedHttpClient.PostAsJsonAsync(ApiRoutes.UserProfileController.SaveMonetization,
                 globalMonetizationModel);
             if (!response.IsSuccessStatusCode)
             {
@@ -64,6 +64,14 @@ namespace FairPlayTube.Client.ClientServices
                 else
                     throw new Exception(response.ReasonPhrase);
             }
+        }
+
+        public async Task<decimal> GetMyFunds()
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            string requestUrl = $"{Constants.ApiRoutes.UserProfileController.GetMyFunds}";
+            var result = await authorizedHttpClient.GetStringAsync(requestUrl);
+            return Convert.ToDecimal(result);
         }
     }
 }

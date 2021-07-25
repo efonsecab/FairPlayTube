@@ -96,5 +96,17 @@ namespace FairPlayTube.Controllers
             var azureAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
             await this.PaymentService.AddFundsAsync(azureAdB2CObjectId: azureAdB2CObjectId, orderId, cancellationToken);
         }
+
+        [HttpGet("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task<decimal> GetMyFunds(CancellationToken cancellationToken)
+        {
+            var azureAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
+            var result = await this.FairplaytubeDatabaseContext.ApplicationUser
+                .Where(p => p.AzureAdB2cobjectId.ToString() == azureAdB2CObjectId)
+                .Select(p => p.AvailableFunds)
+                .SingleAsync();
+            return result;
+        }
     }
 }

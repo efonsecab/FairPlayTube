@@ -18,6 +18,8 @@ namespace FairPlayTube.Client.CustomComponents.Paypal
         private UserProfileClientService UserProfileClientService { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
+        [Parameter]
+        public EventCallback OnFundsAdded { get; set; }
         private DotNetObjectReference<PaypalCheckout> objRef;
 
         protected override void OnInitialized()
@@ -40,6 +42,7 @@ namespace FairPlayTube.Client.CustomComponents.Paypal
             {
                 await this.UserProfileClientService.AddFunds(data.orderID);
                 await ToastifyService.DisplaySuccessNotification($"Fundas have been added to your {Common.Global.Constants.Titles.AppTitle} Wallter");
+                await OnFundsAdded.InvokeAsync();
             }
             catch (Exception ex)
             {

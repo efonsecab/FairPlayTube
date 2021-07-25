@@ -87,6 +87,7 @@ namespace FairPlayTube.Common.Global
                 public const string SaveMonetization = "api/UserProfile/SaveMonetization";
                 public const string GetMyMonetizationInfo = "api/UserProfile/GetMyMonetizationInfo";
                 public const string AddFunds = "api/UserProfile/AddFunds";
+                public const string GetMyFunds = "api/UserProfile/GetMyFunds";
             }
         }
     }
