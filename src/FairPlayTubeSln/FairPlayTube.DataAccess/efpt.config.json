@@ -96,6 +96,10 @@
       {
          "Name": "[dbo].[VideoInfo]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[VisitorTracking]",
+         "ObjectType": 0
       }
    ],
    "UiHint": "C:\\Projects\\PTI\\GitHub\\FairPlayTube\\src\\FairPlayTubeSln\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
