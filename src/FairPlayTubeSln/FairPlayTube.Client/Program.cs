@@ -56,7 +56,7 @@ namespace FairPlayTube.Client
             builder.Services.AddTransient<VideoClientService>();
             builder.Services.AddTransient<UserProfileClientService>();
             builder.Services.AddTransient<ToastifyService>();
-
+            builder.Services.AddTransient<VisitorTrackingClientService>();
             await builder.Build().RunAsync();
         }
     }

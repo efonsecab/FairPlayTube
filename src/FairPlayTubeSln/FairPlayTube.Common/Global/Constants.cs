@@ -64,6 +64,10 @@ namespace FairPlayTube.Common.Global
 
         public class ApiRoutes
         {
+            public class VisitorTrackingController
+            {
+                public const string TrackClientInformation = "api/VisitorTracking/TrackClientInformation";
+            }
             public class VideoController
             {
                 public const string GetPublicProcessedVideos = "api/Video/GetPublicProcessedVideos";
