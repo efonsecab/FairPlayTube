@@ -38,6 +38,9 @@ If you'd like to do code contribution see [CONTRIBUTING](CONTRIBUTING.md)
 
 See [CODE-OF-CONDUCT](CODE_OF_CONDUCT.md)
 
+## License
+See [LICENSE](LICENSE)
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
