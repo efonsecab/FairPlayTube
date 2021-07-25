@@ -13,6 +13,8 @@ Hopefully this project is very useful to you.
 
 In order to keep the project free, you can help with some of the costs using the Sponsor link.
 
+You can also help the project grow by giving it a Star on your GitHub profile.
+
 Public Page
 ![](Images/FairPlayTube%20HomePage.png?raw=true)
 Logged In User
