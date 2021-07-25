@@ -100,7 +100,7 @@ namespace FairPlayTube.Services
                 .Select(p => p.VideoId).ToArrayAsync(cancellationToken: cancellationToken);
         }
 
-        public  IQueryable<VideoInfo> GetvideoAsync(string videoId)
+        public IQueryable<VideoInfo> GetvideoAsync(string videoId)
         {
             return this.FairplaytubeDatabaseContext.VideoInfo.Where(p => p.VideoId == videoId);
         }
@@ -124,13 +124,13 @@ namespace FairPlayTube.Services
                 string message = $"User {azureAdB2CObjectId} cannot buy access to video: {videoId}. Total Price: {totalPrice}. Available Funds: {userAvailableFunds}";
                 throw new Exception(message);
             }
-            await this.FairplaytubeDatabaseContext.VideoAccessTransaction.AddAsync(new VideoAccessTransaction() 
+            await this.FairplaytubeDatabaseContext.VideoAccessTransaction.AddAsync(new VideoAccessTransaction()
             {
-                AppliedPrice=videoPrice,
-                BuyerApplicationUserId=userEntity.ApplicationUserId,
-                AppliedCommission=commissionToApply,
-                TotalPrice=totalPrice,
-                VideoInfoId=videoInfoEntity.VideoInfoId
+                AppliedPrice = videoPrice,
+                BuyerApplicationUserId = userEntity.ApplicationUserId,
+                AppliedCommission = commissionToApply,
+                TotalPrice = totalPrice,
+                VideoInfoId = videoInfoEntity.VideoInfoId
             });
             userEntity.AvailableFunds -= totalPrice;
             await this.FairplaytubeDatabaseContext.SaveChangesAsync();
@@ -204,7 +204,7 @@ namespace FairPlayTube.Services
             var newFileName = $"{uploadVideoModel.Name}{fileExtension}";
             await this.AzureBlobStorageService.UploadFileAsync(this.DataStorageConfiguration.ContainerName,
                 $"{userAzueAdB2cObjectId}/{newFileName}",
-                stream, overwrite:false, cancellationToken: cancellationToken);
+                stream, overwrite: false, cancellationToken: cancellationToken);
             string fileUrl = $"https://{this.DataStorageConfiguration.AccountName}.blob.core.windows.net" +
                 $"/{this.DataStorageConfiguration.ContainerName}/{userAzueAdB2cObjectId}/{newFileName}";
             cancellationToken.ThrowIfCancellationRequested();
@@ -296,6 +296,19 @@ namespace FairPlayTube.Services
                 throw new Exception($"Unable to find video with Id: {videoId}");
             videoEntity.Price = model.Price;
             await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+        }
+
+        public async Task<List<VideoInfo>> GetUserPendingVideosQueueAsync(string azureAdB2cobjectId, CancellationToken cancellationToken = default)
+        {
+            var videosEntitities = await this.FairplaytubeDatabaseContext.VideoInfo
+                .Include(p => p.ApplicationUser)
+                .Include(p=>p.VideoIndexStatus)
+                .Where(p => p.ApplicationUser.AzureAdB2cobjectId.ToString() == azureAdB2cobjectId
+                //&& p.VideoIndexStatusId != (short) Common.Global.Enums.VideoIndexStatus.Processed
+                )
+                .OrderByDescending(p=>p.VideoId)
+                .ToListAsync();
+            return videosEntitities;
         }
     }
 }
