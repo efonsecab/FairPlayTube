@@ -63,4 +63,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="PaypalOrderId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="ca9af3c2-5f90-4613-85af-969ec4de76b2" ChangeDateTime="07/25/2021 14:23:00">
+    <Property Name="ElementName" Value="[dbo].[VisitorTracking].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VisitorTracking]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VisitorTrackingId" />
+  </Operation>
 </Operations>
