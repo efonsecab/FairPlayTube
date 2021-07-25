@@ -12,7 +12,11 @@
 Hopefully this project is very useful to you.
 
 In order to keep the project free, you can help with some of the costs using the Sponsor link.
+
+Public Page
 ![](Images/FairPlayTube%20HomePage.png?raw=true)
+Logged In User
+![](Images/FairPlayTube%20Logged%20In%20User.png?raw=true)
 
 ## Live Demo Website
 You can check the Live Demo of the latest progress here: https://fairplaytube.pticostarica.com
