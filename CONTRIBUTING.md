@@ -42,3 +42,10 @@ Commit Messages
 Please write detailed descriptions on your commit.
 When creating PRs add a comment referencing the Issue/Task the PR solves, e.g.:
 Solves #1
+
+Documentation Contributors Required
+---------------
+We are looking for persons who'd like to collaborate with system documentation in the following areas
+* Keeping GitHub documentation up to date
+* Recording videos on How to setup the system
+* Recording videos on How to use the system
