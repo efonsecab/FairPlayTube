@@ -20,9 +20,6 @@ on:
   schedule:
     - cron: '23 5 * * 3'
 env:
-  AZURE_WEBAPP_NAME: FairPlayTubeProd
-  AZURE_WEBAPP_PACKAGE_PATH: FairPlayTube/publish
-  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.FairPlayTubeProd_fc52 }}
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 5.0.x
   WORKING_DIRECTORY: src/FairPlayTubeSln/FairPlayTube
