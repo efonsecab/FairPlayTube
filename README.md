@@ -15,6 +15,11 @@ In order to keep the project free, you can help with some of the costs using the
 
 You can also help the project grow by giving it a Star on your GitHub profile.
 
+## Need Help Configuring Your Environment?
+* Contact Eduardo Fonseca on
+  * LinkedIn: https://cr.linkedin.com/in/pticostarica
+  * Twitter: https://twitter.com/efonsecabcr 
+
 ## Roadmap
 [Check roadmap here](roadmap.md)
 
