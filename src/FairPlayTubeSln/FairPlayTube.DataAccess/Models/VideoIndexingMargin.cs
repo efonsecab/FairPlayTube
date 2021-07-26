@@ -16,13 +16,10 @@ namespace FairPlayTube.DataAccess.Models
         [Column(TypeName = "decimal(5, 4)")]
         public decimal Margin { get; set; }
         public DateTimeOffset RowCreationDateTime { get; set; }
-        [Required]
         [StringLength(256)]
         public string RowCreationUser { get; set; }
-        [Required]
         [StringLength(250)]
         public string SourceApplication { get; set; }
-        [Required]
         [Column("OriginatorIPAddress")]
         [StringLength(100)]
         public string OriginatorIpaddress { get; set; }

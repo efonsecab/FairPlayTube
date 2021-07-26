@@ -40,7 +40,7 @@ SET IDENTITY_INSERT [dbo].[VideoIndexingCost] ON
 DECLARE @COST_PER_MINUTE MONEY = 0.21
 IF NOT EXISTS (SELECT * FROM [dbo].[VideoIndexingCost] VIC WHERE [VIC].[CostPerMinute] = @COST_PER_MINUTE)
 BEGIN 
-    INSERT INTO [dbo].[VideoIndexingCost]([VideoIndexingCostId],[CostPerMinute]) VALUES(1, @COST_PER_MINUTE)
+    INSERT INTO [dbo].[VideoIndexingCost]([VideoIndexingCostId],[CostPerMinute],[RowCreationDateTime]) VALUES(1, @COST_PER_MINUTE, sysutcdatetime())
 END
 SET IDENTITY_INSERT [dbo].[VideoIndexingCost] OFF
 
@@ -49,6 +49,6 @@ SET IDENTITY_INSERT [dbo].[VideoIndexingMargin] ON
 DECLARE @MARGIN DECIMAL(5,4) = 0.5
 IF NOT EXISTS (SELECT * FROM [dbo].[VideoIndexingMargin] VIM WHERE [VIM].[Margin] = @MARGIN)
 BEGIN 
-    INSERT INTO [dbo].[VideoIndexingMargin]([VideoIndexingMarginId],[Margin]) VALUES(1, @MARGIN)
+    INSERT INTO [dbo].[VideoIndexingMargin]([VideoIndexingMarginId],[Margin],[RowCreationDateTime]) VALUES(1, @MARGIN, sysutcdatetime())
 END
 SET IDENTITY_INSERT [dbo].[VideoIndexingMargin] OFF

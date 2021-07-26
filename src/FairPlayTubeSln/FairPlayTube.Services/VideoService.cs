@@ -277,11 +277,17 @@ namespace FairPlayTube.Services
             var query = this.FairplaytubeDatabaseContext.VideoInfo
                 .Include(p => p.ApplicationUser).Where(p => videoIds.Contains(p.VideoId));
 
+            var costPerMinute = this.FairplaytubeDatabaseContext.VideoIndexingCost
+                .OrderByDescending(d => d.RowCreationDateTime)
+                .FirstOrDefault()
+                .CostPerMinute;
+
             foreach (var singleVideoEntity in query)
             {
                 await this.FairplaytubeDatabaseContext.VideoIndexingTransaction.AddAsync(new VideoIndexingTransaction()
                 {
-                    VideoInfoId = singleVideoEntity.VideoInfoId
+                    VideoInfoId = singleVideoEntity.VideoInfoId,
+                    IndexingCost = costPerMinute * ((decimal)singleVideoEntity.VideoDurationInSeconds / 60)
                 }, cancellationToken);
             }
 
