@@ -29,7 +29,7 @@
                                 }
                                 @if (singleVideo.AvailableJobs > 0)
                                 {
-                                    <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="@( $"{singleVideo.AvailableJobs} Available Job(s)")">
+                                    <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="@( $"You could earn ${singleVideo.CombinedBudget.ToString("0.##")} from {singleVideo.AvailableJobs} Available Job(s)")">
                                         <i class="bi bi-briefcase-fill"></i>
                                     </button>
                                 }
