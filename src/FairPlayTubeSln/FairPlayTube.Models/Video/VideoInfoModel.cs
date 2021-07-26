@@ -26,5 +26,6 @@ namespace FairPlayTube.Models.Video
         public string Publisher { get; set; }
         public GlobalMonetizationModel UserGlobalMonetization { get; set; }
         public int Price { get; set; }
+        public int AvailableJobs { get; set; }
     }
 }
