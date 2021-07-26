@@ -153,14 +153,24 @@ namespace FairPlayTube.Controllers
             {
                 var processingVideosIds = processingVideos.Select(p => p.VideoId).ToArray();
                 var processingVideosStatuses = await VideoService.GetVideoIndexerStatus(processingVideosIds, cancellationToken);
-                result.AddRange(processingVideosStatuses.results.Select(p => new VideoStatusModel() 
+                result.AddRange(processingVideosStatuses.results.Select(p => new VideoStatusModel()
                 {
-                    Name=p.name,
-                    Status=p.state,
-                    ProcessingProgress=p.processingProgress
+                    Name = p.name,
+                    Status = p.state,
+                    ProcessingProgress = p.processingProgress
                 }));
             }
             return result;
+        }
+
+        [HttpPost("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task AddVideoJob(VideoJobModel videoJobModel, CancellationToken cancellationToken)
+        {
+            var userObjectId = this.CurrentUserProvider.GetObjectId();
+            if (!await this.VideoService.IsVideoOwnerAsync(videoJobModel.VideoId, userObjectId, cancellationToken))
+                throw new Exception("You are not an owner of this video");
+            await this.VideoService.AddVideoJobAsync(videoJobModel, cancellationToken: cancellationToken);
         }
     }
 }
