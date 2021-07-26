@@ -15,6 +15,9 @@ In order to keep the project free, you can help with some of the costs using the
 
 You can also help the project grow by giving it a Star on your GitHub profile.
 
+## Roadmap
+[Check roadmap here](roadmap.md)
+
 ## Screenshots
 ### Public Page
 ![](Images/FairPlayTube%20HomePage.png?raw=true)
