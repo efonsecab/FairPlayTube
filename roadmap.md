@@ -7,5 +7,10 @@
 * September 2021
   * Messaging System
   * Video Rating System
- * January 2021
+* October 2021
+  * Points System
+* November 2021
+* December 2021
+  * .NET 6 version branch
+* January 2022
    * MAUI-Blazor Basic initial version (Reduced functionality)
