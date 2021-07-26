@@ -30,6 +30,10 @@ namespace FairPlayTube.AutoMapperProfiles
                         };
 
                     }
+                    if (source.VideoJob != null)
+                    {
+                        dest.AvailableJobs = source.VideoJob.Count;
+                    }
                 }
             });
         }
