@@ -311,11 +311,11 @@ namespace FairPlayTube.Services
             return videosEntitities;
         }
 
-        public async Task AddVideoJobAsync(VideoJobModel videoJobModel)
+        public async Task AddVideoJobAsync(VideoJobModel videoJobModel, CancellationToken cancellationToken)
         {
             var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
                 .Include(p=>p.ApplicationUser)
-                .FirstOrDefaultAsync(p => p.VideoId == videoJobModel.VideoId);
+                .FirstOrDefaultAsync(p => p.VideoId == videoJobModel.VideoId, cancellationToken:cancellationToken);
             if (videoEntity == null)
                 throw new Exception($"Video with id: {videoJobModel.VideoId} does not exist");
             await this.FairplaytubeDatabaseContext.VideoJob.AddAsync(new VideoJob() 
@@ -324,8 +324,8 @@ namespace FairPlayTube.Services
                 Title=videoJobModel.Title,
                 Description=videoJobModel.Description,
                 VideoInfoId=videoEntity.VideoInfoId
-            });
-            await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+            }, cancellationToken:cancellationToken);
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken:cancellationToken);
         }
     }
 }
