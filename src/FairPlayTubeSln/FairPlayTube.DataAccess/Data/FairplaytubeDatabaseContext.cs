@@ -34,6 +34,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<UserProfile> UserProfile { get; set; }
         public virtual DbSet<UserVideoRating> UserVideoRating { get; set; }
         public virtual DbSet<VideoAccessTransaction> VideoAccessTransaction { get; set; }
+        public virtual DbSet<VideoComment> VideoComment { get; set; }
         public virtual DbSet<VideoIndexKeyword> VideoIndexKeyword { get; set; }
         public virtual DbSet<VideoIndexStatus> VideoIndexStatus { get; set; }
         public virtual DbSet<VideoIndexingCost> VideoIndexingCost { get; set; }
@@ -191,6 +192,23 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.VideoInfoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VideoAccessTransaction_VideoInfo");
+            });
+
+            modelBuilder.Entity<VideoComment>(entity =>
+            {
+                entity.Property(e => e.VideoCommentId).ValueGeneratedNever();
+
+                entity.HasOne(d => d.ApplicationUser)
+                    .WithMany(p => p.VideoComment)
+                    .HasForeignKey(d => d.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ApplicationUserId_VideoComment");
+
+                entity.HasOne(d => d.VideoInfo)
+                    .WithMany(p => p.VideoComment)
+                    .HasForeignKey(d => d.VideoInfoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoInfo_VideoComment");
             });
 
             modelBuilder.Entity<VideoIndexKeyword>(entity =>
