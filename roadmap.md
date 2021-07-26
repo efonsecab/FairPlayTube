@@ -7,3 +7,5 @@
 * September 2021
   * Messaging System
   * Video Rating System
+ * January 2021
+   * MAUI-Blazor Basic initial version (Reduced functionality)
