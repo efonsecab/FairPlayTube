@@ -5,4 +5,5 @@
   *  Video Comments System
   *  Improvement Feedback System
 * September 2021
-  * Messaging System 
+  * Messaging System
+  * Video Rating System
