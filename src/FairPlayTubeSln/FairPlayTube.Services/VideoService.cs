@@ -310,5 +310,22 @@ namespace FairPlayTube.Services
                 .ToListAsync();
             return videosEntitities;
         }
+
+        public async Task AddVideoJobAsync(VideoJobModel videoJobModel)
+        {
+            var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
+                .Include(p=>p.ApplicationUser)
+                .FirstOrDefaultAsync(p => p.VideoId == videoJobModel.VideoId);
+            if (videoEntity == null)
+                throw new Exception($"Video with id: {videoJobModel.VideoId} does not exist");
+            await this.FairplaytubeDatabaseContext.VideoJob.AddAsync(new VideoJob() 
+            {
+                Budget=videoJobModel.Budget,
+                Title=videoJobModel.Title,
+                Description=videoJobModel.Description,
+                VideoInfoId=videoEntity.VideoInfoId
+            });
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+        }
     }
 }
