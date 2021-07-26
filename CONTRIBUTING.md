@@ -13,7 +13,7 @@ How To Contribute
 
 How To Push changes
 ------------
-* Fork the repository
+* Fork the repository if you are an external user. Clone if you are an internal user.
 * Select a task from the Issues section, and add a comment letting us know you'll be working on it
 * Add a brief description on how you'll be solving the task
 * Once the proposal has been approved, and the issue has been assigned to you, create a new branch for that task, in the forked repo
