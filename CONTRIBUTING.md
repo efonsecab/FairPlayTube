@@ -57,3 +57,9 @@ UX & UI Experts Contributors Required
 We are looking for UX and UI to collaborate with the design for the system.
 We plan to have a UI that would work for both Desktop and mobile devices, using Blazor and Bootstrap.
 We plan the UI to also look good on MAUI Blazor.
+
+Knowledge Base Maintainters
+---------------
+
+The system uses Azure QnA to keep it's knowledge base and facilitate giving help to the users.
+This needs someone to maintain the knowledge base updated with all kinds of questions and answers for heping users.
