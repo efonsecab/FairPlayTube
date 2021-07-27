@@ -15,10 +15,26 @@ In order to keep the project free, you can help with some of the costs using the
 
 You can also help the project grow by giving it a Star on your GitHub profile.
 
-Public Page
+## Need Help Configuring Your Environment?
+* Contact Eduardo Fonseca on
+  * LinkedIn: https://cr.linkedin.com/in/pticostarica
+  * Twitter: https://twitter.com/efonsecabcr 
+
+## Roadmap
+[Check roadmap here](roadmap.md)
+
+## Beta Testers
+Would you like to become a Beta Tester?
+
+Get into the queue here: https://www.linkedin.com/pulse/fairplaytube-beta-testers-eduardo-fonseca/
+
+## Screenshots
+### Public Page
 ![](Images/FairPlayTube%20HomePage.png?raw=true)
-Logged In User
+### Logged In User
 ![](Images/FairPlayTube%20Logged%20In%20User.png?raw=true)
+### Available Jobs Tooltip
+![](Images/FairPlayTube%20Available%20Jobs%20With%20Amount.png?raw=true)
 
 ## Live Demo Website
 You can check the Live Demo of the latest progress here: https://fairplaytube.pticostarica.com

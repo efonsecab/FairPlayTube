@@ -60,6 +60,7 @@ namespace FairPlayTube.Common.Global
             public const string List = "/Users/List";
             public const string MyFunds = "/Users/MyFunds";
             public const string Details = "/Users/Videos/Details/{VideoId}";
+            public const string MyPendingVideosStatus = "/Users/Videos/MyPendingVideosStatus";
         }
 
         public class ApiRoutes
@@ -79,6 +80,7 @@ namespace FairPlayTube.Common.Global
                 public const string UpdateMyVideo = "api/Video/UpdateMyVideo";
                 public const string GetVideo = "api/Video/GetVideo";
                 public const string BuyVideoAccess = "/api/Video/BuyVideoAccess";
+                public const string GetMyPendingVideosQueue = "api/Video/GetMyPendingVideosQueue";
             }
             public class UserController
             {

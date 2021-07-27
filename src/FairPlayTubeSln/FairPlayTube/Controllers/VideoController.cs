@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PTI.Microservices.Library.Models.AzureVideoIndexerService;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -124,6 +125,52 @@ namespace FairPlayTube.Controllers
         {
             var userObjectId = this.CurrentUserProvider.GetObjectId();
             await VideoService.BuyVideoAccessAsync(azureAdB2CObjectId: userObjectId, videoId: videoId, cancellationToken: cancellationToken);
+        }
+
+
+        [HttpGet("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task<List<VideoStatusModel>> GetMyPendingVideosQueue(CancellationToken cancellationToken)
+        {
+            List<VideoStatusModel> result = new List<VideoStatusModel>();
+            var userObjectId = this.CurrentUserProvider.GetObjectId();
+            var userVideosQueue = await this.VideoService
+                .GetUserPendingVideosQueueAsync(azureAdB2cobjectId: userObjectId, cancellationToken: cancellationToken);
+            if (userVideosQueue == null)
+                return null;
+            var processingVideos = userVideosQueue
+                .Where(p => p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processing)
+                .ToArray();
+            var pendingVideos = userVideosQueue.Except(processingVideos);
+            result.AddRange(pendingVideos.Select(p => new VideoStatusModel()
+            {
+                Name = p.Name,
+                ProcessingProgress = "0%",
+                Status = p.VideoIndexStatus.Name,
+                VideoId = p.VideoId
+            }));
+            if (processingVideos != null && processingVideos.Length > 0)
+            {
+                var processingVideosIds = processingVideos.Select(p => p.VideoId).ToArray();
+                var processingVideosStatuses = await VideoService.GetVideoIndexerStatus(processingVideosIds, cancellationToken);
+                result.AddRange(processingVideosStatuses.results.Select(p => new VideoStatusModel()
+                {
+                    Name = p.name,
+                    Status = p.state,
+                    ProcessingProgress = p.processingProgress
+                }));
+            }
+            return result;
+        }
+
+        [HttpPost("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task AddVideoJob(VideoJobModel videoJobModel, CancellationToken cancellationToken)
+        {
+            var userObjectId = this.CurrentUserProvider.GetObjectId();
+            if (!await this.VideoService.IsVideoOwnerAsync(videoJobModel.VideoId, userObjectId, cancellationToken))
+                throw new Exception("You are not an owner of this video");
+            await this.VideoService.AddVideoJobAsync(videoJobModel, cancellationToken: cancellationToken);
         }
     }
 }

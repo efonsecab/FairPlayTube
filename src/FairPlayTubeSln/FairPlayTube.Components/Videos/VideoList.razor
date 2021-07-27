@@ -12,19 +12,25 @@
                             </div>
                             <div>
                                 <button type="button" class="btn btn-info rounded-circle"
-                                        @onclick="@( ()=> SelectVideo(singleVideo))">
+                                        @onclick="@( ()=> SelectVideo(singleVideo))" data-bs-toggle="tooltip" data-bs-placement="top" title="Insights">
                                     <i class="bi bi-eye-fill"></i>
                                 </button>
                                 <MonetizationIconButton OnClicked="@(  ()=> OnMonetizationIconClicked(singleVideo))">
                                 </MonetizationIconButton>
                                 <button type="button" class="btn btn-info rounded-circle"
-                                        @onclick="@(  ()=> OnVideoDescriptionClicked(singleVideo))">
+                                        @onclick="@(  ()=> OnVideoDescriptionClicked(singleVideo))" data-bs-toggle="tooltip" data-bs-placement="top" title="Description">
                                     <i class="bi bi-card-text"></i>
                                 </button>
                                 @if (singleVideo.Price > 0)
                                 {
-                                    <button type="button" class="btn btn-info rounded-circle">
+                                    <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Price">
                                         <i class="bi bi-cart-plus-fill"></i>
+                                    </button>
+                                }
+                                @if (singleVideo.AvailableJobs > 0)
+                                {
+                                    <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="@( $"You could earn ${singleVideo.CombinedBudget.ToString("0.##")} from {singleVideo.AvailableJobs} Available Job(s)")">
+                                        <i class="bi bi-briefcase-fill"></i>
                                     </button>
                                 }
                             </div>
@@ -117,8 +123,8 @@
                 </div>
                 <div class="modal-body">
                     @if (
-              this.SelectedVideo.UserGlobalMonetization != null &&
-              this.SelectedVideo.UserGlobalMonetization.MonetizationItems.Count > 0)
+             this.SelectedVideo.UserGlobalMonetization != null &&
+             this.SelectedVideo.UserGlobalMonetization.MonetizationItems.Count > 0)
                     {
                         <ul>
                             @foreach (var singleMonetizationItem in this.SelectedVideo.UserGlobalMonetization.MonetizationItems)

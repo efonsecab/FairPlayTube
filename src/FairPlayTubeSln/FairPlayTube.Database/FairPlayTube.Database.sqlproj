@@ -84,6 +84,7 @@
     <Build Include="dbo\Tables\VideoAccessTransaction.sql" />
     <Build Include="dbo\Tables\PaypalTransaction.sql" />
     <Build Include="dbo\Tables\VisitorTracking.sql" />
+    <Build Include="dbo\Tables\VideoJob.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

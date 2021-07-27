@@ -13,7 +13,7 @@ How To Contribute
 
 How To Push changes
 ------------
-* Fork the repository
+* Fork the repository if you are an external user. Clone if you are an internal user.
 * Select a task from the Issues section, and add a comment letting us know you'll be working on it
 * Add a brief description on how you'll be solving the task
 * Once the proposal has been approved, and the issue has been assigned to you, create a new branch for that task, in the forked repo
@@ -57,3 +57,9 @@ UX & UI Experts Contributors Required
 We are looking for UX and UI to collaborate with the design for the system.
 We plan to have a UI that would work for both Desktop and mobile devices, using Blazor and Bootstrap.
 We plan the UI to also look good on MAUI Blazor.
+
+Knowledge Base Maintainters Required
+---------------
+
+The system uses Azure QnA to keep it's knowledge base and facilitate giving help to the users.
+This needs someone to maintain the knowledge base updated with all kinds of questions and answers for heping users.

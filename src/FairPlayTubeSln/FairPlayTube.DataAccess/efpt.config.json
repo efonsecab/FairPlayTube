@@ -98,6 +98,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[VideoJob]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VisitorTracking]",
          "ObjectType": 0
       }
