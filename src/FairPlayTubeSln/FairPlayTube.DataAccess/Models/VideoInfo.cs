@@ -52,6 +52,8 @@ namespace FairPlayTube.DataAccess.Models
         public string VideoIndexSourceClass { get; set; }
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
+        [StringLength(500)]
+        public string ExternalVideoSourceUrl { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("VideoInfo")]
