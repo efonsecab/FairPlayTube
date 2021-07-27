@@ -40,6 +40,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "calvinmorett",
+      "name": "Calvin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11654917?v=4",
+      "profile": "https://calvinmorett.github.io/",
+      "contributions": [
+        "design"
+      ]
     }
   ],
   "contributorsPerLine": 7,
