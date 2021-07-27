@@ -14,7 +14,7 @@
     [VideoDurationInSeconds] FLOAT NOT NULL DEFAULT 0, 
     [VideoIndexSourceClass] NVARCHAR(500) NULL, 
     [Price] MONEY NOT NULL DEFAULT 0,
-    [SourceUrl] NVARCHAR(500) NOT NULL,
+    [ExternalVideoSourceUrl] NVARCHAR(500),
     CONSTRAINT [FK_VideoInfo_ApplicationUser] FOREIGN KEY ([ApplicationUserId]) REFERENCES [ApplicationUser]([ApplicationUserId]), 
     CONSTRAINT [FK_VideoInfo_VideoIndexStatus] FOREIGN KEY ([VideoIndexStatusId]) REFERENCES [VideoIndexStatus]([VideoIndexStatusId])
 )
