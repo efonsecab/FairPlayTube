@@ -46,6 +46,7 @@ namespace FairPlayTube.Controllers
                     videoInfoEntity.VideoDurationInSeconds = videoIndex.summarizedInsights.duration.seconds;
                     await this.FairplaytubeDatabaseContext.SaveChangesAsync();
                     await VideoService.SaveIndexedVideoKeywordsAsync(id, cancellationToken);
+                    await VideoService.SaveVideoThumbnailAsync(id, videoIndex.videos.First().thumbnailId, cancellationToken);
                 }
             }
         }

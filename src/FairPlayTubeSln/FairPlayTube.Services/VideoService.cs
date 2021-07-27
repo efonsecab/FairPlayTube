@@ -151,7 +151,7 @@ namespace FairPlayTube.Services
         public IQueryable<VideoInfo> GetPublicProcessedVideos()
         {
             return this.FairplaytubeDatabaseContext.VideoInfo
-                .Include(p=>p.VideoJob).Include(p => p.ApplicationUser)
+                .Include(p => p.VideoJob).Include(p => p.ApplicationUser)
                 .ThenInclude(p => p.UserExternalMonetization)
                 .Where(p =>
             p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed)
@@ -309,11 +309,11 @@ namespace FairPlayTube.Services
         {
             var videosEntitities = await this.FairplaytubeDatabaseContext.VideoInfo
                 .Include(p => p.ApplicationUser)
-                .Include(p=>p.VideoIndexStatus)
+                .Include(p => p.VideoIndexStatus)
                 .Where(p => p.ApplicationUser.AzureAdB2cobjectId.ToString() == azureAdB2cobjectId
-                && p.VideoIndexStatusId != (short) Common.Global.Enums.VideoIndexStatus.Processed
+                && p.VideoIndexStatusId != (short)Common.Global.Enums.VideoIndexStatus.Processed
                 )
-                .OrderByDescending(p=>p.VideoId)
+                .OrderByDescending(p => p.VideoId)
                 .ToListAsync();
             return videosEntitities;
         }
@@ -321,18 +321,38 @@ namespace FairPlayTube.Services
         public async Task AddVideoJobAsync(VideoJobModel videoJobModel, CancellationToken cancellationToken)
         {
             var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
-                .Include(p=>p.ApplicationUser)
-                .FirstOrDefaultAsync(p => p.VideoId == videoJobModel.VideoId, cancellationToken:cancellationToken);
+                .Include(p => p.ApplicationUser)
+                .FirstOrDefaultAsync(p => p.VideoId == videoJobModel.VideoId, cancellationToken: cancellationToken);
             if (videoEntity == null)
                 throw new Exception($"Video with id: {videoJobModel.VideoId} does not exist");
-            await this.FairplaytubeDatabaseContext.VideoJob.AddAsync(new VideoJob() 
+            await this.FairplaytubeDatabaseContext.VideoJob.AddAsync(new VideoJob()
             {
-                Budget=videoJobModel.Budget,
-                Title=videoJobModel.Title,
-                Description=videoJobModel.Description,
-                VideoInfoId=videoEntity.VideoInfoId
-            }, cancellationToken:cancellationToken);
-            await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken:cancellationToken);
+                Budget = videoJobModel.Budget,
+                Title = videoJobModel.Title,
+                Description = videoJobModel.Description,
+                VideoInfoId = videoEntity.VideoInfoId
+            }, cancellationToken: cancellationToken);
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
+        }
+
+        public async Task SaveVideoThumbnailAsync(string videoId, string thumbnailId, CancellationToken cancellationToken)
+        {
+            var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
+                .Include(p => p.ApplicationUser).SingleOrDefaultAsync(p => p.VideoId == videoId);
+            if (videoEntity == null)
+                throw new Exception($"Video: {videoId} does not exit");
+            var videoThumbnailBase64 = await this.AzureVideoIndexerService.GetVideoThumbnailAsync(videoId, thumbnailId);
+            string relativePath =
+                $"{videoEntity.ApplicationUser.AzureAdB2cobjectId}/Video/{videoId}/Thumbnail/{thumbnailId}.jpg";
+            var byteArray = Convert.FromBase64String(videoThumbnailBase64);
+            MemoryStream memoryStream = new MemoryStream(byteArray);
+            memoryStream.Position = 0;
+            var result =
+            await this.AzureBlobStorageService.UploadFileAsync(this.DataStorageConfiguration.ContainerName, relativePath,
+                memoryStream, true, cancellationToken);
+            string videoThumbnailUrl = $"https://{DataStorageConfiguration.AccountName}.blob.core.windows.net/{DataStorageConfiguration.ContainerName}/{relativePath}";
+            //videoEntity.ThumbnailUrl = videoThumbnailUrl;
+            //await this.FairplaytubeDatabaseContext.SaveChangesAsync();
         }
     }
 }
