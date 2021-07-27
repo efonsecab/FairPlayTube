@@ -23,6 +23,11 @@ You can also help the project grow by giving it a Star on your GitHub profile.
 ## Roadmap
 [Check roadmap here](roadmap.md)
 
+## Beta Testers
+Would you like to become a Beta Tester?
+
+Get into the queue here: https://www.linkedin.com/pulse/fairplaytube-beta-testers-eduardo-fonseca/
+
 ## Screenshots
 ### Public Page
 ![](Images/FairPlayTube%20HomePage.png?raw=true)

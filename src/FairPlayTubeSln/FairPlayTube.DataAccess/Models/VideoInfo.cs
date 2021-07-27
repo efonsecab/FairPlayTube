@@ -15,6 +15,7 @@ namespace FairPlayTube.DataAccess.Models
         {
             BrandVideo = new HashSet<BrandVideo>();
             VideoAccessTransaction = new HashSet<VideoAccessTransaction>();
+            VideoComment = new HashSet<VideoComment>();
             VideoIndexKeyword = new HashSet<VideoIndexKeyword>();
             VideoIndexingTransaction = new HashSet<VideoIndexingTransaction>();
             VideoJob = new HashSet<VideoJob>();
@@ -51,6 +52,8 @@ namespace FairPlayTube.DataAccess.Models
         public string VideoIndexSourceClass { get; set; }
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
+        [StringLength(500)]
+        public string ExternalVideoSourceUrl { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("VideoInfo")]
@@ -64,6 +67,8 @@ namespace FairPlayTube.DataAccess.Models
         public virtual ICollection<BrandVideo> BrandVideo { get; set; }
         [InverseProperty("VideoInfo")]
         public virtual ICollection<VideoAccessTransaction> VideoAccessTransaction { get; set; }
+        [InverseProperty("VideoInfo")]
+        public virtual ICollection<VideoComment> VideoComment { get; set; }
         [InverseProperty("VideoInfo")]
         public virtual ICollection<VideoIndexKeyword> VideoIndexKeyword { get; set; }
         [InverseProperty("VideoInfo")]
