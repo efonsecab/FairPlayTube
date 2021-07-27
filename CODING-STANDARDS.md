@@ -7,7 +7,8 @@ We are actively trying to avoid the use of hardcoded values spread all around th
 in the Common project, any constant value needs to have a constant defined in some of the subclasses.
 
 ## No member variables
-As part of generating a differentiated code signature we are purposely avoiding having member variables prefixed with "_", instead class will have private properties named using [PascalCase](https://www.theserverside.com/definition/Pascal-case)
+As part of generating a differentiated code signature we are purposely avoiding having member variables prefixed with "_", instead class will have private properties named using [PascalCase](https://www.theserverside.com/definition/Pascal-case).
+
 All class properties must be private.
 
 ## Variables and properties names
