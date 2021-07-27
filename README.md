@@ -15,6 +15,19 @@ In order to keep the project free, you can help with some of the costs using the
 
 You can also help the project grow by giving it a Star on your GitHub profile.
 
+## Need Help Configuring Your Environment?
+* Contact Eduardo Fonseca on
+  * LinkedIn: https://cr.linkedin.com/in/pticostarica
+  * Twitter: https://twitter.com/efonsecabcr 
+
+## Roadmap
+[Check roadmap here](roadmap.md)
+
+## Beta Testers
+Would you like to become a Beta Tester?
+
+Get into the queue here: https://www.linkedin.com/pulse/fairplaytube-beta-testers-eduardo-fonseca/
+
 ## Screenshots
 ### Public Page
 ![](Images/FairPlayTube%20HomePage.png?raw=true)

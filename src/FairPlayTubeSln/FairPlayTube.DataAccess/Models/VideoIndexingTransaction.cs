@@ -14,6 +14,8 @@ namespace FairPlayTube.DataAccess.Models
         [Key]
         public long VideoIndexingTransactionId { get; set; }
         public long VideoInfoId { get; set; }
+        [Column(TypeName = "money")]
+        public decimal IndexingCost { get; set; }
         public DateTimeOffset RowCreationDateTime { get; set; }
         [Required]
         [StringLength(256)]
