@@ -68,6 +68,9 @@ See [CODE-OF-CONDUCT](CODE_OF_CONDUCT.md)
 ## License
 See [LICENSE](LICENSE)
 
+## How you'd like to be rewarded?
+Please let us know how you'd like to be rewarded for your contributions: https://github.com/efonsecab/FairPlayTube/discussions/167
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
