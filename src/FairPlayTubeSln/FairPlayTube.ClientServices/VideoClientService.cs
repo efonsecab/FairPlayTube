@@ -76,7 +76,7 @@ namespace FairPlayTube.ClientServices
                 (ApiRoutes.VideoController.ListAllKeywords);
         }
 
-        public async Task UpdateMyVideo(string videoId,UpdateVideoModel updateVideoModel)
+        public async Task UpdateMyVideo(string videoId, UpdateVideoModel updateVideoModel)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient.PutAsJsonAsync($"{ApiRoutes.VideoController.UpdateMyVideo}" +
@@ -97,6 +97,21 @@ namespace FairPlayTube.ClientServices
             var result = await authorizedHttpClient.GetFromJsonAsync<VideoInfoModel>(
                 $"{ApiRoutes.VideoController.GetVideo}?videoId={videoId}");
             return result;
+        }
+
+        public async Task BuyVideoAccessAsync(string videoId)
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.PostAsync(
+                $"{ApiRoutes.VideoController.BuyVideoAccess}?videoId={videoId}", null);
+            if (!response.IsSuccessStatusCode)
+            {
+                ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
+                if (problemHttpResponse != null)
+                    throw new Exception(problemHttpResponse.Detail);
+                else
+                    throw new Exception(response.ReasonPhrase);
+            }
         }
     }
 }
