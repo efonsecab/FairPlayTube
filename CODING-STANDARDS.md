@@ -27,3 +27,6 @@ The names of variables and properties must specify what the variable contents ar
 * Main code of Blazor pages and components must be placed in the razor.cs file, instead of the .razor file
 * The .razor file must not exit in the .razor file, and instead, the [Route] attribute must be used in the .razor.cs
 * Components that load data must have the "Loading" component so that the spinners are shown while data is being load.
+
+## SQL Tables
+* Tables must not contain more than 20 columns, if a table is about to reach that many columns, chances are many columns can be converted into an "AdditionalAttributes" kind of table.
