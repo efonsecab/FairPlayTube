@@ -21,7 +21,7 @@ You can also help the project grow by giving it a Star on your GitHub profile.
   * Twitter: https://twitter.com/efonsecabcr 
 
 ## Need Custom Development for your version of FairPlayTube?
-* Hire us on Upwork: https://www.upwork.com/o/profiles/users/~01dfba7bd0d1f23c9f/
+* Hire us on Upwork: https://www.upwork.com/o/companies/~018326649e4bb0a1a0
 
 ## Roadmap
 [Check roadmap here](roadmap.md)
