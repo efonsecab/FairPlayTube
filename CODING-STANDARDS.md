@@ -21,3 +21,8 @@ The names of variables and properties must specify what the variable contents ar
   * [HttpPut("[action]")]
   * [HttpDelete("[action]")]
   * [HttpGet("[action]")]
+
+## Blazor Pages & components
+* Main code of Blazor pages and components must be placed in the razor.cs file, instead of the .razor file
+* The .razor file must not exit in the .razor file, and instead, the [Route] attribute must be used in the .razor.cs
+* Components that load data must have the "Loading" component so that the spinners are shown while data is being load.
