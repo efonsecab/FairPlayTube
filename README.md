@@ -15,6 +15,10 @@ In order to keep the project free, you can help with some of the costs using the
 
 You can also help the project grow by giving it a Star on your GitHub profile.
 
+## Getting Started
+
+[Check the Wiki](https://github.com/efonsecab/FairPlayTube/wiki)
+
 ## Need Help Configuring Your Environment?
 * Contact Eduardo Fonseca on
   * LinkedIn: https://cr.linkedin.com/in/pticostarica
@@ -44,10 +48,6 @@ Get into the queue here: https://www.linkedin.com/pulse/fairplaytube-beta-tester
 
 ## Live Demo Website
 You can check the Live Demo of the latest progress here: https://fairplaytube.pticostarica.com
-
-## Wiki
-
-[Check the Wiki](https://github.com/efonsecab/FairPlayTube/wiki)
 
 ## Social Profiles
 Facebook: https://www.facebook.com/Fairplaytube-106615948308091
