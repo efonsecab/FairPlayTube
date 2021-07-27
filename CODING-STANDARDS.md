@@ -12,3 +12,11 @@ As part of generating a differentiated code signature we are purposely avoiding 
 ## Variables and properties names
 The names of variables and properties must specify what the variable contents are: e.g. videosList, userVideos, etc.
 
+## API Endpoints
+* The methods must be named using a verb, e.g. "GetUserVideos"
+* The methods must always have the parameter CancellationToken cancellationToken, as the last parameter.
+* The methods must always have the Http Verb Attribute, with "[action]", so that the endpoint is generated with the same name of the method:
+  * [HttpPost("[action]")]
+  * [HttpPut("[action]")]
+  * [HttpDelete("[action]")]
+  * [HttpGet("[action]")]
