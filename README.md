@@ -20,6 +20,9 @@ You can also help the project grow by giving it a Star on your GitHub profile.
   * LinkedIn: https://cr.linkedin.com/in/pticostarica
   * Twitter: https://twitter.com/efonsecabcr 
 
+## Need Custom Development for your version of FairPlayTube?
+* Contact me on Upwork: https://www.upwork.com/o/profiles/users/~01dfba7bd0d1f23c9f/
+
 ## Roadmap
 [Check roadmap here](roadmap.md)
 
