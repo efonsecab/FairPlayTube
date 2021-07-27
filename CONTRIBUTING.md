@@ -11,6 +11,10 @@ How To Contribute
 * Use the Discussions section to post your ideas
 * Share the repo on your social networks (Twitter, Facebook, LinkedIn, etc)
 
+Coding Standards
+------------
+You must follow the Coding Standards here: [Coding Standards](CODING-STANDARDS.md)
+
 How To Push changes
 ------------
 * Fork the repository if you are an external user. Clone if you are an internal user.
