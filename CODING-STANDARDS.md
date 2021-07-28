@@ -23,6 +23,10 @@ The names of variables and properties must specify what the variable contents ar
   * [HttpDelete("[action]")]
   * [HttpGet("[action]")]
 
+## Accessing API Endpoints
+* use a ClientService class in the "FairPlayTube.ClientServices" project, use the same prefix than the one used in the Controller for a name
+* The client methods must have the same name as the endpoint method
+
 ## Blazor Pages & components
 * Main code of Blazor pages and components must be placed in the razor.cs file, instead of the .razor file
 * The .razor file must not exit in the .razor file, and instead, the [Route] attribute must be used in the .razor.cs
@@ -30,3 +34,7 @@ The names of variables and properties must specify what the variable contents ar
 
 ## SQL Tables
 * Tables must not contain more than 20 columns, if a table is about to reach that many columns, chances are many columns can be converted into an "AdditionalAttributes" kind of table.
+
+## Async Methods naming
+* All async methods( except the endpoints) must be suffixed with Async
+* All aynsc methods must received a mandatory "CancellationToken cancellationToken" as the last parameter
