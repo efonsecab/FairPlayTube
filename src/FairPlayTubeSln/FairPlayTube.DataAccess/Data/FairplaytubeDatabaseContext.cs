@@ -26,6 +26,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<BrandVideo> BrandVideo { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
         public virtual DbSet<PaypalTransaction> PaypalTransaction { get; set; }
+        public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<UserExternalMonetization> UserExternalMonetization { get; set; }
         public virtual DbSet<UserFeedback> UserFeedback { get; set; }
         public virtual DbSet<UserFollower> UserFollower { get; set; }
