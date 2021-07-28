@@ -70,6 +70,22 @@ namespace FairPlayTube.Services.BackgroundServices
                             singleVideo.VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Processing;
                             await fairplaytubeDatabaseContext.SaveChangesAsync();
                         }
+                        try
+                        {
+                            var allVideoIndexerPersons = await videoService.GetAllPersonsAsync(stoppingToken);
+                            await videoService.SavePersonsAsync(personsModels: allVideoIndexerPersons, cancellationToken: stoppingToken);
+                        }
+                        catch (Exception ex)
+                        {
+                            fairplaytubeDatabaseContext.ChangeTracker.Clear();
+                            await fairplaytubeDatabaseContext.ErrorLog.AddAsync(new ErrorLog()
+                            {
+                                FullException = ex.ToString(),
+                                StackTrace = ex.StackTrace,
+                                Message = ex.Message
+                            });
+                            await fairplaytubeDatabaseContext.SaveChangesAsync();
+                        }
                     }
                     catch (Exception ex)
                     {

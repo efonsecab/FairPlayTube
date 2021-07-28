@@ -94,6 +94,47 @@ namespace FairPlayTube.Services
                 }).ToArrayAsync();
         }
 
+        public async Task SavePersonsAsync(List<PersonModel> personsModels, CancellationToken cancellationToken)
+        {
+            var videoIndexerPersonsIds = personsModels.Select(p => p.Id).ToArray();
+            var existentIds = await this.FairplaytubeDatabaseContext.Person
+                .Where(p => videoIndexerPersonsIds.Contains(p.Id)).Select(p => p.Id).ToArrayAsync();
+            var modelstoInsert = personsModels.Where(p => !existentIds.Contains(p.Id));
+            if (modelstoInsert.Count() > 0)
+            {
+                foreach (var singleModelToInsert in modelstoInsert)
+                {
+                    var videoIndexerPersonModelId = Guid.Parse(singleModelToInsert.PersonModelId);
+                    var videoIndexerPersonId = Guid.Parse(singleModelToInsert.Id);
+                    var sampleFaceId = Guid.Parse(singleModelToInsert.SampleFaceId);
+                    var sampleFacePictureBytes = await this.AzureVideoIndexerService
+                        .GetCustomFacePictureAsync(videoIndexerPersonModelId, videoIndexerPersonId, sampleFaceId, cancellationToken);
+                    string relativePath = $"Persons/{videoIndexerPersonId}/Faces/{sampleFaceId}/SampleFace.jpg";
+                    MemoryStream sampleFaceStream = new MemoryStream(sampleFacePictureBytes);
+                    sampleFaceStream.Position = 0;
+                    await this.AzureBlobStorageService.UploadFileAsync(this.DataStorageConfiguration.ContainerName, relativePath,
+                        sampleFaceStream, true, cancellationToken);
+
+                    string sampleFaceUrl = $"https://{this.DataStorageConfiguration.AccountName}" +
+                        $".blob.core.windows.net/" +
+                        $"{this.DataStorageConfiguration.ContainerName}" +
+                        $"/Persons/{videoIndexerPersonId}" +
+                        $"/Faces/{sampleFaceId}" +
+                        $"/SampleFace.jpg";
+                    await this.FairplaytubeDatabaseContext.Person.AddAsync(new Person()
+                    {
+                        Id = singleModelToInsert.Id,
+                        Name = singleModelToInsert.Name,
+                        SampleFaceId = singleModelToInsert.SampleFaceId,
+                        SampleFaceSourceType = singleModelToInsert.SampleFaceSourceType,
+                        SampleFaceState = singleModelToInsert.SampleFaceState,
+                        SampleFaceUrl = sampleFaceUrl
+                    }, cancellationToken: cancellationToken);
+                }
+            }
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
+        }
+
         public async Task<string[]> GetDatabaseProcessingVideosIdsAsync(CancellationToken cancellationToken)
         {
             return await this.FairplaytubeDatabaseContext.VideoInfo.Where(p => p.VideoIndexStatusId ==
@@ -368,10 +409,11 @@ namespace FairPlayTube.Services
                 result = allPersonsInModel.results.Select(p => new PersonModel
                 {
                     Id = p.id,
-                    Name=p.name,
-                    SampleFaceId=p.sampleFace.id,
-                    SampleFaceSourceType=p.sampleFace.sourceType,
-                    SampleFaceState=p.sampleFace.state
+                    PersonModelId = defaultModel.id,
+                    Name = p.name,
+                    SampleFaceId = p.sampleFace.id,
+                    SampleFaceSourceType = p.sampleFace.sourceType,
+                    SampleFaceState = p.sampleFace.state
                 }).ToList();
             }
             return result;

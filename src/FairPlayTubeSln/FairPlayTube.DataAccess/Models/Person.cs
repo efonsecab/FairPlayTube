@@ -15,6 +15,9 @@ namespace FairPlayTube.DataAccess.Models
         public long PersonId { get; set; }
         [Required]
         [StringLength(50)]
+        public string Id { get; set; }
+        [Required]
+        [StringLength(50)]
         public string Name { get; set; }
         [Required]
         [StringLength(50)]
@@ -36,5 +39,8 @@ namespace FairPlayTube.DataAccess.Models
         [Column("OriginatorIPAddress")]
         [StringLength(100)]
         public string OriginatorIpaddress { get; set; }
+        [Required]
+        [StringLength(500)]
+        public string SampleFaceUrl { get; set; }
     }
 }
