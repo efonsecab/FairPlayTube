@@ -106,11 +106,15 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[VideoJobApplication]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VisitorTracking]",
          "ObjectType": 0
       }
    ],
-   "UiHint": "C:\\Sources\\FairPlayTube\\src\\FairPlayTubeSln\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
+   "UiHint": "C:\\Development\\PS\\FairPlayTube\\src\\FairPlayTubeSln\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,

@@ -42,6 +42,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<VideoIndexingTransaction> VideoIndexingTransaction { get; set; }
         public virtual DbSet<VideoInfo> VideoInfo { get; set; }
         public virtual DbSet<VideoJob> VideoJob { get; set; }
+        public virtual DbSet<VideoJobApplication> VideoJobApplication { get; set; }
         public virtual DbSet<VisitorTracking> VisitorTracking { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -256,6 +257,23 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.VideoInfoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VideoJob_VideoInfo");
+            });
+
+            modelBuilder.Entity<VideoJobApplication>(entity =>
+            {
+                entity.Property(e => e.VideoJobApplicationId).ValueGeneratedNever();
+
+                entity.HasOne(d => d.ApplicantApplicationUser)
+                    .WithMany(p => p.VideoJobApplication)
+                    .HasForeignKey(d => d.ApplicantApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoJobApplication_ApplicationUser");
+
+                entity.HasOne(d => d.VideoInfo)
+                    .WithMany(p => p.VideoJobApplication)
+                    .HasForeignKey(d => d.VideoInfoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoJobApplication_VideoInfoId");
             });
 
             modelBuilder.Entity<VisitorTracking>(entity =>
