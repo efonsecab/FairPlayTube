@@ -27,6 +27,7 @@ namespace FairPlayTube.DataAccess.Models
             VideoAccessTransaction = new HashSet<VideoAccessTransaction>();
             VideoComment = new HashSet<VideoComment>();
             VideoInfo = new HashSet<VideoInfo>();
+            VideoJobApplication = new HashSet<VideoJobApplication>();
             VisitorTracking = new HashSet<VisitorTracking>();
         }
 
@@ -74,6 +75,8 @@ namespace FairPlayTube.DataAccess.Models
         public virtual ICollection<VideoComment> VideoComment { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<VideoInfo> VideoInfo { get; set; }
+        [InverseProperty("ApplicantApplicationUser")]
+        public virtual ICollection<VideoJobApplication> VideoJobApplication { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<VisitorTracking> VisitorTracking { get; set; }
     }

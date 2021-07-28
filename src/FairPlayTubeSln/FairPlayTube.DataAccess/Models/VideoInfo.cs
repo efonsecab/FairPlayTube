@@ -19,6 +19,7 @@ namespace FairPlayTube.DataAccess.Models
             VideoIndexKeyword = new HashSet<VideoIndexKeyword>();
             VideoIndexingTransaction = new HashSet<VideoIndexingTransaction>();
             VideoJob = new HashSet<VideoJob>();
+            VideoJobApplication = new HashSet<VideoJobApplication>();
         }
 
         [Key]
@@ -75,5 +76,7 @@ namespace FairPlayTube.DataAccess.Models
         public virtual ICollection<VideoIndexingTransaction> VideoIndexingTransaction { get; set; }
         [InverseProperty("VideoInfo")]
         public virtual ICollection<VideoJob> VideoJob { get; set; }
+        [InverseProperty("VideoInfo")]
+        public virtual ICollection<VideoJobApplication> VideoJobApplication { get; set; }
     }
 }
