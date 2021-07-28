@@ -17,6 +17,16 @@ namespace FairPlayTube.DataAccess.Models
         public long ToApplicationUserId { get; set; }
         [Required]
         public string Message { get; set; }
+        [Required]
+        [StringLength(250)]
+        public string SourceApplication { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string OriginatorIpaddress { get; set; }
+        public DateTimeOffset RowCreationDateTime { get; set; }
+        [Required]
+        [StringLength(256)]
+        public string RowCreationUser { get; set; }
 
         [ForeignKey(nameof(FromApplicationUserId))]
         [InverseProperty(nameof(ApplicationUser.UserMessageFromApplicationUser))]
