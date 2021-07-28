@@ -1,4 +1,5 @@
 ﻿using FairPlayTube.Models.CustomHttpResponse;
+using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.Video;
 using System;
 using System.Collections.Generic;
@@ -112,6 +113,14 @@ namespace FairPlayTube.ClientServices
                 else
                     throw new Exception(response.ReasonPhrase);
             }
+        }
+
+        public async Task<PersonModel[]> GetPersonsAsync()
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var result = await authorizedHttpClient.GetFromJsonAsync<PersonModel[]>(
+                $"{ApiRoutes.VideoController.GetPersons}");
+            return result;
         }
     }
 }

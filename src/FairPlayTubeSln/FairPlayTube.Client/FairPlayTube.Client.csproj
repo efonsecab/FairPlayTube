@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ClientServices\**" />
+    <Content Remove="ClientServices\**" />
+    <EmbeddedResource Remove="ClientServices\**" />
+    <None Remove="ClientServices\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.5" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.7" />
@@ -28,10 +35,6 @@
     <Content Update="Pages\Index.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientServices\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties wwwroot_4appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

@@ -176,11 +176,11 @@ namespace FairPlayTube.Controllers
 
 
         [HttpGet("[action]")]
-        [Authorize(Roles = Common.Global.Constants.Roles.User)]
-        public async Task<List<PersonModel>> GetPersons(CancellationToken cancellationToken)
+        //[Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task<PersonModel[]> GetPersons(CancellationToken cancellationToken)
         {
             var personsList = await this.VideoService.GetPersistedPersonsAsync(cancellationToken);
-            var result = personsList.Select(p => this.Mapper.Map<Person, PersonModel>(p)).ToList();
+            var result = personsList.Select(p => this.Mapper.Map<Person, PersonModel>(p)).ToArray();
             return result;
         }
     }
