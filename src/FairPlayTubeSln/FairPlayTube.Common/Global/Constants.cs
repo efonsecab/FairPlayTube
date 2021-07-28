@@ -63,6 +63,11 @@ namespace FairPlayTube.Common.Global
             public const string MyPendingVideosStatus = "/Users/Videos/MyPendingVideosStatus";
         }
 
+        public class RootPagesRoutes
+        {
+            public const string Persons = "/Persons";
+        }
+
         public class ApiRoutes
         {
             public class VisitorTrackingController
@@ -81,6 +86,7 @@ namespace FairPlayTube.Common.Global
                 public const string GetVideo = "api/Video/GetVideo";
                 public const string BuyVideoAccess = "/api/Video/BuyVideoAccess";
                 public const string GetMyPendingVideosQueue = "api/Video/GetMyPendingVideosQueue";
+                public const string GetPersons = "api/Video/GetPersons";
             }
             public class UserController
             {
