@@ -42,6 +42,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Person]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[UserExternalMonetization]",
          "ObjectType": 0
       },
@@ -114,7 +118,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "C:\\Development\\PS\\FairPlayTube\\src\\FairPlayTubeSln\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
+   "UiHint": "C:\\Projects\\PTI\\GitHub\\FairPlayTube\\src\\FairPlayTubeSln\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,
