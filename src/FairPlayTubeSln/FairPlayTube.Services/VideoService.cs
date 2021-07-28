@@ -418,5 +418,10 @@ namespace FairPlayTube.Services
             }
             return result;
         }
+
+        public async Task<List<Person>> GetPersistedPersonsAsync(CancellationToken cancellation)
+        {
+            return await this.FairplaytubeDatabaseContext.Person.ToListAsync();
+        }
     }
 }
