@@ -8,6 +8,8 @@ How To Contribute
 
 * Use the Discussions section to inform us you'd like to contribute.
 * Check the Issues section and decide in which issues you'd like to contribute
+  * Find the ones labeled with "Good first issue" assigned which are not assigned to anyone.
+* Let us know in the Issue that you are working on it, so we assign it to you.
 * Use the Discussions section to post your ideas
 * Share the repo on your social networks (Twitter, Facebook, LinkedIn, etc)
 
