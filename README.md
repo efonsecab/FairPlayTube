@@ -35,6 +35,9 @@ Would you like to become a Beta Tester?
 
 Get into the queue here: https://www.linkedin.com/pulse/fairplaytube-beta-testers-eduardo-fonseca/
 
+## Youtube PlayList
+We will publish FairPlayTube updates to this playlist: https://youtube.com/playlist?list=PLGPt1G9l1Tyw0F7vKQYZw1JYhPAMCVQq7
+
 ## Users manual
 [Check the Users Manual](https://github.com/efonsecab/FairPlayTube/wiki/Users-Manual)
 
