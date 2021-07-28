@@ -14,5 +14,6 @@ namespace FairPlayTube.Models.Persons
         public string SampleFaceSourceType { get; set; }
         public string SampleFaceState { get; set; }
         public string PersonModelId { get; set; }
+        public string SampleFaceUrl { get; set; }
     }
 }

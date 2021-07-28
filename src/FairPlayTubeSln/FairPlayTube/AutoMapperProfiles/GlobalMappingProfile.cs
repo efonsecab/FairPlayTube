@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FairPlayTube.DataAccess.Models;
+using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.Video;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,16 @@ namespace FairPlayTube.AutoMapperProfiles
     {
         public GlobalMappingProfile()
         {
+            this.CreateMap<Person, PersonModel>().ConstructUsing( person=> new PersonModel() 
+            {
+                Id = person.Id,
+                Name=person.Name,
+                //PersonModelId=person.PersonModelId,
+                //SampleFaceId=person.SampleFaceId,
+                //SampleFaceSourceType=person.SampleFaceSourceType,
+                //SampleFaceState = person.SampleFaceState,
+                SampleFaceUrl = person.SampleFaceUrl
+            });
             this.CreateMap<VideoInfo, VideoInfoModel>().AfterMap(afterFunction: (source, dest) =>
             {
                 if (source.ApplicationUser != null)
