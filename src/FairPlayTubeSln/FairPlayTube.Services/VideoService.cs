@@ -2,6 +2,7 @@
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
+using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Notifications.Hubs;
 using Microsoft.AspNetCore.SignalR;
@@ -353,6 +354,27 @@ namespace FairPlayTube.Services
             string videoThumbnailUrl = $"https://{DataStorageConfiguration.AccountName}.blob.core.windows.net/{DataStorageConfiguration.ContainerName}/{relativePath}";
             //videoEntity.ThumbnailUrl = videoThumbnailUrl;
             //await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+        }
+
+        public async Task<List<PersonModel>> GetAllPersonsAsync(CancellationToken cancellationToken)
+        {
+            List<PersonModel> result = new List<PersonModel>();
+            var allPersonModels = await this.AzureVideoIndexerService.GetAllPersonModelsAsync(cancellationToken);
+            var defaultModel = allPersonModels.Single(p => p.isDefault == true);
+            Guid defaultModelId = Guid.Parse(defaultModel.id);
+            var allPersonsInModel = await this.AzureVideoIndexerService.GetPersonsInModelAsync(defaultModelId, cancellationToken);
+            if (allPersonsInModel.results.Length > 0)
+            {
+                result = allPersonsInModel.results.Select(p => new PersonModel
+                {
+                    Id = p.id,
+                    Name=p.name,
+                    SampleFaceId=p.sampleFace.id,
+                    SampleFaceSourceType=p.sampleFace.sourceType,
+                    SampleFaceState=p.sampleFace.state
+                }).ToList();
+            }
+            return result;
         }
     }
 }
