@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Models;
+using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -171,6 +172,16 @@ namespace FairPlayTube.Controllers
             if (!await this.VideoService.IsVideoOwnerAsync(videoJobModel.VideoId, userObjectId, cancellationToken))
                 throw new Exception("You are not an owner of this video");
             await this.VideoService.AddVideoJobAsync(videoJobModel, cancellationToken: cancellationToken);
+        }
+
+
+        [HttpGet("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task<List<PersonModel>> GetPersons(CancellationToken cancellationToken)
+        {
+            var personsList = await this.VideoService.GetPersistedPersonsAsync(cancellationToken);
+            var result = personsList.Select(p => this.Mapper.Map<Person, PersonModel>(p)).ToList();
+            return result;
         }
     }
 }
