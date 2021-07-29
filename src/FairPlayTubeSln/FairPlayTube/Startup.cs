@@ -29,23 +29,40 @@ using PTI.Microservices.Library.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 
 namespace FairPlayTube
 {
+    /// <summary>
+    /// Used to configure system's startup
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Initialized <see cref="Startup"/>
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Represents the system's initial/startup configuration
+        /// </summary>
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        /// <summary>
+        /// Configures the System Services
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
@@ -168,6 +185,7 @@ namespace FairPlayTube
                 var azureAdB2ClientAppDefaultScope = Configuration["AzureAdB2C:ClientAppDefaultScope"];
                 services.AddSwaggerGen(c =>
                 {
+                    c.IncludeXmlComments(XmlCommentsFilePath);
                     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "FairPlayTube API" });
                     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                     {
@@ -189,6 +207,16 @@ namespace FairPlayTube
                 });
             }
 
+        }
+
+        private static string XmlCommentsFilePath
+        {
+            get
+            {
+                var basePath = AppContext.BaseDirectory;
+                var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
+                return Path.Combine(basePath, fileName);
+            }
         }
 
         private void ConfigureIpStackService(IServiceCollection services)
@@ -234,6 +262,11 @@ namespace FairPlayTube
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// Configure the Application Behavior and pipleline execution
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseResponseCompression();

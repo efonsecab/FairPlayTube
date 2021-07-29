@@ -19,6 +19,9 @@ using FairPlayTube.Notifications.Hubs;
 
 namespace FairPlayTube.Controllers
 {
+    /// <summary>
+    /// Handles all of the data regarding a User
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -29,8 +32,15 @@ namespace FairPlayTube.Controllers
         private EmailService EmailService { get; }
         private IHubContext<NotificationHub, INotificationHub> HubContext { get; }
 
-        public UserController(FairplaytubeDatabaseContext fairplaytubeDatabaseContext, 
-            ICurrentUserProvider currentUserProvider, EmailService emailService, 
+        /// <summary>
+        /// Initializes <see cref="UserController"/>
+        /// </summary>
+        /// <param name="fairplaytubeDatabaseContext"></param>
+        /// <param name="currentUserProvider"></param>
+        /// <param name="emailService"></param>
+        /// <param name="hubContext"></param>
+        public UserController(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
+            ICurrentUserProvider currentUserProvider, EmailService emailService,
             IHubContext<NotificationHub, INotificationHub> hubContext)
         {
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
@@ -40,11 +50,11 @@ namespace FairPlayTube.Controllers
         }
 
         /// <summary>
-        /// Gets the name of the role assigned to the specified user
+        /// Gets the name of the role assigned to the Logged In User
         /// </summary>
-        /// <param name="userAdB2CObjectId"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
+        [Authorize]
         public async Task<string> GetMyRole(CancellationToken cancellationToken)
         {
             var userAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
@@ -52,17 +62,22 @@ namespace FairPlayTube.Controllers
                 .Include(p => p.ApplicationUser)
                 .Include(p => p.ApplicationRole)
                 .Where(p => p.ApplicationUser.AzureAdB2cobjectId.ToString() == userAdB2CObjectId)
-                .Select(p => p.ApplicationRole.Name).SingleOrDefaultAsync(cancellationToken:cancellationToken);
+                .Select(p => p.ApplicationRole.Name).SingleOrDefaultAsync(cancellationToken: cancellationToken);
             return role;
         }
 
+        /// <summary>
+        /// List the users in the system
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("[action]")]
         public async Task<UserModel[]> ListUsers(CancellationToken cancellationToken)
         {
             var result = await this.FairplaytubeDatabaseContext.ApplicationUser
                 .Include(p => p.VideoInfo)
                 .Include(p => p.Brand)
-                .Select(p => new UserModel 
+                .Select(p => new UserModel
                 {
                     ApplicationUserId = p.ApplicationUserId,
                     Name = p.FullName,
@@ -72,6 +87,11 @@ namespace FairPlayTube.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Invites a user to use the system
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("[action]")]
         public async Task InviteUser(InviteUserModel model)
         {
@@ -85,6 +105,12 @@ namespace FairPlayTube.Controllers
                 completeBody.ToString(), true);
         }
 
+        /// <summary>
+        /// Sends a message to the specified user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("[action]")]
         public async Task SendMessage(UserMessageModel model, CancellationToken cancellationToken)
         {

@@ -1,0 +1,356 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FairPlayTube</name>
+    </assembly>
+    <members>
+        <member name="T:FairPlayTube.AutoMapperProfiles.GlobalMappingProfile">
+            <summary>
+            Configures the Automapper mapping
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.AutoMapperProfiles.GlobalMappingProfile.#ctor">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.AutoMapperProfiles.GlobalMappingProfile"/>
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Controllers.AzureVideoIndexerController">
+            <summary>
+            Enabled the callback to be invoked from Azure Video Indexer
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.AzureVideoIndexerController.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext,FairPlayTube.Services.VideoService,Microsoft.AspNetCore.SignalR.IHubContext{FairPlayTube.Notifications.Hubs.NotificationHub,FairPlayTube.Notifications.Hubs.INotificationHub})">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.AzureVideoIndexerController"/>
+            </summary>
+            <param name="fairplaytubeDatabaseContext"></param>
+            <param name="videoService"></param>
+            <param name="hubContext"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.AzureVideoIndexerController.OnVideoIndexed(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Invoked by Azure Video Indexer when a video has been indxed
+            </summary>
+            <param name="id"></param>
+            <param name="state"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FairPlayTube.Controllers.UserController">
+            <summary>
+            Handles all of the data regarding a User
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserController.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext,FairPlayTube.Common.Interfaces.ICurrentUserProvider,FairPlayTube.Services.EmailService,Microsoft.AspNetCore.SignalR.IHubContext{FairPlayTube.Notifications.Hubs.NotificationHub,FairPlayTube.Notifications.Hubs.INotificationHub})">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.UserController"/>
+            </summary>
+            <param name="fairplaytubeDatabaseContext"></param>
+            <param name="currentUserProvider"></param>
+            <param name="emailService"></param>
+            <param name="hubContext"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserController.GetMyRole(System.Threading.CancellationToken)">
+            <summary>
+            Gets the name of the role assigned to the Logged In User
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserController.ListUsers(System.Threading.CancellationToken)">
+            <summary>
+            List the users in the system
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserController.InviteUser(FairPlayTube.Models.Invites.InviteUserModel)">
+            <summary>
+            Invites a user to use the system
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserController.SendMessage(FairPlayTube.Models.UserMessage.UserMessageModel,System.Threading.CancellationToken)">
+            <summary>
+            Sends a message to the specified user
+            </summary>
+            <param name="model"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FairPlayTube.Controllers.UserProfileController">
+            <summary>
+            Handles all the data regarind a USer's Profile
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserProfileController.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext,FairPlayTube.Common.Interfaces.ICurrentUserProvider,FairPlayTube.Services.PaymentService)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.UserProfileController"/>
+            </summary>
+            <param name="fairplaytubeDatabaseContext"></param>
+            <param name="currentUserProvider"></param>
+            <param name="paymentService"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserProfileController.SaveMonetization(FairPlayTube.Models.UserProfile.GlobalMonetizationModel,System.Threading.CancellationToken)">
+            <summary>
+            Saves the Monetization Profile
+            </summary>
+            <param name="globalMonetizationModel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserProfileController.GetMyMonetizationInfo(System.Threading.CancellationToken)">
+            <summary>
+            Gets the Logged In User Monetization Profile
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserProfileController.AddFunds(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Verifies if the Paypal order id is valid, and adds fund to the user's system wallet
+            </summary>
+            <param name="orderId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserProfileController.GetMyFunds(System.Threading.CancellationToken)">
+            <summary>
+            Gets the available funds for the Logged In user
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FairPlayTube.Controllers.VideoController">
+            <summary>
+            Handles all of the data related to a video
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.#ctor(FairPlayTube.Services.VideoService,AutoMapper.IMapper,FairPlayTube.Common.Interfaces.ICurrentUserProvider)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.VideoController"/>
+            </summary>
+            <param name="videoService"></param>
+            <param name="mapper"></param>
+            <param name="currentUserProvider"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.GetPublicProcessedVideos(System.Threading.CancellationToken)">
+            <summary>
+            Gets all of the public processed videos
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.UploadVideo(FairPlayTube.Models.Video.UploadVideoModel,System.Threading.CancellationToken)">
+            <summary>
+            Uploads a video 
+            </summary>
+            <param name="uploadVideoModel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.GetMyProcessedVideos(System.Threading.CancellationToken)">
+            <summary>
+            Gets the Logged In user processed videos
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.GetVideoEditAccessToken(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets a given video access token to enable edit mode in the insights widget
+            </summary>
+            <param name="videoId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.ListAllKeywords(System.Threading.CancellationToken)">
+            <summary>
+            List all keywords found on the processed videos
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.ListVideosByKeyword(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Lists all the videos having a given keyword
+            </summary>
+            <param name="keyword"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.UpdateMyVideo(System.String,FairPlayTube.Models.Video.UpdateVideoModel,System.Threading.CancellationToken)">
+            <summary>
+            Updates a video
+            </summary>
+            <param name="videoId"></param>
+            <param name="model"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.GetVideo(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets the information for a given video
+            </summary>
+            <param name="videoId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.BuyVideoAccess(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Buys access to a given video
+            </summary>
+            <param name="videoId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.GetMyPendingVideosQueue(System.Threading.CancellationToken)">
+            <summary>
+            Gets the status of the logged in user queued videos
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.AddVideoJob(FairPlayTube.Models.Video.VideoJobModel,System.Threading.CancellationToken)">
+            <summary>
+            Adds a job associatd to a given video
+            </summary>
+            <param name="videoJobModel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.GetPersons(System.Threading.CancellationToken)">
+            <summary>
+            Gets the persons found in the videos
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FairPlayTube.Controllers.VisitorTrackingController">
+            <summary>
+            Used to persis a visitor informaation
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VisitorTrackingController.#ctor(FairPlayTube.Services.VisitorTrackingService)">
+            <summary>
+            Initialized <see cref="T:FairPlayTube.Controllers.VisitorTrackingController"/>
+            </summary>
+            <param name="visitorTrackingService"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VisitorTrackingController.TrackClientInformation(FairPlayTube.Models.VisitorTracking.VisitorTrackingModel)">
+            <summary>
+            Persists the visitors information and visited page
+            </summary>
+            <param name="visitorTrackingModel"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FairPlayTube.CustomProviders.CurrentUserProvider">
+            <summary>
+            Holds the logic to retrieve the current user's information
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.CustomProviders.CurrentUserProvider.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>
+            Creates a new instance of <see cref="T:FairPlayTube.CustomProviders.CurrentUserProvider"/>
+            </summary>
+            <param name="httpContextAccessor"></param>
+        </member>
+        <member name="M:FairPlayTube.CustomProviders.CurrentUserProvider.GetUsername">
+            <summary>
+            Retrieves the user's username
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.CustomProviders.CurrentUserProvider.GetObjectId">
+            <summary>
+            Gets the Logged In User Azure Ad B2C Object Id
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:FairPlayTube.Pages.ErrorModel">
+            <summary>
+            Error Model
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Pages.ErrorModel.RequestId">
+            <summary>
+            Request Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Pages.ErrorModel.ShowRequestId">
+            <summary>
+            Show Request Id
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Pages.ErrorModel.#ctor(Microsoft.Extensions.Logging.ILogger{FairPlayTube.Pages.ErrorModel})">
+            <summary>
+            Initialized <see cref="T:FairPlayTube.Pages.ErrorModel"/>
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:FairPlayTube.Pages.ErrorModel.OnGet">
+            <summary>
+            OnGet
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Program">
+            <summary>
+            Application Entryy class
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Program.Main(System.String[])">
+            <summary>
+            Application entry method
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:FairPlayTube.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Initializes the Host Builder
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FairPlayTube.Startup">
+            <summary>
+            Used to configure system's startup
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initialized <see cref="T:FairPlayTube.Startup"/>
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:FairPlayTube.Startup.Configuration">
+            <summary>
+            Represents the system's initial/startup configuration
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures the System Services
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:FairPlayTube.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Configure the Application Behavior and pipleline execution
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+        <member name="T:FairPlayTube.Swagger.Filters.SecurityRequirementsOperationFilter">
+            <summary>
+            Used to add the required configuration to be able to use Swagger UI with Authentcation
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Swagger.Filters.SecurityRequirementsOperationFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Applies the this filter on swagger documentation generation.
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
+    </members>
+</doc>

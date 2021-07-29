@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace FairPlayTube.Controllers
 {
+    /// <summary>
+    /// Handles all the data regarind a USer's Profile
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -23,6 +26,12 @@ namespace FairPlayTube.Controllers
         private ICurrentUserProvider CurrentUserProvider { get; }
         private PaymentService PaymentService { get; }
 
+        /// <summary>
+        /// Initializes <see cref="UserProfileController"/>
+        /// </summary>
+        /// <param name="fairplaytubeDatabaseContext"></param>
+        /// <param name="currentUserProvider"></param>
+        /// <param name="paymentService"></param>
         public UserProfileController(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             ICurrentUserProvider currentUserProvider, PaymentService paymentService)
         {
@@ -31,6 +40,12 @@ namespace FairPlayTube.Controllers
             this.PaymentService = paymentService;
         }
 
+        /// <summary>
+        /// Saves the Monetization Profile
+        /// </summary>
+        /// <param name="globalMonetizationModel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("[action]")]
         public async Task SaveMonetization(GlobalMonetizationModel globalMonetizationModel,
             CancellationToken cancellationToken)
@@ -64,6 +79,11 @@ namespace FairPlayTube.Controllers
 
         }
 
+        /// <summary>
+        /// Gets the Logged In User Monetization Profile
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("[action]")]
         public async Task<GlobalMonetizationModel> GetMyMonetizationInfo(CancellationToken cancellationToken)
         {
@@ -89,6 +109,12 @@ namespace FairPlayTube.Controllers
                 };
         }
 
+        /// <summary>
+        /// Verifies if the Paypal order id is valid, and adds fund to the user's system wallet
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         public async Task AddFunds(string orderId, CancellationToken cancellationToken)
@@ -97,6 +123,11 @@ namespace FairPlayTube.Controllers
             await this.PaymentService.AddFundsAsync(azureAdB2CObjectId: azureAdB2CObjectId, orderId, cancellationToken);
         }
 
+        /// <summary>
+        /// Gets the available funds for the Logged In user
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         public async Task<decimal> GetMyFunds(CancellationToken cancellationToken)

@@ -9,14 +9,20 @@ using System.Threading.Tasks;
 
 namespace FairPlayTube.AutoMapperProfiles
 {
+    /// <summary>
+    /// Configures the Automapper mapping
+    /// </summary>
     public class GlobalMappingProfile : Profile
     {
+        /// <summary>
+        /// Initializes <see cref="GlobalMappingProfile"/>
+        /// </summary>
         public GlobalMappingProfile()
         {
-            this.CreateMap<Person, PersonModel>().ConstructUsing( person=> new PersonModel() 
+            this.CreateMap<Person, PersonModel>().ConstructUsing(person => new PersonModel()
             {
                 Id = person.Id,
-                Name=person.Name,
+                Name = person.Name,
                 //PersonModelId=person.PersonModelId,
                 //SampleFaceId=person.SampleFaceId,
                 //SampleFaceSourceType=person.SampleFaceSourceType,
