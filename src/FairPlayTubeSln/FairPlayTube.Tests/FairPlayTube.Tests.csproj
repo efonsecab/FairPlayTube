@@ -6,6 +6,12 @@
 		<IsPackable>false</IsPackable>
 
 		<UserSecretsId>74135dc8-e371-4439-8744-4493c94df36e</UserSecretsId>
+    <Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	  <WarningsAsErrors />
 	</PropertyGroup>
 
 	<ItemGroup>
