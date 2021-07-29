@@ -268,7 +268,8 @@ namespace FairPlayTube.Services
                 //$"?&locale=en&location={this.AzureVideoIndexerConfiguration.Location}",
                 AccountId = Guid.Parse(this.AzureVideoIndexerConfiguration.AccountId),
                 FileName = newFileName,
-                VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Pending
+                VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Pending,
+                VideoLanguageCode = uploadVideoModel.Language,
             }, cancellationToken: cancellationToken);
             cancellationToken.ThrowIfCancellationRequested();
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);

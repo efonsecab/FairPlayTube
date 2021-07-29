@@ -82,5 +82,9 @@ namespace FairPlayTube.Models.Video
         /// Combined Budget for all jobs associated to this video
         /// </summary>
         public decimal CombinedBudget { get; set; }
+        /// <summary>
+        /// Language code selected by the user uploading the video
+        /// </summary>
+        public string VideoLanguageCode { get; set; }
     }
 }

@@ -15,6 +15,7 @@
     [VideoIndexSourceClass] NVARCHAR(500) NULL, 
     [Price] MONEY NOT NULL DEFAULT 0,
     [ExternalVideoSourceUrl] NVARCHAR(500),
+    [VideoLanguageCode] NVARCHAR(10) NULL, 
     CONSTRAINT [FK_VideoInfo_ApplicationUser] FOREIGN KEY ([ApplicationUserId]) REFERENCES [ApplicationUser]([ApplicationUserId]), 
     CONSTRAINT [FK_VideoInfo_VideoIndexStatus] FOREIGN KEY ([VideoIndexStatusId]) REFERENCES [VideoIndexStatus]([VideoIndexStatusId])
 )
