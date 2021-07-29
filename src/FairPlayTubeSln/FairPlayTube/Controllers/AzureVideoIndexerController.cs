@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace FairPlayTube.Controllers
 {
+    /// <summary>
+    /// Enabled the callback to be invoked from Azure Video Indexer
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AzureVideoIndexerController : ControllerBase
@@ -22,6 +25,12 @@ namespace FairPlayTube.Controllers
         private VideoService VideoService { get; }
         private IHubContext<NotificationHub, INotificationHub> HubContext { get; }
 
+        /// <summary>
+        /// Initializes <see cref="AzureVideoIndexerController"/>
+        /// </summary>
+        /// <param name="fairplaytubeDatabaseContext"></param>
+        /// <param name="videoService"></param>
+        /// <param name="hubContext"></param>
         public AzureVideoIndexerController(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             VideoService videoService, IHubContext<NotificationHub, INotificationHub> hubContext)
         {
@@ -30,6 +39,13 @@ namespace FairPlayTube.Controllers
             this.HubContext = hubContext;
         }
 
+        /// <summary>
+        /// Invoked by Azure Video Indexer when a video has been indxed
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="state"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("[action]")]
         public async Task OnVideoIndexed(string id, string state, CancellationToken cancellationToken)
         {

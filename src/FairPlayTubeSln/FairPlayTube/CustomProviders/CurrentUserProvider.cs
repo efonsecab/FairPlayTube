@@ -41,6 +41,10 @@ namespace FairPlayTube.CustomProviders
             }
         }
 
+        /// <summary>
+        /// Gets the Logged In User Azure Ad B2C Object Id
+        /// </summary>
+        /// <returns></returns>
         public string GetObjectId()
         {
             var user = this.HttpContextAccessor.HttpContext.User;

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace FairPlayTube.Swagger.Filters
 {
+    /// <summary>
+    /// Used to add the required configuration to be able to use Swagger UI with Authentcation
+    /// </summary>
     public class SecurityRequirementsOperationFilter : IOperationFilter
     {
         /// <summary>

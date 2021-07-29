@@ -18,6 +18,9 @@ using System.Threading.Tasks;
 
 namespace FairPlayTube.Controllers
 {
+    /// <summary>
+    /// Handles all of the data related to a video
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -27,6 +30,12 @@ namespace FairPlayTube.Controllers
         private IMapper Mapper { get; }
         private ICurrentUserProvider CurrentUserProvider { get; }
 
+        /// <summary>
+        /// Initializes <see cref="VideoController"/>
+        /// </summary>
+        /// <param name="videoService"></param>
+        /// <param name="mapper"></param>
+        /// <param name="currentUserProvider"></param>
         public VideoController(VideoService videoService, IMapper mapper, ICurrentUserProvider currentUserProvider)
         {
             this.VideoService = videoService;
@@ -34,6 +43,11 @@ namespace FairPlayTube.Controllers
             this.CurrentUserProvider = currentUserProvider;
         }
 
+        /// <summary>
+        /// Gets all of the public processed videos
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("[action]")]
         [AllowAnonymous]
         public async Task<VideoInfoModel[]> GetPublicProcessedVideos(CancellationToken cancellationToken)
@@ -43,6 +57,12 @@ namespace FairPlayTube.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Uploads a video 
+        /// </summary>
+        /// <param name="uploadVideoModel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         [DisableRequestSizeLimit]
@@ -55,7 +75,11 @@ namespace FairPlayTube.Controllers
                 throw new Exception("An error occurred trying to upload your video");
         }
 
-
+        /// <summary>
+        /// Gets the Logged In user processed videos
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         public async Task<VideoInfoModel[]> GetMyProcessedVideos(CancellationToken cancellationToken)
@@ -67,6 +91,12 @@ namespace FairPlayTube.Controllers
 
         }
 
+        /// <summary>
+        /// Gets a given video access token to enable edit mode in the insights widget
+        /// </summary>
+        /// <param name="videoId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         public async Task<string> GetVideoEditAccessToken(string videoId, CancellationToken cancellationToken)
@@ -80,6 +110,11 @@ namespace FairPlayTube.Controllers
             return accessToken;
         }
 
+        /// <summary>
+        /// List all keywords found on the processed videos
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("[action]")]
         [AllowAnonymous]
         public async Task<GlobalKeywordModel[]> ListAllKeywords(CancellationToken cancellationToken)
@@ -87,6 +122,12 @@ namespace FairPlayTube.Controllers
             return await this.VideoService.ListAllKeywordsAsync(cancellationToken: cancellationToken);
         }
 
+        /// <summary>
+        /// Lists all the videos having a given keyword
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("[action]")]
         [AllowAnonymous]
         public async Task<VideoInfoModel[]> ListVideosByKeyword(string keyword,
@@ -99,6 +140,13 @@ namespace FairPlayTube.Controllers
         }
 
 
+        /// <summary>
+        /// Updates a video
+        /// </summary>
+        /// <param name="videoId"></param>
+        /// <param name="model"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPut("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         public async Task<IActionResult> UpdateMyVideo(string videoId, UpdateVideoModel model,
@@ -112,6 +160,12 @@ namespace FairPlayTube.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Gets the information for a given video
+        /// </summary>
+        /// <param name="videoId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         public async Task<VideoInfoModel> GetVideo(string videoId, CancellationToken cancellationToken)
@@ -120,6 +174,12 @@ namespace FairPlayTube.Controllers
                 p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p)).SingleOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Buys access to a given video
+        /// </summary>
+        /// <param name="videoId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         public async Task BuyVideoAccess(string videoId, CancellationToken cancellationToken)
@@ -128,7 +188,11 @@ namespace FairPlayTube.Controllers
             await VideoService.BuyVideoAccessAsync(azureAdB2CObjectId: userObjectId, videoId: videoId, cancellationToken: cancellationToken);
         }
 
-
+        /// <summary>
+        /// Gets the status of the logged in user queued videos
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         public async Task<List<VideoStatusModel>> GetMyPendingVideosQueue(CancellationToken cancellationToken)
@@ -163,7 +227,13 @@ namespace FairPlayTube.Controllers
             }
             return result;
         }
-
+        
+        /// <summary>
+        /// Adds a job associatd to a given video
+        /// </summary>
+        /// <param name="videoJobModel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         public async Task AddVideoJob(VideoJobModel videoJobModel, CancellationToken cancellationToken)
@@ -174,7 +244,11 @@ namespace FairPlayTube.Controllers
             await this.VideoService.AddVideoJobAsync(videoJobModel, cancellationToken: cancellationToken);
         }
 
-
+        /// <summary>
+        /// Gets the persons found in the videos
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("[action]")]
         //[Authorize(Roles = Common.Global.Constants.Roles.User)]
         public async Task<PersonModel[]> GetPersons(CancellationToken cancellationToken)
