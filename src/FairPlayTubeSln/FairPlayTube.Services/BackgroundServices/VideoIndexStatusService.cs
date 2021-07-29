@@ -62,7 +62,9 @@ namespace FairPlayTube.Services.BackgroundServices
                             await azureVideoIndexerService.UploadVideoAsync(new Uri(singleVideo.VideoBloblUrl),
                                 encodedName, encodedDescription, singleVideo.FileName,
                                 personModelId: Guid.Parse(defaultPersonModel.id), privacy: AzureVideoIndexerService.VideoPrivacy.Public,
-                                callBackUri: new Uri(videoIndexerCallbackUrl), cancellationToken: stoppingToken);
+                                callBackUri: new Uri(videoIndexerCallbackUrl), 
+                                language: singleVideo.VideoLanguageCode,
+                                cancellationToken: stoppingToken);
                             singleVideo.VideoId = indexVideoResponse.id;
                             singleVideo.IndexedVideoUrl = $"https://www.videoindexer.ai/embed/player/{singleVideo.AccountId}" +
                                 $"/{indexVideoResponse.id}/" +

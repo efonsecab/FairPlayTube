@@ -38,5 +38,11 @@ namespace FairPlayTube.Models.Video
         [Required]
         [Range(Constants.PriceLimits.MinVideoPrice, Constants.PriceLimits.MaxVideoPrice)]
         public int Price { get; set; }
+
+        /// <summary>
+        /// The video's language
+        /// </summary>
+        [Required]
+        public string Language { get; set; }
     }
 }

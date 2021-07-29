@@ -15,12 +15,21 @@
         <InputText class="form-control" @bind-Value="UploadVideoModel.SourceUrl"></InputText>
     </div>
     <div class="mb-3">
+        <label class="form-label">Video's Language</label>
+        <InputSelect class="form-control" @bind-Value="UploadVideoModel.Language">
+            @foreach (var singleLanguage in AvailableLanguages)
+            {
+                <option value="@singleLanguage.Value">@singleLanguage.Name</option>
+            }
+        </InputSelect>
+    </div>
+    <div class="mb-3">
         <label class="form-label">Description</label>
         <InputText class="form-control" @bind-Value="UploadVideoModel.Description"></InputText>
     </div>
     <div class="mb-3">
         <label class="form-label">Price (@Common.Global.Constants.CurrencySymbols.Dollars) - (@Constants.PriceLimits.MinVideoPrice, @Constants.PriceLimits.MaxVideoPrice)</label>
-        <InputNumber class="form-control" @bind-Value="UploadVideoModel.Price" 
+        <InputNumber class="form-control" @bind-Value="UploadVideoModel.Price"
                      ParsingErrorMessage="The Price must be a valid integer number"></InputNumber>
     </div>
     @if (!IsSubmitting)

@@ -754,6 +754,11 @@
             Video's Price
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.Video.UploadVideoModel.Language">
+            <summary>
+            The video's language
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.VideoInfoModel">
             <summary>
             Represents the VideoInfo entry
@@ -842,6 +847,11 @@
         <member name="P:FairPlayTube.Models.Video.VideoInfoModel.CombinedBudget">
             <summary>
             Combined Budget for all jobs associated to this video
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.VideoLanguageCode">
+            <summary>
+            Language code selected by the user uploading the video
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.Video.VideoJobModel">

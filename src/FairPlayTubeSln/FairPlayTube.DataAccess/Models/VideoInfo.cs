@@ -55,6 +55,8 @@ namespace FairPlayTube.DataAccess.Models
         public decimal Price { get; set; }
         [StringLength(500)]
         public string ExternalVideoSourceUrl { get; set; }
+        [StringLength(10)]
+        public string VideoLanguageCode { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("VideoInfo")]
