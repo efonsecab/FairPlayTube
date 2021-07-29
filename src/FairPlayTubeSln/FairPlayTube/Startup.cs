@@ -29,9 +29,12 @@ using PTI.Microservices.Library.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 
 namespace FairPlayTube
 {
@@ -182,6 +185,7 @@ namespace FairPlayTube
                 var azureAdB2ClientAppDefaultScope = Configuration["AzureAdB2C:ClientAppDefaultScope"];
                 services.AddSwaggerGen(c =>
                 {
+                    c.IncludeXmlComments(XmlCommentsFilePath);
                     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "FairPlayTube API" });
                     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                     {
@@ -203,6 +207,16 @@ namespace FairPlayTube
                 });
             }
 
+        }
+
+        private static string XmlCommentsFilePath
+        {
+            get
+            {
+                var basePath = AppContext.BaseDirectory;
+                var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
+                return Path.Combine(basePath, fileName);
+            }
         }
 
         private void ConfigureIpStackService(IServiceCollection services)
