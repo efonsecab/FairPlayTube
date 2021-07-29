@@ -1,14 +1,9 @@
 ﻿using FairPlayTube.DataAccess.Data;
-using FairPlayTube.Models.Paypal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PTI.Microservices.Library.Interceptors;
-using PTI.Microservices.Library.PayPal.Models.GetOrderDetails;
 using PTI.Microservices.Library.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,7 +23,7 @@ namespace FairPlayTube.Services
             this.CustomHttpClientHandlerLogger = customHttpClientHandlerLogger;
         }
 
-        public async Task AddFundsAsync(string azureAdB2CObjectId, string orderId, CancellationToken cancellationToken=default)
+        public async Task AddFundsAsync(string azureAdB2CObjectId, string orderId, CancellationToken cancellationToken = default)
         {
             var paypalAccessTokenResult = await this.PaypalService.GetAccessTokenAsync(CustomHttpClientHandlerLogger, cancellationToken);
             var paypalOrder = await this.PaypalService.GetOrderDetailsAsync(orderId, paypalAccessTokenResult.access_token, cancellationToken);

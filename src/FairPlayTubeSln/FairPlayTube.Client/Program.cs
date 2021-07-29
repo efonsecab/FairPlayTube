@@ -1,16 +1,13 @@
-using FairPlayTube.ClientServices;
 using FairPlayTube.Client.CustomClaims;
 using FairPlayTube.Client.Services;
+using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Configuration;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FairPlayTube.Client

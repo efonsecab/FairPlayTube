@@ -1,18 +1,12 @@
-﻿using FairPlayTube.Common.Global.Enums;
-using FairPlayTube.DataAccess.Data;
+﻿using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
-using FairPlayTube.Notifications.Hubs;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PTI.Microservices.Library.Services;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -62,7 +56,7 @@ namespace FairPlayTube.Services.BackgroundServices
                             await azureVideoIndexerService.UploadVideoAsync(new Uri(singleVideo.VideoBloblUrl),
                                 encodedName, encodedDescription, singleVideo.FileName,
                                 personModelId: Guid.Parse(defaultPersonModel.id), privacy: AzureVideoIndexerService.VideoPrivacy.Public,
-                                callBackUri: new Uri(videoIndexerCallbackUrl), 
+                                callBackUri: new Uri(videoIndexerCallbackUrl),
                                 language: singleVideo.VideoLanguageCode,
                                 cancellationToken: stoppingToken);
                             singleVideo.VideoId = indexVideoResponse.id;

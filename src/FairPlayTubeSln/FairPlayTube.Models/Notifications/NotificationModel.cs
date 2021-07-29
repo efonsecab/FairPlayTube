@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FairPlayTube.Models.Notifications
+﻿namespace FairPlayTube.Models.Notifications
 {
     /// <summary>
     /// Rpresents a Notification used in the SignalR communication

@@ -1,11 +1,6 @@
-﻿using AutoMapper;
-using FairPlayTube.DataAccess.Data;
-using FairPlayTube.DataAccess.Models;
-using FairPlayTube.Models.VisitorTracking;
+﻿using FairPlayTube.Models.VisitorTracking;
 using FairPlayTube.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FairPlayTube.Controllers
@@ -15,7 +10,7 @@ namespace FairPlayTube.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class VisitorTrackingController: ControllerBase
+    public class VisitorTrackingController : ControllerBase
     {
         private VisitorTrackingService VisitorTrackingService { get; }
         /// <summary>

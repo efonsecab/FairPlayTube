@@ -1,16 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FairPlayTube.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FairPlayTube.Tests;
-using FairPlayTube.Common.Global;
-using System.Net.Http.Json;
-using FairPlayTube.Models.Video;
-using Microsoft.EntityFrameworkCore;
+﻿using FairPlayTube.Common.Global;
 using FairPlayTube.DataAccess.Models;
+using FairPlayTube.Models.Video;
+using FairPlayTube.Tests;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Linq;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 namespace FairPlayTube.Controllers.Tests
 {
@@ -26,8 +23,8 @@ namespace FairPlayTube.Controllers.Tests
             VideoBloblUrl = TestsBase.TestVideoBloblUrl,
             Location = TestsBase.AzureVideoIndexerConfiguration!.Location,
             AccountId = Guid.Parse(TestsBase.AzureVideoIndexerConfiguration.AccountId),
-            Price=5,
-            VideoId=Guid.NewGuid().ToString()
+            Price = 5,
+            VideoId = Guid.NewGuid().ToString()
         };
 
         [ClassCleanup]
@@ -108,7 +105,7 @@ namespace FairPlayTube.Controllers.Tests
             await dbContext.SaveChangesAsync();
             var authorizedHttpClient = await base.CreateAuthorizedClientAsync(Role.User);
             var response = await authorizedHttpClient.PostAsync($"{Constants.ApiRoutes.VideoController.BuyVideoAccess}" +
-                $"?videoId={TestVideo.VideoId}",null!);
+                $"?videoId={TestVideo.VideoId}", null!);
             if (!response.IsSuccessStatusCode)
             {
                 var message = await response.Content.ReadAsStringAsync();
