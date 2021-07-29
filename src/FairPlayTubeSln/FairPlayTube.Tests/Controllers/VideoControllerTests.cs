@@ -24,7 +24,7 @@ namespace FairPlayTube.Controllers.Tests
             Name = "AUTOMATESTESTVIDEONAME",
             VideoIndexStatusId = (int)Common.Global.Enums.VideoIndexStatus.Processed,
             VideoBloblUrl = TestsBase.TestVideoBloblUrl,
-            Location = TestsBase.AzureVideoIndexerConfiguration.Location,
+            Location = TestsBase.AzureVideoIndexerConfiguration!.Location,
             AccountId = Guid.Parse(TestsBase.AzureVideoIndexerConfiguration.AccountId),
             Price=5,
             VideoId=Guid.NewGuid().ToString()
@@ -49,14 +49,14 @@ namespace FairPlayTube.Controllers.Tests
         {
             var dbContext = TestsBase.CreateDbContext();
             var userEntity = await dbContext.ApplicationUser.Where(p => p.AzureAdB2cobjectId.ToString() ==
-            TestsBase.TestAzureAdB2CAuthConfiguration.AzureAdUserObjectId).SingleAsync();
+            TestsBase.TestAzureAdB2CAuthConfiguration!.AzureAdUserObjectId).SingleAsync();
             TestVideo.ApplicationUserId = userEntity.ApplicationUserId;
             await dbContext.VideoInfo.AddAsync(TestVideo);
             await dbContext.SaveChangesAsync();
             var authorizedHttpClient = await base.CreateAuthorizedClientAsync(Role.User);
             var result = await authorizedHttpClient
                 .GetFromJsonAsync<VideoInfoModel[]>(Constants.ApiRoutes.VideoController.GetMyProcessedVideos);
-            Assert.AreEqual(1, result.Length, "Invalid count of owned videos for test user");
+            Assert.AreEqual(1, result!.Length, "Invalid count of owned videos for test user");
         }
 
         [TestMethod()]
@@ -86,7 +86,7 @@ namespace FairPlayTube.Controllers.Tests
             var anonymousHttpClient = this.CreateAnonymousClient();
             var result = await anonymousHttpClient
                 .GetFromJsonAsync<GlobalKeywordModel[]>(Constants.ApiRoutes.VideoController.ListAllKeywords);
-            Assert.IsTrue(result.Length > 0, "Invalid count of keywords");
+            Assert.IsTrue(result!.Length > 0, "Invalid count of keywords");
         }
 
         [TestMethod()]
@@ -100,7 +100,7 @@ namespace FairPlayTube.Controllers.Tests
         {
             var dbContext = TestsBase.CreateDbContext();
             var userEntity = await dbContext.ApplicationUser.Where(p => p.AzureAdB2cobjectId.ToString() ==
-            TestsBase.TestAzureAdB2CAuthConfiguration.AzureAdUserObjectId).SingleAsync();
+            TestsBase.TestAzureAdB2CAuthConfiguration!.AzureAdUserObjectId).SingleAsync();
             userEntity.AvailableFunds = 25;
             await dbContext.SaveChangesAsync();
             TestVideo.ApplicationUserId = userEntity.ApplicationUserId;
@@ -108,7 +108,7 @@ namespace FairPlayTube.Controllers.Tests
             await dbContext.SaveChangesAsync();
             var authorizedHttpClient = await base.CreateAuthorizedClientAsync(Role.User);
             var response = await authorizedHttpClient.PostAsync($"{Constants.ApiRoutes.VideoController.BuyVideoAccess}" +
-                $"?videoId={TestVideo.VideoId}",null);
+                $"?videoId={TestVideo.VideoId}",null!);
             if (!response.IsSuccessStatusCode)
             {
                 var message = await response.Content.ReadAsStringAsync();
