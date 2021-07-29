@@ -3,7 +3,6 @@ using FairPlayTube.Common.Interfaces;
 using FairPlayTube.CustomProviders;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
-using FairPlayTube.Models;
 using FairPlayTube.Models.CustomHttpResponse;
 using FairPlayTube.Notifications.Hubs;
 using FairPlayTube.Services;
@@ -11,7 +10,6 @@ using FairPlayTube.Services.BackgroundServices;
 using FairPlayTube.Services.Configuration;
 using FairPlayTube.Swagger.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -26,7 +24,6 @@ using Microsoft.OpenApi.Models;
 using PTI.Microservices.Library.Configuration;
 using PTI.Microservices.Library.Interceptors;
 using PTI.Microservices.Library.Services;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,7 +31,6 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Xml.XPath;
 
 namespace FairPlayTube
 {

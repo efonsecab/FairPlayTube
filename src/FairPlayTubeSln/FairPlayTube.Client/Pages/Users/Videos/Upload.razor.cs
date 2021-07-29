@@ -1,12 +1,12 @@
-﻿using FairPlayTube.ClientServices;
-using FairPlayTube.Client.Services;
+﻿using FairPlayTube.Client.Services;
+using FairPlayTube.ClientServices;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System;
-using System.Threading.Tasks;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FairPlayTube.Client.Pages.Users.Videos
 {

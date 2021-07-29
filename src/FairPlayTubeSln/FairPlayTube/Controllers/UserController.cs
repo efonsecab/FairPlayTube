@@ -3,19 +3,16 @@ using FairPlayTube.DataAccess.Data;
 using FairPlayTube.Models.Invites;
 using FairPlayTube.Models.UserMessage;
 using FairPlayTube.Models.UserProfile;
+using FairPlayTube.Notifications.Hubs;
 using FairPlayTube.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using FairPlayTube.Notifications.Hubs;
 
 namespace FairPlayTube.Controllers
 {

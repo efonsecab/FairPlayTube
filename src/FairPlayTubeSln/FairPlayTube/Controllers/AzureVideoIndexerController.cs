@@ -1,13 +1,9 @@
 ﻿using FairPlayTube.DataAccess.Data;
-using FairPlayTube.Models.Notifications;
 using FairPlayTube.Notifications.Hubs;
 using FairPlayTube.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

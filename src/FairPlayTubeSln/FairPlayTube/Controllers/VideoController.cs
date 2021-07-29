@@ -5,13 +5,10 @@ using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PTI.Microservices.Library.Models.AzureVideoIndexerService;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -227,7 +224,7 @@ namespace FairPlayTube.Controllers
             }
             return result;
         }
-        
+
         /// <summary>
         /// Adds a job associatd to a given video
         /// </summary>

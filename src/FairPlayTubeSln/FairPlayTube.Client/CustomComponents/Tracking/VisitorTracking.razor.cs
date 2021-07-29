@@ -16,7 +16,7 @@ namespace FairPlayTube.Client.CustomComponents.Tracking
         [Inject]
         private ToastifyService ToastifyService { get; set; }
         [Inject]
-        private VisitorTrackingClientService VisitorTrackingClientService { get;set;}
+        private VisitorTrackingClientService VisitorTrackingClientService { get; set; }
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
@@ -29,7 +29,7 @@ namespace FairPlayTube.Client.CustomComponents.Tracking
                     VisitedUrl = this.NavigationManager.Uri
                 };
                 var state = await AuthenticationStateTask;
-                if( state != null && state.User != null && state.User.Identity.IsAuthenticated)
+                if (state != null && state.User != null && state.User.Identity.IsAuthenticated)
                 {
                     var userObjectId = state.User.Claims.GetAzureAdB2CUserObjectId();
                     visitorTrackingModel.UserAzureAdB2cObjectId = userObjectId;

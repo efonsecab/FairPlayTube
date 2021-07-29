@@ -1,11 +1,9 @@
-﻿using FairPlayTube.ClientServices;
-using FairPlayTube.Client.Services;
+﻿using FairPlayTube.Client.Services;
+using FairPlayTube.ClientServices;
 using FairPlayTube.Models.Paypal;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FairPlayTube.Client.CustomComponents.Paypal
@@ -14,7 +12,7 @@ namespace FairPlayTube.Client.CustomComponents.Paypal
     {
         [Inject]
         private IJSRuntime JSRuntime { get; set; }
-        [Inject] 
+        [Inject]
         private UserProfileClientService UserProfileClientService { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }

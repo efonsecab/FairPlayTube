@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace FairPlayTube.Notifications.Hubs
 {
-    public class NotificationHub: Hub<INotificationHub>
+    public class NotificationHub : Hub<INotificationHub>
     {
         public async Task SendMessage(NotificationModel model)
         {

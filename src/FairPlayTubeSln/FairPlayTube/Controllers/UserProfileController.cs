@@ -1,12 +1,10 @@
 ﻿using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Data;
-using FairPlayTube.Models.Paypal;
 using FairPlayTube.Models.UserProfile;
 using FairPlayTube.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -52,7 +50,7 @@ namespace FairPlayTube.Controllers
         {
             var userObjectId = this.CurrentUserProvider.GetObjectId();
             var user = await this.FairplaytubeDatabaseContext.ApplicationUser.Include(p => p.UserExternalMonetization)
-                .Where(p=>p.AzureAdB2cobjectId.ToString() == userObjectId)
+                .Where(p => p.AzureAdB2cobjectId.ToString() == userObjectId)
                 .SingleAsync();
             if (user.UserExternalMonetization.Count > 0)
             {

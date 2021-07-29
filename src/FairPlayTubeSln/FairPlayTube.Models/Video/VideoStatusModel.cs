@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FairPlayTube.Models.Video
+﻿namespace FairPlayTube.Models.Video
 {
     /// <summary>
     /// Represents a Video Status

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FairPlayTube.Models.CustomHttpResponse
+﻿namespace FairPlayTube.Models.CustomHttpResponse
 {
     /// <summary>
     /// Represents an Http Problem Response

@@ -1,14 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FairPlayTube.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FairPlayTube.Tests;
-using FairPlayTube.Common.Global;
-using System.Net.Http.Json;
+﻿using FairPlayTube.Common.Global;
 using FairPlayTube.Models.UserProfile;
+using FairPlayTube.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 namespace FairPlayTube.Controllers.Tests
 {

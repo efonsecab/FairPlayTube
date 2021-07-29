@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FairPlayTube.Models.Persons
+﻿namespace FairPlayTube.Models.Persons
 {
     /// <summary>
     /// Represents the Person Model from Azure Video Indexer

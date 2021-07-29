@@ -1,10 +1,7 @@
 ﻿using FairPlayTube.Models.CustomHttpResponse;
 using FairPlayTube.Models.VisitorTracking;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
 using System.Threading.Tasks;
 using static FairPlayTube.Common.Global.Constants;
 
