@@ -181,7 +181,13 @@ namespace FairPlayTube
                 var azureAdB2ClientAppDefaultScope = Configuration["AzureAdB2C:ClientAppDefaultScope"];
                 services.AddSwaggerGen(c =>
                 {
-                    c.IncludeXmlComments(XmlCommentsFilePath);
+                    var basePath = AppContext.BaseDirectory;
+                    var mainAppXmlFilename = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
+                    var modelsFileName = typeof(FairPlayTube.Models.Video.VideoInfoModel).Assembly.GetName().Name + ".xml";
+                    var mainAppXmlPath = Path.Combine(basePath, mainAppXmlFilename);
+                    var modelsXmlPath = Path.Combine(basePath, modelsFileName);
+                    c.IncludeXmlComments(mainAppXmlPath);
+                    c.IncludeXmlComments(modelsXmlPath);
                     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "FairPlayTube API" });
                     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                     {
@@ -203,16 +209,6 @@ namespace FairPlayTube
                 });
             }
 
-        }
-
-        private static string XmlCommentsFilePath
-        {
-            get
-            {
-                var basePath = AppContext.BaseDirectory;
-                var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
-                return Path.Combine(basePath, fileName);
-            }
         }
 
         private void ConfigureIpStackService(IServiceCollection services)
