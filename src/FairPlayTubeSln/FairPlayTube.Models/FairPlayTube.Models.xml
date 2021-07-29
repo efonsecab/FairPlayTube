@@ -1,0 +1,913 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FairPlayTube.Models</name>
+    </assembly>
+    <members>
+        <member name="T:FairPlayTube.Models.CustomHttpResponse.ProblemHttpResponse">
+            <summary>
+            Represents an Http Problem Response
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.CustomHttpResponse.ProblemHttpResponse.Type">
+            <summary>
+            Type of Problem
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.CustomHttpResponse.ProblemHttpResponse.Title">
+            <summary>
+            Problem's Title
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.CustomHttpResponse.ProblemHttpResponse.Status">
+            <summary>
+            Status Code
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.CustomHttpResponse.ProblemHttpResponse.Detail">
+            <summary>
+            Problem's Detail
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.CustomHttpResponse.ProblemHttpResponse.TraceId">
+            <summary>
+            Trace Id
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Invites.InviteUserModel">
+            <summary>
+            Represents an invitation to a user to use the system
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Invites.InviteUserModel.ToEmailAddress">
+            <summary>
+            Email Address the invitation is sent to
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Invites.InviteUserModel.CustomMessage">
+            <summary>
+            Custom message for the invitation
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Notifications.NotificationModel">
+            <summary>
+            Rpresents a Notification used in the SignalR communication
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Notifications.NotificationModel.Message">
+            <summary>
+            Message of the SignalR notification
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDataModel">
+            <summary>
+            Represents the PayPal Checkout Approval Data
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDataModel.orderID">
+            <summary>
+            Order Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDataModel.payerID">
+            <summary>
+            Payer Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDataModel.paymentID">
+            <summary>
+            Payment Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDataModel.billingToken">
+            <summary>
+            Billing Token
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDataModel.facilitatorAccessToken">
+            <summary>
+            Facilitator Access Token
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDetailsModel">
+            <summary>
+            Represents the PayPal Checkout Approval Details
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDetailsModel.id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDetailsModel.intent">
+            <summary>
+            Intent
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDetailsModel.status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDetailsModel.purchase_units">
+            <summary>
+            Purchase Units
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDetailsModel.payer">
+            <summary>
+            Payer
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDetailsModel.create_time">
+            <summary>
+            Create DateTime
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDetailsModel.update_time">
+            <summary>
+            Update DateTime
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDetailsModel.links">
+            <summary>
+            Links
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Payer">
+            <summary>
+            Represents the PayPal Payer
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Payer.name">
+            <summary>
+            Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Payer.email_address">
+            <summary>
+            Email Address
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Payer.payer_id">
+            <summary>
+            Payer Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Payer.address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Name">
+            <summary>
+            Represents the Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Name.given_name">
+            <summary>
+            Given Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Name.surname">
+            <summary>
+            Surname
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Address">
+            <summary>
+            Represents the Address
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Address.country_code">
+            <summary>
+            Country Code
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Purchase_Units">
+            <summary>
+            Purchase Units
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Purchase_Units.reference_id">
+            <summary>
+            Reference Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Purchase_Units.amount">
+            <summary>
+            Amount
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Purchase_Units.payee">
+            <summary>
+            Payee
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Purchase_Units.description">
+            <summary>
+            Description
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Purchase_Units.items">
+            <summary>
+            Items
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Purchase_Units.shipping">
+            <summary>
+            Shipping
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Purchase_Units.payments">
+            <summary>
+            Payments
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Amount">
+            <summary>
+            Represents the Amount
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Amount.currency_code">
+            <summary>
+            Currency Code
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Amount.value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Amount.breakdown">
+            <summary>
+            Breakdown
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Breakdown">
+            <summary>
+            Represents the Breakdown
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Breakdown.item_total">
+            <summary>
+            Item Total
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Breakdown.shipping">
+            <summary>
+            Shipping
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Breakdown.handling">
+            <summary>
+            Handling
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Breakdown.tax_total">
+            <summary>
+            Tax Total
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Breakdown.insurance">
+            <summary>
+            Insurance
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Breakdown.shipping_discount">
+            <summary>
+            Shipping Discount
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Item_Total">
+            <summary>
+            Represents the Item Total
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Item_Total.currency_code">
+            <summary>
+            Currency Code
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Item_Total.value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Shipping">
+            <summary>
+            Shipping
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Shipping.currency_code">
+            <summary>
+            Currency Code
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Shipping.value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Handling">
+            <summary>
+            Represents the Handling
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Handling.currency_code">
+            <summary>
+            Currency Code
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Handling.value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Tax_Total">
+            <summary>
+            Represents the Tax Total
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Tax_Total.currency_code">
+            <summary>
+            Currency Code
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Tax_Total.value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Insurance">
+            <summary>
+            Represents the Insurance
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Insurance.currency_code">
+            <summary>
+            Currency Code
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Insurance.value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Shipping_Discount">
+            <summary>
+            Shipping Discount
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Shipping_Discount.currency_code">
+            <summary>
+            Currency Code
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Shipping_Discount.value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Payee">
+            <summary>
+            Represents the Payee
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Payee.email_address">
+            <summary>
+            Email Address
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Payee.merchant_id">
+            <summary>
+            Merchant Id
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Shipping1">
+            <summary>
+            Represents the Shipping
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Shipping1.name">
+            <summary>
+            Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Shipping1.address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Name1">
+            <summary>
+            Represents the Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Name1.full_name">
+            <summary>
+            Full Name
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Address1">
+            <summary>
+            Represents the Address
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Address1.address_line_1">
+            <summary>
+            Address Line 1
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Address1.admin_area_2">
+            <summary>
+            Admin Area 2
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Address1.admin_area_1">
+            <summary>
+            Admin Area 1
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Address1.postal_code">
+            <summary>
+            Postal Code
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Address1.country_code">
+            <summary>
+            Country Code
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Payments">
+            <summary>
+            Represents the Payments
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Payments.captures">
+            <summary>
+            Captures
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Capture">
+            <summary>
+            Represents the Capture
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Capture.id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Capture.status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Capture.amount">
+            <summary>
+            Amount
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Capture.final_capture">
+            <summary>
+            Final Capture
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Capture.seller_protection">
+            <summary>
+            Seller Protection
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Capture.create_time">
+            <summary>
+            Create DateTime
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Capture.update_time">
+            <summary>
+            Update DateTime
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Amount1">
+            <summary>
+            Represents the Amount
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Amount1.currency_code">
+            <summary>
+            Currency Code
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Amount1.value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Seller_Protection">
+            <summary>
+            Represents the Seller Protection
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Seller_Protection.status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Seller_Protection.dispute_categories">
+            <summary>
+            Dispute Categories
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Item">
+            <summary>
+            Represents the Item
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Item.name">
+            <summary>
+            Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Item.unit_amount">
+            <summary>
+            Unit Amount
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Item.tax">
+            <summary>
+            Tax
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Item.quantity">
+            <summary>
+            Quantity
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Unit_Amount">
+            <summary>
+            Represents the Unit Amount
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Unit_Amount.currency_code">
+            <summary>
+            Currency Code
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Unit_Amount.value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Tax">
+            <summary>
+            Represents the Tax
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Tax.currency_code">
+            <summary>
+            Currency Code
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Tax.value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Paypal.Link">
+            <summary>
+            Represents the Link
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Link.href">
+            <summary>
+            Href
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Link.rel">
+            <summary>
+            Rel
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Paypal.Link.method">
+            <summary>
+            Method
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Persons.PersonModel">
+            <summary>
+            Represents the Person Model from Azure Video Indexer
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Persons.PersonModel.Id">
+            <summary>
+            Azure Video Indexer Person Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Persons.PersonModel.Name">
+            <summary>
+            Azure Video Indexer Person Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Persons.PersonModel.SampleFaceId">
+            <summary>
+            Azure Video Indexer Person Sample Face Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Persons.PersonModel.SampleFaceSourceType">
+            <summary>
+            Azure Video Indexer Person Sample Face Type
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Persons.PersonModel.SampleFaceState">
+            <summary>
+            Azure Video Indexer Person Sample Face State
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Persons.PersonModel.PersonModelId">
+            <summary>
+            Azure Video Indexer Person Person Model Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Persons.PersonModel.SampleFaceUrl">
+            <summary>
+            System Storage Url for the Sample Face
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.UserMessage.UserMessageModel">
+            <summary>
+            Represents the User Message entry
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserMessage.UserMessageModel.ToApplicationUserId">
+            <summary>
+            ApplicationUserId of the user to whom the message is sent
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserMessage.UserMessageModel.Message">
+            <summary>
+            Message to be sent
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.UserProfile.GlobalMonetizationModel">
+            <summary>
+            Represents the External Monetization Information
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.GlobalMonetizationModel.MonetizationItems">
+            <summary>
+            List of Monetization Items
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.UserProfile.MonetizationItem">
+            <summary>
+            Represents a Monetization Item
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.MonetizationItem.MonetizationUrl">
+            <summary>
+            Url of the Monetization Item
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.UserProfile.UserModel">
+            <summary>
+            Represents the User entry
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.UserModel.ApplicationUserId">
+            <summary>
+            ApplicationUserId
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.UserModel.Name">
+            <summary>
+            Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.UserModel.BrandsCount">
+            <summary>
+            # of Brands the user owns
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.UserModel.VideosCount">
+            <summary>
+            # of Videos the user owns
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.UserProfile.UserProfileModel">
+            <summary>
+            Represents the User Profile
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.UserProfileModel.AvailableFunds">
+            <summary>
+            Available Funds for the user
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Video.GlobalKeywordModel">
+            <summary>
+            Represents the Global Keywords
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.GlobalKeywordModel.Keyword">
+            <summary>
+            Keywords
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.GlobalKeywordModel.Appeareances">
+            <summary>
+            Appeareances
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Video.UpdateVideoModel">
+            <summary>
+            Holds the information required to update a video
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.UpdateVideoModel.Price">
+            <summary>
+            Video's price
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Video.UploadVideoModel">
+            <summary>
+            Holds the information required to upload a new video
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.UploadVideoModel.Name">
+            <summary>
+            Name/Title for the video
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.UploadVideoModel.Description">
+            <summary>
+            Video's Description
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.UploadVideoModel.SourceUrl">
+            <summary>
+            Public Url where the source video is located
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.UploadVideoModel.Price">
+            <summary>
+            Video's Price
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Video.VideoInfoModel">
+            <summary>
+            Represents the VideoInfo entry
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.VideoId">
+            <summary>
+            Azure Video Indexer Video Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.Name">
+            <summary>
+            NAme of the Video
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.Description">
+            <summary>
+            Video's Description
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.Location">
+            <summary>
+            Azure Video Indexer Video's Location
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.AccountId">
+            <summary>
+            Azure Video Indexer Video's Account Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.PublicPlayerUrl">
+            <summary>
+            Url to use to render the Azure Video Indexer Player Widget
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.PublicInsightsUrl">
+            <summary>
+            Url to use to render the Azure Video Indexer Insights Widget
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.EditAccessToken">
+            <summary>
+            Access Token required to be able to edit Azure Video Indexer Videos Insights
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.PrivateInsightsUrl">
+            <summary>
+            Url to use to display the insights Widget in editable mode
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.VideoDurationInSeconds">
+            <summary>
+            Total duration of the video, in seconds
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.VideoDuration">
+            <summary>
+            Video's Duration
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.VideoDurationFormatted">
+            <summary>
+            Video's Duration Formatted for Displaying
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.Publisher">
+            <summary>
+            Video's Owner
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.UserGlobalMonetization">
+            <summary>
+            Monetization Profile Information
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.Price">
+            <summary>
+            Video's Price
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.AvailableJobs">
+            <summary>
+            Available Jobs associated with this video
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.CombinedBudget">
+            <summary>
+            Combined Budget for all jobs associated to this video
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Video.VideoJobModel">
+            <summary>
+            Represents a Job associated to a video
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoJobModel.VideoId">
+            <summary>
+            Video Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoJobModel.Budget">
+            <summary>
+            Budget
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoJobModel.Title">
+            <summary>
+            Job Title
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoJobModel.Description">
+            <summary>
+            Job Description
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Video.VideoStatusModel">
+            <summary>
+            Represents a Video Status
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoStatusModel.VideoId">
+            <summary>
+            Video Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoStatusModel.Name">
+            <summary>
+            Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoStatusModel.Status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoStatusModel.ProcessingProgress">
+            <summary>
+            Processing progress
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.VisitorTracking.VisitorTrackingModel">
+            <summary>
+            Holds the information required to track visitors information/behavior
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VisitorTracking.VisitorTrackingModel.VisitedUrl">
+            <summary>
+            Visisted Url
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VisitorTracking.VisitorTrackingModel.UserAzureAdB2cObjectId">
+            <summary>
+            Logged In user Azure Ad B2C Object Id
+            </summary>
+        </member>
+    </members>
+</doc>
