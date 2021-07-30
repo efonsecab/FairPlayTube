@@ -41,14 +41,14 @@
             Handles all of the data regarding a User
             </summary>
         </member>
-        <member name="M:FairPlayTube.Controllers.UserController.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext,FairPlayTube.Common.Interfaces.ICurrentUserProvider,FairPlayTube.Services.EmailService,Microsoft.AspNetCore.SignalR.IHubContext{FairPlayTube.Notifications.Hubs.NotificationHub,FairPlayTube.Notifications.Hubs.INotificationHub})">
+        <member name="M:FairPlayTube.Controllers.UserController.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext,FairPlayTube.Common.Interfaces.ICurrentUserProvider,FairPlayTube.Services.EmailService,FairPlayTube.Services.MessageService)">
             <summary>
             Initializes <see cref="T:FairPlayTube.Controllers.UserController"/>
             </summary>
             <param name="fairplaytubeDatabaseContext"></param>
             <param name="currentUserProvider"></param>
             <param name="emailService"></param>
-            <param name="hubContext"></param>
+            <param name="messageService"></param>
         </member>
         <member name="M:FairPlayTube.Controllers.UserController.GetMyRole(System.Threading.CancellationToken)">
             <summary>

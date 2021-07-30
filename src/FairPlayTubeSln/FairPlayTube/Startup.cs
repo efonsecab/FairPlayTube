@@ -75,7 +75,7 @@ namespace FairPlayTube
 
             services.AddScoped<CustomHttpClientHandler>();
             services.AddScoped<CustomHttpClient>();
-
+            ConfigureAzureContentModerator(services);
             ConfigureAzureVideoIndexer(services);
             ConfigureAzureBlobStorage(services);
             ConfigureDataStorage(services);
@@ -206,6 +206,15 @@ namespace FairPlayTube
                 });
             }
 
+        }
+
+        private void ConfigureAzureContentModerator(IServiceCollection services)
+        {
+            AzureContentModeratorConfiguration azureContentModeratorConfiguration =
+                            Configuration.GetSection(nameof(AzureContentModeratorConfiguration))
+                            .Get<AzureContentModeratorConfiguration>();
+            services.AddSingleton(azureContentModeratorConfiguration);
+            services.AddScoped<AzureContentModeratorService>();
         }
 
         private static void AddPlatformServices(IServiceCollection services)
