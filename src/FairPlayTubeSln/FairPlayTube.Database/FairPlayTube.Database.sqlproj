@@ -88,6 +88,7 @@
     <Build Include="dbo\Tables\VideoComment.sql" />
     <Build Include="dbo\Tables\VideoJobApplication.sql" />
     <Build Include="dbo\Tables\Person.sql" />
+    <Build Include="dbo\Tables\VideoVisibility.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

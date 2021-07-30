@@ -759,6 +759,11 @@
             The video's language
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.Video.UploadVideoModel.VideoVisibility">
+            <summary>
+            The video's visibility
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.VideoInfoModel">
             <summary>
             Represents the VideoInfo entry

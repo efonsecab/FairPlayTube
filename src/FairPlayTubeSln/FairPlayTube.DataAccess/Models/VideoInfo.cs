@@ -57,6 +57,7 @@ namespace FairPlayTube.DataAccess.Models
         public string ExternalVideoSourceUrl { get; set; }
         [StringLength(10)]
         public string VideoLanguageCode { get; set; }
+        public short VideoVisibilityId { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("VideoInfo")]
@@ -64,6 +65,9 @@ namespace FairPlayTube.DataAccess.Models
         [ForeignKey(nameof(VideoIndexStatusId))]
         [InverseProperty("VideoInfo")]
         public virtual VideoIndexStatus VideoIndexStatus { get; set; }
+        [ForeignKey(nameof(VideoVisibilityId))]
+        [InverseProperty("VideoInfo")]
+        public virtual VideoVisibility VideoVisibility { get; set; }
         [InverseProperty("VideoInfo")]
         public virtual UserVideoRating UserVideoRating { get; set; }
         [InverseProperty("VideoInfo")]

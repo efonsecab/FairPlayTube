@@ -44,6 +44,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<VideoInfo> VideoInfo { get; set; }
         public virtual DbSet<VideoJob> VideoJob { get; set; }
         public virtual DbSet<VideoJobApplication> VideoJobApplication { get; set; }
+        public virtual DbSet<VideoVisibility> VideoVisibility { get; set; }
         public virtual DbSet<VisitorTracking> VisitorTracking { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -238,6 +239,8 @@ namespace FairPlayTube.DataAccess.Data
             {
                 entity.Property(e => e.ApplicationUserId).HasComment("Video Owner Id");
 
+                entity.Property(e => e.VideoVisibilityId).HasDefaultValueSql("1");
+
                 entity.HasOne(d => d.ApplicationUser)
                     .WithMany(p => p.VideoInfo)
                     .HasForeignKey(d => d.ApplicationUserId)
@@ -249,6 +252,12 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.VideoIndexStatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VideoInfo_VideoIndexStatus");
+
+                entity.HasOne(d => d.VideoVisibility)
+                    .WithMany(p => p.VideoInfo)
+                    .HasForeignKey(d => d.VideoVisibilityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoInfo_VideoVisibility");
             });
 
             modelBuilder.Entity<VideoJob>(entity =>

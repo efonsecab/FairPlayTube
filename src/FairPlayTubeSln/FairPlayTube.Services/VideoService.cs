@@ -196,7 +196,9 @@ namespace FairPlayTube.Services
                 .Include(p => p.VideoJob).Include(p => p.ApplicationUser)
                 .ThenInclude(p => p.UserExternalMonetization)
                 .Where(p =>
-            p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed)
+            p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed
+            && p.VideoVisibilityId == (short)Common.Global.Enums.VideoVisibility.Public
+            )
                 .OrderByDescending(p => p.VideoInfoId);
         }
 
@@ -209,7 +211,7 @@ namespace FairPlayTube.Services
             p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed);
         }
 
-        public IQueryable<VideoInfo> GetPublicProcessedVideosByUserId(
+        public IQueryable<VideoInfo> GetProcessedVideosByUserId(
             string azureAdB2cobjectId)
         {
             return this.FairplaytubeDatabaseContext.VideoInfo
@@ -270,6 +272,7 @@ namespace FairPlayTube.Services
                 FileName = newFileName,
                 VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Pending,
                 VideoLanguageCode = uploadVideoModel.Language,
+                VideoVisibilityId = (short)uploadVideoModel.VideoVisibility
             }, cancellationToken: cancellationToken);
             cancellationToken.ThrowIfCancellationRequested();
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
