@@ -13,6 +13,8 @@ How To Contribute
 * Use the Discussions section to post your ideas
 * Share the repo on your social networks (Twitter, Facebook, LinkedIn, etc)
 
+**Note: Please let us know what made you want to contribute: https://github.com/efonsecab/FairPlayTube/discussions/205**
+
 Coding Standards
 ------------
 You must follow the Coding Standards here: [Coding Standards](CODING-STANDARDS.md)
