@@ -27,23 +27,22 @@ namespace FairPlayTube.Controllers
         private FairplaytubeDatabaseContext FairplaytubeDatabaseContext { get; }
         private ICurrentUserProvider CurrentUserProvider { get; }
         private EmailService EmailService { get; }
-        private IHubContext<NotificationHub, INotificationHub> HubContext { get; }
-
+        private MessageService MessageService { get; }
         /// <summary>
         /// Initializes <see cref="UserController"/>
         /// </summary>
         /// <param name="fairplaytubeDatabaseContext"></param>
         /// <param name="currentUserProvider"></param>
         /// <param name="emailService"></param>
-        /// <param name="hubContext"></param>
+        /// <param name="messageService"></param>
         public UserController(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             ICurrentUserProvider currentUserProvider, EmailService emailService,
-            IHubContext<NotificationHub, INotificationHub> hubContext)
+            MessageService messageService)
         {
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
             this.CurrentUserProvider = currentUserProvider;
             this.EmailService = emailService;
-            this.HubContext = hubContext;
+            this.MessageService = messageService;
         }
 
         /// <summary>
@@ -112,30 +111,7 @@ namespace FairPlayTube.Controllers
         public async Task SendMessage(UserMessageModel model, CancellationToken cancellationToken)
         {
             var senderObjectId = this.CurrentUserProvider.GetObjectId();
-            var sender = await this.FairplaytubeDatabaseContext.ApplicationUser
-                .Where(u => u.AzureAdB2cobjectId.ToString() == senderObjectId)
-                .SingleAsync(cancellationToken);
-
-            var receiver = await this.FairplaytubeDatabaseContext.ApplicationUser
-                .Where(u => u.ApplicationUserId == model.ToApplicationUserId)
-                .SingleAsync(cancellationToken);
-
-            await this.FairplaytubeDatabaseContext.UserMessage.AddAsync(
-                new DataAccess.Models.UserMessage()
-                {
-                    ToApplicationUserId = model.ToApplicationUserId,
-                    Message = model.Message,
-                    FromApplicationUserId = sender.ApplicationUserId
-                }, cancellationToken);
-
-            await this.FairplaytubeDatabaseContext.SaveChangesAsync();
-
-            await this.HubContext.Clients.User(receiver.AzureAdB2cobjectId.ToString())
-                .ReceiveMessage(new Models.Notifications.NotificationModel()
-                {
-                    Message = $"You have a new message from: {sender.FullName}"
-                });
+            await this.MessageService.SendMessageAsync(model, senderObjectId, cancellationToken);
         }
-
     }
 }

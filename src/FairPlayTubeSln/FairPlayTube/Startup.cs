@@ -84,10 +84,7 @@ namespace FairPlayTube
 
             var smtpConfiguration = Configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
             services.AddSingleton(smtpConfiguration);
-            services.AddScoped<EmailService>();
-            services.AddScoped<VideoService>();
-            services.AddScoped<PaymentService>();
-            services.AddScoped<VisitorTrackingService>();
+            AddPlatformServices(services);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAdB2C"));
@@ -209,6 +206,15 @@ namespace FairPlayTube
                 });
             }
 
+        }
+
+        private static void AddPlatformServices(IServiceCollection services)
+        {
+            services.AddScoped<EmailService>();
+            services.AddScoped<VideoService>();
+            services.AddScoped<PaymentService>();
+            services.AddScoped<VisitorTrackingService>();
+            services.AddScoped<MessageService>();
         }
 
         private void ConfigureIpStackService(IServiceCollection services)
