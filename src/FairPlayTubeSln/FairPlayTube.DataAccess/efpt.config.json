@@ -114,6 +114,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[VideoVisibility]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VisitorTracking]",
          "ObjectType": 0
       }

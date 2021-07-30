@@ -91,4 +91,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="VideoLanguageCode" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="2efd6a06-f635-4715-8f63-ff717e54e80c" ChangeDateTime="07/30/2021 17:33:10">
+    <Property Name="ElementName" Value="[dbo].[VideoVisibility].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VideoVisibility]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VideoVisibilityId" />
+  </Operation>
 </Operations>
