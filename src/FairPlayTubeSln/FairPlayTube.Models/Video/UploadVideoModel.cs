@@ -1,4 +1,5 @@
 ﻿using FairPlayTube.Common.Global;
+using FairPlayTube.Common.Global.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -40,5 +41,10 @@ namespace FairPlayTube.Models.Video
         /// </summary>
         [Required]
         public string Language { get; set; }
+        /// <summary>
+        /// The video's visibility
+        /// </summary>
+        [Required]
+        public VideoVisibility VideoVisibility { get; set; } = VideoVisibility.Public;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
@@ -96,6 +97,11 @@ namespace FairPlayTube.Client.Pages.Users.Videos
                 this.IsLoading = false;
                 this.IsSubmitting = false;
             }
+        }
+
+        private string GetVisibilityName(VideoVisibility visibilityValue)
+        {
+            return Enum.GetName<VideoVisibility>(visibilityValue);
         }
     }
 }

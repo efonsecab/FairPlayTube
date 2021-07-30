@@ -32,6 +32,15 @@
         <InputNumber class="form-control" @bind-Value="UploadVideoModel.Price"
                      ParsingErrorMessage="The Price must be a valid integer number"></InputNumber>
     </div>
+    <div class="mb-3">
+        <label class="form-label">Visibility</label>
+        <InputSelect class="form-control" @bind-Value="UploadVideoModel.VideoVisibility">
+            @foreach (var singleValue in Enum.GetValues<Common.Global.Enums.VideoVisibility>())
+            {
+                <option value="@singleValue">@GetVisibilityName(singleValue)</option>
+            }
+        </InputSelect>
+    </div>
     @if (!IsSubmitting)
     {
         <div class="mb-3">

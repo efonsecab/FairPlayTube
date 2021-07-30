@@ -82,7 +82,7 @@ namespace FairPlayTube.Controllers
         public async Task<VideoInfoModel[]> GetMyProcessedVideos(CancellationToken cancellationToken)
         {
             var azureAdB2cobjectId = this.CurrentUserProvider.GetObjectId();
-            var result = await this.VideoService.GetPublicProcessedVideosByUserId(azureAdB2cobjectId)
+            var result = await this.VideoService.GetProcessedVideosByUserId(azureAdB2cobjectId)
                 .Select(p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p)).ToArrayAsync(cancellationToken: cancellationToken);
             return result;
 
