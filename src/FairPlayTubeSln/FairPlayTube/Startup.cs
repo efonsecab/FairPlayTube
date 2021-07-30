@@ -75,7 +75,7 @@ namespace FairPlayTube
 
             services.AddScoped<CustomHttpClientHandler>();
             services.AddScoped<CustomHttpClient>();
-
+            ConfigureAzureContentModerator(services);
             ConfigureAzureVideoIndexer(services);
             ConfigureAzureBlobStorage(services);
             ConfigureDataStorage(services);
@@ -84,10 +84,7 @@ namespace FairPlayTube
 
             var smtpConfiguration = Configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
             services.AddSingleton(smtpConfiguration);
-            services.AddScoped<EmailService>();
-            services.AddScoped<VideoService>();
-            services.AddScoped<PaymentService>();
-            services.AddScoped<VisitorTrackingService>();
+            AddPlatformServices(services);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAdB2C"));
@@ -209,6 +206,24 @@ namespace FairPlayTube
                 });
             }
 
+        }
+
+        private void ConfigureAzureContentModerator(IServiceCollection services)
+        {
+            AzureContentModeratorConfiguration azureContentModeratorConfiguration =
+                            Configuration.GetSection(nameof(AzureContentModeratorConfiguration))
+                            .Get<AzureContentModeratorConfiguration>();
+            services.AddSingleton(azureContentModeratorConfiguration);
+            services.AddScoped<AzureContentModeratorService>();
+        }
+
+        private static void AddPlatformServices(IServiceCollection services)
+        {
+            services.AddScoped<EmailService>();
+            services.AddScoped<VideoService>();
+            services.AddScoped<PaymentService>();
+            services.AddScoped<VisitorTrackingService>();
+            services.AddScoped<MessageService>();
         }
 
         private void ConfigureIpStackService(IServiceCollection services)
