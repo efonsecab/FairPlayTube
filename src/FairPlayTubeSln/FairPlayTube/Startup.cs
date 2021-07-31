@@ -208,15 +208,6 @@ namespace FairPlayTube
 
         }
 
-        private void ConfigureAzureContentModerator(IServiceCollection services)
-        {
-            AzureContentModeratorConfiguration azureContentModeratorConfiguration =
-                            Configuration.GetSection(nameof(AzureContentModeratorConfiguration))
-                            .Get<AzureContentModeratorConfiguration>();
-            services.AddSingleton(azureContentModeratorConfiguration);
-            services.AddScoped<AzureContentModeratorService>();
-        }
-
         private static void AddPlatformServices(IServiceCollection services)
         {
             services.AddScoped<EmailService>();
@@ -224,6 +215,15 @@ namespace FairPlayTube
             services.AddScoped<PaymentService>();
             services.AddScoped<VisitorTrackingService>();
             services.AddScoped<MessageService>();
+        }
+
+        private void ConfigureAzureContentModerator(IServiceCollection services)
+        {
+            AzureContentModeratorConfiguration azureContentModeratorConfiguration =
+                            Configuration.GetSection(nameof(AzureContentModeratorConfiguration))
+                            .Get<AzureContentModeratorConfiguration>();
+            services.AddSingleton(azureContentModeratorConfiguration);
+            services.AddScoped<AzureContentModeratorService>();
         }
 
         private void ConfigureIpStackService(IServiceCollection services)
