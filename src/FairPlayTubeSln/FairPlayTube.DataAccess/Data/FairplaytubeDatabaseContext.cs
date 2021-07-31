@@ -25,6 +25,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<Brand> Brand { get; set; }
         public virtual DbSet<BrandVideo> BrandVideo { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
+        public virtual DbSet<GatedFeature> GatedFeature { get; set; }
         public virtual DbSet<PaypalTransaction> PaypalTransaction { get; set; }
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<UserExternalMonetization> UserExternalMonetization { get; set; }
@@ -89,6 +90,11 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.VideoInfoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_BrandVideo_VideoInfo");
+            });
+
+            modelBuilder.Entity<GatedFeature>(entity =>
+            {
+                entity.Property(e => e.DefaultValue).HasDefaultValueSql("1");
             });
 
             modelBuilder.Entity<PaypalTransaction>(entity =>

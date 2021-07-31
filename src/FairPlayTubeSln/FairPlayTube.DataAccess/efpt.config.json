@@ -38,6 +38,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[GatedFeature]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[PaypalTransaction]",
          "ObjectType": 0
       },
