@@ -61,9 +61,10 @@ namespace FairPlayTube
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSignalR();
-            GlobalPackageConfiguration.EnableHttpRequestInformationLog = false;
+            bool enablePTILibrariesLogging = Convert.ToBoolean(Configuration["EnablePTILibrariesLogging"]);
+            GlobalPackageConfiguration.EnableHttpRequestInformationLog = enablePTILibrariesLogging;
             GlobalPackageConfiguration.RapidApiKey = Configuration.GetValue<string>("RapidApiKey");
+            services.AddSignalR();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
             services.AddScoped(serviceProvider =>
