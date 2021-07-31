@@ -30,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FairPlayTube.Client\FairPlayTube.Client.csproj" />
     <ProjectReference Include="..\FairPlayTube.Components\FairPlayTube.Components.csproj" />
+    <ProjectReference Include="..\FairPlayTube.Controllers\FairPlayTube.Controllers.csproj" />
     <ProjectReference Include="..\FairPlayTube.DataAccess\FairPlayTube.DataAccess.csproj" />
     <ProjectReference Include="..\FairPlayTube.Models\FairPlayTube.Models.csproj" />
     <ProjectReference Include="..\FairPlayTube.Notifications\FairPlayTube.Notifications.csproj" />
