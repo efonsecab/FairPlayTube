@@ -1,7 +1,26 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
+<div class="container">
+    <div class="mb-3">
+        <label class="form-label">ConenctionString</label>
+        <input class="form-control" type="text" @bind-value="ConnectionString" />
+        <button class="btn btn-primary" type="button" @onclick="GenerateFeatures">Generate Features</button>
+    </div>
+</div>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+
+@foreach (var singleController in this.Controllers)
+{
+    <div class="row">
+        <div class="col">
+            <h2>@singleController.Name</h2>
+        </div>
+    </div>
+    <ul>
+        @foreach (var singleEndpoint in singleController.Endpoints)
+        {
+            <li>Name: @singleEndpoint.Name - Feature Name: @($"{singleController.Name}.{singleEndpoint.Name}")</li>
+        }
+    </ul>
+}
