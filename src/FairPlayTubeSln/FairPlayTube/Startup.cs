@@ -215,6 +215,7 @@ namespace FairPlayTube
             services.AddScoped<PaymentService>();
             services.AddScoped<VisitorTrackingService>();
             services.AddScoped<MessageService>();
+            services.AddScoped<ContentModerationService>();
         }
 
         private void ConfigureAzureContentModerator(IServiceCollection services)
