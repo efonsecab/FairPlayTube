@@ -37,6 +37,26 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.GatedFeatures.FeatureFilters.PaidFeatureFilter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.GatedFeatures.FeatureFilters.PaidFeatureFilter.#ctor(Microsoft.AspNetCore.Mvc.Infrastructure.IActionContextAccessor,FairPlayTube.Common.Interfaces.ICurrentUserProvider,FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext)">
+            <summary>
+            
+            </summary>
+            <param name="actionContextAccessor"></param>
+            <param name="currentUserProvider"></param>
+            <param name="fairplaytubeDatabase"></param>
+        </member>
+        <member name="M:FairPlayTube.GatedFeatures.FeatureFilters.PaidFeatureFilter.EvaluateAsync(Microsoft.FeatureManagement.FeatureFilterEvaluationContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Pages.ErrorModel">
             <summary>
             Error Model
