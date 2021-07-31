@@ -98,4 +98,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="VideoVisibilityId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="84686038-1fc4-4217-82c5-c0c45104ef34" ChangeDateTime="07/31/2021 16:15:25">
+    <Property Name="ElementName" Value="[dbo].[VideoCommentAnalysis].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VideoCommentAnalysis]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VideoCommentAnalysis" />
+  </Operation>
 </Operations>

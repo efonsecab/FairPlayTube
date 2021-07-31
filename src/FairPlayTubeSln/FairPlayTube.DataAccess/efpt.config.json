@@ -82,6 +82,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[VideoCommentAnalysis]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoIndexingCost]",
          "ObjectType": 0
       },

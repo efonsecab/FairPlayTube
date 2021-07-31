@@ -25,5 +25,7 @@ namespace FairPlayTube.DataAccess.Models
         [ForeignKey(nameof(VideoInfoId))]
         [InverseProperty("VideoComment")]
         public virtual VideoInfo VideoInfo { get; set; }
+        [InverseProperty("VideoComment")]
+        public virtual VideoCommentAnalysis VideoCommentAnalysis { get; set; }
     }
 }
