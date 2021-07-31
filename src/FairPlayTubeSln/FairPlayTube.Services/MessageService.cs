@@ -17,27 +17,29 @@ namespace FairPlayTube.Services
     {
         private FairplaytubeDatabaseContext FairplaytubeDatabaseContext { get; }
         private IHubContext<NotificationHub, INotificationHub> HubContext { get; }
-        private AzureContentModeratorService AzureContentModeratorService { get; }
+        private ContentModerationService ContentModerationService { get; }
 
         public MessageService(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             IHubContext<NotificationHub, INotificationHub> hubContext,
-            AzureContentModeratorService azureContentModeratorService)
+            ContentModerationService contentModerationService)
         {
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
             this.HubContext = hubContext;
-            this.AzureContentModeratorService = azureContentModeratorService;
+            this.ContentModerationService = contentModerationService;
         }
 
         public async Task SendMessageAsync(UserMessageModel model, string senderObjectId, CancellationToken cancellationToken)
         {
-            await CheckMessageModeration(messageText: model.Message);
+            await this.ContentModerationService.CheckMessageModeration(messageText: model.Message);
             var sender = await this.FairplaytubeDatabaseContext.ApplicationUser
                             .Where(u => u.AzureAdB2cobjectId.ToString() == senderObjectId)
                             .SingleAsync(cancellationToken);
 
             var receiver = await this.FairplaytubeDatabaseContext.ApplicationUser
                 .Where(u => u.ApplicationUserId == model.ToApplicationUserId)
-                .SingleAsync(cancellationToken);
+                .SingleOrDefaultAsync(cancellationToken);
+            if (receiver == null)
+                throw new Exception($"Specified user {model.ToApplicationUserId} does not exist");
 
             await this.FairplaytubeDatabaseContext.UserMessage.AddAsync(
                 new DataAccess.Models.UserMessage()
@@ -54,18 +56,6 @@ namespace FairPlayTube.Services
                 {
                     Message = $"You have a new message from: {sender.FullName}"
                 });
-        }
-
-        private async Task CheckMessageModeration(string messageText)
-        {
-            //TODO: We need PTI Library to support must languages or auto detect it
-            var result = await this.AzureContentModeratorService.AnalyzeTextAsync(messageText,
-                AzureContentModeratorService.TextType.PlainText, 
-                AzureContentModeratorService.TextLanguage.English);
-            var isRestricted = result.IsOffensive || result.IsSexuallyExplicit || result.IsSexuallySuggestive;
-            if (isRestricted)
-                throw new Exception("Your message cannot be sent. Please remove any offensive, explicity or suggestive text");
-
         }
     }
 }
