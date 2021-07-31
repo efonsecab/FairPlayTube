@@ -16,13 +16,12 @@ namespace FairPlayTube.DataAccess.Models
         [Column("VideoCommentAnalysis")]
         public long VideoCommentAnalysis1 { get; set; }
         public long VideoCommentId { get; set; }
-        public double Sentiment { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Sentiment { get; set; }
         [Required]
         [Column(TypeName = "text")]
         public string KeyPhrases { get; set; }
-        [Required]
-        [Column(TypeName = "text")]
-        public string Topics { get; set; }
 
         [ForeignKey(nameof(VideoCommentId))]
         [InverseProperty("VideoCommentAnalysis")]
