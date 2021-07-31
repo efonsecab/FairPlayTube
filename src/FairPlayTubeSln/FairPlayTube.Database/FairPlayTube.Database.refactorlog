@@ -105,4 +105,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="VideoCommentAnalysis" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="c35541d0-963f-4a82-a33b-f75f73d75942" ChangeDateTime="07/31/2021 19:37:06">
+    <Property Name="ElementName" Value="[dbo].[GatedFeature].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[GatedFeature]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="GatedFeatureId" />
+  </Operation>
 </Operations>
