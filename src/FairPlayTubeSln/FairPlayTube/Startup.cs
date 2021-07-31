@@ -66,16 +66,16 @@ namespace FairPlayTube
             GlobalPackageConfiguration.RapidApiKey = Configuration.GetValue<string>("RapidApiKey");
             services.AddSignalR();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
-            services.AddScoped(serviceProvider =>
+            services.AddTransient<ICurrentUserProvider, CurrentUserProvider>();
+            services.AddTransient(serviceProvider =>
             {
                 var fairplaytubeDatabaseContext = this.CreateFairPlayTubeDbContext(services);
                 return fairplaytubeDatabaseContext;
             });
 
 
-            services.AddScoped<CustomHttpClientHandler>();
-            services.AddScoped<CustomHttpClient>();
+            services.AddTransient<CustomHttpClientHandler>();
+            services.AddTransient<CustomHttpClient>();
             ConfigureAzureTextAnalytics(services);
             ConfigureAzureContentModerator(services);
             ConfigureAzureVideoIndexer(services);
@@ -216,18 +216,18 @@ namespace FairPlayTube
                             Configuration.GetSection(nameof(AzureTextAnalyticsConfiguration))
                             .Get<AzureTextAnalyticsConfiguration>();
             services.AddSingleton(azureTextAnalyticsConfiguration);
-            services.AddScoped<AzureTextAnalyticsService>();
+            services.AddTransient<AzureTextAnalyticsService>();
         }
 
         private static void AddPlatformServices(IServiceCollection services)
         {
-            services.AddScoped<EmailService>();
-            services.AddScoped<VideoService>();
-            services.AddScoped<PaymentService>();
-            services.AddScoped<VisitorTrackingService>();
-            services.AddScoped<MessageService>();
-            services.AddScoped<ContentModerationService>();
-            services.AddScoped<TextAnalysisServices>();
+            services.AddTransient<EmailService>();
+            services.AddTransient<VideoService>();
+            services.AddTransient<PaymentService>();
+            services.AddTransient<VisitorTrackingService>();
+            services.AddTransient<MessageService>();
+            services.AddTransient<ContentModerationService>();
+            services.AddTransient<TextAnalysisServices>();
         }
 
         private void ConfigureAzureContentModerator(IServiceCollection services)
@@ -236,7 +236,7 @@ namespace FairPlayTube
                             Configuration.GetSection(nameof(AzureContentModeratorConfiguration))
                             .Get<AzureContentModeratorConfiguration>();
             services.AddSingleton(azureContentModeratorConfiguration);
-            services.AddScoped<AzureContentModeratorService>();
+            services.AddTransient<AzureContentModeratorService>();
         }
 
         private void ConfigureIpStackService(IServiceCollection services)
@@ -245,7 +245,7 @@ namespace FairPlayTube
                             Configuration.GetSection(nameof(IpStackConfiguration))
                             .Get<IpStackConfiguration>();
             services.AddSingleton(ipStackConfiguration);
-            services.AddScoped<IpStackService>();
+            services.AddTransient<IpStackService>();
         }
 
         private void ConfigurePayPal(IServiceCollection services)
@@ -253,7 +253,7 @@ namespace FairPlayTube
             PaypalConfiguration paypalConfiguration = Configuration.GetSection(nameof(PaypalConfiguration))
                             .Get<PaypalConfiguration>();
             services.AddSingleton(paypalConfiguration);
-            services.AddScoped<PaypalService>();
+            services.AddTransient<PaypalService>();
         }
 
         private void ConfigureDataStorage(IServiceCollection services)
@@ -269,7 +269,7 @@ namespace FairPlayTube
                 Configuration.GetSection($"AzureConfiguration:{nameof(AzureVideoIndexerConfiguration)}")
                 .Get<AzureVideoIndexerConfiguration>();
             services.AddSingleton(azureVideoIndexerConfiguration);
-            services.AddScoped<AzureVideoIndexerService>();
+            services.AddTransient<AzureVideoIndexerService>();
         }
 
         private void ConfigureAzureBlobStorage(IServiceCollection services)
@@ -278,7 +278,7 @@ namespace FairPlayTube
                 Configuration.GetSection($"AzureConfiguration:{nameof(AzureBlobStorageConfiguration)}")
                 .Get<AzureBlobStorageConfiguration>();
             services.AddSingleton(azureBlobStorageConfiguration);
-            services.AddScoped<AzureBlobStorageService>();
+            services.AddTransient<AzureBlobStorageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
