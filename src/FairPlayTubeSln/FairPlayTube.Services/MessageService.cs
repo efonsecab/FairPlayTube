@@ -37,7 +37,9 @@ namespace FairPlayTube.Services
 
             var receiver = await this.FairplaytubeDatabaseContext.ApplicationUser
                 .Where(u => u.ApplicationUserId == model.ToApplicationUserId)
-                .SingleAsync(cancellationToken);
+                .SingleOrDefaultAsync(cancellationToken);
+            if (receiver == null)
+                throw new Exception($"Specified user {model.ToApplicationUserId} does not exist");
 
             await this.FairplaytubeDatabaseContext.UserMessage.AddAsync(
                 new DataAccess.Models.UserMessage()
@@ -60,9 +62,9 @@ namespace FairPlayTube.Services
         {
             //TODO: We need PTI Library to support must languages or auto detect it
             var result = await this.AzureContentModeratorService.AnalyzeTextAsync(messageText,
-                AzureContentModeratorService.TextType.PlainText, 
-                AzureContentModeratorService.TextLanguage.English);
-            var isRestricted = result.IsOffensive || result.IsSexuallyExplicit || result.IsSexuallySuggestive;
+                AzureContentModeratorService.TextType.PlainText);
+            var isRestricted = result.IsOffensive || result.IsSexuallyExplicit || 
+                result.IsSexuallySuggestive || result.HasProfanityTerms;
             if (isRestricted)
                 throw new Exception("Your message cannot be sent. Please remove any offensive, explicity or suggestive text");
 
