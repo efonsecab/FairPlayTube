@@ -1,5 +1,15 @@
 ﻿@page "/"
 
+
+<div class="container">
+    <div class="mb-3">
+        <label class="form-label">ConenctionString</label>
+        <input class="form-control" type="text" @bind-value="ConnectionString" />
+        <button class="btn btn-primary" type="button" @onclick="GenerateFeatures">Generate Features</button>
+    </div>
+</div>
+
+
 @foreach (var singleController in this.Controllers)
 {
     <div class="row">
@@ -10,7 +20,7 @@
     <ul>
         @foreach (var singleEndpoint in singleController.Endpoints)
         {
-            <li>Name: @singleEndpoint.Name - Permission Name: @($"{singleController.Name}.{singleEndpoint.Name}")</li>
+            <li>Name: @singleEndpoint.Name - Feature Name: @($"{singleController.Name}.{singleEndpoint.Name}")</li>
         }
     </ul>
 }
