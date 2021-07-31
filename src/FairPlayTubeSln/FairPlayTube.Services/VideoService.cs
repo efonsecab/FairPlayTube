@@ -32,13 +32,15 @@ namespace FairPlayTube.Services
         private AzureVideoIndexerConfiguration AzureVideoIndexerConfiguration { get; }
         private CustomHttpClient CustomHttpClient { get; }
         private IHubContext<NotificationHub, INotificationHub> HubContext { get; }
+        private TextAnalysisServices TextAnalysisService { get; }
 
         public VideoService(AzureVideoIndexerService azureVideoIndexerService, AzureBlobStorageService azureBlobStorageService,
             DataStorageConfiguration dataStorageConfiguration, ICurrentUserProvider currentUserProvider,
             FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             AzureVideoIndexerConfiguration azureVideoIndexerConfiguration,
             CustomHttpClient customHttpClient,
-            IHubContext<NotificationHub, INotificationHub> hubContext
+            IHubContext<NotificationHub, INotificationHub> hubContext,
+            TextAnalysisServices textAnalysisService
             )
         {
             this.AzureVideoIndexerService = azureVideoIndexerService;
@@ -49,6 +51,7 @@ namespace FairPlayTube.Services
             this.AzureVideoIndexerConfiguration = azureVideoIndexerConfiguration;
             this.CustomHttpClient = customHttpClient;
             this.HubContext = hubContext;
+            this.TextAnalysisService = textAnalysisService;
         }
 
         public async Task<bool> UpdateVideoIndexStatusAsync(string[] videoIds,
@@ -426,6 +429,30 @@ namespace FairPlayTube.Services
         public async Task<List<Person>> GetPersistedPersonsAsync(CancellationToken cancellation)
         {
             return await this.FairplaytubeDatabaseContext.Person.ToListAsync();
+        }
+
+        public async Task AnalyzeVideoCommentAsync(long videoCommentId, CancellationToken cancellationToken)
+        {
+            var videoCommentEntity = await this.FairplaytubeDatabaseContext.VideoComment
+                .Where(p => p.VideoCommentId == videoCommentId).SingleOrDefaultAsync();
+            if (videoCommentEntity == null)
+                throw new Exception($"Video comment id: {videoCommentId} does not exit");
+            var videoCommentAnalysisEntity = await this.FairplaytubeDatabaseContext
+                .VideoCommentAnalysis.Where(p => p.VideoCommentId == videoCommentId)
+                .SingleOrDefaultAsync();
+            if (videoCommentAnalysisEntity != null)
+                throw new Exception($"Video comment id: {videoCommentId} has already been analyzed");
+            var detectedLanguage = await this.TextAnalysisService.DetectLanguageAsync(videoCommentEntity.Comment, cancellationToken);
+            var keyPhrases = await this.TextAnalysisService.GetKeyPhrasesAsync(videoCommentEntity.Comment, detectedLanguage, cancellationToken);
+            var sentiment = await this.TextAnalysisService.GetSentimentAsync(videoCommentEntity.Comment, detectedLanguage, cancellationToken);
+            var joinedKeyPhrases = String.Join(",", keyPhrases);
+            await this.FairplaytubeDatabaseContext.VideoCommentAnalysis.AddAsync(new VideoCommentAnalysis()
+            {
+                VideoCommentId=videoCommentId,
+                KeyPhrases=joinedKeyPhrases,
+                Sentiment=sentiment,
+            }, cancellationToken);
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

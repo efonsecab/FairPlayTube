@@ -41,7 +41,7 @@ namespace FairPlayTube.Services
             return response.documents.First().detectedLanguage.iso6391Name;
         }
 
-        public async Task GetSentimentAsync(string text, string textLanguage, CancellationToken cancellationToken)
+        public async Task<string> GetSentimentAsync(string text, string textLanguage, CancellationToken cancellationToken)
         {
             Guid id = Guid.NewGuid();
             GetSentimentRequest request = new GetSentimentRequest()
@@ -57,7 +57,12 @@ namespace FairPlayTube.Services
                 }
             };
             var response = await this.AzureTextAnalyticsService.GetSentimentAsync(request, cancellationToken);
-            throw new NotImplementedException();
+            if (response.documents?.Length > 0)
+            {
+                return response.documents.First().sentiment;
+            }
+            else
+            throw new Exception($"Unable to retrieve sentiment for text: '{textLanguage}' on language: {textLanguage}");
         }
 
         public async Task<List<string>> GetKeyPhrasesAsync(string text, string textLanguage, CancellationToken cancellationToken)
