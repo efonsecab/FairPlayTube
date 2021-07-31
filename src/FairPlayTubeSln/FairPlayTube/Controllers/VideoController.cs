@@ -254,5 +254,19 @@ namespace FairPlayTube.Controllers
             var result = personsList.Select(p => this.Mapper.Map<Person, PersonModel>(p)).ToArray();
             return result;
         }
+
+        /// <summary>
+        /// Analyzes given video's comment to generate additional insights
+        /// </summary>
+        /// <param name="videoCommentId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task<IActionResult> AnalyzeVideoComment(long videoCommentId, CancellationToken cancellationToken)
+        {
+            await this.VideoService.AnalyzeVideoCommentAsync(videoCommentId, cancellationToken);
+            return Ok();
+        }
     }
 }
