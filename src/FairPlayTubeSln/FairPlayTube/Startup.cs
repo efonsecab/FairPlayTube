@@ -75,6 +75,7 @@ namespace FairPlayTube
 
             services.AddScoped<CustomHttpClientHandler>();
             services.AddScoped<CustomHttpClient>();
+            ConfigureAzureTextAnalytics(services);
             ConfigureAzureContentModerator(services);
             ConfigureAzureVideoIndexer(services);
             ConfigureAzureBlobStorage(services);
@@ -208,6 +209,15 @@ namespace FairPlayTube
 
         }
 
+        private void ConfigureAzureTextAnalytics(IServiceCollection services)
+        {
+            AzureTextAnalyticsConfiguration azureTextAnalyticsConfiguration =
+                            Configuration.GetSection(nameof(AzureTextAnalyticsConfiguration))
+                            .Get<AzureTextAnalyticsConfiguration>();
+            services.AddSingleton(azureTextAnalyticsConfiguration);
+            services.AddScoped<AzureTextAnalyticsService>();
+        }
+
         private static void AddPlatformServices(IServiceCollection services)
         {
             services.AddScoped<EmailService>();
@@ -216,6 +226,7 @@ namespace FairPlayTube
             services.AddScoped<VisitorTrackingService>();
             services.AddScoped<MessageService>();
             services.AddScoped<ContentModerationService>();
+            services.AddScoped<TextAnalysisServices>();
         }
 
         private void ConfigureAzureContentModerator(IServiceCollection services)
