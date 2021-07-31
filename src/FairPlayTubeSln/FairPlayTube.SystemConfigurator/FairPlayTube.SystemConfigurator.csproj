@@ -9,4 +9,8 @@
     <WarningsAsErrors />
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FairPlayTube.Controllers\FairPlayTube.Controllers.csproj" />
+  </ItemGroup>
+
 </Project>
