@@ -19,6 +19,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using static PTI.Microservices.Library.Services.AzureVideoIndexerService;
 
 namespace FairPlayTube.Services
 {
@@ -52,6 +53,15 @@ namespace FairPlayTube.Services
             this.CustomHttpClient = customHttpClient;
             this.HubContext = hubContext;
             this.TextAnalysisService = textAnalysisService;
+        }
+
+        public async Task<IQueryable<VideoInfo>> SearchVideosByPersonNameAsync(string personName, CancellationToken cancellationtoken)
+        {
+            var searchVideoResults = await AzureVideoIndexerService.SearchVideosAsync(personName, new SearchScope[] { SearchScope.NamedPeople }, cancellationToken: cancellationtoken);
+            var videoIds = searchVideoResults.results.Select(searchVideo => searchVideo.id);
+            return this.FairplaytubeDatabaseContext
+                       .VideoInfo
+                       .Join(videoIds, video => video.VideoId, search => search, (video, _) => video);
         }
 
         public async Task<bool> UpdateVideoIndexStatusAsync(string[] videoIds,
