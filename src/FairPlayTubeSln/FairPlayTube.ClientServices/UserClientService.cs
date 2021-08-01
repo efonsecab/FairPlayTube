@@ -1,4 +1,6 @@
 ﻿using FairPlayTube.Common.Global;
+using FairPlayTube.Models.CustomHttpResponse;
+using FairPlayTube.Models.Invites;
 using FairPlayTube.Models.UserProfile;
 using System;
 using System.Collections.Generic;
@@ -30,6 +32,21 @@ namespace FairPlayTube.ClientServices
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             return await authorizedHttpClient.GetFromJsonAsync<UserModel[]>(
                 Constants.ApiRoutes.UserController.ListUsers);
+        }
+
+        public async Task InviteUserAsync(InviteUserModel inviteUserModel)
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.PostAsJsonAsync<InviteUserModel>(
+                Constants.ApiRoutes.UserController.InviteUser, inviteUserModel);
+            if (!response.IsSuccessStatusCode)
+            {
+                ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
+                if (problemHttpResponse != null)
+                    throw new Exception(problemHttpResponse.Detail);
+                else
+                    throw new Exception(response.ReasonPhrase);
+            }
         }
     }
 }

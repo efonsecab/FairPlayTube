@@ -32,9 +32,15 @@ namespace FairPlayTube.Controllers.Tests
         }
 
         [TestMethod()]
-        public void InviteUserTest()
+        public async Task InviteUserTest()
         {
-            Assert.Inconclusive();
+            await base.SignIn(Role.User);
+            UserClientService userClientService = base.CreateUserClientService();
+            await userClientService.InviteUserAsync(inviteUserModel: new Models.Invites.InviteUserModel() 
+            {
+                CustomMessage="This is a message from FairPlayTube Automated Tests",
+                ToEmailAddress="test@fairplaytube.local"
+            });
         }
 
         [TestMethod()]
