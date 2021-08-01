@@ -112,4 +112,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="GatedFeatureId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="d12b67c5-fe12-4b90-a027-c2702be6a163" ChangeDateTime="08/01/2021 11:58:22">
+    <Property Name="ElementName" Value="[dbo].[ApplicationUserFeature].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ApplicationUserFeature]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ApplicationUserFeatureId" />
+  </Operation>
 </Operations>

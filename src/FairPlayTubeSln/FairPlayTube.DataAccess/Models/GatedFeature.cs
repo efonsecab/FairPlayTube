@@ -12,6 +12,11 @@ namespace FairPlayTube.DataAccess.Models
     [Index(nameof(FeatureName), Name = "UI_GatedFeature_FeatureName", IsUnique = true)]
     public partial class GatedFeature
     {
+        public GatedFeature()
+        {
+            ApplicationUserFeature = new HashSet<ApplicationUserFeature>();
+        }
+
         [Key]
         public int GatedFeatureId { get; set; }
         [Required]
@@ -19,5 +24,8 @@ namespace FairPlayTube.DataAccess.Models
         public string FeatureName { get; set; }
         [Required]
         public bool? DefaultValue { get; set; }
+
+        [InverseProperty("GatedFeature")]
+        public virtual ICollection<ApplicationUserFeature> ApplicationUserFeature { get; set; }
     }
 }

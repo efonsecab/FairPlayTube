@@ -21,6 +21,7 @@ namespace FairPlayTube.DataAccess.Data
 
         public virtual DbSet<ApplicationRole> ApplicationRole { get; set; }
         public virtual DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public virtual DbSet<ApplicationUserFeature> ApplicationUserFeature { get; set; }
         public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }
         public virtual DbSet<Brand> Brand { get; set; }
         public virtual DbSet<BrandVideo> BrandVideo { get; set; }
@@ -52,6 +53,21 @@ namespace FairPlayTube.DataAccess.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Scaffolding:ConnectionString", "Data Source=(local);Initial Catalog=FairPlayTube.Database;Integrated Security=true");
+
+            modelBuilder.Entity<ApplicationUserFeature>(entity =>
+            {
+                entity.HasOne(d => d.ApplicationUser)
+                    .WithMany(p => p.ApplicationUserFeature)
+                    .HasForeignKey(d => d.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ApplicationUserFeature_ApplicationUser");
+
+                entity.HasOne(d => d.GatedFeature)
+                    .WithMany(p => p.ApplicationUserFeature)
+                    .HasForeignKey(d => d.GatedFeatureId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ApplicationUserFeature_GatedFeature");
+            });
 
             modelBuilder.Entity<ApplicationUserRole>(entity =>
             {
