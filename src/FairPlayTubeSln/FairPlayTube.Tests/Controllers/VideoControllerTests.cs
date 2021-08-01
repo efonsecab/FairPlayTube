@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Common.Global;
+﻿using FairPlayTube.Controllers;
+using FairPlayTube.Common.Global;
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Tests;
@@ -123,6 +124,42 @@ namespace FairPlayTube.Controllers.Tests
                 var message = await response.Content.ReadAsStringAsync();
                 Assert.Fail(message);
             }
+        }
+
+        [TestMethod()]
+        public void UpdateMyVideoTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod()]
+        public void GetVideoTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod()]
+        public void GetMyPendingVideosQueueTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod()]
+        public void AddVideoJobTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod()]
+        public void GetPersonsTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod()]
+        public void AnalyzeVideoCommentTest()
+        {
+            Assert.Inconclusive();
         }
     }
 }
