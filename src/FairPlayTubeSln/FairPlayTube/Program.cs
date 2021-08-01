@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace FairPlayTube
 {
@@ -35,7 +36,10 @@ namespace FairPlayTube
                     var azureAppConfigConnectionString =
                         configRoot["AzureAppConfigConnectionString"];
                     options
-                        .Connect(azureAppConfigConnectionString);
+                        .Connect(azureAppConfigConnectionString).UseFeatureFlags(
+                        featureFlagOptions=> {
+                            featureFlagOptions.CacheExpirationInterval = TimeSpan.FromMinutes(5);
+                        });
                 });
             })
             .ConfigureWebHostDefaults(webBuilder =>
