@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FairPlayTube.Controllers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FairPlayTube.Controllers.Tests
 {

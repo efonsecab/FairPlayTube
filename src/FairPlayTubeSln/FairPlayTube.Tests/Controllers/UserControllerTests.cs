@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Common.Global;
+﻿using FairPlayTube.Controllers;
+using FairPlayTube.Common.Global;
 using FairPlayTube.Models.UserProfile;
 using FairPlayTube.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -30,6 +31,18 @@ namespace FairPlayTube.Controllers.Tests
             var authorizedHttpClient = await base.SignIn(Role.User);
             var result = await authorizedHttpClient.GetFromJsonAsync<UserModel[]>(Constants.ApiRoutes.UserController.ListUsers);
             Assert.IsNotNull(result);
+        }
+
+        [TestMethod()]
+        public void InviteUserTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod()]
+        public void SendMessageTest()
+        {
+            Assert.Inconclusive();
         }
     }
 }
