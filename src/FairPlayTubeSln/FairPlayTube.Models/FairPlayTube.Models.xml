@@ -859,6 +859,16 @@
             Language code selected by the user uploading the video
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.ThumbnailUrl">
+            <summary>
+            Url for the main Thumbnail
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.ShowPlayerWidget">
+            <summary>
+            Tells the UI if the Player Widget should be displayed
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.VideoJobModel">
             <summary>
             Represents a Job associated to a video
