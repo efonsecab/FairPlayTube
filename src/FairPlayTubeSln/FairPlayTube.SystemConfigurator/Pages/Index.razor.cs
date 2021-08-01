@@ -1,6 +1,7 @@
 ﻿using FairPlayTube.Controllers;
 using FairPlayTube.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.FeatureManagement.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,17 @@ namespace FairPlayTube.SystemConfigurator.Pages
                     var endpoints = singleType.GetMethods(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.DeclaredOnly);
                     foreach (var singleEndpoint in endpoints)
                     {
+                        bool defaultValue = true;
+                        var featureGateAttributes =
+                        singleEndpoint.CustomAttributes.Where(p => p.AttributeType == typeof(FeatureGateAttribute));
+                        foreach(var singleFeatureGateAttribute in featureGateAttributes)
+                        {
+                            defaultValue = false;
+                        }
                         controller.Endpoints.Add(new Endpoint() 
                         {
-                            Name = singleEndpoint.Name
+                            Name = singleEndpoint.Name,
+                            DefaultValue = defaultValue
                         });
                     }
                     this.Controllers.Add(controller);
@@ -68,7 +77,7 @@ namespace FairPlayTube.SystemConfigurator.Pages
                             new DataAccess.Models.GatedFeature()
                             {
                                 FeatureName = featureName,
-                                DefaultValue = true
+                                DefaultValue = singleEndpoint.DefaultValue
                             });
                         await fairplaytubeDatabaseContext.SaveChangesAsync();
                     }
@@ -90,6 +99,7 @@ namespace FairPlayTube.SystemConfigurator.Pages
     public class Endpoint
     {
         public string Name { get; set; }
+        public bool DefaultValue { get; internal set; }
     }
 
 }
