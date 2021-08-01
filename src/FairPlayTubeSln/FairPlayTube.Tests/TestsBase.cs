@@ -14,15 +14,19 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Http;
+using FairPlayTube.ClientServices;
+using System.Threading;
 
 namespace FairPlayTube.Tests
 {
     public abstract class TestsBase
     {
-        private static TestServer? Server { get; set; }
+        internal static TestServer? Server { get; set; }
         protected IMapper Mapper { get; }
         private static IHttpContextAccessor? HttpContextAccessor { get; set; }
         internal static string? TestVideoBloblUrl { get; set; }
+        public TestsHttpClientFactory TestsHttpClientFactory { get; }
         internal static DataStorageConfiguration? DataStorageConfiguration { get; set; }
         internal static TestAzureAdB2CAuthConfiguration? TestAzureAdB2CAuthConfiguration { get; set; }
         internal static AzureVideoIndexerConfiguration? AzureVideoIndexerConfiguration { get; set; }
@@ -30,6 +34,7 @@ namespace FairPlayTube.Tests
         protected static IConfiguration? Configuration { get; set; }
         private HttpClient? UserRoleAuthorizedHttpClient { get; set; }
         private HttpClient? AdminRoleAuthorizedHttpClient { get; set; }
+        internal static string? UserBearerToken { get; set; }
 
 
         public TestsBase()
@@ -69,7 +74,9 @@ namespace FairPlayTube.Tests
             TestAzureAdB2CAuthConfiguration = Configuration.GetSection("TestAzureAdB2CAuthConfiguration").Get<TestAzureAdB2CAuthConfiguration>();
             AzureVideoIndexerConfiguration = Server.Services.GetRequiredService<AzureVideoIndexerConfiguration>();
             TestVideoBloblUrl = configRoot.GetValue<string>("TestVideoBloblUrl");
+            this.TestsHttpClientFactory = new TestsHttpClientFactory();
         }
+
 
         public static FairplaytubeDatabaseContext CreateDbContext()
         {
@@ -137,6 +144,7 @@ namespace FairPlayTube.Tests
                         this.UserRoleAuthorizedHttpClient = client;
                         break;
                 }
+                UserBearerToken = result!.Access_token;
                 return client;
             }
             else
@@ -146,7 +154,55 @@ namespace FairPlayTube.Tests
             }
         }
 
+        private HttpClientService CreateHttpClientService()
+        {
+            HttpClientService httpClientService = new HttpClientService(this.TestsHttpClientFactory);
+            return httpClientService;
+        }
+
+        protected UserClientService CreateUserClientService()
+        {
+            UserClientService userClientService = new UserClientService(CreateHttpClientService());
+            return userClientService;
+        }
+
+        protected VideoClientService CreateVideoClientService()
+        {
+            VideoClientService videoClientService = new VideoClientService(CreateHttpClientService());
+            return videoClientService;
+        }
     }
+
+    public class TestsHttpClientFactory : IHttpClientFactory
+    {
+        public HttpClient CreateClient(string name)
+        {
+            string assemblyName = "FairPlayTube";
+            var serverApiClientName = $"{assemblyName}.ServerAPI";
+            var client = TestsBase.Server!.CreateClient();
+            if (name == serverApiClientName)
+            {
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", TestsBase.UserBearerToken);
+                return client;
+            }
+            else
+                return client;
+        }
+    }
+
+    //public class TestsMessageHandler : System.Net.Http.HttpClientHandler
+    //{
+    //    protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
+    //    {
+    //        return base.Send(request, cancellationToken);
+    //    }
+
+    //    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    //    {
+    //        return await base.SendAsync(request, cancellationToken);
+    //    }
+    //}
 
     public class AuthResponse
     {

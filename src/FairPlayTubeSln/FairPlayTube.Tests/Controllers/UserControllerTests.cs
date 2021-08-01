@@ -5,6 +5,7 @@ using FairPlayTube.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using FairPlayTube.ClientServices;
 
 namespace FairPlayTube.Controllers.Tests
 {
@@ -14,22 +15,19 @@ namespace FairPlayTube.Controllers.Tests
         [TestMethod()]
         public async Task GetMyRoleTest()
         {
-            var authorizedHttpClient = await base.SignIn(Role.User);
-            var result = await authorizedHttpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyRole);
+            await base.SignIn(Role.User);
+            UserClientService userClientService = base.CreateUserClientService();
+            var result = await userClientService.GetMyRoleAsync();
             Assert.IsNotNull(result);
             Assert.AreEqual(result, Role.User.ToString());
-
-            //authorizedHttpClient = await base.CreateAuthorizedClientAsync(Role.Admin);
-            //var result = await authorizedHttpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyRole);
-            //Assert.IsNotNull(result);
-            //Assert.AreEqual(result, Role.Admin);
         }
 
         [TestMethod()]
         public async Task ListUsersTest()
         {
-            var authorizedHttpClient = await base.SignIn(Role.User);
-            var result = await authorizedHttpClient.GetFromJsonAsync<UserModel[]>(Constants.ApiRoutes.UserController.ListUsers);
+            await base.SignIn(Role.User);
+            UserClientService userClientService = base.CreateUserClientService();
+            var result = await userClientService.ListUsers();
             Assert.IsNotNull(result);
         }
 

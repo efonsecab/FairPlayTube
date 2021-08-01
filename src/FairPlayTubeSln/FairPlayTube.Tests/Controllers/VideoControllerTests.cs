@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using FairPlayTube.ClientServices;
 
 namespace FairPlayTube.Controllers.Tests
 {
@@ -55,6 +56,7 @@ namespace FairPlayTube.Controllers.Tests
         public async Task GetMyProcessedVideosTest()
         {
             var authorizedHttpClient = await base.SignIn(Role.User);
+            VideoClientService videoClientService = base.CreateVideoClientService();
             var dbContext = TestsBase.CreateDbContext();
             var videos = await dbContext.VideoInfo.ToListAsync();
             var userEntity = await dbContext.ApplicationUser.Where(p => p.AzureAdB2cobjectId.ToString() ==
@@ -63,8 +65,7 @@ namespace FairPlayTube.Controllers.Tests
             testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
             await dbContext.VideoInfo.AddAsync(testVideoEntity);
             await dbContext.SaveChangesAsync();
-            var result = await authorizedHttpClient
-                .GetFromJsonAsync<VideoInfoModel[]>(Constants.ApiRoutes.VideoController.GetMyProcessedVideos);
+            var result = await videoClientService.GetMyProcessedVideos();
             Assert.AreEqual(1, result!.Length, "Invalid count of owned videos for test user");
         }
 
@@ -89,13 +90,23 @@ namespace FairPlayTube.Controllers.Tests
         [TestMethod()]
         public async Task ListAllKeywordsTest()
         {
-            Assert.Inconclusive();
-            //TODO: Insert test data: 1. VideoInfo and VideoIndexKeyword.
-            //Remember to clean the test data in the [ClassCleanup] method
-            var anonymousHttpClient = this.CreateAnonymousClient();
-            var result = await anonymousHttpClient
-                .GetFromJsonAsync<GlobalKeywordModel[]>(Constants.ApiRoutes.VideoController.ListAllKeywords);
-            Assert.IsTrue(result!.Length > 0, "Invalid count of keywords");
+            await base.SignIn(Role.User);
+            VideoClientService videoClientService = base.CreateVideoClientService();
+            var dbContext = TestsBase.CreateDbContext();
+            var userEntity = await dbContext.ApplicationUser.Where(p => p.AzureAdB2cobjectId.ToString() ==
+            TestsBase.TestAzureAdB2CAuthConfiguration!.AzureAdUserObjectId).SingleAsync();
+            var testVideoEntity = CreateTestVideoEntity();
+            testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
+            await dbContext.VideoInfo.AddAsync(testVideoEntity);
+            await dbContext.SaveChangesAsync();
+            await dbContext.VideoIndexKeyword.AddAsync(new VideoIndexKeyword()
+            {
+                Keyword="TestKeyword",
+                VideoInfoId=testVideoEntity.VideoInfoId
+            });
+            await dbContext.SaveChangesAsync();
+            var result = await videoClientService.ListAllKeywordsAsync();
+            Assert.IsTrue(result!.Length ==1, "Invalid count of keywords");
         }
 
         [TestMethod()]
@@ -107,7 +118,8 @@ namespace FairPlayTube.Controllers.Tests
         [TestMethod()]
         public async Task BuyVideoAccessTest()
         {
-            var authorizedHttpClient = await base.SignIn(Role.User);
+            await base.SignIn(Role.User);
+            VideoClientService videoClientService = base.CreateVideoClientService();
             var dbContext = TestsBase.CreateDbContext();
             var userEntity = await dbContext.ApplicationUser.Where(p => p.AzureAdB2cobjectId.ToString() ==
             TestsBase.TestAzureAdB2CAuthConfiguration!.AzureAdUserObjectId).SingleAsync();
@@ -117,13 +129,7 @@ namespace FairPlayTube.Controllers.Tests
             testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
             await dbContext.VideoInfo.AddAsync(testVideoEntity);
             await dbContext.SaveChangesAsync();
-            var response = await authorizedHttpClient.PostAsync($"{Constants.ApiRoutes.VideoController.BuyVideoAccess}" +
-                $"?videoId={testVideoEntity.VideoId}", null!);
-            if (!response.IsSuccessStatusCode)
-            {
-                var message = await response.Content.ReadAsStringAsync();
-                Assert.Fail(message);
-            }
+            await videoClientService.BuyVideoAccessAsync(testVideoEntity.VideoId);
         }
 
         [TestMethod()]
