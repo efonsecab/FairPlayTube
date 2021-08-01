@@ -19,7 +19,7 @@ namespace FairPlayTube.Tests
 {
     public abstract class TestsBase
     {
-        TestServer Server { get; }
+        private static TestServer? Server { get; set; }
         protected IMapper Mapper { get; }
         private static IHttpContextAccessor? HttpContextAccessor { get; set; }
         internal static string? TestVideoBloblUrl { get; set; }
@@ -73,13 +73,8 @@ namespace FairPlayTube.Tests
 
         public static FairplaytubeDatabaseContext CreateDbContext()
         {
-            var connectionString = Configuration.GetConnectionString("Default");
-            DbContextOptionsBuilder<FairplaytubeDatabaseContext> dbContextOptionsBuilder =
-            new();
-            FairplaytubeDatabaseContext blazorRestaurantDbContext =
-            new(dbContextOptionsBuilder.UseSqlServer(connectionString).Options,
-            new CustomProviders.CurrentUserProvider(HttpContextAccessor));
-            return blazorRestaurantDbContext;
+            var dbContext = Server!.Services.GetRequiredService<FairplaytubeDatabaseContext>();
+            return dbContext;
         }
 
         public enum Role
@@ -90,7 +85,7 @@ namespace FairPlayTube.Tests
 
         protected HttpClient CreateAnonymousClient()
         {
-            return this.Server.CreateClient();
+            return Server!.CreateClient();
         }
 
         protected async Task<HttpClient> CreateAuthorizedClientAsync(Role role)
@@ -123,7 +118,7 @@ namespace FairPlayTube.Tests
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<AuthResponse>();
-                var client = this.Server.CreateClient();
+                var client = Server!.CreateClient();
                 client.DefaultRequestHeaders.Authorization =
                     new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", result!.Access_token);
                 switch (role)
