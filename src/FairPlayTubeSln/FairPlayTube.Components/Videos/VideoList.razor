@@ -37,10 +37,20 @@
                         </CardHeader>
                         <CardBody>
                             <div class="embed-responsive embed-responsive-1by1">
-                                <iframe class="embed-responsive-item" style="width:100%;"
-                                        src="@singleVideo.PublicPlayerUrl"
-                                        frameborder="0"
-                                        allowfullscreen></iframe>
+                                @if (!singleVideo.ShowPlayerWidget)
+                                {
+                                    <img class="img-thumbnail" src="@singleVideo.ThumbnailUrl"
+                                         style="cursor:pointer; width:100%;"
+                                         @onclick="@( ()=>ShowVideoPlayer(singleVideo) )" />
+                                }
+                                else
+                                {
+                                    <iframe class="embed-responsive-item video-indexer-widget" style="width:100%;"
+                                            src="@singleVideo.PublicPlayerUrl"
+                                            frameborder="0"
+                                            allowfullscreen
+                                            ></iframe>
+                                }
                             </div>
                         </CardBody>
                         <CardFooter>
@@ -74,7 +84,7 @@
                             <FairPlayTube.Components.Bootstrap.Card Width="100%">
                                 <CardBody>
                                     <div class="embed-responsive embed-responsive-1by1">
-                                        <iframe class="embed-responsive-item" style="width:100%; height:350px;"
+                                        <iframe class="embed-responsive-item video-indexer-widget" style="width:100%; height:350px;"
                                                 src="@SelectedVideo.PublicPlayerUrl"
                                                 frameborder="0"
                                                 allowfullscreen></iframe>
@@ -123,8 +133,8 @@
                 </div>
                 <div class="modal-body">
                     @if (
-             this.SelectedVideo.UserGlobalMonetization != null &&
-             this.SelectedVideo.UserGlobalMonetization.MonetizationItems.Count > 0)
+          this.SelectedVideo.UserGlobalMonetization != null &&
+          this.SelectedVideo.UserGlobalMonetization.MonetizationItems.Count > 0)
                     {
                         <ul>
                             @foreach (var singleMonetizationItem in this.SelectedVideo.UserGlobalMonetization.MonetizationItems)

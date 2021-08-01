@@ -69,5 +69,11 @@ namespace FairPlayTube.Components.Videos
                 return model.PublicInsightsUrl;
             }
         }
+
+        private void ShowVideoPlayer(VideoInfoModel videoInfoModel)
+        {
+            videoInfoModel.ShowPlayerWidget = true;
+            StateHasChanged();
+        }
     }
 }

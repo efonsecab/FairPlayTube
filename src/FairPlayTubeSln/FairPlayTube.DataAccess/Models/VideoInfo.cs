@@ -58,6 +58,8 @@ namespace FairPlayTube.DataAccess.Models
         [StringLength(10)]
         public string VideoLanguageCode { get; set; }
         public short VideoVisibilityId { get; set; }
+        [StringLength(500)]
+        public string ThumbnailUrl { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("VideoInfo")]

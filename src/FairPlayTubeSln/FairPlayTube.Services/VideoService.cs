@@ -400,8 +400,8 @@ namespace FairPlayTube.Services
             await this.AzureBlobStorageService.UploadFileAsync(this.DataStorageConfiguration.ContainerName, relativePath,
                 memoryStream, true, cancellationToken);
             string videoThumbnailUrl = $"https://{DataStorageConfiguration.AccountName}.blob.core.windows.net/{DataStorageConfiguration.ContainerName}/{relativePath}";
-            //videoEntity.ThumbnailUrl = videoThumbnailUrl;
-            //await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+            videoEntity.ThumbnailUrl = videoThumbnailUrl;
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync();
         }
 
         public async Task<List<PersonModel>> GetAllPersonsAsync(CancellationToken cancellationToken)
