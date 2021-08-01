@@ -86,6 +86,7 @@
             {
                 public const string GetMyRole = "api/User/GetMyRole";
                 public const string ListUsers = "api/User/ListUsers";
+                public const string InviteUser = "api/User/InviteUser";
             }
 
             public class UserProfileController
