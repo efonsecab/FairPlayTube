@@ -407,12 +407,54 @@ namespace FairPlayTube
         {
             DbContextOptionsBuilder<FairplaytubeDatabaseContext> dbContextOptionsBuilder =
                 new();
-            FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
-            new(dbContextOptionsBuilder.UseSqlServer(Configuration.GetConnectionString("Default"),
+            bool useInMemoryDatabase = Convert.ToBoolean(Configuration["UseInMemoryDatabase"]);
+            if (useInMemoryDatabase)
+            {
+                dbContextOptionsBuilder =
+                    dbContextOptionsBuilder.UseInMemoryDatabase("FairPlayTubeInMemoryDb");
+            }
+            else
+            {
+                dbContextOptionsBuilder =
+                    dbContextOptionsBuilder.UseSqlServer(Configuration.GetConnectionString("Default"),
             sqlServerOptionsAction: (serverOptions) => serverOptions
-            .EnableRetryOnFailure(3, TimeSpan.FromSeconds(5), null)).Options,
-            currentUserProvider);
+            .EnableRetryOnFailure(3, TimeSpan.FromSeconds(5), null));
+            }
+            FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
+            new(dbContextOptionsBuilder.Options, currentUserProvider);
+            if (useInMemoryDatabase)
+            {
+                ConfigureInMemoryDatabase(fairplaytubeDatabaseContext);
+            }
             return fairplaytubeDatabaseContext;
+        }
+
+        private void ConfigureInMemoryDatabase(FairplaytubeDatabaseContext fairplaytubeDatabaseContext)
+        {
+            fairplaytubeDatabaseContext.Database.EnsureCreated();
+            SeedDefaultRoles(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
+                roleId: 1, roleName: Common.Global.Constants.Roles.User);
+            SeedDefaultRoles(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
+                roleId: 2, roleName: Common.Global.Constants.Roles.Admin);
+            fairplaytubeDatabaseContext.SaveChanges();
+        }
+
+        private void SeedDefaultRoles(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
+            short roleId, string roleName)
+        {
+            var roleEntity = fairplaytubeDatabaseContext.ApplicationRole
+                .SingleOrDefault(p => p.Name == roleName);
+            if (roleEntity == null)
+            {
+                roleEntity = new ApplicationRole()
+                {
+                    ApplicationRoleId = roleId,
+                    Name = roleName,
+                    Description = roleName
+                };
+                fairplaytubeDatabaseContext.ApplicationRole.Add(roleEntity);
+                fairplaytubeDatabaseContext.SaveChanges();
+            }
         }
     }
 }
