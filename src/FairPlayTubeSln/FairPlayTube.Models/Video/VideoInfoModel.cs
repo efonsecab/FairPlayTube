@@ -32,7 +32,7 @@ namespace FairPlayTube.Models.Video
         /// Url to use to render the Azure Video Indexer Player Widget
         /// </summary>
         public string PublicPlayerUrl => $"https://www.videoindexer.ai/embed/player/{AccountId}/{VideoId}" +
-                $"?&locale=en&location={Location}&autoplay=false";
+                $"?&locale=en&location={Location}";//&autoplay=false";
         /// <summary>
         /// Url to use to render the Azure Video Indexer Insights Widget
         /// </summary>
@@ -82,5 +82,13 @@ namespace FairPlayTube.Models.Video
         /// Language code selected by the user uploading the video
         /// </summary>
         public string VideoLanguageCode { get; set; }
+        /// <summary>
+        /// Url for the main Thumbnail
+        /// </summary>
+        public string ThumbnailUrl { get; set; }
+        /// <summary>
+        /// Tells the UI if the Player Widget should be displayed
+        /// </summary>
+        public bool ShowPlayerWidget { get; set; } = false;
     }
 }

@@ -29,10 +29,10 @@
                 var activeModals = window.document.getElementsByClassName("modal");
                 var iframes = null;
                 if (activeModals.length > 0) {
-                    iframes = activeModals[0].getElementsByTagName("iframe")
+                    iframes = activeModals[0].getElementsByClassName("video-indexer-widget")
                 }
                 else {
-                    iframes = window.document.getElementsByTagName('iframe');
+                    iframes = window.document.getElementsByClassName('video-indexer-widget');
                 }
                 try {
                     for (var index = 0; index < iframes.length; index++) {
