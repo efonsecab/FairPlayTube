@@ -214,9 +214,16 @@ namespace FairPlayTube
             }
             services.AddFeatureManagement()
                 .AddFeatureFilter<PaidFeatureFilter>()
-                .UseDisabledFeaturesHandler((services, context) =>
+                .UseDisabledFeaturesHandler((features, context) =>
                 {
-                    context.Result = new ForbidResult();
+                    string joinedFeatureNames = String.Join(",", features);
+                    context.Result = new ObjectResult($"User is missing the following features: " +
+                        $"{joinedFeatureNames}")
+                    {
+                        StatusCode = (int)System.Net.HttpStatusCode.Forbidden
+                    };
+                    context.HttpContext.Response.Headers.Add("RequiredFeaures",
+                        joinedFeatureNames);
                 });
         }
 

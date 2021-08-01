@@ -56,7 +56,14 @@ namespace FairPlayTube.GatedFeatures.FeatureFilters
             bool shouldGrantAccess = false;
             var userAzureAdB2cObjctId = this.CurrentUserProvider.GetObjectId();
             bool? userConfiguredPermission = null;
-            //TODO: Get userConfiguredPermission value from table with user assigned permissions 
+            //TODO: Get userConfiguredPermission value from table with user assigned permissions
+            var applicationUserFeatureEntity = await this.FairplaytubeDatabase
+                .ApplicationUserFeature.Include(p=>p.GatedFeature)
+                .Include(p=>p.ApplicationUser)
+                .SingleOrDefaultAsync(p=>p.GatedFeature.FeatureName == featureName && 
+                p.ApplicationUser.AzureAdB2cobjectId.ToString() == userAzureAdB2cObjctId);
+            if (applicationUserFeatureEntity != null)
+                userConfiguredPermission = applicationUserFeatureEntity.Enabled;
             if (!userConfiguredPermission.HasValue)
             {
                 var gatedFeatureEntity = await this.FairplaytubeDatabase
@@ -66,6 +73,10 @@ namespace FairPlayTube.GatedFeatures.FeatureFilters
                     shouldGrantAccess = gatedFeatureEntity.DefaultValue.Value;
                 }
                 //TODO:Evalute if we should CheckFunds here to centralize logic;
+            }
+            else
+            {
+                shouldGrantAccess = userConfiguredPermission.Value;
             }
             return shouldGrantAccess;
         }

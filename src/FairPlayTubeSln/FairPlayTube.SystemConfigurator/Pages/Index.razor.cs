@@ -19,7 +19,7 @@ namespace FairPlayTube.SystemConfigurator.Pages
             try
             {
                 var assembly = typeof(VideoController).Assembly;
-                var types = assembly.GetTypes().Where(p=>p.Name.EndsWith("Controller"));
+                var types = assembly.GetTypes().Where(p => p.Name.EndsWith("Controller"));
                 foreach (var singleType in types)
                 {
                     Controller controller = new Controller()
@@ -32,11 +32,11 @@ namespace FairPlayTube.SystemConfigurator.Pages
                         bool defaultValue = true;
                         var featureGateAttributes =
                         singleEndpoint.CustomAttributes.Where(p => p.AttributeType == typeof(FeatureGateAttribute));
-                        foreach(var singleFeatureGateAttribute in featureGateAttributes)
+                        foreach (var singleFeatureGateAttribute in featureGateAttributes)
                         {
                             defaultValue = false;
                         }
-                        controller.Endpoints.Add(new Endpoint() 
+                        controller.Endpoints.Add(new Endpoint()
                         {
                             Name = singleEndpoint.Name,
                             DefaultValue = defaultValue
@@ -72,13 +72,19 @@ namespace FairPlayTube.SystemConfigurator.Pages
                         string featureName = $"{singleController.Name}.{singleEndpoint.Name}";
                         var existentEntity = await fairplaytubeDatabaseContext.GatedFeature
                             .SingleOrDefaultAsync(p => p.FeatureName == featureName);
-                        if (existentEntity != null) continue;
-                        await fairplaytubeDatabaseContext.GatedFeature.AddAsync(
-                            new DataAccess.Models.GatedFeature()
-                            {
-                                FeatureName = featureName,
-                                DefaultValue = singleEndpoint.DefaultValue
-                            });
+                        if (existentEntity != null)
+                        {
+                            existentEntity.DefaultValue = singleEndpoint.DefaultValue;
+                        }
+                        else
+                        {
+                            await fairplaytubeDatabaseContext.GatedFeature.AddAsync(
+                                new DataAccess.Models.GatedFeature()
+                                {
+                                    FeatureName = featureName,
+                                    DefaultValue = singleEndpoint.DefaultValue
+                                });
+                        }
                         await fairplaytubeDatabaseContext.SaveChangesAsync();
                     }
                     catch (Exception ex)
