@@ -14,41 +14,52 @@ namespace FairPlayTube.Controllers.Tests
     [TestClass()]
     public class VideoControllerTests : TestsBase
     {
-        private static VideoInfo TestVideo = new()
+        private const string TestVideoName = "AUTOMATESTESTVIDEONAME";
+        private static VideoInfo CreateTestVideoEntity()
         {
-            Description = "AUTOMATED TEST VIDEO DESC",
-            FileName = "AUTOMATEDTESTVIDEO.MP4",
-            Name = "AUTOMATESTESTVIDEONAME",
-            VideoIndexStatusId = (int)Common.Global.Enums.VideoIndexStatus.Processed,
-            VideoBloblUrl = TestsBase.TestVideoBloblUrl,
-            Location = TestsBase.AzureVideoIndexerConfiguration!.Location,
-            AccountId = Guid.Parse(TestsBase.AzureVideoIndexerConfiguration.AccountId),
-            Price = 5,
-            VideoId = Guid.NewGuid().ToString()
-        };
+            return new()
+            {
+                Description = "AUTOMATED TEST VIDEO DESC",
+                FileName = "AUTOMATEDTESTVIDEO.MP4",
+                Name = TestVideoName,
+                VideoIndexStatusId = (int)Common.Global.Enums.VideoIndexStatus.Processed,
+                VideoBloblUrl = TestsBase.TestVideoBloblUrl,
+                Location = TestsBase.AzureVideoIndexerConfiguration!.Location,
+                AccountId = Guid.Parse(TestsBase.AzureVideoIndexerConfiguration.AccountId),
+                Price = 5,
+                VideoId = Guid.NewGuid().ToString()
+            };
+        }
 
-        [ClassCleanup]
-        public static async Task CleanTests()
+        [TestCleanup]
+        public async Task CleanTests()
         {
             using var dbContext = TestsBase.CreateDbContext();
+            var testVideoEntity = CreateTestVideoEntity();
+            dbContext.Entry<VideoInfo>(testVideoEntity).State = EntityState.Detached;
             foreach (var singleVideoAccessTransaction in dbContext.VideoAccessTransaction)
             {
                 dbContext.VideoAccessTransaction.Remove(singleVideoAccessTransaction);
             }
             await dbContext.SaveChangesAsync();
-            var testEntity = await dbContext.VideoInfo.Where(p => p.Name == TestVideo.Name).SingleAsync();
-            dbContext.VideoInfo.Remove(testEntity);
-            await dbContext.SaveChangesAsync();
+            var testEntity = await dbContext.VideoInfo.Where(p => p.Name == testVideoEntity.Name).SingleOrDefaultAsync();
+            if (testEntity != null)
+            {
+                dbContext.VideoInfo.Remove(testEntity);
+                await dbContext.SaveChangesAsync();
+            }
         }
 
         [TestMethod()]
         public async Task GetMyProcessedVideosTest()
         {
             var dbContext = TestsBase.CreateDbContext();
+            var videos = await dbContext.VideoInfo.ToListAsync();
             var userEntity = await dbContext.ApplicationUser.Where(p => p.AzureAdB2cobjectId.ToString() ==
             TestsBase.TestAzureAdB2CAuthConfiguration!.AzureAdUserObjectId).SingleAsync();
-            TestVideo.ApplicationUserId = userEntity.ApplicationUserId;
-            await dbContext.VideoInfo.AddAsync(TestVideo);
+            var testVideoEntity = CreateTestVideoEntity();
+            testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
+            await dbContext.VideoInfo.AddAsync(testVideoEntity);
             await dbContext.SaveChangesAsync();
             var authorizedHttpClient = await base.CreateAuthorizedClientAsync(Role.User);
             var result = await authorizedHttpClient
@@ -100,12 +111,13 @@ namespace FairPlayTube.Controllers.Tests
             TestsBase.TestAzureAdB2CAuthConfiguration!.AzureAdUserObjectId).SingleAsync();
             userEntity.AvailableFunds = 25;
             await dbContext.SaveChangesAsync();
-            TestVideo.ApplicationUserId = userEntity.ApplicationUserId;
-            await dbContext.VideoInfo.AddAsync(TestVideo);
+            var testVideoEntity = CreateTestVideoEntity();
+            testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
+            await dbContext.VideoInfo.AddAsync(testVideoEntity);
             await dbContext.SaveChangesAsync();
             var authorizedHttpClient = await base.CreateAuthorizedClientAsync(Role.User);
             var response = await authorizedHttpClient.PostAsync($"{Constants.ApiRoutes.VideoController.BuyVideoAccess}" +
-                $"?videoId={TestVideo.VideoId}", null!);
+                $"?videoId={testVideoEntity.VideoId}", null!);
             if (!response.IsSuccessStatusCode)
             {
                 var message = await response.Content.ReadAsStringAsync();
