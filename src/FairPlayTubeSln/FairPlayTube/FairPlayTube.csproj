@@ -22,6 +22,7 @@
     <PackageReference Include="Azure.Identity" Version="1.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.6" />
     <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="4.4.0" />
+    <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.3.0" />
     <PackageReference Include="Microsoft.Identity.Web" Version="1.1.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
@@ -35,6 +36,10 @@
     <ProjectReference Include="..\FairPlayTube.Models\FairPlayTube.Models.csproj" />
     <ProjectReference Include="..\FairPlayTube.Notifications\FairPlayTube.Notifications.csproj" />
     <ProjectReference Include="..\FairPlayTube.Services\FairPlayTube.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="GatedFeatures\SessionManagers\" />
   </ItemGroup>
 
 </Project>

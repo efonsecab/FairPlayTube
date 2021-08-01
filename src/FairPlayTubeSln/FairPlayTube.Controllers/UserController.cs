@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Common.Interfaces;
+﻿using FairPlayTube.Common.Global.Enums;
+using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.Models.Invites;
 using FairPlayTube.Models.UserMessage;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.FeatureManagement.Mvc;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -108,6 +110,7 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
+        [FeatureGate(FeatureType.PaidFeature)]
         public async Task SendMessage(UserMessageModel model, CancellationToken cancellationToken)
         {
             var senderObjectId = this.CurrentUserProvider.GetObjectId();

@@ -3,6 +3,7 @@ using FairPlayTube.Common.Interfaces;
 using FairPlayTube.CustomProviders;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
+using FairPlayTube.GatedFeatures.FeatureFilters;
 using FairPlayTube.Models.CustomHttpResponse;
 using FairPlayTube.Notifications.Hubs;
 using FairPlayTube.Services;
@@ -14,11 +15,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using PTI.Microservices.Library.Configuration;
@@ -66,6 +70,7 @@ namespace FairPlayTube
             GlobalPackageConfiguration.RapidApiKey = Configuration.GetValue<string>("RapidApiKey");
             services.AddSignalR();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<ICurrentUserProvider, CurrentUserProvider>();
             services.AddTransient(serviceProvider =>
             {
@@ -207,7 +212,19 @@ namespace FairPlayTube
                     c.OperationFilter<SecurityRequirementsOperationFilter>();
                 });
             }
-
+            services.AddFeatureManagement()
+                .AddFeatureFilter<PaidFeatureFilter>()
+                .UseDisabledFeaturesHandler((features, context) =>
+                {
+                    string joinedFeatureNames = String.Join(",", features);
+                    context.Result = new ObjectResult($"User is missing the following features: " +
+                        $"{joinedFeatureNames}")
+                    {
+                        StatusCode = (int)System.Net.HttpStatusCode.Forbidden
+                    };
+                    context.HttpContext.Response.Headers.Add("RequiredFeaures",
+                        joinedFeatureNames);
+                });
         }
 
         private void ConfigureAzureTextAnalytics(IServiceCollection services)
