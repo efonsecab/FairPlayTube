@@ -88,7 +88,14 @@ namespace FairPlayTube.Tests
             return Server!.CreateClient();
         }
 
-        protected async Task<HttpClient> CreateAuthorizedClientAsync(Role role)
+        protected async Task<HttpClient> SignIn(Role role)
+        {
+            var authorizedHttpClient = await CreateAuthorizedClientAsync(role);
+            var userRole = await authorizedHttpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyRole);
+            return authorizedHttpClient;
+        }
+
+        private async Task<HttpClient> CreateAuthorizedClientAsync(Role role)
         {
 
             switch (role)

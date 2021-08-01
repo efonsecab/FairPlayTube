@@ -53,6 +53,7 @@ namespace FairPlayTube.Controllers.Tests
         [TestMethod()]
         public async Task GetMyProcessedVideosTest()
         {
+            var authorizedHttpClient = await base.SignIn(Role.User);
             var dbContext = TestsBase.CreateDbContext();
             var videos = await dbContext.VideoInfo.ToListAsync();
             var userEntity = await dbContext.ApplicationUser.Where(p => p.AzureAdB2cobjectId.ToString() ==
@@ -61,7 +62,6 @@ namespace FairPlayTube.Controllers.Tests
             testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
             await dbContext.VideoInfo.AddAsync(testVideoEntity);
             await dbContext.SaveChangesAsync();
-            var authorizedHttpClient = await base.CreateAuthorizedClientAsync(Role.User);
             var result = await authorizedHttpClient
                 .GetFromJsonAsync<VideoInfoModel[]>(Constants.ApiRoutes.VideoController.GetMyProcessedVideos);
             Assert.AreEqual(1, result!.Length, "Invalid count of owned videos for test user");
@@ -106,6 +106,7 @@ namespace FairPlayTube.Controllers.Tests
         [TestMethod()]
         public async Task BuyVideoAccessTest()
         {
+            var authorizedHttpClient = await base.SignIn(Role.User);
             var dbContext = TestsBase.CreateDbContext();
             var userEntity = await dbContext.ApplicationUser.Where(p => p.AzureAdB2cobjectId.ToString() ==
             TestsBase.TestAzureAdB2CAuthConfiguration!.AzureAdUserObjectId).SingleAsync();
@@ -115,7 +116,6 @@ namespace FairPlayTube.Controllers.Tests
             testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
             await dbContext.VideoInfo.AddAsync(testVideoEntity);
             await dbContext.SaveChangesAsync();
-            var authorizedHttpClient = await base.CreateAuthorizedClientAsync(Role.User);
             var response = await authorizedHttpClient.PostAsync($"{Constants.ApiRoutes.VideoController.BuyVideoAccess}" +
                 $"?videoId={testVideoEntity.VideoId}", null!);
             if (!response.IsSuccessStatusCode)
