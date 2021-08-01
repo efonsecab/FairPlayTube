@@ -39,13 +39,6 @@ namespace FairPlayTube.ClientServices
                 Constants.ApiRoutes.UserProfileController.GetMyMonetizationInfo);
         }
 
-        public async Task<UserModel[]> ListUsers()
-        {
-            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
-            return await authorizedHttpClient.GetFromJsonAsync<UserModel[]>(
-                Constants.ApiRoutes.UserController.ListUsers);
-        }
-
         public async Task AddFunds(string paypalOrderId)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();

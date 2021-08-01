@@ -14,7 +14,7 @@ namespace FairPlayTube.Client.Pages.Users
     {
         public UserModel[] AllUsers { get; private set; }
         [Inject]
-        private UserProfileClientService UserProfileClientService { get; set; }
+        private UserClientService UserClientService { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
         private bool IsLoading { get; set; }
@@ -24,7 +24,7 @@ namespace FairPlayTube.Client.Pages.Users
             try
             {
                 IsLoading = true;
-                this.AllUsers = await this.UserProfileClientService.ListUsers();
+                this.AllUsers = await this.UserClientService.ListUsers();
             }
             catch (Exception ex)
             {
