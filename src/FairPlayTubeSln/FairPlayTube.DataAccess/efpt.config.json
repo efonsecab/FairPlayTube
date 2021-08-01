@@ -22,6 +22,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ApplicationUserFeature]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ApplicationUserRole]",
          "ObjectType": 0
       },
