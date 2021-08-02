@@ -139,10 +139,11 @@
             Handles all of the data related to a video
             </summary>
         </member>
-        <member name="M:FairPlayTube.Controllers.VideoController.#ctor(FairPlayTube.Services.VideoService,AutoMapper.IMapper,FairPlayTube.Common.Interfaces.ICurrentUserProvider)">
+        <member name="M:FairPlayTube.Controllers.VideoController.#ctor(Microsoft.Extensions.Logging.ILogger{FairPlayTube.Controllers.VideoController},FairPlayTube.Services.VideoService,AutoMapper.IMapper,FairPlayTube.Common.Interfaces.ICurrentUserProvider)">
             <summary>
             Initializes <see cref="T:FairPlayTube.Controllers.VideoController"/>
             </summary>
+            <param name="logger"></param>
             <param name="videoService"></param>
             <param name="mapper"></param>
             <param name="currentUserProvider"></param>

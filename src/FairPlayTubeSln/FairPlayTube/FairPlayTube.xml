@@ -14,6 +14,66 @@
             Initializes <see cref="T:FairPlayTube.AutoMapperProfiles.GlobalMappingProfile"/>
             </summary>
         </member>
+        <member name="T:FairPlayTube.CustomLoggers.CustomDbLogger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.CustomLoggers.CustomDbLogger.#ctor(Microsoft.Extensions.Logging.LogLevel[])">
+            <summary>
+            
+            </summary>
+            <param name="logLevels"></param>
+        </member>
+        <member name="M:FairPlayTube.CustomLoggers.CustomDbLogger.BeginScope``1(``0)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TState"></typeparam>
+            <param name="state"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.CustomLoggers.CustomDbLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <summary>
+            
+            </summary>
+            <param name="logLevel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.CustomLoggers.CustomDbLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>
+            
+            </summary>
+            <typeparam name="TState"></typeparam>
+            <param name="logLevel"></param>
+            <param name="eventId"></param>
+            <param name="state"></param>
+            <param name="exception"></param>
+            <param name="formatter"></param>
+        </member>
+        <member name="T:FairPlayTube.CustomLoggers.CustomDbLoggerProvider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.CustomLoggers.CustomDbLoggerProvider.#ctor(Microsoft.Extensions.Logging.LogLevel[])">
+            <summary>
+            
+            </summary>
+            <param name="logLevels"></param>
+        </member>
+        <member name="M:FairPlayTube.CustomLoggers.CustomDbLoggerProvider.CreateLogger(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="categoryName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.CustomLoggers.CustomDbLoggerProvider.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:FairPlayTube.CustomProviders.CurrentUserProvider">
             <summary>
             Holds the logic to retrieve the current user's information

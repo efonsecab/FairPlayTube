@@ -8,6 +8,7 @@ using FairPlayTube.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement.Mvc;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace FairPlayTube.Controllers
     [Authorize]
     public class VideoController : ControllerBase
     {
+        private ILogger<VideoController> Logger { get; }
         private VideoService VideoService { get; }
         private IMapper Mapper { get; }
         private ICurrentUserProvider CurrentUserProvider { get; }
@@ -32,11 +34,14 @@ namespace FairPlayTube.Controllers
         /// <summary>
         /// Initializes <see cref="VideoController"/>
         /// </summary>
+        /// <param name="logger"></param>
         /// <param name="videoService"></param>
         /// <param name="mapper"></param>
         /// <param name="currentUserProvider"></param>
-        public VideoController(VideoService videoService, IMapper mapper, ICurrentUserProvider currentUserProvider)
+        public VideoController(ILogger<VideoController> logger,
+            VideoService videoService, IMapper mapper, ICurrentUserProvider currentUserProvider)
         {
+            this.Logger = logger;
             this.VideoService = videoService;
             this.Mapper = mapper;
             this.CurrentUserProvider = currentUserProvider;
@@ -51,6 +56,7 @@ namespace FairPlayTube.Controllers
         [AllowAnonymous]
         public async Task<VideoInfoModel[]> GetPublicProcessedVideos(CancellationToken cancellationToken)
         {
+            this.Logger.LogInformation("Loading videos");
             var result = await this.VideoService.GetPublicProcessedVideos()
                 .Select(p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p)).ToArrayAsync(cancellationToken: cancellationToken);
             return result;

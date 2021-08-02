@@ -1,5 +1,6 @@
 using FairPlayTube.Common.Configuration;
 using FairPlayTube.Common.Interfaces;
+using FairPlayTube.CustomLoggers;
 using FairPlayTube.CustomProviders;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
@@ -21,6 +22,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
@@ -67,6 +69,10 @@ namespace FairPlayTube
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ILoggerProvider, CustomDbLoggerProvider>(sp =>
+            {
+                return new CustomDbLoggerProvider(new LogLevel[] { LogLevel.Information });
+            });
             bool enablePTILibrariesLogging = Convert.ToBoolean(Configuration["EnablePTILibrariesLogging"]);
             GlobalPackageConfiguration.EnableHttpRequestInformationLog = enablePTILibrariesLogging;
             GlobalPackageConfiguration.RapidApiKey = Configuration.GetValue<string>("RapidApiKey");
@@ -82,7 +88,7 @@ namespace FairPlayTube
 
 
             services.AddTransient<CustomHttpClientHandler>();
-            services.AddTransient<CustomHttpClient>(sp=> 
+            services.AddTransient<CustomHttpClient>(sp =>
             {
                 var handler = sp.GetRequiredService<CustomHttpClientHandler>();
                 return new CustomHttpClient(handler) { Timeout = TimeSpan.FromMinutes(30) };
@@ -298,13 +304,13 @@ namespace FairPlayTube
                 Configuration.GetSection($"AzureConfiguration:{nameof(AzureBlobStorageConfiguration)}")
                 .Get<AzureBlobStorageConfiguration>();
             services.AddSingleton(azureBlobStorageConfiguration);
-            services.AddTransient<AzureBlobStorageService>(sp=> 
+            services.AddTransient<AzureBlobStorageService>(sp =>
             {
                 CustomHttpClient customHttpClient = sp.GetRequiredService<CustomHttpClient>();
                 customHttpClient.Timeout = TimeSpan.FromMinutes(60);
-                return new AzureBlobStorageService(logger:sp.GetRequiredService<ILogger<AzureBlobStorageService>>(),
-                    azureBlobStorageConfiguration:azureBlobStorageConfiguration,
-                    customHttpClient:customHttpClient);
+                return new AzureBlobStorageService(logger: sp.GetRequiredService<ILogger<AzureBlobStorageService>>(),
+                    azureBlobStorageConfiguration: azureBlobStorageConfiguration,
+                    customHttpClient: customHttpClient);
             });
         }
 
