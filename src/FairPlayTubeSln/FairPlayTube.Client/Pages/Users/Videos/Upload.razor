@@ -5,14 +5,29 @@
 
 <EditForm Model="@UploadVideoModel" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator></DataAnnotationsValidator>
+    <FairPlayTube.Client.CustomValidators.UploadVideoValidator></FairPlayTube.Client.CustomValidators.UploadVideoValidator>
     <ValidationSummary></ValidationSummary>
     <div class="mb-3">
         <label class="form-label">Name</label>
         <InputText class="form-control" @bind-Value="UploadVideoModel.Name"></InputText>
     </div>
     <div class="mb-3">
-        <label class="form-label">FileUrl</label>
-        <InputText class="form-control" @bind-Value="UploadVideoModel.SourceUrl"></InputText>
+        <label class="form-label">Use Url?</label>
+        <InputCheckbox @bind-Value="UploadVideoModel.UseSourceUrl"  @onchange="OnFileSourceModeChanged"></InputCheckbox>
+    </div>
+    <div class="mb-3">
+        @if (UploadVideoModel.UseSourceUrl)
+        {
+            <label class="form-label">Source Url</label>
+            <InputText class="form-control" @bind-Value="UploadVideoModel.SourceUrl"></InputText>
+        }
+        else
+        {
+            <FairPlayTube.Client.CustomComponents.Upload.FileUpload 
+                                                                    OnFilesUploaded="OnFilesUploaded"
+                                                                    ></FairPlayTube.Client.CustomComponents.Upload.FileUpload>
+        }
+
     </div>
     <div class="mb-3">
         <label class="form-label">Video's Language</label>

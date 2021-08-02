@@ -1,9 +1,11 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Global.Enums;
+using FairPlayTube.Models.FileUpload;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,6 +104,18 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         private string GetVisibilityName(VideoVisibility visibilityValue)
         {
             return Enum.GetName<VideoVisibility>(visibilityValue);
+        }
+
+        private void OnFilesUploaded(List<UploadResult> uploadResults)
+        {
+            var result = uploadResults.Single();
+            this.UploadVideoModel.StoredFileName = result.StoredFileName;
+        }
+
+        private void OnFileSourceModeChanged(ChangeEventArgs e)
+        {
+            this.UploadVideoModel.StoredFileName = string.Empty;
+            this.UploadVideoModel.SourceUrl = string.Empty;
         }
     }
 }

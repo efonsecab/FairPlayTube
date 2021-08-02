@@ -34,6 +34,31 @@
             Trace Id
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.FileUpload.UploadResult">
+            <summary>
+            File upload result
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.FileUpload.UploadResult.FileName">
+            <summary>
+            File Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.FileUpload.UploadResult.ErrorCode">
+            <summary>
+            Error code received when uploading file
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.FileUpload.UploadResult.StoredFileName">
+            <summary>
+            Stored File name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.FileUpload.UploadResult.Uploaded">
+            <summary>
+            Indicates if the file has ben uploaded
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Invites.InviteUserModel">
             <summary>
             Represents an invitation to a user to use the system
@@ -762,6 +787,16 @@
         <member name="P:FairPlayTube.Models.Video.UploadVideoModel.VideoVisibility">
             <summary>
             The video's visibility
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.UploadVideoModel.StoredFileName">
+            <summary>
+            Generated unique name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.UploadVideoModel.UseSourceUrl">
+            <summary>
+            Indicate the user will specify a Source Url instead of uploading a file
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.Video.VideoInfoModel">
