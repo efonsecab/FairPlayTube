@@ -23,20 +23,18 @@ namespace FairPlayTube.Client.CustomComponents.Upload
         private List<File> files = new();
         private List<UploadResult> uploadResults = new();
         private int maxAllowedFiles = 1;
-        //private bool shouldRender;
         [Parameter]
         public EventCallback<List<UploadResult>> OnFilesUploaded { get; set; }
         private bool IsLoading { get; set; }
-
-        //protected override bool ShouldRender() => shouldRender;
+        private bool ShouldDisplayFileList { get; set; } = false;
 
         private async Task OnInputFileChange(InputFileChangeEventArgs e)
         {
             try
             {
                 IsLoading = true;
+                ShouldDisplayFileList = false;
                 StateHasChanged();
-                //shouldRender = false;
                 long maxFileSize = 1024 * 1024 * 15;
                 var upload = false;
 
@@ -90,7 +88,7 @@ namespace FairPlayTube.Client.CustomComponents.Upload
                     await this.OnFilesUploaded.InvokeAsync(uploadResults);
                 }
 
-                //shouldRender = true;
+                ShouldDisplayFileList = true;
             }
             finally
             {
