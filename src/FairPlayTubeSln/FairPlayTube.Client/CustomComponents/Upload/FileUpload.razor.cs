@@ -84,6 +84,7 @@ namespace FairPlayTube.Client.CustomComponents.Upload
                 if (upload)
                 {
                     var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+                    authorizedHttpClient.Timeout = TimeSpan.FromMinutes(30);
                     var response = await authorizedHttpClient.PostAsync("api/Filesave/PostFile", content);
 
                     var newUploadResults = await response.Content

@@ -116,6 +116,7 @@ namespace FairPlayTube.Controllers
                             logger.LogError("{FileName} error on upload (Err: 3): {Message}",
                                 trustedFileNameForDisplay, ex.Message);
                             uploadResult.ErrorCode = 3;
+                            throw;
                         }
                     }
 
