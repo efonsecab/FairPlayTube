@@ -22,6 +22,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
@@ -32,6 +33,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -80,7 +82,11 @@ namespace FairPlayTube
 
 
             services.AddTransient<CustomHttpClientHandler>();
-            services.AddTransient<CustomHttpClient>();
+            services.AddTransient<CustomHttpClient>(sp=> 
+            {
+                var handler = sp.GetRequiredService<CustomHttpClientHandler>();
+                return new CustomHttpClient(handler) { Timeout = TimeSpan.FromMinutes(30) };
+            });
             ConfigureAzureTextAnalytics(services);
             ConfigureAzureContentModerator(services);
             ConfigureAzureVideoIndexer(services);
@@ -292,7 +298,14 @@ namespace FairPlayTube
                 Configuration.GetSection($"AzureConfiguration:{nameof(AzureBlobStorageConfiguration)}")
                 .Get<AzureBlobStorageConfiguration>();
             services.AddSingleton(azureBlobStorageConfiguration);
-            services.AddTransient<AzureBlobStorageService>();
+            services.AddTransient<AzureBlobStorageService>(sp=> 
+            {
+                CustomHttpClient customHttpClient = sp.GetRequiredService<CustomHttpClient>();
+                customHttpClient.Timeout = TimeSpan.FromMinutes(60);
+                return new AzureBlobStorageService(logger:sp.GetRequiredService<ILogger<AzureBlobStorageService>>(),
+                    azureBlobStorageConfiguration:azureBlobStorageConfiguration,
+                    customHttpClient:customHttpClient);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

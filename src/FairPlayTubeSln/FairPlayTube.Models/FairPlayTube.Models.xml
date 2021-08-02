@@ -34,6 +34,11 @@
             Trace Id
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.CustomHttpResponse.ProblemHttpResponse.Errors">
+            <summary>
+            Errors
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.FileUpload.UploadResult">
             <summary>
             File upload result
@@ -967,6 +972,16 @@
         <member name="P:FairPlayTube.Models.VisitorTracking.VisitorTrackingModel.UserAzureAdB2cObjectId">
             <summary>
             Logged In user Azure Ad B2C Object Id
+            </summary>
+        </member>
+        <member name="T:Errors">
+            <summary>
+            Errors
+            </summary>
+        </member>
+        <member name="P:Errors._">
+            <summary>
+            Error messages
             </summary>
         </member>
     </members>

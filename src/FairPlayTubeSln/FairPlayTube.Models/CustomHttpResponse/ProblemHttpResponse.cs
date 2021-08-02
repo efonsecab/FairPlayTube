@@ -25,5 +25,21 @@
         /// Trace Id
         /// </summary>
         public string TraceId { get; set; }
+        /// <summary>
+        /// Errors
+        /// </summary>
+        public Errors Errors { get; set; }
+
     }
+}
+
+/// <summary>
+/// Errors
+/// </summary>
+public class Errors
+{
+    /// <summary>
+    /// Error messages
+    /// </summary>
+    public string[] _ { get; set; }
 }
