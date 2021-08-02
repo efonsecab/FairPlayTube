@@ -60,6 +60,8 @@ namespace FairPlayTube.Controllers
         /// <returns></returns>
         [HttpPost("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        [DisableRequestSizeLimit]
+        [RequestSizeLimit(1073741824)] //1GB
         public async Task<ActionResult<IList<UploadResult>>> PostFile(
             [FromForm] IEnumerable<IFormFile> files, CancellationToken cancellationToken)
         {
