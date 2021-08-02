@@ -11,6 +11,7 @@ using System.Net.Http.Json;
 using FairPlayTube.ClientServices;
 using Microsoft.AspNetCore.Authorization;
 using FairPlayTube.Client.Services;
+using FairPlayTube.Models.CustomHttpResponse;
 
 namespace FairPlayTube.Client.CustomComponents.Upload
 {
@@ -86,12 +87,18 @@ namespace FairPlayTube.Client.CustomComponents.Upload
                     var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
                     authorizedHttpClient.Timeout = TimeSpan.FromMinutes(30);
                     var response = await authorizedHttpClient.PostAsync("api/Filesave/PostFile", content);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        await ToastifyService.DisplayErrorNotification("Unable to upload file. Please try a small file");
+                    }
+                    else
+                    {
+                        var newUploadResults = await response.Content
+                            .ReadFromJsonAsync<IList<UploadResult>>();
 
-                    var newUploadResults = await response.Content
-                        .ReadFromJsonAsync<IList<UploadResult>>();
-
-                    uploadResults = uploadResults.Concat(newUploadResults).ToList();
-                    await this.OnFilesUploaded.InvokeAsync(uploadResults);
+                        uploadResults = uploadResults.Concat(newUploadResults).ToList();
+                        await this.OnFilesUploaded.InvokeAsync(uploadResults);
+                    }
                 }
 
                 ShouldDisplayFileList = true;

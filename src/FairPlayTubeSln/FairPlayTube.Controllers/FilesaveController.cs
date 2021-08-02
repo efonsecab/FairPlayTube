@@ -61,10 +61,12 @@ namespace FairPlayTube.Controllers
         [HttpPost("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         [DisableRequestSizeLimit]
-        [RequestSizeLimit(1073741824)] //1GB
+        //[RequestSizeLimit(1073741824)] //1GB
+        [RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
         public async Task<ActionResult<IList<UploadResult>>> PostFile(
             [FromForm] IEnumerable<IFormFile> files, CancellationToken cancellationToken)
         {
+            //TODO: Disabling request limits it is not recommended. We'll use it as a temporary measure, but needs to be changed
             var userAzueAdB2cObjectId = this.CurrentUserProvider.GetObjectId();
             var maxAllowedFiles = 3;
             long maxFileSize = Common.Global.Constants.UploadLimits.MaxBytesAllowed;
@@ -106,7 +108,7 @@ namespace FairPlayTube.Controllers
 
                             var blobUploadResult = await this.AzureBlobStorageService.UploadFileAsync(
                                 this.DataStorageConfiguration.UntrustedUploadsContainerName, fileRelativePath,
-                                file.OpenReadStream(), false, cancellationToken);
+                                file.OpenReadStream(), true, cancellationToken);
 
                             logger.LogInformation("{FileName} saved at {Path}",
                                 trustedFileNameForDisplay, fileRelativePath);
