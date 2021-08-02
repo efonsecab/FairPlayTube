@@ -68,6 +68,10 @@ namespace FairPlayTube.Controllers
         [RequestSizeLimit(1073741824)] //1GB
         public async Task<IActionResult> UploadVideo(UploadVideoModel uploadVideoModel, CancellationToken cancellationToken)
         {
+            if (uploadVideoModel.UseSourceUrl && String.IsNullOrWhiteSpace(uploadVideoModel.SourceUrl))
+                throw new Exception("You muse specify a Source Url");
+            if (!uploadVideoModel.UseSourceUrl && String.IsNullOrWhiteSpace(uploadVideoModel.StoredFileName))
+                throw new Exception("You muse upload a file");
             if (await this.VideoService.UploadVideoAsync(uploadVideoModel, cancellationToken: cancellationToken))
                 return Ok();
             else

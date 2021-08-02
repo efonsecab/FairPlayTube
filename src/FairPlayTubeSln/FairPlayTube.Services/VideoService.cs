@@ -238,10 +238,25 @@ namespace FairPlayTube.Services
         public async Task<bool> UploadVideoAsync(UploadVideoModel uploadVideoModel,
             CancellationToken cancellationToken)
         {
+            var fileExtension = string.Empty;
+            var userAzueAdB2cObjectId = this.CurrentUserProvider.GetObjectId();
             MemoryStream stream = null;
-            var fileExtension = Path.GetExtension(uploadVideoModel.SourceUrl);
-            if (String.IsNullOrWhiteSpace(fileExtension))
-                throw new Exception("Please make sure the source file has a valid extension like .mp4");
+            if (!uploadVideoModel.UseSourceUrl)
+            {
+                string fileRelativePath =
+                    $"User/{userAzueAdB2cObjectId}/{uploadVideoModel.StoredFileName}";
+                stream = new MemoryStream();
+                var response = await this.AzureBlobStorageService
+                    .GetFileStreamAsync(this.DataStorageConfiguration.UntrustedUploadsContainerName,
+                    fileRelativePath, stream, cancellationToken);
+                fileExtension = Path.GetExtension(uploadVideoModel.StoredFileName);
+            }
+            else
+            {
+                fileExtension = Path.GetExtension(uploadVideoModel.SourceUrl);
+                if (String.IsNullOrWhiteSpace(fileExtension))
+                    throw new Exception("Please make sure the source file has a valid extension like .mp4");
+            }
             var existentVideoName = await this.FairplaytubeDatabaseContext.VideoInfo
                 .SingleOrDefaultAsync(p =>
             p.AccountId.ToString() == this.AzureVideoIndexerConfiguration.AccountId &&
@@ -249,14 +264,17 @@ namespace FairPlayTube.Services
             p.Name == uploadVideoModel.Name, cancellationToken: cancellationToken);
             if (existentVideoName != null)
                 throw new Exception($"Unable to use the Name: {uploadVideoModel.Name}. Please use another name and try again");
-            byte[] fileBytes = null;
-            if (!String.IsNullOrWhiteSpace(uploadVideoModel.SourceUrl))
+
+            if (uploadVideoModel.UseSourceUrl)
             {
-                fileBytes = await this.CustomHttpClient.GetByteArrayAsync(uploadVideoModel.SourceUrl);
+                byte[] fileBytes = null;
+                if (!String.IsNullOrWhiteSpace(uploadVideoModel.SourceUrl))
+                {
+                    fileBytes = await this.CustomHttpClient.GetByteArrayAsync(uploadVideoModel.SourceUrl);
+                }
+                stream = new MemoryStream(fileBytes);
             }
-            stream = new MemoryStream(fileBytes);
             cancellationToken.ThrowIfCancellationRequested();
-            var userAzueAdB2cObjectId = this.CurrentUserProvider.GetObjectId();
             stream.Position = 0;
             cancellationToken.ThrowIfCancellationRequested();
             var newFileName = $"{uploadVideoModel.Name}{fileExtension}";
@@ -458,9 +476,9 @@ namespace FairPlayTube.Services
             var joinedKeyPhrases = String.Join(",", keyPhrases);
             await this.FairplaytubeDatabaseContext.VideoCommentAnalysis.AddAsync(new VideoCommentAnalysis()
             {
-                VideoCommentId=videoCommentId,
-                KeyPhrases=joinedKeyPhrases,
-                Sentiment=sentiment,
+                VideoCommentId = videoCommentId,
+                KeyPhrases = joinedKeyPhrases,
+                Sentiment = sentiment,
             }, cancellationToken);
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
         }

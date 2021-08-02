@@ -26,6 +26,29 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.FilesaveController">
+            <summary>
+            In charge to saving files
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.FilesaveController.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Logging.ILogger{FairPlayTube.Controllers.FilesaveController},PTI.Microservices.Library.Services.AzureBlobStorageService,FairPlayTube.Common.Configuration.DataStorageConfiguration,FairPlayTube.Common.Interfaces.ICurrentUserProvider)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.FilesaveController"/>
+            </summary>
+            <param name="env"></param>
+            <param name="logger"></param>
+            <param name="azureBlobStorageService"></param>
+            <param name="dataStorageConfiguration"></param>
+            <param name="currentUserProvider"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.FilesaveController.PostFile(System.Collections.Generic.IEnumerable{Microsoft.AspNetCore.Http.IFormFile},System.Threading.CancellationToken)">
+            <summary>
+            Upload a file
+            </summary>
+            <param name="files"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.UserController">
             <summary>
             Handles all of the data regarding a User

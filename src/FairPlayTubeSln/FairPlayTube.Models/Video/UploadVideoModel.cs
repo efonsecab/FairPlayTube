@@ -27,7 +27,6 @@ namespace FairPlayTube.Models.Video
         /// </summary>
         [Url]
         [StringLength(500)]
-        [Required]
         public string SourceUrl { get; set; }
         /// <summary>
         /// Video's Price
@@ -46,5 +45,13 @@ namespace FairPlayTube.Models.Video
         /// </summary>
         [Required]
         public VideoVisibility VideoVisibility { get; set; } = VideoVisibility.Public;
+        /// <summary>
+        /// Generated unique name
+        /// </summary>
+        public string StoredFileName { get; set; }
+        /// <summary>
+        /// Indicate the user will specify a Source Url instead of uploading a file
+        /// </summary>
+        public bool UseSourceUrl { get; set; }
     }
 }
