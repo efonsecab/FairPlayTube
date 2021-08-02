@@ -1,7 +1,7 @@
 ﻿<Loading IsLoading="IsLoading"></Loading>
 <p>
     <label class="form-label">
-        Upload up to @maxAllowedFiles files:
+        Upload file(s). Max: @(Common.Global.Constants.UploadLimits.MaxMegabytesAllowed) MB
         <InputFile class="form-control" OnChange="@OnInputFileChange" multiple accept="video/mp4" />
     </label>
 </p>

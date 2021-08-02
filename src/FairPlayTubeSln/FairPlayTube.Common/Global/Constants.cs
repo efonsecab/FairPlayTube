@@ -2,6 +2,11 @@
 {
     public class Constants
     {
+        public class UploadLimits
+        {
+            public const int MaxMegabytesAllowed = 300;
+            public const long MaxBytesAllowed = 1024 * 1024 * MaxMegabytesAllowed;
+        }
         public class Commissions
         {
             public const decimal VideoAccess = 0.05M;//5% 

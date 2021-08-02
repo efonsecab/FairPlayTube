@@ -65,7 +65,7 @@ namespace FairPlayTube.Controllers
         {
             var userAzueAdB2cObjectId = this.CurrentUserProvider.GetObjectId();
             var maxAllowedFiles = 3;
-            long maxFileSize = 1024 * 1024 * 15;
+            long maxFileSize = Common.Global.Constants.UploadLimits.MaxBytesAllowed;
             var filesProcessed = 0;
             var resourcePath = new Uri($"{Request.Scheme}://{Request.Host}/");
             List<UploadResult> uploadResults = new();

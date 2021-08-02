@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using System.Net.Http.Json;
 using FairPlayTube.ClientServices;
 using Microsoft.AspNetCore.Authorization;
+using FairPlayTube.Client.Services;
 
 namespace FairPlayTube.Client.CustomComponents.Upload
 {
@@ -17,9 +18,11 @@ namespace FairPlayTube.Client.CustomComponents.Upload
     public partial class FileUpload
     {
         [Inject]
-        HttpClientService HttpClientService { get; set; }
+        private HttpClientService HttpClientService { get; set; }
         [Inject]
-        ILogger<FileUpload> Logger { get; set; }
+        private ILogger<FileUpload> Logger { get; set; }
+        [Inject]
+        private ToastifyService ToastifyService { get; set; }
         private List<File> files = new();
         private List<UploadResult> uploadResults = new();
         private int maxAllowedFiles = 1;
@@ -35,7 +38,7 @@ namespace FairPlayTube.Client.CustomComponents.Upload
                 IsLoading = true;
                 ShouldDisplayFileList = false;
                 StateHasChanged();
-                long maxFileSize = 1024 * 1024 * 15;
+                long maxFileSize = Common.Global.Constants.UploadLimits.MaxBytesAllowed;
                 var upload = false;
 
                 using var content = new MultipartFormDataContent();
@@ -61,6 +64,8 @@ namespace FairPlayTube.Client.CustomComponents.Upload
                         }
                         catch (Exception ex)
                         {
+                            await ToastifyService.DisplayErrorNotification($"Please specify a smaller file. Max: " +
+                                $"{Common.Global.Constants.UploadLimits.MaxBytesAllowed / 1024 / 1024} MB");
                             Logger.LogInformation(
                                 "{FileName} not uploaded (Err: 6): {Message}",
                                 file.Name, ex.Message);
