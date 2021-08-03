@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace FairPlayTube.Common.Providers
 {
@@ -43,9 +45,11 @@ namespace FairPlayTube.Common.Providers
             return lstIps;
         }
 
-        public static IPAddress GetPublicIp(string serviceUrl = "https://ipinfo.io/ip")
+        public static async Task<IPAddress> GetPublicIp(string serviceUrl = "https://ipinfo.io/ip")
         {
-            return IPAddress.Parse(new System.Net.WebClient().DownloadString(serviceUrl));
+            HttpClient httpClient = new HttpClient();
+            var ipAddress = await httpClient.GetStringAsync(serviceUrl);
+            return IPAddress.Parse(ipAddress);
         }
     }
 }

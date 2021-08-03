@@ -22,6 +22,12 @@ namespace FairPlayTube.ClientServices
         public async Task<VideoInfoModel[]> GetPublicProcessedVideosAsync()
         {
             var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
+            var response = await anonymousHttpClient
+                .GetAsync(ApiRoutes.VideoController.GetPublicProcessedVideos);
+            if (!response.IsSuccessStatusCode)
+            {
+                var message = await response.Content.ReadAsStringAsync();
+            }
             return await anonymousHttpClient.GetFromJsonAsync<VideoInfoModel[]>(
                 ApiRoutes.VideoController.GetPublicProcessedVideos);
         }

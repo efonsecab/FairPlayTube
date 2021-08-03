@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0-preview.6.21352.12" />
     <PackageReference Include="PTI.Microservices.Library.AzureBlobStorage" Version="2.0.0.2-preview" />
     <PackageReference Include="PTI.Microservices.Library.AzureContentModerator" Version="2.0.0.1-preview" />
     <PackageReference Include="PTI.Microservices.Library.AzureTextAnalytics" Version="2.0.0.1-preview" />
