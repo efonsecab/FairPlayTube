@@ -1,6 +1,7 @@
 using FairPlayTube.Client.CustomClaims;
 using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.ClientServices.Extensions;
 using FairPlayTube.Common.Configuration;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -48,13 +49,8 @@ namespace FairPlayTube.Client
                 builder.Configuration.GetSection("AzureQnABotConfiguration").Get<AzureQnABotConfiguration>();
             builder.Services.AddSingleton(azureQnABotConfiguration);
 
-            builder.Services.AddTransient<HttpClientService>();
-            builder.Services.AddTransient<ToastifyService>();
-            builder.Services.AddTransient<VideoClientService>();
-            builder.Services.AddTransient<UserProfileClientService>();
-            builder.Services.AddTransient<ToastifyService>();
-            builder.Services.AddTransient<VisitorTrackingClientService>();
-            builder.Services.AddTransient<UserClientService>();
+            builder.Services.AddClientServices();
+
             await builder.Build().RunAsync();
         }
     }

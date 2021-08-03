@@ -16,48 +16,24 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiImage
-			Include="..\FairPlayTube.MauiBlazor\Resources\appicon.svg"
-			Link="Resources\appicon.svg"
-			ForegroundFile="..\FairPlayTube.MauiBlazor\Resources\appiconfg.svg"
-			IsAppIcon="true"
-			Color="#512BD4" />
+		<MauiImage Include="..\FairPlayTube.MauiBlazor\Resources\appicon.svg" Link="Resources\appicon.svg" ForegroundFile="..\FairPlayTube.MauiBlazor\Resources\appiconfg.svg" IsAppIcon="true" Color="#512BD4" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen
-			Include="..\FairPlayTube.MauiBlazor\Resources\appiconfg.svg"
-			Link="Resources\appiconfg.svg"
-			Color="#512BD4" />
+		<MauiSplashScreen Include="..\FairPlayTube.MauiBlazor\Resources\appiconfg.svg" Link="Resources\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Images -->
-		<MauiImage
-			Include="..\FairPlayTube.MauiBlazor\Resources\Images\*"
-			Link="Resources\Images\%(Filename)%(Extension)" />
+		<MauiImage Include="..\FairPlayTube.MauiBlazor\Resources\Images\*" Link="Resources\Images\%(Filename)%(Extension)" />
 
 		<!-- Custom Fonts -->
-		<MauiFont
-			Include="..\FairPlayTube.MauiBlazor\Resources\Fonts\*"
-			Link="Resources\Fonts\%(Filename)%(Extension)" />
+		<MauiFont Include="..\FairPlayTube.MauiBlazor\Resources\Fonts\*" Link="Resources\Fonts\%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile
-			Include="..\FairPlayTube.MauiBlazor\**\*.cs"
-			Exclude="..\FairPlayTube.MauiBlazor\bin\**;..\FairPlayTube.MauiBlazor\obj\**;..\FairPlayTube.MauiBlazor\Platforms\**"
-			Link="%(RecursiveDir)%(Filename)%(Extension)"/>
-		<MauiXaml
-			Include="..\FairPlayTube.MauiBlazor\**\*.xaml"
-			Exclude="..\FairPlayTube.MauiBlazor\bin\**;..\FairPlayTube.MauiBlazor\obj\**"
-			Link="%(RecursiveDir)%(FileName)%(Extension)" />
-		<_ThisProjectStaticWebAsset
-			Include="..\FairPlayTube.MauiBlazor\wwwroot\**"
-			Link="wwwroot\%(RecursiveDir)%(Filename)%(Extension)"
-			RelativePath="%(RecursiveDir)%(Filename)%(Extension)" />
-		<None Include="@(_ThisProjectStaticWebAsset)"/>
-		<RazorComponent
-			Include="..\FairPlayTube.MauiBlazor\**\*.razor"
-			Exclude="..\FairPlayTube.MauiBlazor\bin\**;..\FairPlayTube.MauiBlazor\obj\**"
-			Link="%(RecursiveDir)%(Filename)%(Extension)"/>
+		<Compile Include="..\FairPlayTube.MauiBlazor\**\*.cs" Exclude="..\FairPlayTube.MauiBlazor\bin\**;..\FairPlayTube.MauiBlazor\obj\**;..\FairPlayTube.MauiBlazor\Platforms\**" Link="%(RecursiveDir)%(Filename)%(Extension)" />
+		<MauiXaml Include="..\FairPlayTube.MauiBlazor\**\*.xaml" Exclude="..\FairPlayTube.MauiBlazor\bin\**;..\FairPlayTube.MauiBlazor\obj\**" Link="%(RecursiveDir)%(FileName)%(Extension)" />
+		<_ThisProjectStaticWebAsset Include="..\FairPlayTube.MauiBlazor\wwwroot\**" Link="wwwroot\%(RecursiveDir)%(Filename)%(Extension)" RelativePath="%(RecursiveDir)%(Filename)%(Extension)" />
+		<None Include="@(_ThisProjectStaticWebAsset)" />
+		<RazorComponent Include="..\FairPlayTube.MauiBlazor\**\*.razor" Exclude="..\FairPlayTube.MauiBlazor\bin\**;..\FairPlayTube.MauiBlazor\obj\**" Link="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -66,6 +42,10 @@
 		<PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.8.0" />
 		<PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.0" />
 		<PackageReference Include="Microsoft.ProjectReunion.InteractiveExperiences" Version="0.8.0" NoWarn="NU1701" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\FairPlayTube.ClientServices\FairPlayTube.ClientServices.csproj" />
 	</ItemGroup>
 
 </Project>

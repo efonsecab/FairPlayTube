@@ -1,7 +1,43 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<h1>Hello, FairPlayTube!</h1>
 
-Welcome to your new app.
+@if (this.AllVideos != null)
+{
+    foreach (var singleVideo in this.AllVideos)
+    {
+        <div class="row">
+            <div class="col">
+                @singleVideo.Name
+            </div>
+        </div>
+    }
+}
+<FairPlayTube.Components.Bootstrap.Loading IsLoading="IsLoading"></FairPlayTube.Components.Bootstrap.Loading>
+<FairPlayTube.Components.Videos.VideoList AllVideos="AllVideos" AllowEdit="false"></FairPlayTube.Components.Videos.VideoList>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code
+{
+    [Inject]
+    private VideoClientService VideoClientService { get; set; }
+    [Inject]
+    private FairPlayTube.Client.Services.ToastifyService ToastifyService { get; set; }
+    private FairPlayTube.Models.Video.VideoInfoModel[] AllVideos { get; set; }
+    private bool IsLoading { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IsLoading = true;
+            this.AllVideos = await this.VideoClientService.GetPublicProcessedVideosAsync();
+        }
+        catch (Exception ex)
+        {
+            await ToastifyService.DisplayErrorNotification(ex.Message);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+}
