@@ -46,6 +46,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\FairPlayTube.ClientServices\FairPlayTube.ClientServices.csproj" />
+	  <ProjectReference Include="..\..\FairPlayTube.Components\FairPlayTube.Components.csproj" />
 	</ItemGroup>
 
 </Project>

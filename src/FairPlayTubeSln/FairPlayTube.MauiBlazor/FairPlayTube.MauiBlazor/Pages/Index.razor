@@ -1,18 +1,7 @@
 ﻿@page "/"
 
-<h1>Hello, FairPlayTube!</h1>
+<h1>FairPlayTube! The MAUI Blazor Version!</h1>
 
-@if (this.AllVideos != null)
-{
-    foreach (var singleVideo in this.AllVideos)
-    {
-        <div class="row">
-            <div class="col">
-                @singleVideo.Name
-            </div>
-        </div>
-    }
-}
 <FairPlayTube.Components.Bootstrap.Loading IsLoading="IsLoading"></FairPlayTube.Components.Bootstrap.Loading>
 <FairPlayTube.Components.Videos.VideoList AllVideos="AllVideos" AllowEdit="false"></FairPlayTube.Components.Videos.VideoList>
 
