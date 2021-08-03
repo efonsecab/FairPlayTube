@@ -450,6 +450,30 @@ namespace FairPlayTube
             SeedDefaultRoles(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
                 roleId: 2, roleName: Common.Global.Constants.Roles.Admin);
             fairplaytubeDatabaseContext.SaveChanges();
+            SeedDefaultVideoIndexStatuses(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
+                videoIndexStatus: Common.Global.Enums.VideoIndexStatus.Pending);
+            SeedDefaultVideoIndexStatuses(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
+                videoIndexStatus: Common.Global.Enums.VideoIndexStatus.Processing);
+            SeedDefaultVideoIndexStatuses(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
+                videoIndexStatus: Common.Global.Enums.VideoIndexStatus.Processed);
+        }
+
+        private void SeedDefaultVideoIndexStatuses(FairplaytubeDatabaseContext fairplaytubeDatabaseContext, 
+            Common.Global.Enums.VideoIndexStatus videoIndexStatus)
+        {
+
+            var videoIndexStatusEntity = fairplaytubeDatabaseContext.VideoIndexStatus
+                .SingleOrDefault(p => p.Name == videoIndexStatus.ToString());
+            if (videoIndexStatusEntity == null)
+            {
+                videoIndexStatusEntity = new VideoIndexStatus()
+                {
+                    Name = videoIndexStatus.ToString(),
+                    VideoIndexStatusId = (short)videoIndexStatus
+                };
+                fairplaytubeDatabaseContext.VideoIndexStatus.Add(videoIndexStatusEntity);
+                fairplaytubeDatabaseContext.SaveChanges();
+            }
         }
 
         private void SeedDefaultRoles(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,

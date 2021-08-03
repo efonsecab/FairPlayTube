@@ -145,9 +145,21 @@ namespace FairPlayTube.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GetMyPendingVideosQueueTest()
+        public async Task GetMyPendingVideosQueueTest()
         {
-            Assert.Inconclusive();
+            var authorizedHttpClient = await base.SignIn(Role.User);
+            VideoClientService videoClientService = base.CreateVideoClientService();
+            var dbContext = TestsBase.CreateDbContext();
+            var videos = await dbContext.VideoInfo.ToListAsync();
+            var userEntity = await dbContext.ApplicationUser.Where(p => p.AzureAdB2cobjectId.ToString() ==
+            TestsBase.TestAzureAdB2CAuthConfiguration!.AzureAdUserObjectId).SingleAsync();
+            var testVideoEntity = CreateTestVideoEntity();
+            testVideoEntity.VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Pending;
+            testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
+            await dbContext.VideoInfo.AddAsync(testVideoEntity);
+            await dbContext.SaveChangesAsync();
+            var result = await videoClientService.GetMyPendingVideosQueue();
+            Assert.AreEqual(1, result.Count);
         }
 
         [TestMethod()]

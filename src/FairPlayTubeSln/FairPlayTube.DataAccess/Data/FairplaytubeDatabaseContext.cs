@@ -258,6 +258,11 @@ namespace FairPlayTube.DataAccess.Data
                     .HasConstraintName("FK_VideoIndexKeyword_VideoInfo");
             });
 
+            modelBuilder.Entity<VideoIndexStatus>(entity =>
+            {
+                entity.Property(e => e.VideoIndexStatusId).ValueGeneratedNever();
+            });
+
             modelBuilder.Entity<VideoIndexingTransaction>(entity =>
             {
                 entity.HasOne(d => d.VideoInfo)
