@@ -34,7 +34,7 @@ namespace FairPlayTube.Controllers.Tests
         }
 
         [TestCleanup]
-        public async Task CleanTests()
+        public async Task TestCleanup()
         {
             using var dbContext = TestsBase.CreateDbContext();
             var testVideoEntity = CreateTestVideoEntity();
@@ -48,6 +48,11 @@ namespace FairPlayTube.Controllers.Tests
             if (testEntity != null)
             {
                 dbContext.VideoInfo.Remove(testEntity);
+                await dbContext.SaveChangesAsync();
+            }
+            foreach (var singlePerson in dbContext.Person)
+            {
+                dbContext.Person.Remove(singlePerson);
                 await dbContext.SaveChangesAsync();
             }
         }
