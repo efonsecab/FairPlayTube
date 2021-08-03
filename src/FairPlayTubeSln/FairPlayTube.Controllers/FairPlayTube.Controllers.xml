@@ -147,6 +147,14 @@
             <param name="mapper"></param>
             <param name="currentUserProvider"></param>
         </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.DeleteVideo(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Allows to delete a video
+            </summary>
+            <param name="videoId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="M:FairPlayTube.Controllers.VideoController.GetPublicProcessedVideos(System.Threading.CancellationToken)">
             <summary>
             Gets all of the public processed videos

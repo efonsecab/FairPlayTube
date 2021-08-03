@@ -55,6 +55,41 @@ namespace FairPlayTube.Services
             this.TextAnalysisService = textAnalysisService;
         }
 
+        public async Task DeleteVideoAsync(string userAzureAdB2cObjectId, string videoId, CancellationToken cancellationToken)
+        {
+            var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
+                                        .Include(p => p.ApplicationUser)
+                                        .SingleOrDefaultAsync(p => p.VideoId == videoId);
+
+            if (videoEntity == null)
+                throw new Exception($"Video: {videoId} does not exit");
+
+            // DELETING VIDEO KEYWORDS
+            var keywordsResponse = await this.GetIndexedVideoKeywordsAsync(videoId, cancellationToken);
+            var existentKeywords = this.FairplaytubeDatabaseContext.VideoIndexKeyword
+                                       .Where(p => p.VideoInfoId == videoEntity.VideoInfoId);
+
+            if (existentKeywords.Any())
+            {
+                this.FairplaytubeDatabaseContext.VideoIndexKeyword.RemoveRange(existentKeywords);
+                await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+            }
+
+            // DELETING VIDEO INFO
+            this.FairplaytubeDatabaseContext.VideoInfo.Remove(videoEntity);
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+
+            // DELETING VIDEO INDEXER
+            await this.AzureVideoIndexerService.DeleteVideoAsync(videoId, cancellationToken);
+
+            // DELETING VIDEO FROM BLOB STORAGE (ThumbnailUrl)
+            await this.AzureBlobStorageService.DeleteFileAsync(this.DataStorageConfiguration.ContainerName, videoEntity.ThumbnailUrl, cancellationToken);
+
+            // DELETING VIDEO FROM BLOB STORAGE (VIDEO)
+            await this.AzureBlobStorageService.DeleteFileAsync(this.DataStorageConfiguration.ContainerName, $"{userAzureAdB2cObjectId}/{videoEntity.FileName}", cancellationToken);
+        }
+
+
         public async Task<IQueryable<VideoInfo>> SearchVideosByPersonNameAsync(string personName, CancellationToken cancellationtoken)
         {
             var searchVideoResults = await AzureVideoIndexerService.SearchVideosAsync(personName, new SearchScope[] { SearchScope.NamedPeople }, cancellationToken: cancellationtoken);

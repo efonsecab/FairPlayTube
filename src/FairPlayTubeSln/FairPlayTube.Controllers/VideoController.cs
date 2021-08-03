@@ -43,6 +43,20 @@ namespace FairPlayTube.Controllers
         }
 
         /// <summary>
+        /// Allows to delete a video
+        /// </summary>
+        /// <param name="videoId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task DeleteVideo(string videoId, CancellationToken cancellationToken)
+        {
+            var userObjectId = this.CurrentUserProvider.GetObjectId();
+            await VideoService.DeleteVideoAsync(videoId, userObjectId, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets all of the public processed videos
         /// </summary>
         /// <param name="cancellationToken"></param>
