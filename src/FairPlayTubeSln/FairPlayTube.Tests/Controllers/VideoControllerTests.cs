@@ -34,7 +34,7 @@ namespace FairPlayTube.Controllers.Tests
         }
 
         [TestCleanup]
-        public async Task CleanTests()
+        public async Task TestCleanup()
         {
             using var dbContext = TestsBase.CreateDbContext();
             var testVideoEntity = CreateTestVideoEntity();
@@ -48,6 +48,11 @@ namespace FairPlayTube.Controllers.Tests
             if (testEntity != null)
             {
                 dbContext.VideoInfo.Remove(testEntity);
+                await dbContext.SaveChangesAsync();
+            }
+            foreach (var singlePerson in dbContext.Person)
+            {
+                dbContext.Person.Remove(singlePerson);
                 await dbContext.SaveChangesAsync();
             }
         }
@@ -169,9 +174,24 @@ namespace FairPlayTube.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GetPersonsTest()
+        public async Task GetPersonsTest()
         {
-            Assert.Inconclusive();
+            await base.SignIn(Role.User);
+            var dbContext = TestsBase.CreateDbContext();
+            await dbContext.Person.AddAsync(new Person() 
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name="Test Name",
+                PersonId = 1,
+                SampleFaceId = Guid.NewGuid().ToString(),
+                SampleFaceState="ok",
+                SampleFaceUrl="http://wwww.test.local",
+                SampleFaceSourceType="video"
+            });
+            await dbContext.SaveChangesAsync();
+            VideoClientService videoClientService = base.CreateVideoClientService();
+            var result = await videoClientService.GetPersonsAsync();
+            Assert.AreEqual(1, result.Length);
         }
 
         [TestMethod()]
