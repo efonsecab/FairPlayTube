@@ -1,0 +1,71 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFrameworks>net6.0-windows10.0.19041</TargetFrameworks>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<OutputType>WinExe</OutputType>
+		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<RootNamespace>FairPlayTube.MauiBlazor</RootNamespace>
+
+		<!-- Required - Enable Single Project for WinUI -->
+		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
+		<WindowsPackageType>MSIX</WindowsPackageType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiImage
+			Include="..\FairPlayTube.MauiBlazor\Resources\appicon.svg"
+			Link="Resources\appicon.svg"
+			ForegroundFile="..\FairPlayTube.MauiBlazor\Resources\appiconfg.svg"
+			IsAppIcon="true"
+			Color="#512BD4" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen
+			Include="..\FairPlayTube.MauiBlazor\Resources\appiconfg.svg"
+			Link="Resources\appiconfg.svg"
+			Color="#512BD4" />
+
+		<!-- Images -->
+		<MauiImage
+			Include="..\FairPlayTube.MauiBlazor\Resources\Images\*"
+			Link="Resources\Images\%(Filename)%(Extension)" />
+
+		<!-- Custom Fonts -->
+		<MauiFont
+			Include="..\FairPlayTube.MauiBlazor\Resources\Fonts\*"
+			Link="Resources\Fonts\%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile
+			Include="..\FairPlayTube.MauiBlazor\**\*.cs"
+			Exclude="..\FairPlayTube.MauiBlazor\bin\**;..\FairPlayTube.MauiBlazor\obj\**;..\FairPlayTube.MauiBlazor\Platforms\**"
+			Link="%(RecursiveDir)%(Filename)%(Extension)"/>
+		<MauiXaml
+			Include="..\FairPlayTube.MauiBlazor\**\*.xaml"
+			Exclude="..\FairPlayTube.MauiBlazor\bin\**;..\FairPlayTube.MauiBlazor\obj\**"
+			Link="%(RecursiveDir)%(FileName)%(Extension)" />
+		<_ThisProjectStaticWebAsset
+			Include="..\FairPlayTube.MauiBlazor\wwwroot\**"
+			Link="wwwroot\%(RecursiveDir)%(Filename)%(Extension)"
+			RelativePath="%(RecursiveDir)%(Filename)%(Extension)" />
+		<None Include="@(_ThisProjectStaticWebAsset)"/>
+		<RazorComponent
+			Include="..\FairPlayTube.MauiBlazor\**\*.razor"
+			Exclude="..\FairPlayTube.MauiBlazor\bin\**;..\FairPlayTube.MauiBlazor\obj\**"
+			Link="%(RecursiveDir)%(Filename)%(Extension)"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0-preview.6.*" />
+		<PackageReference Include="Microsoft.ProjectReunion" Version="0.8.0" />
+		<PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.8.0" />
+		<PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.0" />
+		<PackageReference Include="Microsoft.ProjectReunion.InteractiveExperiences" Version="0.8.0" NoWarn="NU1701" />
+	</ItemGroup>
+
+</Project>

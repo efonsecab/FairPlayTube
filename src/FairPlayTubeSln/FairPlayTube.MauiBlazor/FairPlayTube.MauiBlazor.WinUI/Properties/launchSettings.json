@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "FairPlayTube.MauiBlazor.WinUI": {
+      "commandName": "MsixPackage"
+    }
+  }
+}
