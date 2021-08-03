@@ -75,9 +75,22 @@ namespace FairPlayTube.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GetPublicProcessedVideosTest()
+        public async Task GetPublicProcessedVideosTest()
         {
-            Assert.Inconclusive();
+            var authorizedHttpClient = await base.SignIn(Role.User);
+            VideoClientService videoClientService = base.CreateVideoClientService();
+            var dbContext = TestsBase.CreateDbContext();
+            var videos = await dbContext.VideoInfo.ToListAsync();
+            var userEntity = await dbContext.ApplicationUser.Where(p => p.AzureAdB2cobjectId.ToString() ==
+            TestsBase.TestAzureAdB2CAuthConfiguration!.AzureAdUserObjectId).SingleAsync();
+            var testVideoEntity = CreateTestVideoEntity();
+            testVideoEntity.VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Processed;
+            testVideoEntity.VideoVisibilityId = (short)Common.Global.Enums.VideoVisibility.Public;
+            testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
+            await dbContext.VideoInfo.AddAsync(testVideoEntity);
+            await dbContext.SaveChangesAsync();
+            var result = await videoClientService.GetPublicProcessedVideosAsync();
+            Assert.AreEqual(1, result.Length);
         }
 
         [TestMethod()]
