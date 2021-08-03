@@ -82,7 +82,7 @@ namespace FairPlayTube
 
 
             services.AddTransient<CustomHttpClientHandler>();
-            services.AddTransient<CustomHttpClient>(sp=> 
+            services.AddTransient<CustomHttpClient>(sp =>
             {
                 var handler = sp.GetRequiredService<CustomHttpClientHandler>();
                 return new CustomHttpClient(handler) { Timeout = TimeSpan.FromMinutes(30) };
@@ -298,13 +298,13 @@ namespace FairPlayTube
                 Configuration.GetSection($"AzureConfiguration:{nameof(AzureBlobStorageConfiguration)}")
                 .Get<AzureBlobStorageConfiguration>();
             services.AddSingleton(azureBlobStorageConfiguration);
-            services.AddTransient<AzureBlobStorageService>(sp=> 
+            services.AddTransient<AzureBlobStorageService>(sp =>
             {
                 CustomHttpClient customHttpClient = sp.GetRequiredService<CustomHttpClient>();
                 customHttpClient.Timeout = TimeSpan.FromMinutes(60);
-                return new AzureBlobStorageService(logger:sp.GetRequiredService<ILogger<AzureBlobStorageService>>(),
-                    azureBlobStorageConfiguration:azureBlobStorageConfiguration,
-                    customHttpClient:customHttpClient);
+                return new AzureBlobStorageService(logger: sp.GetRequiredService<ILogger<AzureBlobStorageService>>(),
+                    azureBlobStorageConfiguration: azureBlobStorageConfiguration,
+                    customHttpClient: customHttpClient);
             });
         }
 
@@ -456,9 +456,30 @@ namespace FairPlayTube
                 videoIndexStatus: Common.Global.Enums.VideoIndexStatus.Processing);
             SeedDefaultVideoIndexStatuses(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
                 videoIndexStatus: Common.Global.Enums.VideoIndexStatus.Processed);
+            SeedDefaultVideoVisibility(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
+                visibility: Common.Global.Enums.VideoVisibility.Public);
+            SeedDefaultVideoVisibility(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
+                visibility: Common.Global.Enums.VideoVisibility.Private);
         }
 
-        private void SeedDefaultVideoIndexStatuses(FairplaytubeDatabaseContext fairplaytubeDatabaseContext, 
+        private void SeedDefaultVideoVisibility(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
+            Common.Global.Enums.VideoVisibility visibility)
+        {
+            var visibilityEntity = fairplaytubeDatabaseContext.VideoVisibility
+                .SingleOrDefault(p => p.Name == visibility.ToString());
+            if (visibilityEntity == null)
+            {
+                visibilityEntity = new VideoVisibility()
+                {
+                    VideoVisibilityId = (short)visibility,
+                    Name = visibility.ToString()
+                };
+                fairplaytubeDatabaseContext.Add(visibilityEntity);
+                fairplaytubeDatabaseContext.SaveChanges();
+            }
+        }
+
+        private void SeedDefaultVideoIndexStatuses(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             Common.Global.Enums.VideoIndexStatus videoIndexStatus)
         {
 

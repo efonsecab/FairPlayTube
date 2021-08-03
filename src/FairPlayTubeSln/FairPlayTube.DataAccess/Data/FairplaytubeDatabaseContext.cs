@@ -323,6 +323,11 @@ namespace FairPlayTube.DataAccess.Data
                     .HasConstraintName("FK_VideoJobApplication_VideoInfoId");
             });
 
+            modelBuilder.Entity<VideoVisibility>(entity =>
+            {
+                entity.Property(e => e.VideoVisibilityId).ValueGeneratedNever();
+            });
+
             modelBuilder.Entity<VisitorTracking>(entity =>
             {
                 entity.HasOne(d => d.ApplicationUser)
