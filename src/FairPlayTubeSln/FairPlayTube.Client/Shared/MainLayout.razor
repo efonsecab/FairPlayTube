@@ -20,7 +20,47 @@
         </div>
 
         <div class="content px-4">
-            @Body
+            <ErrorBoundary>
+                <ChildContent>
+                    @Body
+                </ChildContent>
+                <ErrorContent Context="errorContext">
+                    <Card Width="100%">
+                        <CardHeader>
+                            <strong>Unexpected Error</strong>
+                        </CardHeader>
+                        <CardBody>
+                            <div class="row" style="border:solid;">
+                                <div class="col">
+                                    Message:
+                                </div>
+                                <div class="col">
+                                    @errorContext.Message
+                                </div>
+                            </div>
+                            @if (errorContext.InnerException != null)
+                            {
+                                <div class="row" style="border:solid;">
+                                    <div class="col">
+                                        Inner Exception:
+                                    </div>
+                                    <div class="col">
+                                        @errorContext.InnerException.Message
+                                    </div>
+                                </div>
+                            }
+                            <div class="row" style="border:solid;">
+                                <div class="col">
+                                    Full Exception:
+                                </div>
+                                <div class="col">
+                                    @errorContext.ToString()
+                                </div>
+                            </div>
+                        </CardBody>
+                    </Card>
+                </ErrorContent>
+            </ErrorBoundary>
         </div>
     </div>
 </div>
