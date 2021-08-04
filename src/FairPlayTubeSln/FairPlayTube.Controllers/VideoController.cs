@@ -170,7 +170,7 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
-        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        [AllowAnonymous]
         public async Task<VideoInfoModel> GetVideo(string videoId, CancellationToken cancellationToken)
         {
             return await this.VideoService.GetvideoAsync(videoId).Select(

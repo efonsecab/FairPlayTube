@@ -1,0 +1,13 @@
+﻿<Loading IsLoading="IsLoading"></Loading>
+
+@if (this.VideoModel != null)
+{
+    <div class="container">
+        <div class="mb-3">
+            <h1>
+                @this.VideoModel.Name
+            </h1>
+        </div>
+        <FairPlayTube.Components.Videos.Video AllowEdit="false" VideoModel="this.VideoModel"></FairPlayTube.Components.Videos.Video>
+    </div>
+}
