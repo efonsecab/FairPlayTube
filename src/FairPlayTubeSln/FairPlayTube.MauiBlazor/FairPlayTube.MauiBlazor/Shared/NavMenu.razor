@@ -7,24 +7,22 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+        <li class="nav-item px-3 navicon">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
+                <i class="bi bi-house-door-fill navicon"></i>
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
+        @if (UserState.UserContext.IsLoggedOn)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyVideos" data-bs-toggle="tooltip" data-bs-placement="top" title="My Videos">
+                    <i class="bi bi-play-btn-fill navicon"></i>
+                </NavLink>
+            </li>
+        }
     </ul>
 </div>
 
 @code {
-    
+
 }

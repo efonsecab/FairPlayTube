@@ -191,3 +191,7 @@ app {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.navicon {
+    font-size: 3em;
+}

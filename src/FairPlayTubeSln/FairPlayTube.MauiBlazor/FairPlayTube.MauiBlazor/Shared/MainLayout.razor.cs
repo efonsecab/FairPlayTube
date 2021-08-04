@@ -1,4 +1,5 @@
 ﻿using FairPlayTube.MauiBlazor.Features.LogOn;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace FairPlayTube.MauiBlazor.Shared
 {
     public partial class MainLayout
     {
+        [Inject]
+        private NavigationManager NavigationManager {get;set;}
         private async Task OnLoginClicked()
         {
             AuthenticationResult authResult = null;
@@ -37,6 +40,7 @@ namespace FairPlayTube.MauiBlazor.Shared
                     AccessToken = authResult.AccessToken,
                     IsLoggedOn = true
                 };
+                NavigationManager.NavigateTo("/", true);
                 DisplayBasicTokenInfo(authResult);
                 UpdateSignInState(true);
             }

@@ -2,10 +2,6 @@
 
 <h1>FairPlayTube! The MAUI Blazor Version!</h1>
 
-@if (UserState.UserContext.IsLoggedOn)
-{
-    <button @onclick="GetMyVideos">GetMyVideos</button>
-}
 
 <FairPlayTube.Components.Bootstrap.Loading IsLoading="IsLoading"></FairPlayTube.Components.Bootstrap.Loading>
 <FairPlayTube.Components.Videos.VideoList AllVideos="AllVideos" AllowEdit="false"></FairPlayTube.Components.Videos.VideoList>
@@ -23,7 +19,7 @@
         try
         {
             IsLoading = true;
-            //this.AllVideos = await this.VideoClientService.GetPublicProcessedVideosAsync();
+            this.AllVideos = await this.VideoClientService.GetPublicProcessedVideosAsync();
         }
         catch (Exception ex)
         {

@@ -58,9 +58,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Controllers", "FairPlayTube.Controllers\FairPlayTube.Controllers.csproj", "{6041E6CB-CADD-408E-A32E-887C815BFEB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayTube.MauiBlazor", "FairPlayTube.MauiBlazor\FairPlayTube.MauiBlazor\FairPlayTube.MauiBlazor.csproj", "{C540B431-79EF-4E51-A72B-515D1DA8F762}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.MauiBlazor", "FairPlayTube.MauiBlazor\FairPlayTube.MauiBlazor\FairPlayTube.MauiBlazor.csproj", "{C540B431-79EF-4E51-A72B-515D1DA8F762}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayTube.MauiBlazor.WinUI", "FairPlayTube.MauiBlazor\FairPlayTube.MauiBlazor.WinUI\FairPlayTube.MauiBlazor.WinUI.csproj", "{DCF52F5F-CC05-4CE9-BEA8-500E9E612BA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.MauiBlazor.WinUI", "FairPlayTube.MauiBlazor\FairPlayTube.MauiBlazor.WinUI\FairPlayTube.MauiBlazor.WinUI.csproj", "{DCF52F5F-CC05-4CE9-BEA8-500E9E612BA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
