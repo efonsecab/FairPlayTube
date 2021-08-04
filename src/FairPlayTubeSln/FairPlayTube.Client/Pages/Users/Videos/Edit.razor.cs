@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace FairPlayTube.Client.Pages.Users.Videos
 {
-    [Route(Common.Global.Constants.UserPagesRoutes.Details)]
+    [Route(Common.Global.Constants.UserPagesRoutes.Edit)]
     [Authorize(Roles = Common.Global.Constants.Roles.User)]
-    public partial class Details
+    public partial class Edit
     {
         [Parameter]
         public string VideoId { get; set; }
