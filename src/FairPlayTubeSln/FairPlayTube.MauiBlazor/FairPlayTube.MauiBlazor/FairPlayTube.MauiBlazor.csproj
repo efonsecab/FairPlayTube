@@ -35,6 +35,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0-preview.6.*" />
+		<PackageReference Include="Microsoft.Identity.Client" Version="4.35.1" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,5 +1,10 @@
-﻿using Microsoft.Maui.Controls;
+﻿using FairPlayTube.MauiBlazor.Features.LogOn;
+using Microsoft.Identity.Client;
+using Microsoft.Maui.Controls;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FairPlayTube.MauiBlazor
 {
@@ -8,6 +13,7 @@ namespace FairPlayTube.MauiBlazor
         public MainPage()
         {
             InitializeComponent();
+
         }
     }
 }

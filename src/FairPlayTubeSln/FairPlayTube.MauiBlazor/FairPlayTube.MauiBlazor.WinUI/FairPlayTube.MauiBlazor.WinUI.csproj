@@ -38,6 +38,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0-preview.6.*" />
+		<PackageReference Include="Microsoft.Identity.Client" Version="4.27.1" />
 		<PackageReference Include="Microsoft.ProjectReunion" Version="0.8.0" />
 		<PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.8.0" />
 		<PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.0" />

@@ -4,8 +4,7 @@
              xmlns:local="clr-namespace:FairPlayTube.MauiBlazor"
              x:Class="FairPlayTube.MauiBlazor.MainPage"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
-
-    <b:BlazorWebView HostPage="wwwroot/index.html">
+    <b:BlazorWebView HostPage="wwwroot/index.html" Grid.Row="1" Grid.Column="0">
         <b:BlazorWebView.RootComponents>
             <b:RootComponent Selector="app" ComponentType="{x:Type local:Main}" />
         </b:BlazorWebView.RootComponents>
