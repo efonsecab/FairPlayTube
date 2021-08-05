@@ -2,8 +2,10 @@
 
 @if (this.VideoModel != null)
 {
+    <MetaTag TagName="og:url" TagValue="@this.NavigationManager.Uri"></MetaTag>
     <MetaTag TagName="og:type" TagValue="video"></MetaTag>
     <MetaTag TagName="og:title" TagValue="@this.VideoModel.Name"></MetaTag>
+    <MetaTag TagName="og:image" TagValue="@this.VideoModel.ThumbnailUrl"></MetaTag>
     <MetaTag TagName="og:description" TagValue="@this.VideoModel.Description"></MetaTag>
     <MetaTag TagName="og:video" TagValue="@this.NavigationManager.Uri"></MetaTag>
     <MetaTag TagName="og:video:url" TagValue="@this.NavigationManager.Uri"></MetaTag>
