@@ -19,7 +19,7 @@
         try
         {
             IsLoading = true;
-            //this.AllVideos = await this.VideoClientService.GetPublicProcessedVideosAsync();
+            this.AllVideos = await this.VideoClientService.GetPublicProcessedVideosAsync();
         }
         catch (Exception ex)
         {
