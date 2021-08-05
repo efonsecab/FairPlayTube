@@ -2,6 +2,17 @@
 
 @if (this.VideoModel != null)
 {
+    <MetaTag TagName="og:type" TagValue="video"></MetaTag>
+    <MetaTag TagName="og:title" TagValue="@this.VideoModel.Name"></MetaTag>
+    <MetaTag TagName="og:description" TagValue="@this.VideoModel.Description"></MetaTag>
+    <MetaTag TagName="og:video" TagValue="@this.NavigationManager.Uri"></MetaTag>
+    <MetaTag TagName="og:video:url" TagValue="@this.NavigationManager.Uri"></MetaTag>
+    <MetaTag TagName="og:video:secure_url" TagValue="@this.NavigationManager.Uri"></MetaTag>
+    <MetaTag TagName="og:video:type" TagValue="video/mp4"></MetaTag>
+    <MetaTag TagName="og:video:width" TagValue="300"></MetaTag>
+    <MetaTag TagName="og:video:height" TagValue="300"></MetaTag>
+    <MetaTag TagName="og:video:image" TagValue="@this.VideoModel.ThumbnailUrl"></MetaTag>
+
     <div class="container">
         <div class="mb-3">
             <h1>

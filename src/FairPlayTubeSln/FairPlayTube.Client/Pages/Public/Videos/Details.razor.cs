@@ -18,6 +18,8 @@ namespace FairPlayTube.Client.Pages.Public.Videos
         private ToastifyService ToastifyService { get; set; }
         [Inject]
         private VideoClientService VideoClientService { get; set; }
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
         private VideoInfoModel VideoModel { get; set; }
         private bool IsLoading { get; set; }
 
