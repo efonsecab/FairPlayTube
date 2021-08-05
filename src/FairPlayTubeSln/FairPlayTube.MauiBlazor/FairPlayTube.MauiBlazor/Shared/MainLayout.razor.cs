@@ -38,7 +38,8 @@ namespace FairPlayTube.MauiBlazor.Shared
                 UserState.UserContext = new UserContext()
                 {
                     AccessToken = authResult.AccessToken,
-                    IsLoggedOn = true
+                    IsLoggedOn = true,
+                    UserIdentifier = authResult.UniqueId
                 };
                 NavigationManager.NavigateTo("/", true);
                 DisplayBasicTokenInfo(authResult);

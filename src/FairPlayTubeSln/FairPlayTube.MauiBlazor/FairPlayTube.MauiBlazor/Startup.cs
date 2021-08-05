@@ -1,6 +1,8 @@
 ﻿using FairPlayTube.ClientServices.Extensions;
+using FairPlayTube.MauiBlazor.Authentication;
 using FairPlayTube.MauiBlazor.Data;
 using FairPlayTube.MauiBlazor.Features.LogOn;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebView.Maui;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
@@ -31,6 +33,9 @@ namespace FairPlayTube.MauiBlazor
                 })
                 .ConfigureServices(services =>
                 {
+                    services.AddOptions();
+                    services.AddAuthorizationCore();
+                    services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
                     services.AddBlazorWebView();
                     services.AddSingleton<WeatherForecastService>();
 
