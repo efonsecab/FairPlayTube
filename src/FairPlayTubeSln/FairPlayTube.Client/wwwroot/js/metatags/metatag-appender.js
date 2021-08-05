@@ -1,6 +1,7 @@
 ﻿function appendMetaTag(tagName, tagValue) {
     var element = document.createElement("meta");
-    element.setAttribute(tagName, tagValue);
+    element.setAttribute("property", tagName);
+    element.setAttribute("content", tagValue);
     document.head.appendChild(element);
 
 }
