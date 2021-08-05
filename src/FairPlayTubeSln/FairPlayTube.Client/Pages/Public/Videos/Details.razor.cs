@@ -23,6 +23,13 @@ namespace FairPlayTube.Client.Pages.Public.Videos
         private VideoInfoModel VideoModel { get; set; }
         private bool IsLoading { get; set; }
 
+        private bool shouldRender = false;
+
+        protected override bool ShouldRender()
+        {
+            return this.shouldRender;
+        }
+
         protected override async Task OnInitializedAsync()
         {
             try
@@ -37,6 +44,7 @@ namespace FairPlayTube.Client.Pages.Public.Videos
             finally
             {
                 IsLoading = false;
+                shouldRender = true;
             }
         }
     }
