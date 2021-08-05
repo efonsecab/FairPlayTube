@@ -2,18 +2,16 @@
 
 @if (this.VideoModel != null)
 {
-    <MetaTag TagName="og:url" TagValue="@this.NavigationManager.Uri"></MetaTag>
-    <MetaTag TagName="og:type" TagValue="website"></MetaTag>
-    <MetaTag TagName="og:title" TagValue="@this.VideoModel.Name"></MetaTag>
-    <MetaTag TagName="og:image" TagValue="@this.VideoModel.ThumbnailUrl"></MetaTag>
-    <MetaTag TagName="og:description" TagValue="@this.VideoModel.Description"></MetaTag>
-    <MetaTag TagName="og:video" TagValue="@this.NavigationManager.Uri"></MetaTag>
-    <MetaTag TagName="og:video:url" TagValue="@this.NavigationManager.Uri"></MetaTag>
-    <MetaTag TagName="og:video:secure_url" TagValue="@this.NavigationManager.Uri"></MetaTag>
-    <MetaTag TagName="og:video:type" TagValue="video/mp4"></MetaTag>
-    <MetaTag TagName="og:video:width" TagValue="300"></MetaTag>
-    <MetaTag TagName="og:video:height" TagValue="300"></MetaTag>
-    <MetaTag TagName="og:video:image" TagValue="@this.VideoModel.ThumbnailUrl"></MetaTag>
+    <Meta property="og:url" content="@this.NavigationManager.Uri" />
+    <Meta property="og:type" content="website" />
+    <Meta property="og:title" content="@this.VideoModel.Name"/>
+    <Meta property="og:image" content="@this.VideoModel.ThumbnailUrl"/>
+    <Meta property="og:description" content="@this.VideoModel.Description"/>
+    <Meta property="og:video" content="@this.NavigationManager.Uri"/>
+    <Meta property="og:video:secure_url" content="@this.NavigationManager.Uri"/>
+    <Meta property="og:video:type" content="video/mp4"/>
+    <Meta property="og:video:width" content="300"/>
+    <Meta property="og:video:height" content="300"/>
 
     <div class="container">
         <div class="mb-3">
