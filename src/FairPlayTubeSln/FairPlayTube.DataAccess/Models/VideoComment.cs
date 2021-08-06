@@ -18,6 +18,14 @@ namespace FairPlayTube.DataAccess.Models
         [Required]
         [StringLength(500)]
         public string Comment { get; set; }
+        public DateTimeOffset RowCreationDateTime { get; set; }
+        [StringLength(256)]
+        public string RowCreationUser { get; set; }
+        [StringLength(250)]
+        public string SourceApplication { get; set; }
+        [Column("OriginatorIPAddress")]
+        [StringLength(100)]
+        public string OriginatorIpaddress { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("VideoComment")]
