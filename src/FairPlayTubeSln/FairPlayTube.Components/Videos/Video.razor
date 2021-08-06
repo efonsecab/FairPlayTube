@@ -34,10 +34,17 @@
                     <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="top"
                             title="Watch Video"
-                            @onclick="ViewDetails"
-                            >
+                            @onclick="ViewDetails">
                         <i class="bi bi-display-fill"></i>
                     </button>
+                }
+                @if (ShowTwitterShareButton)
+                {
+                    <div style="vertical-align:bottom; display:inline;">
+                        <TwitterShareButton Text="@this.VideoModel.Name" Via="FTube2021"
+                                            HashTags="FairPlayTube,OpeSource,GitHub"
+                                            DisableClientScriptAutoInjection="true" Size="Large"></TwitterShareButton>
+                    </div>
                 }
             </div>
         </CardHeader>
@@ -135,8 +142,8 @@
                 </div>
                 <div class="modal-body">
                     @if (
-      this.VideoModel.UserGlobalMonetization != null &&
-      this.VideoModel.UserGlobalMonetization.MonetizationItems.Count > 0)
+this.VideoModel.UserGlobalMonetization != null &&
+this.VideoModel.UserGlobalMonetization.MonetizationItems.Count > 0)
                     {
                         <ul>
                             @foreach (var singleMonetizationItem in this.VideoModel.UserGlobalMonetization.MonetizationItems)
