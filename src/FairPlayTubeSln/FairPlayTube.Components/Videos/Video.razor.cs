@@ -17,6 +17,8 @@ namespace FairPlayTube.Components.Videos
         public bool AllowEdit { get; set; } = false;
         [Parameter]
         public bool ShowDetailsLink { get; set; } = false;
+        [Parameter]
+        public bool ShowTwitterShareButton { get; set; } = false;
         [Inject]
         private VideoClientService VideoClientService { get; set; }
         [Inject]
