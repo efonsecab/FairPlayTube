@@ -22,6 +22,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
@@ -32,6 +33,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -80,7 +82,11 @@ namespace FairPlayTube
 
 
             services.AddTransient<CustomHttpClientHandler>();
-            services.AddTransient<CustomHttpClient>();
+            services.AddTransient<CustomHttpClient>(sp =>
+            {
+                var handler = sp.GetRequiredService<CustomHttpClientHandler>();
+                return new CustomHttpClient(handler) { Timeout = TimeSpan.FromMinutes(30) };
+            });
             ConfigureAzureTextAnalytics(services);
             ConfigureAzureContentModerator(services);
             ConfigureAzureVideoIndexer(services);
@@ -292,7 +298,14 @@ namespace FairPlayTube
                 Configuration.GetSection($"AzureConfiguration:{nameof(AzureBlobStorageConfiguration)}")
                 .Get<AzureBlobStorageConfiguration>();
             services.AddSingleton(azureBlobStorageConfiguration);
-            services.AddTransient<AzureBlobStorageService>();
+            services.AddTransient<AzureBlobStorageService>(sp =>
+            {
+                CustomHttpClient customHttpClient = sp.GetRequiredService<CustomHttpClient>();
+                customHttpClient.Timeout = TimeSpan.FromMinutes(60);
+                return new AzureBlobStorageService(logger: sp.GetRequiredService<ILogger<AzureBlobStorageService>>(),
+                    azureBlobStorageConfiguration: azureBlobStorageConfiguration,
+                    customHttpClient: customHttpClient);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -437,6 +450,51 @@ namespace FairPlayTube
             SeedDefaultRoles(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
                 roleId: 2, roleName: Common.Global.Constants.Roles.Admin);
             fairplaytubeDatabaseContext.SaveChanges();
+            SeedDefaultVideoIndexStatuses(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
+                videoIndexStatus: Common.Global.Enums.VideoIndexStatus.Pending);
+            SeedDefaultVideoIndexStatuses(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
+                videoIndexStatus: Common.Global.Enums.VideoIndexStatus.Processing);
+            SeedDefaultVideoIndexStatuses(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
+                videoIndexStatus: Common.Global.Enums.VideoIndexStatus.Processed);
+            SeedDefaultVideoVisibility(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
+                visibility: Common.Global.Enums.VideoVisibility.Public);
+            SeedDefaultVideoVisibility(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
+                visibility: Common.Global.Enums.VideoVisibility.Private);
+        }
+
+        private void SeedDefaultVideoVisibility(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
+            Common.Global.Enums.VideoVisibility visibility)
+        {
+            var visibilityEntity = fairplaytubeDatabaseContext.VideoVisibility
+                .SingleOrDefault(p => p.Name == visibility.ToString());
+            if (visibilityEntity == null)
+            {
+                visibilityEntity = new VideoVisibility()
+                {
+                    VideoVisibilityId = (short)visibility,
+                    Name = visibility.ToString()
+                };
+                fairplaytubeDatabaseContext.Add(visibilityEntity);
+                fairplaytubeDatabaseContext.SaveChanges();
+            }
+        }
+
+        private void SeedDefaultVideoIndexStatuses(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
+            Common.Global.Enums.VideoIndexStatus videoIndexStatus)
+        {
+
+            var videoIndexStatusEntity = fairplaytubeDatabaseContext.VideoIndexStatus
+                .SingleOrDefault(p => p.Name == videoIndexStatus.ToString());
+            if (videoIndexStatusEntity == null)
+            {
+                videoIndexStatusEntity = new VideoIndexStatus()
+                {
+                    Name = videoIndexStatus.ToString(),
+                    VideoIndexStatusId = (short)videoIndexStatus
+                };
+                fairplaytubeDatabaseContext.VideoIndexStatus.Add(videoIndexStatusEntity);
+                fairplaytubeDatabaseContext.SaveChanges();
+            }
         }
 
         private void SeedDefaultRoles(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,

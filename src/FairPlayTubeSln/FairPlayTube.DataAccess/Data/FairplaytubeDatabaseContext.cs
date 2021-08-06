@@ -258,6 +258,11 @@ namespace FairPlayTube.DataAccess.Data
                     .HasConstraintName("FK_VideoIndexKeyword_VideoInfo");
             });
 
+            modelBuilder.Entity<VideoIndexStatus>(entity =>
+            {
+                entity.Property(e => e.VideoIndexStatusId).ValueGeneratedNever();
+            });
+
             modelBuilder.Entity<VideoIndexingTransaction>(entity =>
             {
                 entity.HasOne(d => d.VideoInfo)
@@ -270,6 +275,14 @@ namespace FairPlayTube.DataAccess.Data
             modelBuilder.Entity<VideoInfo>(entity =>
             {
                 entity.Property(e => e.ApplicationUserId).HasComment("Video Owner Id");
+
+                entity.Property(e => e.OriginatorIpaddress).HasDefaultValueSql("'unknown'");
+
+                entity.Property(e => e.RowCreationDateTime).HasDefaultValueSql("getutcdate()");
+
+                entity.Property(e => e.RowCreationUser).HasDefaultValueSql("'unknown'");
+
+                entity.Property(e => e.SourceApplication).HasDefaultValueSql("'unknown'");
 
                 entity.Property(e => e.VideoVisibilityId).HasDefaultValueSql("1");
 
@@ -316,6 +329,11 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.VideoInfoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VideoJobApplication_VideoInfoId");
+            });
+
+            modelBuilder.Entity<VideoVisibility>(entity =>
+            {
+                entity.Property(e => e.VideoVisibilityId).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<VisitorTracking>(entity =>

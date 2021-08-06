@@ -17,8 +17,12 @@
     [ExternalVideoSourceUrl] NVARCHAR(500),
     [VideoLanguageCode] NVARCHAR(10) NULL, 
     [VideoVisibilityId] SMALLINT NOT NULL DEFAULT 1, 
-    [ThumbnailUrl] NVARCHAR(500) NULL, 
-    CONSTRAINT [FK_VideoInfo_ApplicationUser] FOREIGN KEY ([ApplicationUserId]) REFERENCES [ApplicationUser]([ApplicationUserId]), 
+    [ThumbnailUrl] NVARCHAR(500) NULL,
+    [RowCreationDateTime] DATETIMEOFFSET NOT NULL DEFAULT GETUTCDATE(), 
+    [RowCreationUser] NVARCHAR(256) NOT NULL DEFAULT 'Unknown',
+    [SourceApplication] NVARCHAR(250) NOT NULL DEFAULT 'Unknown', 
+    [OriginatorIPAddress] NVARCHAR(100) NOT NULL
+    CONSTRAINT [FK_VideoInfo_ApplicationUser] FOREIGN KEY ([ApplicationUserId]) REFERENCES [ApplicationUser]([ApplicationUserId]) DEFAULT 'Unknown', 
     CONSTRAINT [FK_VideoInfo_VideoIndexStatus] FOREIGN KEY ([VideoIndexStatusId]) REFERENCES [VideoIndexStatus]([VideoIndexStatusId]), 
     CONSTRAINT [FK_VideoInfo_VideoVisibility] FOREIGN KEY ([VideoVisibilityId]) REFERENCES [VideoVisibility]([VideoVisibilityId])
 )

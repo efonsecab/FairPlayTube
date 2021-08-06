@@ -35,6 +35,7 @@ namespace FairPlayTube.Services.BackgroundServices
                 var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
                 var videoIndexerBaseCallbackUrl = config["VideoIndexerCallbackUrl"];
                 var videoIndexerCallbackUrl = $"{videoIndexerBaseCallbackUrl}/api/AzureVideoIndexer/OnVideoIndexed";
+                var indexingPreset = "Advanced"; //TODO: Temporaily set to show capabilities, later this needs to has business logic
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     //Check https://stackoverflow.com/questions/48368634/how-should-i-inject-a-dbcontext-instance-into-an-ihostedservice
@@ -58,6 +59,7 @@ namespace FairPlayTube.Services.BackgroundServices
                                 personModelId: Guid.Parse(defaultPersonModel.id), privacy: AzureVideoIndexerService.VideoPrivacy.Public,
                                 callBackUri: new Uri(videoIndexerCallbackUrl),
                                 language: singleVideo.VideoLanguageCode,
+                                indexingPreset: indexingPreset,
                                 cancellationToken: stoppingToken);
                             singleVideo.VideoId = indexVideoResponse.id;
                             singleVideo.IndexedVideoUrl = $"https://www.videoindexer.ai/embed/player/{singleVideo.AccountId}" +
@@ -120,9 +122,6 @@ namespace FairPlayTube.Services.BackgroundServices
                     {
                         var indexCompleteVideosIds = indexCompleteVideos.Select(p => p.id).ToArray();
 
-                        await videoService.UpdateVideoIndexStatusAsync(indexCompleteVideosIds,
-                            Common.Global.Enums.VideoIndexStatus.Processed,
-                            cancellationToken: stoppingToken);
                         await videoService.AddVideoIndexTransactionsAsync(indexCompleteVideosIds, stoppingToken);
 
                         foreach (var singleIndexedVideo in indexCompleteVideos)
@@ -133,6 +132,9 @@ namespace FairPlayTube.Services.BackgroundServices
                         {
                             await videoService.SaveVideoThumbnailAsync(singleIndexedVideo.id, singleIndexedVideo.thumbnailId, stoppingToken);
                         }
+                        await videoService.UpdateVideoIndexStatusAsync(indexCompleteVideosIds,
+                            Common.Global.Enums.VideoIndexStatus.Processed,
+                            cancellationToken: stoppingToken);
                     }
                 }
             }

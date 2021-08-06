@@ -60,6 +60,17 @@ namespace FairPlayTube.DataAccess.Models
         public short VideoVisibilityId { get; set; }
         [StringLength(500)]
         public string ThumbnailUrl { get; set; }
+        public DateTimeOffset RowCreationDateTime { get; set; }
+        [Required]
+        [StringLength(256)]
+        public string RowCreationUser { get; set; }
+        [Required]
+        [StringLength(250)]
+        public string SourceApplication { get; set; }
+        [Required]
+        [Column("OriginatorIPAddress")]
+        [StringLength(100)]
+        public string OriginatorIpaddress { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("VideoInfo")]
