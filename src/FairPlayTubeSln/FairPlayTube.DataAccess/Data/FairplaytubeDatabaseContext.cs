@@ -276,6 +276,14 @@ namespace FairPlayTube.DataAccess.Data
             {
                 entity.Property(e => e.ApplicationUserId).HasComment("Video Owner Id");
 
+                entity.Property(e => e.OriginatorIpaddress).HasDefaultValueSql("'unknown'");
+
+                entity.Property(e => e.RowCreationDateTime).HasDefaultValueSql("getutcdate()");
+
+                entity.Property(e => e.RowCreationUser).HasDefaultValueSql("'unknown'");
+
+                entity.Property(e => e.SourceApplication).HasDefaultValueSql("'unknown'");
+
                 entity.Property(e => e.VideoVisibilityId).HasDefaultValueSql("1");
 
                 entity.HasOne(d => d.ApplicationUser)
