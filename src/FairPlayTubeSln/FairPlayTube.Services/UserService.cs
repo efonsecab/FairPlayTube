@@ -18,17 +18,17 @@ namespace FairPlayTube.Services
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
         }
 
-        public async Task AddUserFollowerAsync(UserFollowerModel userFollowerModel, CancellationToken cancellationToken)
+        public async Task AddUserFollowerAsync(string followerUserObjectId, string followedUserObjectId, CancellationToken cancellationToken)
         {
             var followerUserEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
-                .SingleOrDefaultAsync(p => p.ApplicationUserId == userFollowerModel.FollowerApplicationUserId);
+                .SingleOrDefaultAsync(p => p.AzureAdB2cobjectId.ToString() == followerUserObjectId);
             if (followerUserEntity is null)
-                throw new Exception($"User {userFollowerModel.FollowerApplicationUserId} does not exist");
+                throw new Exception($"User {followerUserObjectId} does not exist");
 
             var followedUserEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
-                .SingleOrDefaultAsync(p => p.ApplicationUserId == userFollowerModel.FollowedApplicationUserId);
+                .SingleOrDefaultAsync(p => p.AzureAdB2cobjectId.ToString() == followedUserObjectId);
             if (followedUserEntity is null)
-                throw new Exception($"User {userFollowerModel.FollowedApplicationUserId} does not exist");
+                throw new Exception($"User {followedUserObjectId} does not exist");
 
             await this.FairplaytubeDatabaseContext.UserFollower.AddAsync(new DataAccess.Models.UserFollower() 
             {

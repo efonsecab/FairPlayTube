@@ -248,6 +248,7 @@ namespace FairPlayTube
             services.AddTransient<MessageService>();
             services.AddTransient<ContentModerationService>();
             services.AddTransient<TextAnalysisServices>();
+            services.AddTransient<UserService>();
         }
 
         private void ConfigureAzureContentModerator(IServiceCollection services)
