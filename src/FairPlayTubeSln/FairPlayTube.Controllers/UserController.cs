@@ -1,7 +1,9 @@
-﻿using FairPlayTube.Common.Global.Enums;
+﻿using FairPlayTube.Common.Global;
+using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.Models.Invites;
+using FairPlayTube.Models.UserAudience;
 using FairPlayTube.Models.UserMessage;
 using FairPlayTube.Models.UserProfile;
 using FairPlayTube.Notifications.Hubs;
@@ -30,6 +32,8 @@ namespace FairPlayTube.Controllers
         private ICurrentUserProvider CurrentUserProvider { get; }
         private EmailService EmailService { get; }
         private MessageService MessageService { get; }
+        private UserService UserService { get; }
+
         /// <summary>
         /// Initializes <see cref="UserController"/>
         /// </summary>
@@ -37,14 +41,16 @@ namespace FairPlayTube.Controllers
         /// <param name="currentUserProvider"></param>
         /// <param name="emailService"></param>
         /// <param name="messageService"></param>
+        /// <param name="userService"></param>
         public UserController(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             ICurrentUserProvider currentUserProvider, EmailService emailService,
-            MessageService messageService)
+            MessageService messageService, UserService userService)
         {
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
             this.CurrentUserProvider = currentUserProvider;
             this.EmailService = emailService;
             this.MessageService = messageService;
+            this.UserService = userService;
         }
 
         /// <summary>
@@ -115,6 +121,23 @@ namespace FairPlayTube.Controllers
         {
             var senderObjectId = this.CurrentUserProvider.GetObjectId();
             await this.MessageService.SendMessageAsync(model, senderObjectId, cancellationToken);
+        }
+    
+ 
+        /// <summary>
+        /// Adds a new user followed by the logged in user
+        /// </summary>
+        /// <param name="followedApplicationUserId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        [Authorize(Roles = Constants.Roles.User)]
+        public async Task<IActionResult> AddUserFollower(string followedApplicationUserId, CancellationToken cancellationToken)
+        {
+            var userAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
+            await this.UserService.AddUserFollowerAsync(followerUserObjectId: userAdB2CObjectId,
+                followedUserObjectId: followedApplicationUserId, cancellationToken);
+            return Ok();
         }
     }
 }

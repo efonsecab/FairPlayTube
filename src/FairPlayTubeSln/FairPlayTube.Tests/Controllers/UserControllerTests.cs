@@ -6,12 +6,39 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using FairPlayTube.ClientServices;
+using System;
+using FairPlayTube.DataAccess.Models;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace FairPlayTube.Controllers.Tests
 {
     [TestClass()]
     public class UserControllerTests : TestsBase
     {
+
+        [TestInitialize()]
+        public async Task TestInitialize()
+        {
+            await CleanData();
+        }
+
+        [ClassCleanup()]
+        public static async Task ClassCleanup()
+        {
+            await CleanData();
+        }
+
+        public static async Task CleanData()
+        {
+            var dbContext = TestsBase.CreateDbContext();
+            foreach (var singleUserFollower in dbContext.UserFollower)
+            {
+                dbContext.UserFollower.Remove(singleUserFollower);
+            }
+            await dbContext.SaveChangesAsync();
+        }
+
         [TestMethod()]
         public async Task GetMyRoleTest()
         {
@@ -36,10 +63,10 @@ namespace FairPlayTube.Controllers.Tests
         {
             await base.SignIn(Role.User);
             UserClientService userClientService = base.CreateUserClientService();
-            await userClientService.InviteUserAsync(inviteUserModel: new Models.Invites.InviteUserModel() 
+            await userClientService.InviteUserAsync(inviteUserModel: new Models.Invites.InviteUserModel()
             {
-                CustomMessage="This is a message from FairPlayTube Automated Tests",
-                ToEmailAddress="test@fairplaytube.local"
+                CustomMessage = "This is a message from FairPlayTube Automated Tests",
+                ToEmailAddress = "test@fairplaytube.local"
             });
         }
 
@@ -47,6 +74,26 @@ namespace FairPlayTube.Controllers.Tests
         public void SendMessageTest()
         {
             Assert.Inconclusive();
+        }
+
+        [TestMethod()]
+        public async Task AddUserFollowerTest()
+        {
+            var followedApplicationUserId = Guid.NewGuid();
+            var dbContext = TestsBase.CreateDbContext();
+            await dbContext.ApplicationUser.AddAsync(new ApplicationUser()
+            {
+                AzureAdB2cobjectId = followedApplicationUserId,
+                EmailAddress = "test@test.test",
+                FullName = "AUTOMATED TEST USER"
+            });
+            await dbContext.SaveChangesAsync();
+            await base.SignIn(Role.User);
+            UserClientService userClientService = base.CreateUserClientService();
+            await userClientService.AddUserFollowerAsync(followedApplicationUserId: followedApplicationUserId);
+            var followerEntity = await dbContext.UserFollower
+                .SingleOrDefaultAsync(p => p.FollowedApplicationUser.AzureAdB2cobjectId == followedApplicationUserId);
+            Assert.IsNotNull(followerEntity);
         }
     }
 }
