@@ -55,7 +55,7 @@ namespace FairPlayTube.Services
             this.TextAnalysisService = textAnalysisService;
         }
 
-        public async Task DeleteVideoAsync(string userAzureAdB2cObjectId, string videoId, CancellationToken cancellationToken)
+        public async Task<bool> DeleteVideoAsync(string userAzureAdB2cObjectId, string videoId, CancellationToken cancellationToken)
         {
             var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
                                         .Include(p => p.ApplicationUser)
@@ -63,6 +63,9 @@ namespace FairPlayTube.Services
 
             if (videoEntity == null)
                 throw new Exception($"Video: {videoId} does not exit");
+
+            if (!videoEntity.ApplicationUser.AzureAdB2cobjectId.ToString().Equals(userAzureAdB2cObjectId))
+                throw new Exception("Delete denied. You are not an owner of this video");
 
             // DELETING VIDEO KEYWORDS
             var keywordsResponse = await this.GetIndexedVideoKeywordsAsync(videoId, cancellationToken);
@@ -87,6 +90,8 @@ namespace FairPlayTube.Services
 
             // DELETING VIDEO FROM BLOB STORAGE (VIDEO)
             await this.AzureBlobStorageService.DeleteFileAsync(this.DataStorageConfiguration.ContainerName, $"{userAzureAdB2cObjectId}/{videoEntity.FileName}", cancellationToken);
+
+            return true;
         }
 
 

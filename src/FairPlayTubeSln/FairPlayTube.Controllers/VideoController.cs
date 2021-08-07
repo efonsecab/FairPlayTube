@@ -50,10 +50,14 @@ namespace FairPlayTube.Controllers
         /// <returns></returns>
         [HttpPost("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
-        public async Task DeleteVideo(string videoId, CancellationToken cancellationToken)
+        public async Task<ActionResult> DeleteVideo(string videoId, CancellationToken cancellationToken)
         {
             var userObjectId = this.CurrentUserProvider.GetObjectId();
-            await VideoService.DeleteVideoAsync(videoId, userObjectId, cancellationToken);
+            if (await VideoService.DeleteVideoAsync(videoId, userObjectId, cancellationToken))
+                return Ok();
+            else
+                throw new Exception("An error occurred trying to delete your video");
+
         }
 
         /// <summary>
