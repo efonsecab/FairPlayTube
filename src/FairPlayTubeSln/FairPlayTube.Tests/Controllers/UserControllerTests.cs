@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Models.UserMessage;
 
 namespace FairPlayTube.Controllers.Tests
 {
@@ -44,9 +45,15 @@ namespace FairPlayTube.Controllers.Tests
         }
 
         [TestMethod()]
-        public void SendMessageTest()
+        public async Task SendMessageTest()
         {
-            Assert.Inconclusive();
+            await base.SignIn(Role.User);
+            UserClientService userClientService = base.CreateUserClientService();
+            await userClientService.SendMessageAsync(new UserMessageModel()
+            {
+                Message = "PRUEBA", 
+                ToApplicationUserId = 1
+            });
         }
     }
 }

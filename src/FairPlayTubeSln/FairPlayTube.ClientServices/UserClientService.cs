@@ -23,7 +23,7 @@ namespace FairPlayTube.ClientServices
 
         public async Task SendMessageAsync(UserMessageModel userMessageModel)
         {
-            var authorizedHttpClient = this.HttpClientService.CreateAnonymousClient();
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient.PostAsJsonAsync(
                     requestUri: Constants.ApiRoutes.UserController.SendMessage,
                     value: userMessageModel
