@@ -67,5 +67,21 @@ namespace FairPlayTube.ClientServices
                     throw new Exception(response.ReasonPhrase);
             }
         }
+
+        public async Task AddUserFollowerAsync(Guid followedApplicationUserId)
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient
+                .PostAsync($"{Constants.ApiRoutes.UserController.AddUserFollower}" +
+                $"?followedApplicationUserId={followedApplicationUserId}", null);
+            if (!response.IsSuccessStatusCode)
+            {
+                ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
+                if (problemHttpResponse != null)
+                    throw new Exception(problemHttpResponse.Detail);
+                else
+                    throw new Exception(response.ReasonPhrase);
+            }
+        }
     }
 }

@@ -664,6 +664,21 @@
             System Storage Url for the Sample Face
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.UserAudience.UserFollowerModel">
+            <summary>
+            Represents a follower for a given user
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserAudience.UserFollowerModel.FollowedApplicationUserId">
+            <summary>
+            Id for the user following
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserAudience.UserFollowerModel.FollowerApplicationUserId">
+            <summary>
+            Id for the user being followed
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.UserMessage.UserMessageModel">
             <summary>
             Represents the User Message entry
