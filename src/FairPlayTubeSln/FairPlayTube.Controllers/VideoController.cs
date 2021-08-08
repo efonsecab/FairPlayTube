@@ -53,6 +53,12 @@ namespace FairPlayTube.Controllers
         public async Task<ActionResult> DeleteVideo(string videoId, CancellationToken cancellationToken)
         {
             var userObjectId = this.CurrentUserProvider.GetObjectId();
+
+            bool isVideoOwner = await VideoService.IsVideoOwnerAsync(videoId: videoId, azureAdB2cobjectId: userObjectId,
+                cancellationToken: cancellationToken);
+            if (!isVideoOwner)
+                throw new Exception($"Video: {videoId} does not exit");
+
             if (await VideoService.DeleteVideoAsync(videoId, userObjectId, cancellationToken))
                 return Ok();
             else

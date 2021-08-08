@@ -62,13 +62,10 @@ namespace FairPlayTube.Services
                                         .SingleOrDefaultAsync(p => p.VideoId == videoId);
 
             if (videoEntity == null)
-                throw new Exception($"Video: {videoId} does not exit");
-
-            if (!videoEntity.ApplicationUser.AzureAdB2cobjectId.ToString().Equals(userAzureAdB2cObjectId))
                 throw new Exception("Delete denied. You are not an owner of this video");
 
             // DELETING VIDEO KEYWORDS
-            var keywordsResponse = await this.GetIndexedVideoKeywordsAsync(videoId, cancellationToken);
+            
             var existentKeywords = this.FairplaytubeDatabaseContext.VideoIndexKeyword
                                        .Where(p => p.VideoInfoId == videoEntity.VideoInfoId);
 
