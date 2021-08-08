@@ -16,13 +16,23 @@
                 <i class="bi bi-house-door-fill"></i>
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.Keywords" data-bs-toggle="tooltip" data-bs-placement="top" title="Search">
-                <i class="bi bi-tags-fill"></i>
-            </NavLink>
-        </li>
         <AuthorizeView Roles="@Common.Global.Constants.Roles.User">
             <Authorized>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.UploadVideo" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Video">
+                        <i class="bi bi-cloud-upload-fill"></i>
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyPendingVideosStatus" data-bs-toggle="tooltip" data-bs-placement="top" title="My Videos Queue">
+                        <i class="bi bi-list-check"></i>
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyVideos" data-bs-toggle="tooltip" data-bs-placement="top" title="My Videos">
+                        <i class="bi bi-play-btn-fill"></i>
+                    </NavLink>
+                </li>
                 <li class="nav-item px-3">
                     <NavLink class="nav-link" href="@Common.Global.Constants.RootPagesRoutes.Persons" data-bs-toggle="tooltip" data-bs-placement="top" title="Persons in videos">
                         <i class="bi bi-person-circle"></i>
@@ -34,23 +44,8 @@
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyVideos" data-bs-toggle="tooltip" data-bs-placement="top" title="My Videos">
-                        <i class="bi bi-play-btn-fill"></i>
-                    </NavLink>
-                </li>
-                <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyPendingVideosStatus" data-bs-toggle="tooltip" data-bs-placement="top" title="My Videos Queue">
-                        <i class="bi bi-list-check"></i>
-                    </NavLink>
-                </li>
-                <li class="nav-item px-3">
                     <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyFunds" data-bs-toggle="tooltip" data-bs-placement="top" title="My Funds">
                         <i class="bi bi-wallet-fill"></i>
-                    </NavLink>
-                </li>
-                <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.UploadVideo" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Video">
-                        <i class="bi bi-cloud-upload-fill"></i>
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
@@ -60,6 +55,16 @@
                 </li>
             </Authorized>
         </AuthorizeView>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.Keywords" data-bs-toggle="tooltip" data-bs-placement="top" title="Search">
+                <i class="bi bi-tags-fill"></i>
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="/Visits" data-bs-toggle="tooltip" data-bs-placement="top" title="Visits">
+                <i class="bi bi-globe"></i>
+            </NavLink>
+        </li>
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="https://github.com/efonsecab/FairPlayTube/" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="GitHub">
                 <i class="bi bi-github"></i>

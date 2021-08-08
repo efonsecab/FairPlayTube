@@ -50,6 +50,11 @@
             public const string User = "User";
         }
 
+        public class PublicVideosPages
+        {
+            public const string Details = "/Public/Videos/Details/{VideoId}";
+        }
+
         public class UserPagesRoutes
         {
             public const string UploadVideo = "/Users/Videos/Upload";
@@ -58,7 +63,7 @@
             public const string ProfileMonetization = "/Users/Profile/Monetization";
             public const string List = "/Users/List";
             public const string MyFunds = "/Users/MyFunds";
-            public const string Details = "/Users/Videos/Details/{VideoId}";
+            public const string Edit = "/Users/Videos/Edit/{VideoId}";
             public const string MyPendingVideosStatus = "/Users/Videos/MyPendingVideosStatus";
         }
 
@@ -92,6 +97,7 @@
                 public const string GetMyRole = "api/User/GetMyRole";
                 public const string ListUsers = "api/User/ListUsers";
                 public const string InviteUser = "api/User/InviteUser";
+                public const string AddUserFollower = "API/uSER/AddUserFollower";
             }
 
             public class UserProfileController

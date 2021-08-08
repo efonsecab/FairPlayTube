@@ -34,6 +34,11 @@
             Trace Id
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.CustomHttpResponse.ProblemHttpResponse.Errors">
+            <summary>
+            Errors
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.FileUpload.UploadResult">
             <summary>
             File upload result
@@ -659,6 +664,21 @@
             System Storage Url for the Sample Face
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.UserAudience.UserFollowerModel">
+            <summary>
+            Represents a follower for a given user
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserAudience.UserFollowerModel.FollowedApplicationUserId">
+            <summary>
+            Id for the user following
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserAudience.UserFollowerModel.FollowerApplicationUserId">
+            <summary>
+            Id for the user being followed
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.UserMessage.UserMessageModel">
             <summary>
             Represents the User Message entry
@@ -967,6 +987,16 @@
         <member name="P:FairPlayTube.Models.VisitorTracking.VisitorTrackingModel.UserAzureAdB2cObjectId">
             <summary>
             Logged In user Azure Ad B2C Object Id
+            </summary>
+        </member>
+        <member name="T:Errors">
+            <summary>
+            Errors
+            </summary>
+        </member>
+        <member name="P:Errors._">
+            <summary>
+            Error messages
             </summary>
         </member>
     </members>

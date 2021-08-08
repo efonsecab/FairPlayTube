@@ -94,8 +94,8 @@ namespace FairPlayTube.ClientServices
 
         public async Task<VideoInfoModel> GetVideoAsync(string videoId)
         {
-            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
-            var result = await authorizedHttpClient.GetFromJsonAsync<VideoInfoModel>(
+            var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
+            var result = await anonymousHttpClient.GetFromJsonAsync<VideoInfoModel>(
                 $"{ApiRoutes.VideoController.GetVideo}?videoId={videoId}");
             return result;
         }

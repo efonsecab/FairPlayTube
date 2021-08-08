@@ -33,10 +33,21 @@ namespace FairPlayTube.Controllers.Tests
             };
         }
 
-        [TestCleanup]
-        public async Task CleanTests()
+        [TestInitialize]
+        public async Task TestInitialize()
         {
-            using var dbContext = TestsBase.CreateDbContext();
+            await CleanTestData();
+        }
+
+        [TestCleanup]
+        public async Task TestCleanup()
+        {
+            await CleanTestData();
+        }
+
+        private static async Task CleanTestData()
+        {
+            var dbContext = TestsBase.CreateDbContext();
             var testVideoEntity = CreateTestVideoEntity();
             dbContext.Entry<VideoInfo>(testVideoEntity).State = EntityState.Detached;
             foreach (var singleVideoAccessTransaction in dbContext.VideoAccessTransaction)
@@ -48,6 +59,11 @@ namespace FairPlayTube.Controllers.Tests
             if (testEntity != null)
             {
                 dbContext.VideoInfo.Remove(testEntity);
+                await dbContext.SaveChangesAsync();
+            }
+            foreach (var singlePerson in dbContext.Person)
+            {
+                dbContext.Person.Remove(singlePerson);
                 await dbContext.SaveChangesAsync();
             }
         }
@@ -70,9 +86,22 @@ namespace FairPlayTube.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GetPublicProcessedVideosTest()
+        public async Task GetPublicProcessedVideosTest()
         {
-            Assert.Inconclusive();
+            var authorizedHttpClient = await base.SignIn(Role.User);
+            VideoClientService videoClientService = base.CreateVideoClientService();
+            var dbContext = TestsBase.CreateDbContext();
+            var videos = await dbContext.VideoInfo.ToListAsync();
+            var userEntity = await dbContext.ApplicationUser.Where(p => p.AzureAdB2cobjectId.ToString() ==
+            TestsBase.TestAzureAdB2CAuthConfiguration!.AzureAdUserObjectId).SingleAsync();
+            var testVideoEntity = CreateTestVideoEntity();
+            testVideoEntity.VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Processed;
+            testVideoEntity.VideoVisibilityId = (short)Common.Global.Enums.VideoVisibility.Public;
+            testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
+            await dbContext.VideoInfo.AddAsync(testVideoEntity);
+            await dbContext.SaveChangesAsync();
+            var result = await videoClientService.GetPublicProcessedVideosAsync();
+            Assert.AreEqual(1, result.Length);
         }
 
         [TestMethod()]
@@ -145,9 +174,21 @@ namespace FairPlayTube.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GetMyPendingVideosQueueTest()
+        public async Task GetMyPendingVideosQueueTest()
         {
-            Assert.Inconclusive();
+            var authorizedHttpClient = await base.SignIn(Role.User);
+            VideoClientService videoClientService = base.CreateVideoClientService();
+            var dbContext = TestsBase.CreateDbContext();
+            var videos = await dbContext.VideoInfo.ToListAsync();
+            var userEntity = await dbContext.ApplicationUser.Where(p => p.AzureAdB2cobjectId.ToString() ==
+            TestsBase.TestAzureAdB2CAuthConfiguration!.AzureAdUserObjectId).SingleAsync();
+            var testVideoEntity = CreateTestVideoEntity();
+            testVideoEntity.VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Pending;
+            testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
+            await dbContext.VideoInfo.AddAsync(testVideoEntity);
+            await dbContext.SaveChangesAsync();
+            var result = await videoClientService.GetMyPendingVideosQueue();
+            Assert.AreEqual(1, result.Count);
         }
 
         [TestMethod()]
@@ -157,9 +198,24 @@ namespace FairPlayTube.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GetPersonsTest()
+        public async Task GetPersonsTest()
         {
-            Assert.Inconclusive();
+            await base.SignIn(Role.User);
+            var dbContext = TestsBase.CreateDbContext();
+            await dbContext.Person.AddAsync(new Person() 
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name="Test Name",
+                PersonId = 1,
+                SampleFaceId = Guid.NewGuid().ToString(),
+                SampleFaceState="ok",
+                SampleFaceUrl="http://wwww.test.local",
+                SampleFaceSourceType="video"
+            });
+            await dbContext.SaveChangesAsync();
+            VideoClientService videoClientService = base.CreateVideoClientService();
+            var result = await videoClientService.GetPersonsAsync();
+            Assert.AreEqual(1, result.Length);
         }
 
         [TestMethod()]
