@@ -51,11 +51,18 @@
             </CardHeader>
             <CardBody>
                 <div class="embed-responsive embed-responsive-1by1">
-                    @if (!VideoModel.ShowPlayerWidget)
+                    @if (!VideoModel.ShowPlayerWidget || VideoModel.Price > 0)
                     {
-                        <img class="img-thumbnail" src="@VideoModel.ThumbnailUrl"
-                             style="cursor:pointer; width:100%;"
-                             @onclick="@( ()=>ShowVideoPlayer() )" />
+                        @if (VideoModel.Price > 0)
+                        {
+                            <img class="img-thumbnail" src="@VideoModel.ThumbnailUrl" style="width:100%;" />
+                        }
+                        else
+                        {
+                            <img class="img-thumbnail" src="@VideoModel.ThumbnailUrl"
+                                 style="cursor:pointer; width:100%;"
+                                 @onclick="@( ()=>ShowVideoPlayer() )" />
+                        }
                     }
                     else
                     {
