@@ -43,6 +43,30 @@ namespace FairPlayTube.Controllers
         }
 
         /// <summary>
+        /// Allows to delete a video
+        /// </summary>
+        /// <param name="videoId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task<ActionResult> DeleteVideo(string videoId, CancellationToken cancellationToken)
+        {
+            var userObjectId = this.CurrentUserProvider.GetObjectId();
+
+            bool isVideoOwner = await VideoService.IsVideoOwnerAsync(videoId: videoId, azureAdB2cobjectId: userObjectId,
+                cancellationToken: cancellationToken);
+            if (!isVideoOwner)
+                throw new Exception($"Video: {videoId} does not exit");
+
+            if (await VideoService.DeleteVideoAsync(videoId, userObjectId, cancellationToken))
+                return Ok();
+            else
+                throw new Exception("An error occurred trying to delete your video");
+
+        }
+
+        /// <summary>
         /// Gets all of the public processed videos
         /// </summary>
         /// <param name="cancellationToken"></param>
