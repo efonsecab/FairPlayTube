@@ -33,10 +33,21 @@ namespace FairPlayTube.Controllers.Tests
             };
         }
 
+        [TestInitialize]
+        public async Task TestInitialize()
+        {
+            await CleanTestData();
+        }
+
         [TestCleanup]
         public async Task TestCleanup()
         {
-            using var dbContext = TestsBase.CreateDbContext();
+            await CleanTestData();
+        }
+
+        private static async Task CleanTestData()
+        {
+            var dbContext = TestsBase.CreateDbContext();
             var testVideoEntity = CreateTestVideoEntity();
             dbContext.Entry<VideoInfo>(testVideoEntity).State = EntityState.Detached;
             foreach (var singleVideoAccessTransaction in dbContext.VideoAccessTransaction)
