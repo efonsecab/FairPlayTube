@@ -40,7 +40,8 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Description</label>
-        <InputText class="form-control" @bind-Value="UploadVideoModel.Description"></InputText>
+        <InputTextArea class="form-control" @bind-Value="UploadVideoModel.Description" 
+                       rows="4" cols="50" maxlength="500"></InputTextArea>
     </div>
     <div class="mb-3">
         <label class="form-label">Price (@Common.Global.Constants.CurrencySymbols.Dollars) - (@Constants.PriceLimits.MinVideoPrice, @Constants.PriceLimits.MaxVideoPrice)</label>

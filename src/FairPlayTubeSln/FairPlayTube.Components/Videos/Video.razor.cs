@@ -1,10 +1,6 @@
-﻿using FairPlayTube.ClientServices;
+﻿using FairPlayTube.Common.Interfaces;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FairPlayTube.Components.Videos
@@ -20,7 +16,7 @@ namespace FairPlayTube.Components.Videos
         [Parameter]
         public bool ShowTwitterShareButton { get; set; } = false;
         [Inject]
-        private VideoClientService VideoClientService { get; set; }
+        private IVideoEditAccessTokenProvider VideoEditAccessTokenProvider { get; set; }
         [Inject]
         private NavigationManager NavigationManager { get; set; }
         private bool IsLoading { get; set; }
@@ -33,9 +29,25 @@ namespace FairPlayTube.Components.Videos
         {
             if (AllowEdit)
             {
-                this.EditAccessToken = await this.VideoClientService.GetVideoEditAccessToken(VideoModel.VideoId);
+                this.EditAccessToken = await this.VideoEditAccessTokenProvider.GetVideoEditAccessToken(VideoModel.VideoId);
+                this.VideoModel.EditAccessToken = this.EditAccessToken;
             }
             this.ShowInsights = true;
+        }
+
+        private string VideoInsightsUrl
+        {
+            get
+            {
+                if (this.AllowEdit)
+                {
+                    return VideoModel.PrivateInsightsUrl;
+                }
+                else
+                {
+                    return VideoModel.PublicInsightsUrl;
+                }
+            }
         }
 
         private void HideInsights()
@@ -61,18 +73,6 @@ namespace FairPlayTube.Components.Videos
         private void HideVideoDescriptionModal()
         {
             this.ShowVideoDescription = false;
-        }
-
-        private string GetVideoInsightsUrl()
-        {
-            if (this.AllowEdit)
-            {
-                return VideoModel.PrivateInsightsUrl;
-            }
-            else
-            {
-                return VideoModel.PublicInsightsUrl;
-            }
         }
 
         private void ShowVideoPlayer()
