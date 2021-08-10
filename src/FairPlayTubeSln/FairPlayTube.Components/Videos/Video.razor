@@ -8,7 +8,7 @@
                 </div>
                 <div>
                     <button type="button" class="btn btn-info rounded-circle"
-                            @onclick="@( ()=> SelectVideo())" data-bs-toggle="tooltip" data-bs-placement="top" title="Insights">
+                            @onclick="@( async () => await SelectVideo())" data-bs-toggle="tooltip" data-bs-placement="top" title="Insights">
                         <i class="bi bi-eye-fill"></i>
                     </button>
                     <MonetizationIconButton OnClicked="@(  ()=> OnMonetizationIconClicked())">
@@ -118,7 +118,7 @@
                                 <CardBody>
                                     <div class="embed-responsive embed-responsive-1by1">
                                         <iframe class="embed-responsive-item" style="width:100%; height:350px;"
-                                                src="@GetVideoInsightsUrl()"
+                                                src="@VideoInsightsUrl"
                                                 frameborder="0"
                                                 allowfullscreen></iframe>
                                     </div>

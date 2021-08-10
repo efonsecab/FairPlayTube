@@ -98,6 +98,7 @@
                 public const string ListUsers = "api/User/ListUsers";
                 public const string InviteUser = "api/User/InviteUser";
                 public const string AddUserFollower = "API/uSER/AddUserFollower";
+                public const string SendMessage = "api/User/SendMessage";
             }
 
             public class UserProfileController

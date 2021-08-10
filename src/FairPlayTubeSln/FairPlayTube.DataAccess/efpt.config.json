@@ -134,7 +134,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "C:\\Development\\PS\\FairPlayTube\\src\\FairPlayTubeSln\\FairPlayTube.Database\\bin\\Debug\\FairPlayTube.Database.dacpac",
+   "UiHint": "C:\\Users\\Federico Jose Lucia\\source\\repos\\PTICR\\FairPlayTube\\src\\FairPlayTubeSln\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,
