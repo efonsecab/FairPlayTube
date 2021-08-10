@@ -81,6 +81,20 @@ namespace FairPlayTube.Controllers
         }
 
         /// <summary>
+        /// Gets videos by person
+        /// </summary>
+        /// <param name="personName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task<VideoInfoModel[]> SearchVideosByPersonName(string personName, CancellationToken cancellationToken)
+        {
+            var result = await this.VideoService.SearchVideosByPersonNameAsync(personName, cancellationToken);
+            return result.Select(p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p)).ToArray();
+        }
+
+        /// <summary>
         /// Uploads a video 
         /// </summary>
         /// <param name="uploadVideoModel"></param>
