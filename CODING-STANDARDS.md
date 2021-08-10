@@ -38,3 +38,6 @@ The names of variables and properties must specify what the variable contents ar
 ## Async Methods naming
 * All async methods( except the endpoints) must be suffixed with Async
 * All aynsc methods must received a mandatory "CancellationToken cancellationToken" as the last parameter
+
+## Methods invocation
+* When invoking a method, used named parameters.
