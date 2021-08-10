@@ -62,7 +62,7 @@ namespace FairPlayTube.Services
                                         .SingleOrDefaultAsync(p => p.VideoId == videoId);
 
             if (videoEntity == null)
-                throw new Exception("Delete denied. You are not an owner of this video");
+                throw new Exception($"Unable to find the video with id {videoId}");
 
             // DELETING VIDEO KEYWORDS
             

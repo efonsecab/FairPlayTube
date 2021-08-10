@@ -57,9 +57,9 @@ namespace FairPlayTube.Controllers
             bool isVideoOwner = await VideoService.IsVideoOwnerAsync(videoId: videoId, azureAdB2cobjectId: userObjectId,
                 cancellationToken: cancellationToken);
             if (!isVideoOwner)
-                throw new Exception($"Video: {videoId} does not exit");
+                throw new Exception($"Delete denied. You are not an owner of this video");
 
-            if (await VideoService.DeleteVideoAsync(videoId, userObjectId, cancellationToken))
+            if (await VideoService.DeleteVideoAsync(userAzureAdB2cObjectId: userObjectId, videoId: videoId, cancellationToken))
                 return Ok();
             else
                 throw new Exception("An error occurred trying to delete your video");

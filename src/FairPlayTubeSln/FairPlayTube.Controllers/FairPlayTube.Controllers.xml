@@ -171,6 +171,14 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.SearchVideosByPersonName(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets videos by person
+            </summary>
+            <param name="personName"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="M:FairPlayTube.Controllers.VideoController.UploadVideo(FairPlayTube.Models.Video.UploadVideoModel,System.Threading.CancellationToken)">
             <summary>
             Uploads a video 
