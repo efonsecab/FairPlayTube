@@ -130,12 +130,12 @@ namespace FairPlayTube.Controllers.Tests
             await dbContext.SaveChangesAsync();
             await dbContext.VideoIndexKeyword.AddAsync(new VideoIndexKeyword()
             {
-                Keyword="TestKeyword",
-                VideoInfoId=testVideoEntity.VideoInfoId
+                Keyword = "TestKeyword",
+                VideoInfoId = testVideoEntity.VideoInfoId
             });
             await dbContext.SaveChangesAsync();
             var result = await videoClientService.ListAllKeywordsAsync();
-            Assert.IsTrue(result!.Length ==1, "Invalid count of keywords");
+            Assert.IsTrue(result!.Length == 1, "Invalid count of keywords");
         }
 
         [TestMethod()]
@@ -202,15 +202,15 @@ namespace FairPlayTube.Controllers.Tests
         {
             await base.SignIn(Role.User);
             var dbContext = TestsBase.CreateDbContext();
-            await dbContext.Person.AddAsync(new Person() 
+            await dbContext.Person.AddAsync(new Person()
             {
                 Id = Guid.NewGuid().ToString(),
-                Name="Test Name",
+                Name = "Test Name",
                 PersonId = 1,
                 SampleFaceId = Guid.NewGuid().ToString(),
-                SampleFaceState="ok",
-                SampleFaceUrl="http://wwww.test.local",
-                SampleFaceSourceType="video"
+                SampleFaceState = "ok",
+                SampleFaceUrl = "http://wwww.test.local",
+                SampleFaceSourceType = "video"
             });
             await dbContext.SaveChangesAsync();
             VideoClientService videoClientService = base.CreateVideoClientService();
@@ -220,6 +220,12 @@ namespace FairPlayTube.Controllers.Tests
 
         [TestMethod()]
         public void AnalyzeVideoCommentTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod()]
+        public void SearchVideosByPersonNameTest()
         {
             Assert.Inconclusive();
         }

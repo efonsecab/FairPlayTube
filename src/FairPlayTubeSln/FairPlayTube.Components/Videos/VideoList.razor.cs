@@ -1,4 +1,4 @@
-﻿using FairPlayTube.ClientServices;
+﻿using FairPlayTube.Common.Interfaces;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
@@ -12,7 +12,7 @@ namespace FairPlayTube.Components.Videos
         [Parameter]
         public bool AllowEdit { get; set; } = false;
         [Inject]
-        private VideoClientService VideoClientService { get; set; }
+        IVideoEditAccessTokenProvider VideoEditAccessTokenProvider { get; set; }
         private VideoInfoModel SelectedVideo { get; set; }
         private bool IsLoading { get; set; }
         private bool ShowInsights { get; set; }
@@ -24,7 +24,7 @@ namespace FairPlayTube.Components.Videos
             this.SelectedVideo = videoInfoModel;
             if (AllowEdit)
             {
-                this.SelectedVideo.EditAccessToken = await this.VideoClientService.GetVideoEditAccessToken(videoInfoModel.VideoId);
+                this.SelectedVideo.EditAccessToken = await this.VideoEditAccessTokenProvider.GetVideoEditAccessToken(videoInfoModel.VideoId);
             }
             this.ShowInsights = true;
         }

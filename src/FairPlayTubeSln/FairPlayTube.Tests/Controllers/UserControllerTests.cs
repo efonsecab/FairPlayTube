@@ -10,6 +10,7 @@ using System;
 using FairPlayTube.DataAccess.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using FairPlayTube.Models.UserMessage;
 
 namespace FairPlayTube.Controllers.Tests
 {
@@ -71,9 +72,15 @@ namespace FairPlayTube.Controllers.Tests
         }
 
         [TestMethod()]
-        public void SendMessageTest()
+        public async Task SendMessageTest()
         {
-            Assert.Inconclusive();
+            await base.SignIn(Role.User);
+            UserClientService userClientService = base.CreateUserClientService();
+            await userClientService.SendMessageAsync(new UserMessageModel()
+            {
+                Message = "PRUEBA", 
+                ToApplicationUserId = 1
+            });
         }
 
         [TestMethod()]

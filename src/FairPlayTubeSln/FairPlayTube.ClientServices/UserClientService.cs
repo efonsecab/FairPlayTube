@@ -1,6 +1,7 @@
 ﻿using FairPlayTube.Common.Global;
 using FairPlayTube.Models.CustomHttpResponse;
 using FairPlayTube.Models.Invites;
+using FairPlayTube.Models.UserMessage;
 using FairPlayTube.Models.UserProfile;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,24 @@ namespace FairPlayTube.ClientServices
         public UserClientService(HttpClientService httpClientService)
         {
             this.HttpClientService = httpClientService;
+        }
+
+        public async Task SendMessageAsync(UserMessageModel userMessageModel)
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.PostAsJsonAsync(
+                    requestUri: Constants.ApiRoutes.UserController.SendMessage,
+                    value: userMessageModel
+                );
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
+                if (problemHttpResponse != null)
+                    throw new Exception(problemHttpResponse.Detail);
+                else
+                    throw new Exception(response.ReasonPhrase);
+            }
         }
 
         public async Task<string> GetMyRoleAsync()
