@@ -21,7 +21,6 @@ SET IDENTITY_INSERT [dbo].[ApplicationRole] OFF
 --START OF DEFAULT APPLICATION ROLES
 
 --START OF DEFAULT VIDEO INDEX STATUSES
-SET IDENTITY_INSERT [dbo].[VideoIndexStatus] ON
 DECLARE @VIDEO_INDEX_STATUS NVARCHAR(50) = 'Pending'
 IF NOT EXISTS (SELECT * FROM [dbo].[VideoIndexStatus] VIS WHERE [VIS].[Name] = @VIDEO_INDEX_STATUS)
 BEGIN
@@ -37,13 +36,16 @@ IF NOT EXISTS (SELECT * FROM [dbo].[VideoIndexStatus] VIS WHERE [VIS].[Name] = @
 BEGIN
     INSERT INTO [dbo].[VideoIndexStatus]([VideoIndexStatusId],[Name]) VALUES(2, @VIDEO_INDEX_STATUS)
 END
-SET IDENTITY_INSERT [dbo].[VideoIndexStatus] OFF
 --START OF DEFAULT VIDEO INDEX STATUSES
 --START OF DEFAULT VIDEO VISIBILITY CATEGORIES
-SET IDENTITY_INSERT [dbo].[VideoVisibility] ON
-INSERT INTO [dbo].VideoVisibility([VideoVisibilityId],[Name]) VALUES(1,'Public')
-INSERT INTO [dbo].VideoVisibility([VideoVisibilityId],[Name]) VALUES(2,'Private')
-SET IDENTITY_INSERT [dbo].[VideoVisibility] OFF
+IF NOT EXISTS (SELECT * FROM [dbo].[VideoVisibility] WHERE [Name] = 'Public')
+BEGIN
+	INSERT INTO [dbo].VideoVisibility([VideoVisibilityId],[Name]) VALUES(1,'Public')
+END
+IF NOT EXISTS (SELECT * FROM [dbo].[VideoVisibility] WHERE [Name] = 'Private')
+BEGIN
+	INSERT INTO [dbo].VideoVisibility([VideoVisibilityId],[Name]) VALUES(2,'Private')
+END
 --END OF DEFAULT VIDEO VISIBILITY CATEGORIES
 
 --IORIGINATOR INFO
