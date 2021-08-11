@@ -70,4 +70,4 @@ Knowledge Base Maintainters Required
 ---------------
 
 The system uses Azure QnA to keep it's knowledge base and facilitate giving help to the users.
-This needs someone to maintain the knowledge base updated with all kinds of questions and answers for heping users.
+This needs someone to maintain the knowledge base updated with all kinds of questions and answers for helping users.
