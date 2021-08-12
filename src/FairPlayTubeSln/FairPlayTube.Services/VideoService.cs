@@ -64,8 +64,11 @@ namespace FairPlayTube.Services
             if (videoEntity == null)
                 throw new Exception($"Unable to find the video with id {videoId}");
 
+            if(videoEntity.VideoIndexStatusId != (short)Common.Global.Enums.VideoIndexStatus.Pending)
+                throw new InvalidOperationException($"Video with id {videoId} cannot be deleted because is being indexed or is already indexed");
+
             // DELETING VIDEO KEYWORDS
-            
+
             var existentKeywords = this.FairplaytubeDatabaseContext.VideoIndexKeyword
                                        .Where(p => p.VideoInfoId == videoEntity.VideoInfoId);
 
