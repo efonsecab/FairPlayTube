@@ -50,6 +50,8 @@ namespace FairPlayTube.AutoMapperProfiles
                         dest.CombinedBudget = source.VideoJob.Sum(p => p.Budget);
                     }
                 }
+
+                dest.VideoIndexStatus = (Common.Global.Enums.VideoIndexStatus)source.VideoIndexStatusId;
             });
         }
     }

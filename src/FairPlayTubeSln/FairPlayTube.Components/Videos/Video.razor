@@ -47,7 +47,7 @@
                                                 DisableClientScriptAutoInjection="true" Size="Large"></TwitterShareButton>
                         </div>
                     }
-                    @if (AllowDelete && VideoModel.VideoIndexStatus == Common.Global.Enums.VideoIndexStatus.Pending)
+                    @if (AllowDelete && VideoModel.VideoIndexStatus == Common.Global.Enums.VideoIndexStatus.Processed)
                     {
                         <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
                                 @onclick="OnDeleteVideoClicked">
