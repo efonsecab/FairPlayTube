@@ -59,13 +59,17 @@ namespace FairPlayTube.Services
         {
             var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
                                         .Include(p => p.ApplicationUser)
+                                        .Include(p => p.VideoAccessTransaction)
                                         .SingleOrDefaultAsync(p => p.VideoId == videoId);
 
             if (videoEntity == null)
                 throw new Exception($"Unable to find the video with id {videoId}");
 
-            if(videoEntity.VideoIndexStatusId != (short)Common.Global.Enums.VideoIndexStatus.Pending)
-                throw new InvalidOperationException($"Video with id {videoId} cannot be deleted because is being indexed or is already indexed");
+            if(videoEntity.VideoIndexStatusId != (short)Common.Global.Enums.VideoIndexStatus.Processed)
+                throw new InvalidOperationException($"Video with id {videoId} cannot be deleted because it has not been indexed yet");
+
+            if(videoEntity.VideoAccessTransaction.Any())
+                throw new InvalidOperationException($"Video with id {videoId} cannot be deleted because it was already bought");
 
             // DELETING VIDEO KEYWORDS
 
@@ -78,8 +82,8 @@ namespace FairPlayTube.Services
                 await this.FairplaytubeDatabaseContext.SaveChangesAsync();
             }
 
-            // DELETING VIDEO INFO
-            this.FairplaytubeDatabaseContext.VideoInfo.Remove(videoEntity);
+            // UPDATING VIDEO INFO STATUS
+            videoEntity.VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Deleted;
             await this.FairplaytubeDatabaseContext.SaveChangesAsync();
 
             // DELETING VIDEO INDEXER

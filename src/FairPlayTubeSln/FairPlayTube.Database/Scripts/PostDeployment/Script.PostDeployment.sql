@@ -36,6 +36,11 @@ IF NOT EXISTS (SELECT * FROM [dbo].[VideoIndexStatus] VIS WHERE [VIS].[Name] = @
 BEGIN
     INSERT INTO [dbo].[VideoIndexStatus]([VideoIndexStatusId],[Name]) VALUES(2, @VIDEO_INDEX_STATUS)
 END
+SET @VIDEO_INDEX_STATUS = 'Deleted'
+IF NOT EXISTS (SELECT * FROM [dbo].[VideoIndexStatus] VIS WHERE [VIS].[Name] = @VIDEO_INDEX_STATUS)
+BEGIN
+    INSERT INTO [dbo].[VideoIndexStatus]([VideoIndexStatusId],[Name]) VALUES(3, @VIDEO_INDEX_STATUS)
+END
 --START OF DEFAULT VIDEO INDEX STATUSES
 --START OF DEFAULT VIDEO VISIBILITY CATEGORIES
 IF NOT EXISTS (SELECT * FROM [dbo].[VideoVisibility] WHERE [Name] = 'Public')

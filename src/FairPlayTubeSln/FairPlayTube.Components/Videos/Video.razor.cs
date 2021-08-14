@@ -12,9 +12,13 @@ namespace FairPlayTube.Components.Videos
         [Parameter]
         public bool AllowEdit { get; set; } = false;
         [Parameter]
+        public bool AllowDelete { get; set; } = false;
+        [Parameter]
         public bool ShowDetailsLink { get; set; } = false;
         [Parameter]
         public bool ShowTwitterShareButton { get; set; } = false;
+        [Parameter]
+        public EventCallback<VideoInfoModel> OnDelete { get; set; }
         [Inject]
         private IVideoEditAccessTokenProvider VideoEditAccessTokenProvider { get; set; }
         [Inject]
@@ -23,6 +27,7 @@ namespace FairPlayTube.Components.Videos
         private bool ShowInsights { get; set; }
         private bool ShowMonetizationLinks { get; set; }
         private bool ShowVideoDescription { get; set; }
+        private bool ShowDeleteConfirm { get; set; }
         private string EditAccessToken { get; set; }
 
         private async Task SelectVideo()
@@ -88,5 +93,21 @@ namespace FairPlayTube.Components.Videos
             this.NavigationManager.NavigateTo(formattedUrl);
         }
 
+        private void OnDeleteVideoClicked()
+        {
+            this.ShowDeleteConfirm = true;
+        }
+
+        private void OnDeleteVideoCanceled()
+        {
+            this.ShowDeleteConfirm = false;
+        }
+        
+        private async Task OnDeleteVideoConfirmedAsync()
+        {
+            var deleteTask = OnDelete.InvokeAsync(this.VideoModel);
+            this.ShowDeleteConfirm = false;
+            await deleteTask;
+        }
     }
 }

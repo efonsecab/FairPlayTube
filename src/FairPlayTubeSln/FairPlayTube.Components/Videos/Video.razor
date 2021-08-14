@@ -47,6 +47,13 @@
                                                 DisableClientScriptAutoInjection="true" Size="Large"></TwitterShareButton>
                         </div>
                     }
+                    @if (AllowDelete && VideoModel.VideoIndexStatus == Common.Global.Enums.VideoIndexStatus.Pending)
+                    {
+                        <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
+                                @onclick="OnDeleteVideoClicked">
+                            <i class="bi bi-x-circle-fill"></i>
+                        </button>
+                    }
                 </div>
             </CardHeader>
             <CardBody>
@@ -194,6 +201,29 @@ this.VideoModel.UserGlobalMonetization.MonetizationItems.Count > 0)
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="HideVideoDescriptionModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (this.ShowDeleteConfirm)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display:block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@VideoModel.Name</h5>
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="OnDeleteVideoCanceled">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete the selected video</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="OnDeleteVideoCanceled">No</button>
+                    <button type="button" class="btn btn-primary" @onclick="OnDeleteVideoConfirmedAsync">Yes</button>
                 </div>
             </div>
         </div>

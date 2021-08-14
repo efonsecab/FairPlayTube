@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Models.UserProfile;
+﻿using FairPlayTube.Common.Global.Enums;
+using FairPlayTube.Models.UserProfile;
 using System;
 
 namespace FairPlayTube.Models.Video
@@ -90,5 +91,9 @@ namespace FairPlayTube.Models.Video
         /// Tells the UI if the Player Widget should be displayed
         /// </summary>
         public bool ShowPlayerWidget { get; set; } = false;
+        /// <summary>
+        /// Video's indexing status
+        /// </summary>
+        public VideoIndexStatus VideoIndexStatus { get; set; }
     }
 }

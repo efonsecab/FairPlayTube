@@ -11,6 +11,10 @@ namespace FairPlayTube.Components.Videos
         public VideoInfoModel[] AllVideos { get; set; }
         [Parameter]
         public bool AllowEdit { get; set; } = false;
+        [Parameter]
+        public bool AllowDelete { get; set; } = false;
+        [Parameter]
+        public EventCallback<VideoInfoModel> OnDelete { get; set; }
         [Inject]
         IVideoEditAccessTokenProvider VideoEditAccessTokenProvider { get; set; }
         private VideoInfoModel SelectedVideo { get; set; }
