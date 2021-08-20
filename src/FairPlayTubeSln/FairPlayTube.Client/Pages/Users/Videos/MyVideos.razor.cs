@@ -38,5 +38,23 @@ namespace FairPlayTube.Client.Pages.Users.Videos
                 IsLoading = false;
             }
         }
+
+        private async Task OnVideoDelete(VideoInfoModel videoModel)
+        {
+            try
+            {
+                IsLoading = true;
+                await this.VideoClientService.DeleteVideoAsync(videoModel.VideoId);
+                this.AllVideos = await this.VideoClientService.GetMyProcessedVideos();
+            }
+            catch (Exception ex)
+            {
+                await this.ToastifyService.DisplayErrorNotification(ex.Message);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
     }
 }
