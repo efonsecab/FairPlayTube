@@ -51,15 +51,7 @@ namespace FairPlayTube.Controllers
                     .Where(p => p.VideoId == id)
                     .SingleOrDefaultAsync();
                 if (videoInfoEntity != null)
-                {
-                    var videoIndex = await VideoService.GetVideoIndexerStatus(id, cancellationToken);
-                    await VideoService.SaveIndexedVideoKeywordsAsync(id, cancellationToken);
-                    await VideoService.SaveVideoThumbnailAsync(id, videoIndex.videos.First().thumbnailId, cancellationToken);
-                    videoInfoEntity.VideoIndexStatusId = (int)Common.Global.Enums.VideoIndexStatus.Processed;
-                    videoInfoEntity.VideoIndexSourceClass = this.GetType().FullName;
-                    videoInfoEntity.VideoDurationInSeconds = videoIndex.summarizedInsights.duration.seconds;
-                    await this.FairplaytubeDatabaseContext.SaveChangesAsync();
-                }
+                    await this.VideoService.MarkVideoAsProcessed(videoInfoEntity, cancellationToken);
             }
         }
     }

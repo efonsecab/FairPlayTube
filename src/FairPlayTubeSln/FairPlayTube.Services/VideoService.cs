@@ -55,6 +55,15 @@ namespace FairPlayTube.Services
             this.TextAnalysisService = textAnalysisService;
         }
 
+
+        public async Task MarkVideoAsProcessed(VideoInfo videoInfo, CancellationToken cancellationToken)
+        {
+            var videoIndex = await GetVideoIndexerStatus(videoInfo.VideoId, cancellationToken);
+            await SaveIndexedVideoKeywordsAsync(videoInfo.VideoId, cancellationToken);
+            await SaveVideoThumbnailAsync(videoInfo.VideoId, videoIndex.videos.First().thumbnailId, cancellationToken);
+            await UpdateVideoIndexStatusAsync(Common.Global.Enums.VideoIndexStatus.Processed,cancellationToken: cancellationToken, videoInfo.VideoId);
+        }
+
         public async Task<bool> DeleteVideoAsync(string userAzureAdB2cObjectId, string videoId, CancellationToken cancellationToken)
         {
             var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
@@ -101,9 +110,9 @@ namespace FairPlayTube.Services
                        .Join(videoIds, video => video.VideoId, search => search, (video, _) => video);
         }
 
-        public async Task<bool> UpdateVideoIndexStatusAsync(string[] videoIds,
-            Common.Global.Enums.VideoIndexStatus videoIndexStatus,
-            CancellationToken cancellationToken)
+        public async Task<bool> UpdateVideoIndexStatusAsync(Common.Global.Enums.VideoIndexStatus videoIndexStatus,
+            CancellationToken cancellationToken,
+            params string[] videoIds)
         {
             var query = this.FairplaytubeDatabaseContext.VideoInfo
                 .Include(p => p.ApplicationUser).Where(p => videoIds.Contains(p.VideoId));
