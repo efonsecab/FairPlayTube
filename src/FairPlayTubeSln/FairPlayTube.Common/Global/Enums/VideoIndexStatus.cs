@@ -4,6 +4,7 @@
     {
         Pending = 0,
         Processing = 1,
-        Processed = 2
+        Processed = 2,
+        Deleted = 3
     }
 }

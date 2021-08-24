@@ -122,5 +122,20 @@ namespace FairPlayTube.ClientServices
                 $"{ApiRoutes.VideoController.GetPersons}");
             return result;
         }
+
+        public async Task DeleteVideoAsync(string videoId)
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.PostAsync(
+                $"{ApiRoutes.VideoController.DeleteVideo}?videoId={videoId}", null);
+            if (!response.IsSuccessStatusCode)
+            {
+                ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
+                if (problemHttpResponse != null)
+                    throw new Exception(problemHttpResponse.Detail);
+                else
+                    throw new Exception(response.ReasonPhrase);
+            }
+        }
     }
 }

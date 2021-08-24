@@ -924,6 +924,11 @@
             Tells the UI if the Player Widget should be displayed
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.VideoIndexStatus">
+            <summary>
+            Video's indexing status
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.VideoJobModel">
             <summary>
             Represents a Job associated to a video
