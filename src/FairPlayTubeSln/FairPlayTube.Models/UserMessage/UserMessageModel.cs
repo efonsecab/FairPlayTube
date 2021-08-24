@@ -1,4 +1,6 @@
-﻿namespace FairPlayTube.Models.UserMessage
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FairPlayTube.Models.UserMessage
 {
     /// <summary>
     /// Represents the User Message entry
@@ -12,6 +14,7 @@
         /// <summary>
         /// Message to be sent
         /// </summary>
+        [Required]
         public string Message { get; set; }
     }
 }
