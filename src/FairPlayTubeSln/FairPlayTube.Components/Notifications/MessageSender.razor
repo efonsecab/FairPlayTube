@@ -1,23 +1,18 @@
 ﻿@using FairPlayTube.Components.Bootstrap
 
-<h3>Send Message</h3>
-
 <EditForm Model="@UserMessageModel" OnValidSubmit="OnValidSubmit">
     <ObjectGraphDataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label for="Name">Name</label>
         <InputText class="form-control" @bind-Value=ToApplicationUserFullName disabled="true" id="Name"/>
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label for="Message">Message</label>
         <InputTextArea class="form-control" @bind-Value=UserMessageModel.Message id="Message"/>
     </div>
 
-
-    <div class="mb-3">
-        <button type="button" class="btn btn-secondary" @onclick="OnCancelAction">Cancel</button>
-        <button type="submit" class="btn btn-primary">Send</button>
-    </div>
+    <button type="button" class="btn btn-secondary" @onclick="OnCancelAction">Cancel</button>
+    <button type="submit" class="btn btn-primary">Send</button>
 </EditForm>
