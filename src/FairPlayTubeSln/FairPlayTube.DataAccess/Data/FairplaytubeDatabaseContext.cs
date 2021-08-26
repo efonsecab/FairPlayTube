@@ -187,6 +187,12 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.ApplicationUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ApplicationUserId_UserProfile");
+
+                entity.HasOne(d => d.UserVerificationStatus)
+                    .WithMany(p => p.UserProfile)
+                    .HasForeignKey(d => d.UserVerificationStatusId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserProfile_VerificationStatus");
             });
 
             modelBuilder.Entity<UserVideoRating>(entity =>

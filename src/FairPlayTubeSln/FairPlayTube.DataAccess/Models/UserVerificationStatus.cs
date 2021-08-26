@@ -11,6 +11,11 @@ namespace FairPlayTube.DataAccess.Models
 {
     public partial class UserVerificationStatus
     {
+        public UserVerificationStatus()
+        {
+            UserProfile = new HashSet<UserProfile>();
+        }
+
         [Key]
         public long UserVerificationStatusId { get; set; }
         [Required]
@@ -19,5 +24,8 @@ namespace FairPlayTube.DataAccess.Models
         [Required]
         [StringLength(200)]
         public string Description { get; set; }
+
+        [InverseProperty("UserVerificationStatus")]
+        public virtual ICollection<UserProfile> UserProfile { get; set; }
     }
 }
