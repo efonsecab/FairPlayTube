@@ -35,6 +35,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<UserInvitation> UserInvitation { get; set; }
         public virtual DbSet<UserMessage> UserMessage { get; set; }
         public virtual DbSet<UserProfile> UserProfile { get; set; }
+        public virtual DbSet<UserVerificationStatus> UserVerificationStatus { get; set; }
         public virtual DbSet<UserVideoRating> UserVideoRating { get; set; }
         public virtual DbSet<VideoAccessTransaction> VideoAccessTransaction { get; set; }
         public virtual DbSet<VideoComment> VideoComment { get; set; }
