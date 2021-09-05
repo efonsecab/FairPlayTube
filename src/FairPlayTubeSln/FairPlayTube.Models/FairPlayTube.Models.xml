@@ -764,6 +764,46 @@
             Appeareances
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Video.ProjectModel">
+            <summary>
+            Holds the information required to create a custom rendering project
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.ProjectModel.ProjectId">
+            <summary>
+            The project's id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.ProjectModel.Name">
+            <summary>
+            Name of the Project
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.ProjectModel.Videos">
+            <summary>
+            Videos and ranges to be included for the custom project
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Video.ProjectVideoModel">
+            <summary>
+            Halds the informtion for the time ranges for the specified VideoId
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.ProjectVideoModel.VideoId">
+            <summary>
+            Azure Video Indexer Video Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.ProjectVideoModel.Start">
+            <summary>
+            Start Time
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.ProjectVideoModel.End">
+            <summary>
+            End Time
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.UpdateVideoModel">
             <summary>
             Holds the information required to update a video

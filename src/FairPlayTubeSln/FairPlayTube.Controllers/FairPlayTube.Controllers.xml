@@ -272,6 +272,14 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.CreateCustomRenderingProject(FairPlayTube.Models.Video.ProjectModel,System.Threading.CancellationToken)">
+            <summary>
+            Creates a new custom rendering project
+            </summary>
+            <param name="projectModel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.VisitorTrackingController">
             <summary>
             Used to persis a visitor informaation

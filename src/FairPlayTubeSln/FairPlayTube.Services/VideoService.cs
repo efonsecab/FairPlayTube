@@ -7,6 +7,7 @@ using FairPlayTube.Models.Video;
 using FairPlayTube.Notifications.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using PTI.Microservices.Library.AzureVideoIndexer.Models.CreateProject;
 using PTI.Microservices.Library.Configuration;
 using PTI.Microservices.Library.Interceptors;
 using PTI.Microservices.Library.Models.AzureVideoIndexerService;
@@ -268,6 +269,7 @@ namespace FairPlayTube.Services
             p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed);
         }
 
+
         public IQueryable<VideoInfo> GetProcessedVideosByUserId(
             string azureAdB2cobjectId)
         {
@@ -391,6 +393,15 @@ namespace FairPlayTube.Services
                 .AnyAsync(p => p.VideoId == videoId && p.ApplicationUser.AzureAdB2cobjectId.ToString() == azureAdB2cobjectId,
                 cancellationToken: cancellationToken);
             return isVideoOwner;
+        }
+
+        public async Task<bool> IsVideosOwnerAsync(string[] videosIds, string azureAdB2cobjectId, CancellationToken cancellationToken)
+        {
+            bool isVideosOwner = await this.FairplaytubeDatabaseContext.VideoInfo
+                .Include(p => p.ApplicationUser)
+                .AnyAsync(p => videosIds.Contains(p.VideoId) && p.ApplicationUser.AzureAdB2cobjectId.ToString() == azureAdB2cobjectId,
+                cancellationToken: cancellationToken);
+            return isVideosOwner;
         }
 
         public async Task AddVideoIndexTransactionsAsync(string[] videoIds,
@@ -525,6 +536,27 @@ namespace FairPlayTube.Services
                 Sentiment = sentiment,
             }, cancellationToken);
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<ProjectModel> CreateCustomRenderingProject(ProjectModel projectModel, CancellationToken cancellationToken)
+        {
+            CreateProjectRequest createProjectRequestModel = new CreateProjectRequest()
+            {
+                name = projectModel.Name,
+                videosRanges = projectModel.Videos.Select(p =>
+                new PTI.Microservices.Library.AzureVideoIndexer.Models.CreateProject.Videosrange() 
+                {
+                    videoId=p.VideoId,
+                    range=new PTI.Microservices.Library.AzureVideoIndexer.Models.CreateProject.Range()
+                    {
+                        start=p.Start,
+                        end=p.End
+                    }
+                }).ToArray()
+            };
+            var result = await this.AzureVideoIndexerService.CreateProjectAsync(createProjectRequestModel, cancellationToken: cancellationToken);
+            projectModel.ProjectId = result.id;
+            return projectModel;
         }
     }
 }

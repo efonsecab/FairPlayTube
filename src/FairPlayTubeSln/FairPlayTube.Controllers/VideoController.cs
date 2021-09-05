@@ -313,5 +313,26 @@ namespace FairPlayTube.Controllers
             await this.VideoService.AnalyzeVideoCommentAsync(videoCommentId, cancellationToken);
             return Ok();
         }
+
+        /// <summary>
+        /// Creates a new custom rendering project
+        /// </summary>
+        /// <param name="projectModel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        [FeatureGate(FeatureType.PaidFeature)]
+        public async Task<ProjectModel> CreateCustomRenderingProject(ProjectModel projectModel, CancellationToken cancellationToken)
+        {
+            var userObjectId = this.CurrentUserProvider.GetObjectId();
+            var allVideoIds = projectModel.Videos.Select(p => p.VideoId).ToArray();
+            var isVideosOwner = await this.VideoService
+                .IsVideosOwnerAsync(videosIds: allVideoIds, azureAdB2cobjectId: userObjectId, cancellationToken: cancellationToken);
+            if (!isVideosOwner)
+                throw new Exception("Access denied. User does not own all of the specified videos");
+            var result = await this.VideoService.CreateCustomRenderingProject(projectModel, cancellationToken);
+            return result;
+        }
     }
 }
