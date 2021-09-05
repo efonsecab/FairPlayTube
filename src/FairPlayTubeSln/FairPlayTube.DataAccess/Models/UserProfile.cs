@@ -14,15 +14,28 @@ namespace FairPlayTube.DataAccess.Models
         [Key]
         public long UserProfileId { get; set; }
         public long ApplicationUserId { get; set; }
+        public long UserVerificationStatusId { get; set; }
         [Required]
         [StringLength(100)]
         public string About { get; set; }
         [Required]
         [StringLength(100)]
         public string Topics { get; set; }
+        [Required]
+        [StringLength(20)]
+        public string Nationality { get; set; }
+        public int NationalIdNumber { get; set; }
+        [Required]
+        [StringLength(200)]
+        public string NationalIdPhotoUrl { get; set; }
+        [StringLength(100)]
+        public string DisplayAlias { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("UserProfile")]
         public virtual ApplicationUser ApplicationUser { get; set; }
+        [ForeignKey(nameof(UserVerificationStatusId))]
+        [InverseProperty("UserProfile")]
+        public virtual UserVerificationStatus UserVerificationStatus { get; set; }
     }
 }
