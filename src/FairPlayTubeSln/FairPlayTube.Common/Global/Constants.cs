@@ -65,6 +65,7 @@
             public const string MyFunds = "/Users/MyFunds";
             public const string Edit = "/Users/Videos/Edit/{VideoId}";
             public const string MyPendingVideosStatus = "/Users/Videos/MyPendingVideosStatus";
+            public const string RenderingProject = "/Users/Videos/RenderingProject";
         }
 
         public class RootPagesRoutes
@@ -92,6 +93,7 @@
                 public const string GetMyPendingVideosQueue = "api/Video/GetMyPendingVideosQueue";
                 public const string GetPersons = "api/Video/GetPersons";
                 public const string DeleteVideo = "api/Video/DeleteVideo";
+                public const string CreateCustomRenderingProject = "api/Video/CreateCustomRenderingProject";
             }
             public class UserController
             {

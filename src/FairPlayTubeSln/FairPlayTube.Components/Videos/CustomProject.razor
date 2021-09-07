@@ -1,0 +1,41 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col" style="width:50%;">
+            <div class="row row-cols-1 row-cols-md-1 row-cols-lg-1">
+                @foreach (var singleAvailableVideo in this.AvailableVideos)
+                {
+                    <div class="col" style="cursor:pointer;" @onclick="() => SelectVideo(singleAvailableVideo)">
+                        <Video AllowDelete="false"
+                               AllowEdit="false"
+                               ShowDetailsLink="false"
+                               ShowTwitterShareButton="false"
+                               VideoModel="@singleAvailableVideo">
+                        </Video>>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col" style="width:50%;">
+            @if (this.SelectedProjectVideoModel != null)
+            {
+                <EditForm Model="this.SelectedProjectVideoModel">
+                    <DataAnnotationsValidator></DataAnnotationsValidator>
+                    <ValidationSummary></ValidationSummary>
+                    <div class="mb-3">
+                        <label class="form-label">Start</label>
+                        <InputText @bind-Value="this.SelectedProjectVideoModel.Start"></InputText>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">End</label>
+                        <InputText @bind-Value="this.SelectedProjectVideoModel.End"></InputText>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit">
+                            <i class="bi bi-plus-circle-fill" style="font-size:15px;"></i>
+                        </button>
+                    </div>
+                </EditForm>
+            }
+        </div>
+    </div>
+</div>

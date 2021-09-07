@@ -137,5 +137,25 @@ namespace FairPlayTube.ClientServices
                     throw new Exception(response.ReasonPhrase);
             }
         }
+
+        public async Task<ProjectModel> CreateCustomRenderingProjectAsync(ProjectModel projectModel)
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.PostAsJsonAsync<ProjectModel>(
+                $"{ApiRoutes.VideoController.CreateCustomRenderingProject}", projectModel);
+            if (!response.IsSuccessStatusCode)
+            {
+                ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
+                if (problemHttpResponse != null)
+                    throw new Exception(problemHttpResponse.Detail);
+                else
+                    throw new Exception(response.ReasonPhrase);
+            }
+            else
+            {
+                var result = await response.Content.ReadFromJsonAsync<ProjectModel>();
+                return result;
+            }
+        }
     }
 }

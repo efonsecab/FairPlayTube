@@ -1,0 +1,10 @@
+﻿<VisitorTracking></VisitorTracking>
+<div class="container">
+    <div class="mb-3">
+        <Loading IsLoading="IsLoading"></Loading>
+    </div>
+    @if (this.AllMyVideos != null)
+            {
+                <FairPlayTube.Components.Videos.CustomProject AvailableVideos="@this.AllMyVideos"></FairPlayTube.Components.Videos.CustomProject>
+            }
+</div>

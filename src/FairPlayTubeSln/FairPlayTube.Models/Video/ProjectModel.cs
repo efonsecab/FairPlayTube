@@ -35,14 +35,17 @@ namespace FairPlayTube.Models.Video
         /// <summary>
         /// Azure Video Indexer Video Id
         /// </summary>
+        [Required]
         public string VideoId { get; set; }
         /// <summary>
         /// Start Time
         /// </summary>
+        [Required]
         public string Start { get; set; }
         /// <summary>
         /// End Time
         /// </summary>
+        [Required]
         public string End { get; set; }
     }
 }
