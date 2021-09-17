@@ -130,6 +130,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[VideoPlaylist]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoVisibility]",
          "ObjectType": 0
       },
@@ -138,7 +142,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "C:\\Development\\PS\\FairPlayTube\\src\\FairPlayTubeSln\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
+   "UiHint": "FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,
@@ -147,6 +151,7 @@
    "UseInflector": false,
    "UseLegacyPluralizer": false,
    "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
    "UseNoNavigations": false,
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
