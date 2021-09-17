@@ -78,6 +78,12 @@
             {
                 public const string TrackClientInformation = "api/VisitorTracking/TrackClientInformation";
             }
+
+            public class VideoPlaylistController
+            {
+                public const string CreateVideoPlaylist = "api/VideoPlaylist/CreateVideoPlaylist";
+                public const string DeleteVideoPlaylist = "api/VideoPlaylist/DeleteVideoPlaylist";
+            }
             public class VideoController
             {
                 public const string GetPublicProcessedVideos = "api/Video/GetPublicProcessedVideos";

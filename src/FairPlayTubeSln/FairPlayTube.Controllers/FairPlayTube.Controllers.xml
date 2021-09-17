@@ -280,6 +280,33 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.VideoPlaylistController">
+            <summary>
+            Handles actions related to videos playlists
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoPlaylistController.#ctor(FairPlayTube.Services.VideoPlaylistService)">
+            <summary>
+            Initializes <see cref="P:FairPlayTube.Controllers.VideoPlaylistController.VideoPlaylistService"/>
+            </summary>
+            <param name="videoPlaylistService"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoPlaylistController.CreateVideoPlaylist(FairPlayTube.Models.Video.VideoPlaylistModel,System.Threading.CancellationToken)">
+            <summary>
+            Creates a new playlist owned by the logged in user
+            </summary>
+            <param name="videoPlaylistModel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoPlaylistController.DeleteVideoPlaylist(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            Deletes the videoplaylist with the specified id
+            </summary>
+            <param name="videoPlaylistId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.VisitorTrackingController">
             <summary>
             Used to persis a visitor informaation
