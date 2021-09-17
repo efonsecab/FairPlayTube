@@ -994,6 +994,21 @@
             Job Description
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Video.VideoPlaylistModel">
+            <summary>
+            Holds the information related to a video's playlist
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoPlaylistModel.PlaylistName">
+            <summary>
+            Playlist's name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoPlaylistModel.PlaylistDescription">
+            <summary>
+            Playlist's description
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.VideoStatusModel">
             <summary>
             Represents a Video Status
