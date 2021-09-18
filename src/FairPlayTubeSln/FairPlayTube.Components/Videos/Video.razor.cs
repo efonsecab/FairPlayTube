@@ -14,11 +14,15 @@ namespace FairPlayTube.Components.Videos
         [Parameter]
         public bool AllowDelete { get; set; } = false;
         [Parameter]
+        public bool AllowDownload { get; set; } = false;
+        [Parameter]
         public bool ShowDetailsLink { get; set; } = false;
         [Parameter]
         public bool ShowTwitterShareButton { get; set; } = false;
         [Parameter]
         public EventCallback<VideoInfoModel> OnDelete { get; set; }
+        [Parameter]
+        public EventCallback<VideoInfoModel> OnDownload { get; set; }
         [Inject]
         private IVideoEditAccessTokenProvider VideoEditAccessTokenProvider { get; set; }
         [Inject]
@@ -102,7 +106,14 @@ namespace FairPlayTube.Components.Videos
         {
             this.ShowDeleteConfirm = false;
         }
-        
+
+        private async Task OnDownloadClicked()
+        {
+            var downloadTask = OnDownload.InvokeAsync(this.VideoModel);
+            await downloadTask;
+        }
+
+
         private async Task OnDeleteVideoConfirmedAsync()
         {
             var deleteTask = OnDelete.InvokeAsync(this.VideoModel);

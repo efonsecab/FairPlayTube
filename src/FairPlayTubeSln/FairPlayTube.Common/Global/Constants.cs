@@ -98,6 +98,7 @@
                 public const string GetMyPendingVideosQueue = "api/Video/GetMyPendingVideosQueue";
                 public const string GetPersons = "api/Video/GetPersons";
                 public const string DeleteVideo = "api/Video/DeleteVideo";
+                public const string DownloadVideo = "api/Video/DownloadVideo";
             }
             public class UserController
             {
