@@ -334,5 +334,21 @@ namespace FairPlayTube.Controllers
             var result = await this.VideoService.CreateCustomRenderingProject(projectModel, cancellationToken);
             return result;
         }
+
+        /// <summary>
+        /// Download the source file for the specified video id
+        /// </summary>
+        /// <param name="videoId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        [FeatureGate(FeatureType.PaidFeature)]
+        public async Task<FileStreamResult> DownloadVideo(string videoId, CancellationToken cancellationToken)
+        {
+            var memoryStream = await this.VideoService.DownloadVideoAsync(videoId, cancellationToken);
+            var fileName = await this.VideoService.GetVideoFileNameAsync(videoId, cancellationToken);
+            return File(memoryStream, System.Net.Mime.MediaTypeNames.Application.Octet, fileDownloadName: fileName);
+        }
     }
 }

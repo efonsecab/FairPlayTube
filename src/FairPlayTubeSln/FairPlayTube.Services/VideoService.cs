@@ -571,9 +571,15 @@ namespace FairPlayTube.Services
         public async Task<MemoryStream> DownloadVideoAsync(string videoId, CancellationToken cancellationToken)
         {
             var url = await this.AzureVideoIndexerService.GetVideoSourceFileDownloadUrlAsync(videoId, cancellationToken);
-            var videoBytes = await this.CustomHttpClient.GetByteArrayAsync(url);
+            var videoBytes = await this.CustomHttpClient.GetByteArrayAsync(url, cancellationToken);
             MemoryStream stream = new MemoryStream(videoBytes);
             return stream;
+        }
+
+        public async Task<string> GetVideoFileNameAsync(string videoId, CancellationToken cancellationToken)
+        {
+            var videoInfo = await this.FairplaytubeDatabaseContext.VideoInfo.SingleAsync(p => p.VideoId == videoId, cancellationToken);
+            return videoInfo.FileName;
         }
     }
 }
