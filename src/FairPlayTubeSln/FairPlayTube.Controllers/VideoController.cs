@@ -341,14 +341,17 @@ namespace FairPlayTube.Controllers
         /// <param name="videoId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [HttpPost("[action]")]
+        [HttpGet("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         [FeatureGate(FeatureType.PaidFeature)]
-        public async Task<FileStreamResult> DownloadVideo(string videoId, CancellationToken cancellationToken)
+        public async Task<DownloadVideoModel> DownloadVideo(string videoId, CancellationToken cancellationToken)
         {
-            var memoryStream = await this.VideoService.DownloadVideoAsync(videoId, cancellationToken);
-            var fileName = await this.VideoService.GetVideoFileNameAsync(videoId, cancellationToken);
-            return File(memoryStream, System.Net.Mime.MediaTypeNames.Application.Octet, fileDownloadName: fileName);
+            var videoBytes = await this.VideoService.DownloadVideoAsync(videoId, cancellationToken);
+            return new DownloadVideoModel()
+            {
+                VideoId = videoId,
+                VideoBytes = videoBytes
+            };
         }
     }
 }

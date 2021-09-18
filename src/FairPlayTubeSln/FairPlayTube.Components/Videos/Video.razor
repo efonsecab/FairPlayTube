@@ -54,6 +54,14 @@
                             <i class="bi bi-x-circle-fill"></i>
                         </button>
                     }
+                    @if (AllowDownload)
+                    {
+                        <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Download"
+                                @onclick="OnDownloadClicked">
+                            <i class="bi bi-cloud-download-fill"></i>
+                        </button>
+                    }
+
                 </div>
             </CardHeader>
             <CardBody>

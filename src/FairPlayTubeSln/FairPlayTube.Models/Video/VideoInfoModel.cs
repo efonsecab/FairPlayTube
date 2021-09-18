@@ -14,9 +14,13 @@ namespace FairPlayTube.Models.Video
         /// </summary>
         public string VideoId { get; set; }
         /// <summary>
-        /// NAme of the Video
+        /// Name of the Video
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// File's name
+        /// </summary>
+        public string FileName { get; set; }
         /// <summary>
         /// Video's Description
         /// </summary>

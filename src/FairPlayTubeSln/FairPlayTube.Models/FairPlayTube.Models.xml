@@ -749,6 +749,21 @@
             Available Funds for the user
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Video.DownloadVideoModel">
+            <summary>
+            Holds the bytes that composed the video with the given VideoId
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.DownloadVideoModel.VideoId">
+            <summary>
+            VideoId
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.DownloadVideoModel.VideoBytes">
+            <summary>
+            File bytes
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.GlobalKeywordModel">
             <summary>
             Represents the Global Keywords
@@ -871,7 +886,12 @@
         </member>
         <member name="P:FairPlayTube.Models.Video.VideoInfoModel.Name">
             <summary>
-            NAme of the Video
+            Name of the Video
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.FileName">
+            <summary>
+            File's name
             </summary>
         </member>
         <member name="P:FairPlayTube.Models.Video.VideoInfoModel.Description">
