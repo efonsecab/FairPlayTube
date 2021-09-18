@@ -959,6 +959,11 @@
             Video's Price
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.PriceAfterCommission">
+            <summary>
+            Video's price after commission
+            </summary>
+        </member>
         <member name="P:FairPlayTube.Models.Video.VideoInfoModel.AvailableJobs">
             <summary>
             Available Jobs associated with this video

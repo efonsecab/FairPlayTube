@@ -76,6 +76,10 @@ namespace FairPlayTube.Models.Video
         /// </summary>
         public int Price { get; set; }
         /// <summary>
+        /// Video's price after commission
+        /// </summary>
+        public decimal PriceAfterCommission => Price + (Price * Common.Global.Constants.Commissions.VideoAccess);
+        /// <summary>
         /// Available Jobs associated with this video
         /// </summary>
         public int AvailableJobs { get; set; }
