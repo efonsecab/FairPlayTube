@@ -70,5 +70,11 @@ namespace FairPlayTube.Client.Pages.Users
                 this.IsLoading = false;
             }
         }
+
+        private string GetUserHomePageLink(UserModel userModel)
+        {
+            return Common.Global.Constants.UserPagesRoutes.UserHomePage
+                .Replace("{UserId:long}", userModel.ApplicationUserId.ToString());
+        }
     }
 }

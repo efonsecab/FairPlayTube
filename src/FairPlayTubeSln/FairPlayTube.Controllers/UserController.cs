@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.FeatureManagement.Mvc;
+using System;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -94,18 +95,28 @@ namespace FairPlayTube.Controllers
         /// <summary>
         /// Invites a user to use the system
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="inviteUserModel"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
-        public async Task InviteUser(InviteUserModel model)
+        public async Task InviteUser(InviteUserModel inviteUserModel, CancellationToken cancellationToken)
         {
+            var userInvitation = await this.UserService.InviteUserAsync(inviteUserModel, cancellationToken: cancellationToken);
             var userName = this.CurrentUserProvider.GetUsername();
-            StringBuilder completeBody = new StringBuilder(model.CustomMessage);
+            StringBuilder completeBody = new StringBuilder(inviteUserModel.CustomMessage);
             completeBody.AppendLine();
-            string link = $"<a href='{this.Request.Host.Value}'>{this.Request.Host.Value}</a>";
+            string baseUrl = $"{this.Request.Scheme}://{this.Request.Host.Value}";
+            var userHomePagePath = Common.Global.Constants.UserPagesRoutes.UserHomePage
+                .Replace("{UserId:long}", userInvitation.InvitingApplicationUserId.ToString());
+            string invitingUserHomeUrl = $"{baseUrl}{userHomePagePath}";
+            string authPath = $"authentication/login?returnUrl={Uri.EscapeDataString(invitingUserHomeUrl)}";
+            string fullLink = $"{baseUrl}/{authPath}";
+            string link = $"<a href='{fullLink}'>{fullLink}</a>";
             completeBody.AppendLine(link);
-            await this.EmailService.SendEmail(model.ToEmailAddress, $"{userName} is inviting you to " +
-                $"FairPlayTube: The Next Generation Of Video Sharing Portals",
+            await this.EmailService.SendEmail(inviteUserModel.ToEmailAddress, $"{userName} is inviting you to " +
+                $"FairPlayTube: The Next Generation Of Video Sharing Portals. " +
+                $"Once you are on the website you can create your account using the Sign up link." +
+                $"Your invite code is: {userInvitation.InviteCode}",
                 completeBody.ToString(), true);
         }
 
