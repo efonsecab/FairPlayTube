@@ -22,7 +22,7 @@
             @Body
         </div>
 
-        <footer id="" class="footer mt-auto py-3 bg-light position-fixed w-100 bottom-0" 
+        <footer id="" class="footer mt-auto py-3 bg-light position-fixed w-100 bottom-0"
                 style="background-color: #f7f7f7 !important; border-bottom: 1px solid #d6d5d5 !important;">
             <div class="container">
                 <a class="text-black-50" href="https://cr.linkedin.com/in/pticostarica" target="_blank">Designed by PTI Costa Rica</a>
@@ -62,6 +62,26 @@
 }
 
 @code{
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!this.NavigationManager.Uri.EndsWith(Common.Global.Constants.UserPagesRoutes.ValidateInviteCode) &&
+            this.AuthenticationStateTask != null)
+        {
+            var state = await AuthenticationStateTask;
+            if (state != null && state.User != null && state.User.Identity.IsAuthenticated)
+            {
+                var userStatus = state.User.Claims.Where(p => p.Type == "UserStatus").Single();
+                if (userStatus.Value != "Approved")
+                    NavigationManager.NavigateTo(Common.Global.Constants.UserPagesRoutes.ValidateInviteCode);
+            }
+        }
+    }
+
     private bool ShowSupportBot { get; set; } = false;
 
     private void OpenSupportBot()
