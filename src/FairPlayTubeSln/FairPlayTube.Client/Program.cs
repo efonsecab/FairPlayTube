@@ -4,6 +4,7 @@ using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Configuration;
 using FairPlayTube.Common.Interfaces;
+using FairPlayTube.Components.GoogleAdsense;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -49,6 +50,12 @@ namespace FairPlayTube.Client
             AzureQnABotConfiguration azureQnABotConfiguration =
                 builder.Configuration.GetSection("AzureQnABotConfiguration").Get<AzureQnABotConfiguration>();
             builder.Services.AddSingleton(azureQnABotConfiguration);
+
+
+            DisplayResponsiveAdConfiguration displayResponsiveAdConfiguration =
+                builder.Configuration.GetSection("DisplayResponsiveAdConfiguration")
+                .Get<DisplayResponsiveAdConfiguration>();
+            builder.Services.AddSingleton(displayResponsiveAdConfiguration);
 
             builder.Services.AddTransient<IVideoEditAccessTokenProvider, VideoEditAccessTokenProvider>();
 
