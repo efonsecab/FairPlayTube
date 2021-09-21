@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlayTube.DataAccess.Models
 {
+    [Index(nameof(InviteCode), Name = "UI_UserInvitation_InviteCode", IsUnique = true)]
+    [Index(nameof(InvitedUserEmail), Name = "UI_UserInvitation_InvitedUserEmail", IsUnique = true)]
     public partial class UserInvitation
     {
         [Key]
@@ -17,6 +19,7 @@ namespace FairPlayTube.DataAccess.Models
         [Required]
         [StringLength(150)]
         public string InvitedUserEmail { get; set; }
+        public Guid InviteCode { get; set; }
         public DateTimeOffset RowCreationDateTime { get; set; }
         [Required]
         [StringLength(256)]
