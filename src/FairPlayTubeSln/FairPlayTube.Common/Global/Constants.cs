@@ -108,6 +108,7 @@
                 public const string InviteUser = "api/User/InviteUser";
                 public const string AddUserFollower = "API/uSER/AddUserFollower";
                 public const string SendMessage = "api/User/SendMessage";
+                public const string GetMyUserStatus = "api/User/GetMyUserStatus";
             }
 
             public class UserProfileController

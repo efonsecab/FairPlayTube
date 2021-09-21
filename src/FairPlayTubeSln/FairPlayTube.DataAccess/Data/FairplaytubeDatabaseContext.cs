@@ -23,6 +23,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<ApplicationUser> ApplicationUser { get; set; }
         public virtual DbSet<ApplicationUserFeature> ApplicationUserFeature { get; set; }
         public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }
+        public virtual DbSet<ApplicationUserStatus> ApplicationUserStatus { get; set; }
         public virtual DbSet<Brand> Brand { get; set; }
         public virtual DbSet<BrandVideo> BrandVideo { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
@@ -56,6 +57,17 @@ namespace FairPlayTube.DataAccess.Data
         {
             modelBuilder.HasAnnotation("Scaffolding:ConnectionString", "Data Source=(local);Initial Catalog=FairPlayTube.Database;Integrated Security=true");
 
+            modelBuilder.Entity<ApplicationUser>(entity =>
+            {
+                entity.Property(e => e.ApplicationUserStatusId).HasDefaultValueSql("1");
+
+                entity.HasOne(d => d.ApplicationUserStatus)
+                    .WithMany(p => p.ApplicationUser)
+                    .HasForeignKey(d => d.ApplicationUserStatusId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ApplicationUser_ApplicationUserStatus");
+            });
+
             modelBuilder.Entity<ApplicationUserFeature>(entity =>
             {
                 entity.HasOne(d => d.ApplicationUser)
@@ -84,6 +96,11 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey<ApplicationUserRole>(d => d.ApplicationUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ApplicationUserRole_ApplicationUser");
+            });
+
+            modelBuilder.Entity<ApplicationUserStatus>(entity =>
+            {
+                entity.Property(e => e.ApplicationUserStatusId).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<Brand>(entity =>

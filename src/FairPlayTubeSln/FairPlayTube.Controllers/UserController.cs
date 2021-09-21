@@ -150,5 +150,22 @@ namespace FairPlayTube.Controllers
                 followedUserObjectId: followedApplicationUserId, cancellationToken);
             return Ok();
         }
+
+        /// <summary>
+        /// Gets a user status
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        [Authorize(Roles = Constants.Roles.User)]
+        public async Task<string> GetMyUserStatus(CancellationToken cancellationToken)
+        {
+            var userAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
+            var userStatus = await this.FairplaytubeDatabaseContext.ApplicationUser
+                .Include(p => p.ApplicationUserStatus)
+                .Where(p => p.AzureAdB2cobjectId.ToString() == userAdB2CObjectId)
+                .Select(p => p.ApplicationUserStatus.Name).SingleAsync();
+            return userStatus;
+        }
     }
 }
