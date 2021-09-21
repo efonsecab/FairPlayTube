@@ -110,6 +110,7 @@
                 public const string AddUserFollower = "API/uSER/AddUserFollower";
                 public const string SendMessage = "api/User/SendMessage";
                 public const string GetMyUserStatus = "api/User/GetMyUserStatus";
+                public const string ValidateUserInviteCode = "api/User/ValidateUserInviteCode";
             }
 
             public class UserProfileController

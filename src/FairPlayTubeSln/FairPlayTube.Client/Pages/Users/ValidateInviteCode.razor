@@ -1,8 +1,7 @@
 ﻿<h3>ValidateInviteCode</h3>
 
-Type your Invite Code
-<input type="text" />
-
-@code {
-
-}
+<div class="mb-3">
+    <label class="form-label">Please type your Invite Code</label>
+    <input type="text" class="form-control" @bind-value="@InviteCode" />
+    <button type="button" @onclick="( async ()=> await OnValidateInviteCode())">Validate</button>
+</div>

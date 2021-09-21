@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FairPlayTube.Client.Services;
+using FairPlayTube.ClientServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -12,5 +14,25 @@ namespace FairPlayTube.Client.Pages.Users
 
     public partial class ValidateInviteCode
     {
+        [Inject]
+        private ToastifyService ToastifyService { get; set; }
+        [Inject]
+        private UserClientService UserClientService { get; set; }
+        private string InviteCode { get; set; }
+        private async Task OnValidateInviteCode()
+        {
+            try
+            {
+                var parsedInvitedCode = Guid.Parse(InviteCode);
+                await this.UserClientService.ValidateInviteCodeAsync(parsedInvitedCode);
+                await this.ToastifyService
+                    .DisplaySuccessNotification("Invite code has been validated please log out and log in again",
+                    duration:0);
+            }
+            catch (Exception ex)
+            {
+                await this.ToastifyService.DisplayErrorNotification(ex.Message);
+            }
+        }
     }
 }

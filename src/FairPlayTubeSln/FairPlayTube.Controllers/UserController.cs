@@ -133,8 +133,8 @@ namespace FairPlayTube.Controllers
             var senderObjectId = this.CurrentUserProvider.GetObjectId();
             await this.MessageService.SendMessageAsync(model, senderObjectId, cancellationToken);
         }
-    
- 
+
+
         /// <summary>
         /// Adds a new user followed by the logged in user
         /// </summary>
@@ -166,6 +166,35 @@ namespace FairPlayTube.Controllers
                 .Where(p => p.AzureAdB2cobjectId.ToString() == userAdB2CObjectId)
                 .Select(p => p.ApplicationUserStatus.Name).SingleAsync();
             return userStatus;
+        }
+
+        /// <summary>
+        /// Validates a user invite code
+        /// </summary>
+        /// <param name="userInviteCode"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        [Authorize(Roles = Constants.Roles.User)]
+        public async Task<IActionResult> ValidateUserInviteCode([FromQuery] string userInviteCode)
+        {
+            var userAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
+            var userInvitation = await this.FairplaytubeDatabaseContext.UserInvitation
+                .Where(p => p.InviteCode.ToString() == userInviteCode).SingleOrDefaultAsync();
+            if (userInvitation != null)
+            {
+                var userEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
+                    .Include(p => p.ApplicationUserStatus)
+                    .Where(p => p.AzureAdB2cobjectId.ToString() == userAdB2CObjectId)
+                    .SingleAsync();
+                if (userEntity.EmailAddress.ToLower() != userInvitation.InvitedUserEmail.ToLower())
+                {
+                    throw new Exception("Account email does not match invite code email");
+                }
+                userEntity.ApplicationUserStatusId = 2;
+                await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+                return Ok();
+            }
+            throw new Exception("Invalid Invite Code");
         }
     }
 }
