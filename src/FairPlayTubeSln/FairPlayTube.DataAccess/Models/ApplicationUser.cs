@@ -46,7 +46,11 @@ namespace FairPlayTube.DataAccess.Models
         public Guid AzureAdB2cobjectId { get; set; }
         [Column(TypeName = "money")]
         public decimal AvailableFunds { get; set; }
+        public short ApplicationUserStatusId { get; set; }
 
+        [ForeignKey(nameof(ApplicationUserStatusId))]
+        [InverseProperty("ApplicationUser")]
+        public virtual ApplicationUserStatus ApplicationUserStatus { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ApplicationUserRole ApplicationUserRole { get; set; }
         [InverseProperty("ApplicationUser")]

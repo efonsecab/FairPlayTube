@@ -101,6 +101,20 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:FairPlayTube.Controllers.UserController.GetMyUserStatus(System.Threading.CancellationToken)">
+            <summary>
+            Gets a user status
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserController.ValidateUserInviteCode(System.String)">
+            <summary>
+            Validates a user invite code
+            </summary>
+            <param name="userInviteCode"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.UserProfileController">
             <summary>
             Handles all the data regarind a USer's Profile

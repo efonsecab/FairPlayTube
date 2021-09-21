@@ -126,4 +126,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="VideoPlaylistId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="0fe87c9c-5cfc-4834-b0f8-3a76546c471b" ChangeDateTime="09/21/2021 13:00:59">
+    <Property Name="ElementName" Value="[dbo].[ApplicationUserStatus].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ApplicationUserStatus]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ApplicationUserStatusId" />
+  </Operation>
 </Operations>

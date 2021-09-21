@@ -83,5 +83,13 @@ namespace FairPlayTube.ClientServices
                     throw new Exception(response.ReasonPhrase);
             }
         }
+
+        public async Task ValidateInviteCodeAsync(Guid inviteCode)
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.GetAsync(
+                $"{Common.Global.Constants.ApiRoutes.UserController.ValidateUserInviteCode}?userInviteCode={inviteCode}");
+            response.EnsureSuccessStatusCode();
+        }
     }
 }

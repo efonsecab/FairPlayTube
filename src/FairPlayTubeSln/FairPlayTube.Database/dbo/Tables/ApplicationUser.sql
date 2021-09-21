@@ -3,8 +3,10 @@
     [FullName] NVARCHAR(150) NOT NULL, 
     [EmailAddress] NVARCHAR(150) NOT NULL, 
     [LastLogIn] DATETIMEOFFSET NOT NULL, 
-    [AzureAdB2CObjectId] UNIQUEIDENTIFIER NOT NULL,
-    [AvailableFunds] MONEY NOT NULL DEFAULT 0
+    [AzureAdB2CObjectId] UNIQUEIDENTIFIER NOT NULL ,
+    [AvailableFunds] MONEY NOT NULL DEFAULT 0, 
+    [ApplicationUserStatusId] SMALLINT NOT NULL DEFAULT 1, 
+    CONSTRAINT [FK_ApplicationUser_ApplicationUserStatus] FOREIGN KEY ([ApplicationUserStatusId]) REFERENCES [ApplicationUserStatus]([ApplicationUserStatusId]),
 );
 
 
