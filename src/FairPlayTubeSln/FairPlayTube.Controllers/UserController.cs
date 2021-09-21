@@ -112,11 +112,11 @@ namespace FairPlayTube.Controllers
             string authPath = $"authentication/login?returnUrl={Uri.EscapeDataString(invitingUserHomeUrl)}";
             string fullLink = $"{baseUrl}/{authPath}";
             string link = $"<a href='{fullLink}'>{fullLink}</a>";
+            completeBody.AppendLine($"Once you are on the website you can create your account using the Sign up link." +
+                $"Your invite code is: {userInvitation.InviteCode}");
             completeBody.AppendLine(link);
             await this.EmailService.SendEmail(inviteUserModel.ToEmailAddress, $"{userName} is inviting you to " +
-                $"FairPlayTube: The Next Generation Of Video Sharing Portals. " +
-                $"Once you are on the website you can create your account using the Sign up link." +
-                $"Your invite code is: {userInvitation.InviteCode}",
+                $"FairPlayTube: The Next Generation Of Video Sharing Portals.",
                 completeBody.ToString(), true);
         }
 
