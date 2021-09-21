@@ -77,11 +77,12 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:FairPlayTube.Controllers.UserController.InviteUser(FairPlayTube.Models.Invites.InviteUserModel)">
+        <member name="M:FairPlayTube.Controllers.UserController.InviteUser(FairPlayTube.Models.Invites.InviteUserModel,System.Threading.CancellationToken)">
             <summary>
             Invites a user to use the system
             </summary>
-            <param name="model"></param>
+            <param name="inviteUserModel"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="M:FairPlayTube.Controllers.UserController.SendMessage(FairPlayTube.Models.UserMessage.UserMessageModel,System.Threading.CancellationToken)">

@@ -65,6 +65,7 @@
             public const string MyFunds = "/Users/MyFunds";
             public const string Edit = "/Users/Videos/Edit/{VideoId}";
             public const string MyPendingVideosStatus = "/Users/Videos/MyPendingVideosStatus";
+            public const string UserHomePage = "/Users/Home/{UserId:long}";
         }
 
         public class RootPagesRoutes

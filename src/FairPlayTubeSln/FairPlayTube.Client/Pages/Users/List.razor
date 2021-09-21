@@ -14,7 +14,7 @@
             {
                 <Card Width="33.3%">
                     <CardHeader>
-                        @user.Name
+                        <a href="@GetUserHomePageLink(user)">@user.Name</a>
                         <button type="button" @onclick="@(_ => OnOpenMessageSenderModal(user))">
                             <i class="bi bi-chat-left-text-fill" />
                         </button>
