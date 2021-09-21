@@ -5,9 +5,13 @@
             @foreach (var singleVideo in this.AllVideos)
             {
                 <div class="col">
-                    <Video AllowEdit="AllowEdit" AllowDelete="AllowDelete" AllowDownload="AllowDownload" VideoModel="singleVideo" 
+                    <Video AllowEdit="AllowEdit" AllowDelete="AllowDelete" AllowDownload="AllowDownload" VideoModel="singleVideo"
                            ShowDetailsLink="true" OnDelete="OnDelete" OnDownload="OnDownload"></Video>
                 </div>
+                @if ((ItemPos++) % 2 == 0)
+                {
+                    <FairPlayTube.Components.GoogleAdsense.DisplayResponsiveAd></FairPlayTube.Components.GoogleAdsense.DisplayResponsiveAd>
+                }
             }
         </div>
     </div>

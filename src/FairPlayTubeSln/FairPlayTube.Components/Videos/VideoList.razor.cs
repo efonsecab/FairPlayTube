@@ -26,6 +26,7 @@ namespace FairPlayTube.Components.Videos
         private bool ShowInsights { get; set; }
         private bool ShowMonetizationLinks { get; set; }
         private bool ShowVideoDescription { get; set; }
+        private int ItemPos { get; set; } = 0;
 
         private async Task SelectVideo(VideoInfoModel videoInfoModel)
         {
