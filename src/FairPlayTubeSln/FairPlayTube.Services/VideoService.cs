@@ -62,7 +62,7 @@ namespace FairPlayTube.Services
             var videoIndex = await GetVideoIndexerStatus(videoInfo.VideoId, cancellationToken);
             await SaveIndexedVideoKeywordsAsync(videoInfo.VideoId, cancellationToken);
             await SaveVideoThumbnailAsync(videoInfo.VideoId, videoIndex.videos.First().thumbnailId, cancellationToken);
-            await UpdateVideoIndexStatusAsync(Common.Global.Enums.VideoIndexStatus.Processed,cancellationToken: cancellationToken, videoInfo.VideoId);
+            await UpdateVideoIndexStatusAsync(Common.Global.Enums.VideoIndexStatus.Processed, cancellationToken: cancellationToken, videoInfo.VideoId);
         }
 
         public async Task<bool> DeleteVideoAsync(string userAzureAdB2cObjectId, string videoId, CancellationToken cancellationToken)
@@ -75,10 +75,10 @@ namespace FairPlayTube.Services
             if (videoEntity == null)
                 throw new Exception($"Unable to find the video with id {videoId}");
 
-            if(videoEntity.VideoIndexStatusId != (short)Common.Global.Enums.VideoIndexStatus.Processed)
+            if (videoEntity.VideoIndexStatusId != (short)Common.Global.Enums.VideoIndexStatus.Processed)
                 throw new InvalidOperationException($"Video with id {videoId} cannot be deleted because it has not been indexed yet");
 
-            if(videoEntity.VideoAccessTransaction.Any())
+            if (videoEntity.VideoAccessTransaction.Any())
                 throw new InvalidOperationException($"Video with id {videoId} cannot be deleted because it was already bought");
 
             // DELETING VIDEO KEYWORDS
@@ -222,6 +222,12 @@ namespace FairPlayTube.Services
 
         public async Task BuyVideoAccessAsync(string azureAdB2CObjectId, string videoId, CancellationToken cancellationToken)
         {
+            var videoAccessEntity = await this.FairplaytubeDatabaseContext.VideoAccessTransaction
+                .Where(p => p.VideoInfo.VideoId == videoId &&
+                p.BuyerApplicationUser.AzureAdB2cobjectId.ToString() == azureAdB2CObjectId)
+                .SingleOrDefaultAsync();
+            if (videoAccessEntity != null)
+                throw new Exception("User has already bought access to the specified video");
             var userEntity = await this.FairplaytubeDatabaseContext.ApplicationUser.SingleAsync(p => p.AzureAdB2cobjectId.ToString() == azureAdB2CObjectId);
             var videoInfoEntity = await this.FairplaytubeDatabaseContext.VideoInfo.SingleAsync(p => p.VideoId == videoId);
             var videoPrice = videoInfoEntity.Price;
@@ -267,6 +273,16 @@ namespace FairPlayTube.Services
             && p.VideoVisibilityId == (short)Common.Global.Enums.VideoVisibility.Public
             )
                 .OrderByDescending(p => p.VideoInfoId);
+        }
+
+        public async Task<string[]> GetBoughtVideosIds(string userObjectId)
+        {
+            var boughtVideos = this.FairplaytubeDatabaseContext.VideoAccessTransaction
+                .Include(p => p.VideoInfo).Include(p => p.BuyerApplicationUser)
+                .Where(p => p.BuyerApplicationUser.AzureAdB2cobjectId.ToString() == userObjectId)
+                .Select(p => p.VideoInfo);
+            var result = await boughtVideos.Select(p => p.VideoId).ToArrayAsync();
+            return result;
         }
 
         public IQueryable<VideoInfo> GetPublicProcessedVideosByKeyword(string keyword)
@@ -553,13 +569,13 @@ namespace FairPlayTube.Services
             {
                 name = projectModel.Name,
                 videosRanges = projectModel.Videos.Select(p =>
-                new PTI.Microservices.Library.AzureVideoIndexer.Models.CreateProject.Videosrange() 
+                new PTI.Microservices.Library.AzureVideoIndexer.Models.CreateProject.Videosrange()
                 {
-                    videoId=p.VideoId,
-                    range=new PTI.Microservices.Library.AzureVideoIndexer.Models.CreateProject.Range()
+                    videoId = p.VideoId,
+                    range = new PTI.Microservices.Library.AzureVideoIndexer.Models.CreateProject.Range()
                     {
-                        start=p.Start,
-                        end=p.End
+                        start = p.Start,
+                        end = p.End
                     }
                 }).ToArray()
             };
@@ -567,7 +583,7 @@ namespace FairPlayTube.Services
             projectModel.ProjectId = result.id;
             return projectModel;
         }
-    
+
         public async Task<byte[]> DownloadVideoAsync(string videoId, CancellationToken cancellationToken)
         {
             var url = await this.AzureVideoIndexerService.GetVideoSourceFileDownloadUrlAsync(videoId, cancellationToken);

@@ -81,6 +81,20 @@ namespace FairPlayTube.Controllers
         }
 
         /// <summary>
+        /// Gets all of the videosids for the bought videos
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task<string[]> GetBoughtVideosIds(CancellationToken cancellationToken)
+        {
+            var userObjectId = this.CurrentUserProvider.GetObjectId();
+            var result = await this.VideoService.GetBoughtVideosIds(userObjectId);
+            return result;
+        }
+
+        /// <summary>
         /// Gets videos by person
         /// </summary>
         /// <param name="personName"></param>

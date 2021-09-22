@@ -1,6 +1,7 @@
 ﻿using FairPlayTube.Common.Interfaces;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Components;
+using System;
 using System.Threading.Tasks;
 
 namespace FairPlayTube.Components.Videos
@@ -23,6 +24,8 @@ namespace FairPlayTube.Components.Videos
         public EventCallback<VideoInfoModel> OnDelete { get; set; }
         [Parameter]
         public EventCallback<VideoInfoModel> OnDownload { get; set; }
+        [Parameter]
+        public EventCallback<VideoInfoModel> OnBuyVideoAccess { get; set; }
         [Inject]
         private IVideoEditAccessTokenProvider VideoEditAccessTokenProvider { get; set; }
         [Inject]
@@ -95,6 +98,11 @@ namespace FairPlayTube.Components.Videos
             string formattedUrl = Common.Global.Constants.PublicVideosPages.Details
                 .Replace("{VideoId}", VideoModel.VideoId);
             this.NavigationManager.NavigateTo(formattedUrl);
+        }
+
+        private async Task OnBuyVideoAccessClicked()
+        {
+            await this.OnBuyVideoAccess.InvokeAsync(this.VideoModel);
         }
 
         private void OnDeleteVideoClicked()

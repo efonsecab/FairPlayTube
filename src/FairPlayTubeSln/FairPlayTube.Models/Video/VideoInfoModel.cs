@@ -103,5 +103,9 @@ namespace FairPlayTube.Models.Video
         /// Video's indexing status
         /// </summary>
         public VideoIndexStatus VideoIndexStatus { get; set; }
+        /// <summary>
+        /// Specified is the logged in user already bought the video
+        /// </summary>
+        public bool IsBought { get; set; }
     }
 }
