@@ -186,6 +186,13 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.GetBoughtVideosIds(System.Threading.CancellationToken)">
+            <summary>
+            Gets all of the videosids for the bought videos
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="M:FairPlayTube.Controllers.VideoController.SearchVideosByPersonName(System.String,System.Threading.CancellationToken)">
             <summary>
             Gets videos by person

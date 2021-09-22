@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FairPlayTube.Client.Pages
@@ -23,18 +24,34 @@ namespace FairPlayTube.Client.Pages
         private bool AllowDownload { get; set; } = false;
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+        public string[] AllBoughVideosIds { get; private set; }
 
         protected async override Task OnInitializedAsync()
+        {
+            await LoadData();
+        }
+
+        private async Task LoadData()
         {
             try
             {
                 IsLoading = true;
-                //var state = await this.AuthenticationStateTask;
+                var state = await this.AuthenticationStateTask;
                 //if (state.User.Identity.IsAuthenticated)
                 //{
                 //    AllowDownload = true;
                 //}
-                this.AllVideos = await this.VideoClientService.GetPublicProcessedVideosAsync();
+                var allVideos = await this.VideoClientService.GetPublicProcessedVideosAsync();
+                if (state.User.Identity.IsAuthenticated)
+                {
+                    this.AllBoughVideosIds = await this.VideoClientService.GetBoughtVideosIdsAsync();
+                    var boughVideos = allVideos.Where(p => this.AllBoughVideosIds.Contains(p.VideoId));
+                    foreach (var singleBoughtVideo in boughVideos)
+                    {
+                        singleBoughtVideo.IsBought = true;
+                    }
+                }
+                this.AllVideos = allVideos;
             }
             catch (Exception ex)
             {
@@ -63,6 +80,21 @@ namespace FairPlayTube.Client.Pages
             catch (Exception ex)
             {
                 await this.ToastifyService.DisplayErrorNotification(ex.Message);
+            }
+        }
+
+        private async Task OnBuyVideoAccess(VideoInfoModel videoInfoModel)
+        {
+            try
+            {
+                await VideoClientService.BuyVideoAccessAsync(videoInfoModel.VideoId);
+                await ToastifyService.DisplaySuccessNotification("Video Access successfully bought");
+                await LoadData();
+                StateHasChanged();
+            }
+            catch (Exception ex)
+            {
+                await ToastifyService.DisplayErrorNotification(ex.Message);
             }
         }
     }

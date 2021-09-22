@@ -230,8 +230,6 @@ namespace FairPlayTube.DataAccess.Data
 
             modelBuilder.Entity<VideoAccessTransaction>(entity =>
             {
-                entity.Property(e => e.VideoAccessTransactionId).ValueGeneratedNever();
-
                 entity.HasOne(d => d.BuyerApplicationUser)
                     .WithMany(p => p.VideoAccessTransaction)
                     .HasForeignKey(d => d.BuyerApplicationUserId)

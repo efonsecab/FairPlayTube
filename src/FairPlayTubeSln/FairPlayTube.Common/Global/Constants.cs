@@ -101,6 +101,7 @@
                 public const string GetPersons = "api/Video/GetPersons";
                 public const string DeleteVideo = "api/Video/DeleteVideo";
                 public const string DownloadVideo = "api/Video/DownloadVideo";
+                public const string GetBoughtVideosIds = "api/Video/GetBoughtVideosIds";
             }
             public class UserController
             {

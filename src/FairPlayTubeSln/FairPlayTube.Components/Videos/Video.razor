@@ -17,9 +17,11 @@
                             @onclick="@(  ()=> OnVideoDescriptionClicked())" data-bs-toggle="tooltip" data-bs-placement="top" title="Description">
                         <i class="bi bi-card-text"></i>
                     </button>
-                    @if (VideoModel.Price > 0)
+                    @if (VideoModel.Price > 0 && !VideoModel.IsBought)
                     {
-                        <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Price">
+                        <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" 
+                                data-bs-placement="top" title="Buy Video Access"
+                                @onclick="OnBuyVideoAccessClicked">
                             <i class="bi bi-cart-plus-fill"></i>
                         </button>
                     }

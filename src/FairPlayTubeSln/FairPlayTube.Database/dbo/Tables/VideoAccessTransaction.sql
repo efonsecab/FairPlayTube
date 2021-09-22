@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[VideoAccessTransaction]
 (
-	[VideoAccessTransactionId] BIGINT NOT NULL CONSTRAINT PK_VideoAccessTransaction PRIMARY KEY, 
+	[VideoAccessTransactionId] BIGINT NOT NULL CONSTRAINT PK_VideoAccessTransaction PRIMARY KEY IDENTITY, 
     [VideoInfoId] BIGINT NOT NULL, 
     [BuyerApplicationUserId] BIGINT NOT NULL, 
     [AppliedPrice] MONEY NOT NULL, 
