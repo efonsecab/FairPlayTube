@@ -66,7 +66,8 @@
             public const string Edit = "/Users/Videos/Edit/{VideoId}";
             public const string MyPendingVideosStatus = "/Users/Videos/MyPendingVideosStatus";
             public const string UserHomePage = "/Users/Home/{UserId:long}";
-            public const string ValidateInviteCode = "/User/ValidateInviteCode";
+            public const string ValidateInviteCode = "/Users/ValidateInviteCode";
+            public const string InviteUser = "/Users/InviteUser";
         }
 
         public class RootPagesRoutes
