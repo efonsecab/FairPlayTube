@@ -1,0 +1,23 @@
+﻿<h3>Invite User</h3>
+
+<Loading IsLoading="IsLoading"></Loading>
+
+<EditForm Model="@InviteUserModel" OnValidSubmit="OnValidSubmit">
+
+    <div class="mb-3">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Email Address</label>
+        <InputText class="form-control" @bind-Value="@InviteUserModel.ToEmailAddress"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label"></label>
+        <InputTextArea class="form-control" @bind-Value="@InviteUserModel.CustomMessage"
+                       rows="4" cols="50" maxlength="500"></InputTextArea>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Invite User</button>
+    </div>
+</EditForm>
