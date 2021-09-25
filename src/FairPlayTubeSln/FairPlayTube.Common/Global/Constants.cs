@@ -2,6 +2,10 @@
 {
     public class Constants
     {
+        public class RegularExpressions
+        {
+            public const string AllowedFileNameFormat = "^[a-zA-Z0-9 ]+$";
+        }
         public class UploadLimits
         {
             public const int MaxMegabytesAllowed = 300;

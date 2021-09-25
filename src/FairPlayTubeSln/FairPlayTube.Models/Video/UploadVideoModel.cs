@@ -15,6 +15,7 @@ namespace FairPlayTube.Models.Video
         /// </summary>
         [Required]
         [StringLength(50)]
+        [RegularExpression(Constants.RegularExpressions.AllowedFileNameFormat, ErrorMessage ="Name can only contain letters, numbers and spaces")]
         public string Name { get; set; }
         /// <summary>
         /// Video's Description
