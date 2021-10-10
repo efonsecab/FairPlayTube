@@ -4,6 +4,7 @@ using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Configuration;
 using FairPlayTube.Common.Interfaces;
+using FairPlayTube.Components.FacebookButtons;
 using FairPlayTube.Components.GoogleAdsense;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -56,6 +57,11 @@ namespace FairPlayTube.Client
                 builder.Configuration.GetSection("DisplayResponsiveAdConfiguration")
                 .Get<DisplayResponsiveAdConfiguration>();
             builder.Services.AddSingleton(displayResponsiveAdConfiguration);
+
+            FaceBookLikeButtonConfiguration faceBookLikeButtonConfiguration =
+                builder.Configuration.GetSection(nameof(faceBookLikeButtonConfiguration))
+                .Get<FaceBookLikeButtonConfiguration>();
+            builder.Services.AddSingleton(faceBookLikeButtonConfiguration);
 
             builder.Services.AddTransient<IVideoEditAccessTokenProvider, VideoEditAccessTokenProvider>();
 

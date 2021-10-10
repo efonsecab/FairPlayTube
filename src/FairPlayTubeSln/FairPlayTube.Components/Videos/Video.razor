@@ -45,6 +45,9 @@
                         }
                         @if (ShowTwitterShareButton)
                         {
+                            <div style="display:inline;">
+                                <FaceBookLikeButton Url="@this.NavigationManager.Uri"></FaceBookLikeButton>
+                            </div>
                             <div style="vertical-align:bottom; display:inline;">
                                 <TwitterShareButton Text="@this.VideoModel.Name" Via="FTube2021"
                                                     HashTags="FairPlayTube,OpeSource,GitHub"
@@ -147,6 +150,9 @@
                             }
                             @if (ShowTwitterShareButton)
                             {
+                                <div style="display:inline;">
+                                    <FaceBookLikeButton Url="@this.NavigationManager.Uri"></FaceBookLikeButton>
+                                </div>
                                 <div style="vertical-align:bottom; display:inline;">
                                     <TwitterShareButton Text="@this.VideoModel.Name" Via="FTube2021"
                                                         HashTags="FairPlayTube,OpeSource,GitHub"
