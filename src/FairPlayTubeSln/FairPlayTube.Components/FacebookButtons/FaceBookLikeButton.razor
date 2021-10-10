@@ -1,0 +1,12 @@
+﻿@if (!String.IsNullOrWhiteSpace(Url))
+{
+    <iframe src="https://www.facebook.com/plugins/like.php?href=@FormattedUrl&width=220&layout=button_count&action=like&size=small&share=true&height=21&appId=@FaceBookLikeButtonConfiguration.AppId" width="220" height="21" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+}
+@code{
+    [Inject]
+    private FaceBookLikeButtonConfiguration FaceBookLikeButtonConfiguration { get; set; }
+    [Parameter]
+    public string Url { get; set; }
+
+    private string FormattedUrl => System.Net.WebUtility.UrlEncode(Url);
+}
