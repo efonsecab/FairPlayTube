@@ -12,6 +12,9 @@ using FairPlayTube.Services.Configuration;
 using FairPlayTube.Swagger.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -229,6 +232,11 @@ namespace FairPlayTube
                         StatusCode = (int)System.Net.HttpStatusCode.Forbidden
                     };
                 });
+
+            services.AddScoped<AuthenticationStateProvider,
+                    ServerAuthenticationStateProvider>();
+            services.AddScoped<SignOutSessionStateManager>();
+            Client.Program.ConfigureCommonServices(services);
         }
 
         private void ConfigureAzureTextAnalytics(IServiceCollection services)
@@ -412,10 +420,7 @@ namespace FairPlayTube
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
                 endpoints.MapHub<NotificationHub>(Common.Global.Constants.Hubs.NotificationHub);
-                if (env.IsProduction())
-                    endpoints.MapFallbackToFile("index.html");
-                else
-                    endpoints.MapFallbackToFile("index.Development.html");
+                endpoints.MapFallbackToPage("/_Host");
             });
         }
 

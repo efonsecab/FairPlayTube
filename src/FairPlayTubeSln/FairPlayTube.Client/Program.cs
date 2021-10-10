@@ -21,7 +21,6 @@ namespace FairPlayTube.Client
         {
             string assemblyName = "FairPlayTube";
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
-            builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddHttpClient($"{assemblyName}.ServerAPI", client =>
                 client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
@@ -47,10 +46,6 @@ namespace FairPlayTube.Client
             }).AddAccountClaimsPrincipalFactory<
                 RemoteAuthenticationState, CustomRemoteUserAccount, CustomAccountClaimsPrincipalFactory>();
 
-            AzureQnABotConfiguration azureQnABotConfiguration =
-                builder.Configuration.GetSection("AzureQnABotConfiguration").Get<AzureQnABotConfiguration>();
-            builder.Services.AddSingleton(azureQnABotConfiguration);
-
 
             DisplayResponsiveAdConfiguration displayResponsiveAdConfiguration =
                 builder.Configuration.GetSection("DisplayResponsiveAdConfiguration")
@@ -58,15 +53,19 @@ namespace FairPlayTube.Client
             builder.Services.AddSingleton(displayResponsiveAdConfiguration);
 
             builder.Services.AddTransient<IVideoEditAccessTokenProvider, VideoEditAccessTokenProvider>();
-
-            builder.Services.AddTransient<HttpClientService>();
-            builder.Services.AddTransient<ToastifyService>();
-            builder.Services.AddTransient<VideoClientService>();
-            builder.Services.AddTransient<UserProfileClientService>();
-            builder.Services.AddTransient<ToastifyService>();
-            builder.Services.AddTransient<VisitorTrackingClientService>();
-            builder.Services.AddTransient<UserClientService>();
+            ConfigureCommonServices(builder.Services);
             await builder.Build().RunAsync();
+        }
+
+        public static void ConfigureCommonServices(IServiceCollection services)
+        {
+            services.AddTransient<HttpClientService>();
+            services.AddTransient<ToastifyService>();
+            services.AddTransient<VideoClientService>();
+            services.AddTransient<UserProfileClientService>();
+            services.AddTransient<ToastifyService>();
+            services.AddTransient<VisitorTrackingClientService>();
+            services.AddTransient<UserClientService>();
         }
     }
 }
