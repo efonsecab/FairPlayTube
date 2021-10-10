@@ -17,11 +17,11 @@ namespace FairPlayTube.Client
 {
     public class Program
     {
+        private static string assemblyName = "FairPlayTube";
         public static async Task Main(string[] args)
         {
-            string assemblyName = "FairPlayTube";
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
-
+            string baseAddress = builder.HostEnvironment.BaseAddress;
             builder.Services.AddHttpClient($"{assemblyName}.ServerAPI", client =>
                 client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
@@ -46,19 +46,17 @@ namespace FairPlayTube.Client
             }).AddAccountClaimsPrincipalFactory<
                 RemoteAuthenticationState, CustomRemoteUserAccount, CustomAccountClaimsPrincipalFactory>();
 
-
-            DisplayResponsiveAdConfiguration displayResponsiveAdConfiguration =
-                builder.Configuration.GetSection("DisplayResponsiveAdConfiguration")
-                .Get<DisplayResponsiveAdConfiguration>();
-            builder.Services.AddSingleton(displayResponsiveAdConfiguration);
-
-            builder.Services.AddTransient<IVideoEditAccessTokenProvider, VideoEditAccessTokenProvider>();
-            ConfigureCommonServices(builder.Services);
+            ConfigureCommonServices(builder.Services, builder.Configuration);
             await builder.Build().RunAsync();
         }
 
-        public static void ConfigureCommonServices(IServiceCollection services)
+        public static void ConfigureCommonServices(IServiceCollection services, IConfiguration configuration)
         {
+            DisplayResponsiveAdConfiguration displayResponsiveAdConfiguration =
+                configuration.GetSection("DisplayResponsiveAdConfiguration")
+                .Get<DisplayResponsiveAdConfiguration>();
+            services.AddSingleton(displayResponsiveAdConfiguration);
+            services.AddTransient<IVideoEditAccessTokenProvider, VideoEditAccessTokenProvider>();
             services.AddTransient<HttpClientService>();
             services.AddTransient<ToastifyService>();
             services.AddTransient<VideoClientService>();
