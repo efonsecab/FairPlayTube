@@ -81,6 +81,7 @@
                             }
                             else
                             {
+                                <i class="bi bi-play-circle" style="cursor:pointer;" @onclick="@( () => ShowVideoPlayer() )"></i>
                                 <img class="img-thumbnail" src="@VideoModel.ThumbnailUrl"
                                      style="cursor:pointer; width:100%;"
                                      @onclick="@( () => ShowVideoPlayer() )" />
@@ -186,6 +187,7 @@
                                 }
                                 else
                                 {
+                                    <i class="bi bi-play-circle" style="cursor:pointer;" @onclick="@( () => ShowVideoPlayer() )"></i>
                                     <img class="img-thumbnail" src="@VideoModel.ThumbnailUrl"
                                          style="cursor:pointer; width:100%;"
                                          @onclick="@( () => ShowVideoPlayer() )" />
