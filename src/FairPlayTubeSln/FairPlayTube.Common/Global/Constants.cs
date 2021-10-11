@@ -81,6 +81,10 @@
 
         public class ApiRoutes
         {
+            public class OpenGraphController
+            {
+                public const string VideoThumbnail = "api/OpenGraph/VideoThumbnail/{videoId}";
+            }
             public class VisitorTrackingController
             {
                 public const string TrackClientInformation = "api/VisitorTracking/TrackClientInformation";

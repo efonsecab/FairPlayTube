@@ -1,19 +1,20 @@
-﻿<Loading IsLoading="IsLoading"></Loading>
+﻿<Meta property="og:url" content="@this.NavigationManager.Uri" />
+<Meta property="og:type" content="website" />
+<Meta property="og:image" content="@VideoThumbnailUrl" />
+<Meta property="og:video" content="@this.NavigationManager.Uri" />
+<Meta property="og:video:secure_url" content="@this.NavigationManager.Uri" />
+<Meta property="og:video:type" content="video/mp4" />
+<Meta property="og:video:width" content="300" />
+<Meta property="og:video:height" content="300" />
+<Meta property="twitter:image" content="@VideoThumbnailUrl" />
+
+<Loading IsLoading="IsLoading"></Loading>
 <VisitorTracking></VisitorTracking>
 
 @if (this.VideoModel != null)
 {
-    <Meta property="og:url" content="@this.NavigationManager.Uri" />
-    <Meta property="og:type" content="website" />
     <Meta property="og:title" content="@this.VideoModel.Name" />
-    <Meta property="og:image" content="@this.VideoModel.ThumbnailUrl" />
     <Meta property="og:description" content="@this.VideoModel.Description" />
-    <Meta property="og:video" content="@this.NavigationManager.Uri" />
-    <Meta property="og:video:secure_url" content="@this.NavigationManager.Uri" />
-    <Meta property="og:video:type" content="video/mp4" />
-    <Meta property="og:video:width" content="300" />
-    <Meta property="og:video:height" content="300" />
-    <Meta property="twitter:image" content="@this.VideoModel.ThumbnailUrl" />
     <Meta property="twitter:description" content="@this.VideoModel.Description" />
 
     <article>
