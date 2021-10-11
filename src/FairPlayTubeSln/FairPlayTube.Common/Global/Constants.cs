@@ -77,6 +77,8 @@
         public class RootPagesRoutes
         {
             public const string Persons = "/Persons";
+            public const string SearchWithSearchTerm = "/Search/{SearchTerm}";
+            public const string SearchEmpty = "/Search";
         }
 
         public class ApiRoutes
@@ -94,6 +96,11 @@
             {
                 public const string CreateVideoPlaylist = "api/VideoPlaylist/CreateVideoPlaylist";
                 public const string DeleteVideoPlaylist = "api/VideoPlaylist/DeleteVideoPlaylist";
+            }
+
+            public class SearchController
+            {
+                public const string SearchPublicProcessedVideos = "api/Search/SearchPublicProcessedVideos";
             }
             public class VideoController
             {

@@ -68,6 +68,27 @@
             <param name="videoId"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.SearchController">
+            <summary>
+            Handles all of the search functionality
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.SearchController.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext,FairPlayTube.Services.SearchService,AutoMapper.IMapper)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.SearchController"/>
+            </summary>
+            <param name="fairplaytubeDatabaseContext"></param>
+            <param name="searchService"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.SearchController.SearchPublicProcessedVideos(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Searches for public processed videos having the given searchTerm
+            </summary>
+            <param name="searchTerm"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.SitemapController">
             <summary>
             Dynamically generates a sitemap

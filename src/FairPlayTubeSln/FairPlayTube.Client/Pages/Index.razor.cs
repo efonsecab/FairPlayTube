@@ -1,5 +1,6 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Common.Global;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -10,12 +11,18 @@ using System.Threading.Tasks;
 
 namespace FairPlayTube.Client.Pages
 {
+    [Route("/")]
+    [Route(Constants.RootPagesRoutes.SearchWithSearchTerm)]
+    [Route(Constants.RootPagesRoutes.SearchEmpty)]
     public partial class Index
     {
         private VideoInfoModel[] AllVideos { get; set; }
         private VideoInfoModel SelectedVideo { get; set; }
         [Inject]
         private VideoClientService VideoClientService { get; set; }
+        [Inject]
+        private SearchClientService SearchClientService { get; set; }
+
         [Inject]
         private ToastifyService ToastifyService { get; set; }
         [Inject]
@@ -26,7 +33,10 @@ namespace FairPlayTube.Client.Pages
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }
         public string[] AllBoughVideosIds { get; private set; }
 
-        protected async override Task OnInitializedAsync()
+        [Parameter]
+        public string SearchTerm { get; set; }
+
+        protected override async Task OnParametersSetAsync()
         {
             await LoadData();
         }
@@ -41,7 +51,15 @@ namespace FairPlayTube.Client.Pages
                 //{
                 //    AllowDownload = true;
                 //}
-                var allVideos = await this.VideoClientService.GetPublicProcessedVideosAsync();
+                VideoInfoModel[] allVideos = null;
+                if (String.IsNullOrWhiteSpace(SearchTerm))
+                {
+                    allVideos = await this.VideoClientService.GetPublicProcessedVideosAsync();
+                }
+                else
+                {
+                    allVideos = await this.SearchClientService.SearchPublicProcessedVideosAsync(this.SearchTerm);
+                }
                 if (state.User.Identity.IsAuthenticated)
                 {
                     this.AllBoughVideosIds = await this.VideoClientService.GetBoughtVideosIdsAsync();
