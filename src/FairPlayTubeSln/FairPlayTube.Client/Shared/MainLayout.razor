@@ -22,12 +22,18 @@
             @Body
         </div>
 
-        <footer id="" class="footer mt-auto py-3 bg-light position-fixed w-100 bottom-0"
-                style="background-color: #f7f7f7 !important; border-bottom: 1px solid #d6d5d5 !important;">
-            <div class="container">
-                <a class="text-black-50" href="https://cr.linkedin.com/in/pticostarica" target="_blank">Designed by PTI Costa Rica</a>
-            </div>
-        </footer>
+        @if (ShowFooter)
+        {
+            <footer id="" class="footer mt-auto py-3 bg-light position-fixed w-100 bottom-0"
+                    style="background-color: #f7f7f7 !important; border-bottom: 1px solid #d6d5d5 !important;">
+                <div class="container">
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="@CloseFooter">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </button>
+                    <a class="text-black-50" href="https://cr.linkedin.com/in/pticostarica" target="_blank">Designed by PTI Costa Rica</a>
+                </div>
+            </footer>
+        }
 
     </div>
 </div>
@@ -62,10 +68,11 @@
 }
 
 @code{
-        [CascadingParameter]
-        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
-        [Inject]
-        private NavigationManager NavigationManager { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+    private bool ShowFooter { get; set; } = true;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -92,5 +99,10 @@
     private void CloseSupportBot()
     {
         this.ShowSupportBot = false;
+    }
+
+    private void CloseFooter()
+    {
+        this.ShowFooter = false;
     }
 }
