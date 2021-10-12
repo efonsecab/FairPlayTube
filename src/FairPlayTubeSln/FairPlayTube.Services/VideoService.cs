@@ -97,10 +97,13 @@ namespace FairPlayTube.Services
             await this.FairplaytubeDatabaseContext.SaveChangesAsync();
 
             // DELETING VIDEO INDEXER
+            var azureVideoIndexerEntity = (await this.AzureVideoIndexerService.SearchVideosByIdsAsync(new string[] { videoId })).results.Single();
             await this.AzureVideoIndexerService.DeleteVideoAsync(videoId, cancellationToken);
 
             // DELETING VIDEO FROM BLOB STORAGE (ThumbnailUrl)
-            await this.AzureBlobStorageService.DeleteFileAsync(this.DataStorageConfiguration.ContainerName, videoEntity.ThumbnailUrl, cancellationToken);
+            string relativePath =
+                $"{videoEntity.ApplicationUser.AzureAdB2cobjectId}/Video/{videoId}/Thumbnail/{azureVideoIndexerEntity.thumbnailId}.jpg";
+            await this.AzureBlobStorageService.DeleteFileAsync(this.DataStorageConfiguration.ContainerName, relativePath, cancellationToken);
 
             // DELETING VIDEO FROM BLOB STORAGE (VIDEO)
             await this.AzureBlobStorageService.DeleteFileAsync(this.DataStorageConfiguration.ContainerName, $"{userAzureAdB2cObjectId}/{videoEntity.FileName}", cancellationToken);
