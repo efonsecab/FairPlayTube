@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace FairPlayTube.Services
 {
-    public class TextAnalysisServices
+    public class TextAnalysisService
     {
         private AzureTextAnalyticsService AzureTextAnalyticsService { get; }
-        public TextAnalysisServices(AzureTextAnalyticsService azureTextAnalyticsService)
+        public TextAnalysisService(AzureTextAnalyticsService azureTextAnalyticsService)
         {
             this.AzureTextAnalyticsService = azureTextAnalyticsService;
         }

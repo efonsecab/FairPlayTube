@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[VideoComment]
 (
-	[VideoCommentId] BIGINT NOT NULL CONSTRAINT PK_VideoComment PRIMARY KEY,
+	[VideoCommentId] BIGINT NOT NULL CONSTRAINT PK_VideoComment PRIMARY KEY IDENTITY,
 	[VideoInfoId] BIGINT NOT NULL CONSTRAINT FK_VideoInfo_VideoComment REFERENCES [dbo].[VideoInfo]([VideoInfoId]),
 	[ApplicationUserId] BIGINT NOT NULL CONSTRAINT FK_ApplicationUserId_VideoComment REFERENCES [dbo].[ApplicationUser]([ApplicationUserId]),
 	[Comment] NVARCHAR(500) NOT NULL,

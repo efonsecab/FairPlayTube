@@ -31,6 +31,44 @@
                                                   VideoModel="this.VideoModel"
                                                   ShowDetailsLink="false"
                                                   ShowTwitterShareButton="true" ShowDisplayAd="true"></FairPlayTube.Components.Videos.Video>
+
+            <AuthorizeView>
+                <Authorized Context="authContext">
+                    <EditForm Model="@NewCommentModel" OnValidSubmit="OnValidCommentSubmit">
+                        <div class="mb-3">
+                            <DataAnnotationsValidator></DataAnnotationsValidator>
+                            <ValidationSummary></ValidationSummary>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Comment</label>
+                            <InputText class="form-control" @bind-Value="@NewCommentModel.Comment"></InputText>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </EditForm>
+                </Authorized>
+                <NotAuthorized>
+                    Only logged in users are able to add comments
+                </NotAuthorized>
+            </AuthorizeView>
+            <div class="mb-3">
+                @if (this.VideoComments != null)
+                {
+                    <h2>Comments</h2>
+                    @foreach (var singleComment in this.VideoComments)
+                    {
+                        <div class="row">
+                            <div class="col">
+                                <Card Width="100%">
+                                    <CardHeader>@singleComment.RowCreationUser - @singleComment.RowCreationDateTime</CardHeader>
+                                    <CardBody>
+                                        @singleComment.Comment
+                                    </CardBody>
+                                </Card>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
         </div>
     </article>
 }

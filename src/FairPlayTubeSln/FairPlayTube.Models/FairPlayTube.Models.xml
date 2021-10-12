@@ -754,6 +754,56 @@
             Available Funds for the user
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.VideoComment.CreateVideoCommentModel">
+            <summary>
+            Holds the information required to create a comment for a specified video
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoComment.CreateVideoCommentModel.VideoId">
+            <summary>
+            Id the comment is for
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoComment.CreateVideoCommentModel.Comment">
+            <summary>
+            Comment to be created
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.VideoComment.VideoCommentModel">
+            <summary>
+            Holds the information related to a video's comment
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoComment.VideoCommentModel.VideoCommentId">
+            <summary>
+            Id for a video's comment
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoComment.VideoCommentModel.VideoInfoId">
+            <summary>
+            VideoInfoId for the commented video
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoComment.VideoCommentModel.ApplicationUserId">
+            <summary>
+            Id of the user who created the comment
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoComment.VideoCommentModel.Comment">
+            <summary>
+            Comment's text
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoComment.VideoCommentModel.RowCreationDateTime">
+            <summary>
+            Date and Time of comment's creation
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoComment.VideoCommentModel.RowCreationUser">
+            <summary>
+            User who created the comment
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.DownloadVideoModel">
             <summary>
             Holds the bytes that composed the video with the given VideoId

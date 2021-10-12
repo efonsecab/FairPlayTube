@@ -28,18 +28,22 @@ namespace FairPlayTube.Controllers
         private VideoService VideoService { get; }
         private IMapper Mapper { get; }
         private ICurrentUserProvider CurrentUserProvider { get; }
+        private VideoCommentService VideoCommentService { get; }
 
         /// <summary>
         /// Initializes <see cref="VideoController"/>
         /// </summary>
         /// <param name="videoService"></param>
+        /// <param name="videoCommentService"></param>
         /// <param name="mapper"></param>
         /// <param name="currentUserProvider"></param>
-        public VideoController(VideoService videoService, IMapper mapper, ICurrentUserProvider currentUserProvider)
+        public VideoController(VideoService videoService, VideoCommentService videoCommentService,
+            IMapper mapper, ICurrentUserProvider currentUserProvider)
         {
             this.VideoService = videoService;
             this.Mapper = mapper;
             this.CurrentUserProvider = currentUserProvider;
+            this.VideoCommentService = videoCommentService;
         }
 
         /// <summary>
@@ -324,7 +328,7 @@ namespace FairPlayTube.Controllers
         [FeatureGate(FeatureType.PaidFeature)]
         public async Task<IActionResult> AnalyzeVideoComment(long videoCommentId, CancellationToken cancellationToken)
         {
-            await this.VideoService.AnalyzeVideoCommentAsync(videoCommentId, cancellationToken);
+            await this.VideoCommentService.AnalyzeVideoCommentAsync(videoCommentId, cancellationToken);
             return Ok();
         }
 

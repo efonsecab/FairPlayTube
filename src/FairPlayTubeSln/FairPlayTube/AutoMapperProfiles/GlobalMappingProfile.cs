@@ -2,6 +2,7 @@
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.Video;
+using FairPlayTube.Models.VideoComment;
 using System.Linq;
 
 namespace FairPlayTube.AutoMapperProfiles
@@ -53,6 +54,7 @@ namespace FairPlayTube.AutoMapperProfiles
 
                 dest.VideoIndexStatus = (Common.Global.Enums.VideoIndexStatus)source.VideoIndexStatusId;
             });
+            this.CreateMap<VideoComment, VideoCommentModel>();
         }
     }
 }

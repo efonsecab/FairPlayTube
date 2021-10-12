@@ -215,16 +215,45 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.VideoCommentController">
+            <summary>
+            Handles all of the data regarding a VideoComment
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoCommentController.#ctor(FairPlayTube.Services.VideoCommentService,AutoMapper.IMapper)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.VideoCommentController"/>
+            </summary>
+            <param name="videoCommentService"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoCommentController.AddVideoComment(FairPlayTube.Models.VideoComment.CreateVideoCommentModel,System.Threading.CancellationToken)">
+            <summary>
+            Creates a new comment for a given video id
+            </summary>
+            <param name="createVideoCommentModel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoCommentController.GetVideoComments(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets the comments for a given videoId
+            </summary>
+            <param name="videoId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.VideoController">
             <summary>
             Handles all of the data related to a video
             </summary>
         </member>
-        <member name="M:FairPlayTube.Controllers.VideoController.#ctor(FairPlayTube.Services.VideoService,AutoMapper.IMapper,FairPlayTube.Common.Interfaces.ICurrentUserProvider)">
+        <member name="M:FairPlayTube.Controllers.VideoController.#ctor(FairPlayTube.Services.VideoService,FairPlayTube.Services.VideoCommentService,AutoMapper.IMapper,FairPlayTube.Common.Interfaces.ICurrentUserProvider)">
             <summary>
             Initializes <see cref="T:FairPlayTube.Controllers.VideoController"/>
             </summary>
             <param name="videoService"></param>
+            <param name="videoCommentService"></param>
             <param name="mapper"></param>
             <param name="currentUserProvider"></param>
         </member>
