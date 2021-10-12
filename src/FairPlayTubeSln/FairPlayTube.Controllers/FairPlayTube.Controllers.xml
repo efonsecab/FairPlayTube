@@ -150,7 +150,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:FairPlayTube.Controllers.UserController.AddUserFollower(System.String,System.Threading.CancellationToken)">
+        <member name="M:FairPlayTube.Controllers.UserController.AddUserFollower(System.Int64,System.Threading.CancellationToken)">
             <summary>
             Adds a new user followed by the logged in user
             </summary>

@@ -22,7 +22,16 @@
                                 <ul class="list-group">
                                     @foreach (var singleNotification in ReceivedNotifications)
                                     {
-                                        <li class="list-group-item">@singleNotification.Message</li>
+                                        <li class="list-group-item">
+                                            @if (String.IsNullOrWhiteSpace(singleNotification.VideoId))
+                                            {
+                                                @singleNotification.Message
+                                            }
+                                            else
+                                            {
+                                                <a href="@GetVideoDetailsUrl(singleNotification.VideoId)">@singleNotification.Message</a>
+                                            }
+                                        </li>
                                     }
                                 </ul>
                             </CardBody>

@@ -1,4 +1,5 @@
 ﻿using FairPlayTube.Client.Services;
+using FairPlayTube.Common.Global;
 using FairPlayTube.Models.Notifications;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
@@ -74,6 +75,11 @@ namespace FairPlayTube.Client.CustomComponents.SignalR
         private void HideNotifications()
         {
             this.ShowNotifications = false;
+        }
+
+        private string GetVideoDetailsUrl(string videoId)
+        {
+            return Constants.PublicVideosPages.Details.Replace("{VideoId}", videoId);
         }
     }
 }
