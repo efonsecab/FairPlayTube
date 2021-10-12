@@ -73,6 +73,7 @@ namespace FairPlayTube.Client
             builder.Services.AddTransient<VisitorTrackingClientService>();
             builder.Services.AddTransient<UserClientService>();
             builder.Services.AddTransient<SearchClientService>();
+            builder.Services.AddTransient<VideoCommentClientService>();
             await builder.Build().RunAsync();
         }
     }

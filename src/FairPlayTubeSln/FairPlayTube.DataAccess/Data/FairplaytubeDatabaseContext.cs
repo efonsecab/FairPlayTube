@@ -245,8 +245,6 @@ namespace FairPlayTube.DataAccess.Data
 
             modelBuilder.Entity<VideoComment>(entity =>
             {
-                entity.Property(e => e.VideoCommentId).ValueGeneratedNever();
-
                 entity.HasOne(d => d.ApplicationUser)
                     .WithMany(p => p.VideoComment)
                     .HasForeignKey(d => d.ApplicationUserId)

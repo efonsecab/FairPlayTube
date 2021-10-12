@@ -83,6 +83,11 @@
 
         public class ApiRoutes
         {
+            public class VideoCommentController
+            {
+                public const string GetVideoComments = "api/VideoComment/GetVideoComments";
+                public const string AddVideoComment = "api/VideoComment/AddVideoComment";
+            }
             public class OpenGraphController
             {
                 public const string VideoThumbnail = "api/OpenGraph/VideoThumbnail/{videoId}";
