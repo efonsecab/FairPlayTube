@@ -153,7 +153,7 @@ namespace FairPlayTube.Services
                     await this.HubContext.Clients.User(singleFollower.FollowerApplicationUser.AzureAdB2cobjectId.ToString())
                         .ReceiveMessage(new Models.Notifications.NotificationModel()
                         {
-                            Message = $"A user you follow {singleVideoEntity.ApplicationUser.FullName} has uploaded a new video",
+                            Message = $"A user you follow {singleVideoEntity.ApplicationUser.FullName} has uploaded a new video titled: {singleVideoEntity.Name}",
                             VideoId = singleVideoEntity.VideoId
                         });
                 }
