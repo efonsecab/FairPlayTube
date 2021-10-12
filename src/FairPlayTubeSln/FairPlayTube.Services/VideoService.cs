@@ -135,13 +135,38 @@ namespace FairPlayTube.Services
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
             foreach (var singleVideoEntity in query)
             {
-                await this.HubContext.Clients.User(singleVideoEntity.ApplicationUser.AzureAdB2cobjectId.ToString())
-                    .ReceiveMessage(new Models.Notifications.NotificationModel()
-                    {
-                        Message = $"Your video: '{singleVideoEntity.Name}' has been processed"
-                    });
+                await NotifyVideoOwner(singleVideoEntity);
+                await NotifyFollowers(singleVideoEntity);
             }
             return true;
+        }
+
+        private async Task NotifyFollowers(VideoInfo singleVideoEntity)
+        {
+            var followers = this.FairplaytubeDatabaseContext
+                                .UserFollower.Include(p => p.FollowerApplicationUser)
+                                .Where(p => p.FollowedApplicationUserId == singleVideoEntity.ApplicationUserId);
+            if (followers.Count() > 0)
+            {
+                foreach (var singleFollower in followers)
+                {
+                    await this.HubContext.Clients.User(singleFollower.FollowerApplicationUser.AzureAdB2cobjectId.ToString())
+                        .ReceiveMessage(new Models.Notifications.NotificationModel()
+                        {
+                            Message = $"A user you follow {singleVideoEntity.ApplicationUser.FullName} has uploaded a new video titled: {singleVideoEntity.Name}",
+                            VideoId = singleVideoEntity.VideoId
+                        });
+                }
+            }
+        }
+
+        private async Task NotifyVideoOwner(VideoInfo singleVideoEntity)
+        {
+            await this.HubContext.Clients.User(singleVideoEntity.ApplicationUser.AzureAdB2cobjectId.ToString())
+                                .ReceiveMessage(new Models.Notifications.NotificationModel()
+                                {
+                                    Message = $"Your video: '{singleVideoEntity.Name}' has been processed"
+                                });
         }
 
         public async Task<List<KeywordInfoModel>> GetIndexedVideoKeywordsAsync(string videoId, CancellationToken cancellationToken)

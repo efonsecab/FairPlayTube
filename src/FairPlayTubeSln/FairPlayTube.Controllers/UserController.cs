@@ -143,11 +143,14 @@ namespace FairPlayTube.Controllers
         /// <returns></returns>
         [HttpPost("[action]")]
         [Authorize(Roles = Constants.Roles.User)]
-        public async Task<IActionResult> AddUserFollower(string followedApplicationUserId, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddUserFollower(long followedApplicationUserId, CancellationToken cancellationToken)
         {
             var userAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
+            var followedUser = await this.FairplaytubeDatabaseContext.ApplicationUser.SingleOrDefaultAsync(p => p.ApplicationUserId == followedApplicationUserId);
+            if (followedUser == null)
+                throw new Exception($"Invalid {nameof(followedApplicationUserId)}");
             await this.UserService.AddUserFollowerAsync(followerUserObjectId: userAdB2CObjectId,
-                followedUserObjectId: followedApplicationUserId, cancellationToken);
+                followedUserObjectId: followedUser.AzureAdB2cobjectId.ToString(), cancellationToken);
             return Ok();
         }
 

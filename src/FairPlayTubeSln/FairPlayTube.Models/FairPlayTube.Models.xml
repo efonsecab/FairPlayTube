@@ -89,6 +89,11 @@
             Message of the SignalR notification
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.Notifications.NotificationModel.VideoId">
+            <summary>
+            VideoId sent in the message
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDataModel">
             <summary>
             Represents the PayPal Checkout Approval Data
