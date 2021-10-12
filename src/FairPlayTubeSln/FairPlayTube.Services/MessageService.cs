@@ -54,7 +54,7 @@ namespace FairPlayTube.Services
             await this.HubContext.Clients.User(receiver.AzureAdB2cobjectId.ToString())
                 .ReceiveMessage(new Models.Notifications.NotificationModel()
                 {
-                    Message = $"You have a new message from: {sender.FullName}"
+                    Message = $"You have a new message from: {sender.FullName}. Message: {model.Message}"
                 });
         }
     }
