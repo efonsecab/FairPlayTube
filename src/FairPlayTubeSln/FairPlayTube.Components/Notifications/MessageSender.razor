@@ -6,11 +6,11 @@
 
     <div class="form-group mb-3">
         <label for="Name">Name</label>
-        <InputText class="form-control" @bind-Value=ToApplicationUserFullName disabled="true" id="Name"/>
+        <InputText class="form-control" @bind-Value=ToApplicationUserFullName disabled="true" id="Name" />
     </div>
     <div class="form-group mb-3">
         <label for="Message">Message</label>
-        <InputTextArea class="form-control" @bind-Value=UserMessageModel.Message id="Message"/>
+        <InputTextArea class="form-control" @bind-Value=UserMessageModel.Message id="Message" />
     </div>
 
     <button type="button" class="btn btn-secondary" @onclick="OnCancelAction">Cancel</button>
