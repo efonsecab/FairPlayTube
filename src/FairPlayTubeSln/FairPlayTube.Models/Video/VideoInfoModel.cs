@@ -14,9 +14,13 @@ namespace FairPlayTube.Models.Video
         /// </summary>
         public string VideoId { get; set; }
         /// <summary>
-        /// NAme of the Video
+        /// Name of the Video
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// File's name
+        /// </summary>
+        public string FileName { get; set; }
         /// <summary>
         /// Video's Description
         /// </summary>
@@ -72,6 +76,10 @@ namespace FairPlayTube.Models.Video
         /// </summary>
         public int Price { get; set; }
         /// <summary>
+        /// Video's price after commission
+        /// </summary>
+        public decimal PriceAfterCommission => Price + (Price * Common.Global.Constants.Commissions.VideoAccess);
+        /// <summary>
         /// Available Jobs associated with this video
         /// </summary>
         public int AvailableJobs { get; set; }
@@ -95,5 +103,9 @@ namespace FairPlayTube.Models.Video
         /// Video's indexing status
         /// </summary>
         public VideoIndexStatus VideoIndexStatus { get; set; }
+        /// <summary>
+        /// Specified is the logged in user already bought the video
+        /// </summary>
+        public bool IsBought { get; set; }
     }
 }

@@ -137,5 +137,21 @@ namespace FairPlayTube.ClientServices
                     throw new Exception(response.ReasonPhrase);
             }
         }
+
+        public async Task<DownloadVideoModel> DownloadVideo(string videoId)
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var result = await authorizedHttpClient.GetFromJsonAsync<DownloadVideoModel>(
+                $"{ApiRoutes.VideoController.DownloadVideo}?videoId={videoId}");
+            return result;
+        }
+
+        public async Task<string[]> GetBoughtVideosIdsAsync()
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var result = await authorizedHttpClient
+                .GetFromJsonAsync<string[]>(ApiRoutes.VideoController.GetBoughtVideosIds);
+            return result;
+        }
     }
 }

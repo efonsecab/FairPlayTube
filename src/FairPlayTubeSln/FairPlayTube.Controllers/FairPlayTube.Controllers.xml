@@ -49,6 +49,63 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.OpenGraphController">
+            <summary>
+            Handles all of the Open Graph routes
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.OpenGraphController.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext,PTI.Microservices.Library.Interceptors.CustomHttpClient)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.OpenGraphController"/>
+            </summary>
+            <param name="fairplaytubeDatabaseContext"></param>
+            <param name="customHttpClient"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.OpenGraphController.VideoThumbnail(System.String)">
+            <summary>
+            Retrieves the thumbnail image for the specified videoid
+            </summary>
+            <param name="videoId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FairPlayTube.Controllers.SearchController">
+            <summary>
+            Handles all of the search functionality
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.SearchController.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext,FairPlayTube.Services.SearchService,AutoMapper.IMapper)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.SearchController"/>
+            </summary>
+            <param name="fairplaytubeDatabaseContext"></param>
+            <param name="searchService"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.SearchController.SearchPublicProcessedVideos(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Searches for public processed videos having the given searchTerm
+            </summary>
+            <param name="searchTerm"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FairPlayTube.Controllers.SitemapController">
+            <summary>
+            Dynamically generates a sitemap
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.SitemapController.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.SitemapController"/>
+            </summary>
+            <param name="fairplaytubeDatabaseContext"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.SitemapController.Sitemap">
+            <summary>
+            Generates a sitemap
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.UserController">
             <summary>
             Handles all of the data regarding a User
@@ -77,11 +134,12 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:FairPlayTube.Controllers.UserController.InviteUser(FairPlayTube.Models.Invites.InviteUserModel)">
+        <member name="M:FairPlayTube.Controllers.UserController.InviteUser(FairPlayTube.Models.Invites.InviteUserModel,System.Threading.CancellationToken)">
             <summary>
             Invites a user to use the system
             </summary>
-            <param name="model"></param>
+            <param name="inviteUserModel"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="M:FairPlayTube.Controllers.UserController.SendMessage(FairPlayTube.Models.UserMessage.UserMessageModel,System.Threading.CancellationToken)">
@@ -92,12 +150,26 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:FairPlayTube.Controllers.UserController.AddUserFollower(System.String,System.Threading.CancellationToken)">
+        <member name="M:FairPlayTube.Controllers.UserController.AddUserFollower(System.Int64,System.Threading.CancellationToken)">
             <summary>
             Adds a new user followed by the logged in user
             </summary>
             <param name="followedApplicationUserId"></param>
             <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserController.GetMyUserStatus(System.Threading.CancellationToken)">
+            <summary>
+            Gets a user status
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserController.ValidateUserInviteCode(System.String)">
+            <summary>
+            Validates a user invite code
+            </summary>
+            <param name="userInviteCode"></param>
             <returns></returns>
         </member>
         <member name="T:FairPlayTube.Controllers.UserProfileController">
@@ -167,6 +239,13 @@
         <member name="M:FairPlayTube.Controllers.VideoController.GetPublicProcessedVideos(System.Threading.CancellationToken)">
             <summary>
             Gets all of the public processed videos
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.GetBoughtVideosIds(System.Threading.CancellationToken)">
+            <summary>
+            Gets all of the videosids for the bought videos
             </summary>
             <param name="cancellationToken"></param>
             <returns></returns>
@@ -269,6 +348,49 @@
             Analyzes given video's comment to generate additional insights
             </summary>
             <param name="videoCommentId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.CreateCustomRenderingProject(FairPlayTube.Models.Video.ProjectModel,System.Threading.CancellationToken)">
+            <summary>
+            Creates a new custom rendering project
+            </summary>
+            <param name="projectModel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoController.DownloadVideo(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Download the source file for the specified video id
+            </summary>
+            <param name="videoId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FairPlayTube.Controllers.VideoPlaylistController">
+            <summary>
+            Handles actions related to videos playlists
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoPlaylistController.#ctor(FairPlayTube.Services.VideoPlaylistService)">
+            <summary>
+            Initializes <see cref="P:FairPlayTube.Controllers.VideoPlaylistController.VideoPlaylistService"/>
+            </summary>
+            <param name="videoPlaylistService"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoPlaylistController.CreateVideoPlaylist(FairPlayTube.Models.Video.VideoPlaylistModel,System.Threading.CancellationToken)">
+            <summary>
+            Creates a new playlist owned by the logged in user
+            </summary>
+            <param name="videoPlaylistModel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoPlaylistController.DeleteVideoPlaylist(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            Deletes the videoplaylist with the specified id
+            </summary>
+            <param name="videoPlaylistId"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>

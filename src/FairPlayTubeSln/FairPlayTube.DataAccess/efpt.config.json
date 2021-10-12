@@ -30,6 +30,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ApplicationUserStatus]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Brand]",
          "ObjectType": 0
       },
@@ -75,6 +79,10 @@
       },
       {
          "Name": "[dbo].[UserProfile]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserVerificationStatus]",
          "ObjectType": 0
       },
       {
@@ -126,6 +134,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[VideoPlaylist]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoVisibility]",
          "ObjectType": 0
       },
@@ -134,7 +146,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "C:\\Users\\Federico Jose Lucia\\source\\repos\\PTICR\\FairPlayTube\\src\\FairPlayTubeSln\\FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
+   "UiHint": "FairPlayTube.Database\\FairPlayTube.Database.sqlproj",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,
@@ -143,6 +155,7 @@
    "UseInflector": false,
    "UseLegacyPluralizer": false,
    "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
    "UseNoNavigations": false,
    "UseNoObjectFilter": false,
    "UseNodaTime": false,

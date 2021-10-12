@@ -29,6 +29,7 @@ namespace FairPlayTube.DataAccess.Models
             VideoComment = new HashSet<VideoComment>();
             VideoInfo = new HashSet<VideoInfo>();
             VideoJobApplication = new HashSet<VideoJobApplication>();
+            VideoPlaylist = new HashSet<VideoPlaylist>();
             VisitorTracking = new HashSet<VisitorTracking>();
         }
 
@@ -45,7 +46,11 @@ namespace FairPlayTube.DataAccess.Models
         public Guid AzureAdB2cobjectId { get; set; }
         [Column(TypeName = "money")]
         public decimal AvailableFunds { get; set; }
+        public short ApplicationUserStatusId { get; set; }
 
+        [ForeignKey(nameof(ApplicationUserStatusId))]
+        [InverseProperty("ApplicationUser")]
+        public virtual ApplicationUserStatus ApplicationUserStatus { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ApplicationUserRole ApplicationUserRole { get; set; }
         [InverseProperty("ApplicationUser")]
@@ -80,6 +85,8 @@ namespace FairPlayTube.DataAccess.Models
         public virtual ICollection<VideoInfo> VideoInfo { get; set; }
         [InverseProperty("ApplicantApplicationUser")]
         public virtual ICollection<VideoJobApplication> VideoJobApplication { get; set; }
+        [InverseProperty("OwnerApplicationUser")]
+        public virtual ICollection<VideoPlaylist> VideoPlaylist { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<VisitorTracking> VisitorTracking { get; set; }
     }

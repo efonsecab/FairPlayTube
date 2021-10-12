@@ -14,7 +14,13 @@ namespace FairPlayTube.Components.Videos
         [Parameter]
         public bool AllowDelete { get; set; } = false;
         [Parameter]
+        public bool AllowDownload { get; set; } = false;
+        [Parameter]
         public EventCallback<VideoInfoModel> OnDelete { get; set; }
+        [Parameter]
+        public EventCallback<VideoInfoModel> OnDownload { get; set; }
+        [Parameter]
+        public EventCallback<VideoInfoModel> OnBuyVideoAccess { get; set; }
         [Inject]
         IVideoEditAccessTokenProvider VideoEditAccessTokenProvider { get; set; }
         private VideoInfoModel SelectedVideo { get; set; }
@@ -22,6 +28,7 @@ namespace FairPlayTube.Components.Videos
         private bool ShowInsights { get; set; }
         private bool ShowMonetizationLinks { get; set; }
         private bool ShowVideoDescription { get; set; }
+        private int ItemPos { get; set; } = 0;
 
         private async Task SelectVideo(VideoInfoModel videoInfoModel)
         {

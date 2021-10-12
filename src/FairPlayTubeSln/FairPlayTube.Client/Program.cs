@@ -4,6 +4,8 @@ using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Configuration;
 using FairPlayTube.Common.Interfaces;
+using FairPlayTube.Components.FacebookButtons;
+using FairPlayTube.Components.GoogleAdsense;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -50,6 +52,17 @@ namespace FairPlayTube.Client
                 builder.Configuration.GetSection("AzureQnABotConfiguration").Get<AzureQnABotConfiguration>();
             builder.Services.AddSingleton(azureQnABotConfiguration);
 
+
+            DisplayResponsiveAdConfiguration displayResponsiveAdConfiguration =
+                builder.Configuration.GetSection("DisplayResponsiveAdConfiguration")
+                .Get<DisplayResponsiveAdConfiguration>();
+            builder.Services.AddSingleton(displayResponsiveAdConfiguration);
+
+            FaceBookLikeButtonConfiguration faceBookLikeButtonConfiguration =
+                builder.Configuration.GetSection(nameof(faceBookLikeButtonConfiguration))
+                .Get<FaceBookLikeButtonConfiguration>();
+            builder.Services.AddSingleton(faceBookLikeButtonConfiguration);
+
             builder.Services.AddTransient<IVideoEditAccessTokenProvider, VideoEditAccessTokenProvider>();
 
             builder.Services.AddTransient<HttpClientService>();
@@ -59,6 +72,7 @@ namespace FairPlayTube.Client
             builder.Services.AddTransient<ToastifyService>();
             builder.Services.AddTransient<VisitorTrackingClientService>();
             builder.Services.AddTransient<UserClientService>();
+            builder.Services.AddTransient<SearchClientService>();
             await builder.Build().RunAsync();
         }
     }

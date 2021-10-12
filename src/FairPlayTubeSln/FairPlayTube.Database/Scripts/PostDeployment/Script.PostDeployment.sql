@@ -79,3 +79,17 @@ BEGIN
 END
 SET IDENTITY_INSERT [dbo].[VideoIndexingMargin] OFF
 --END OF DEFAULT VIDEO INDEXING MARGINS
+--START OF DEFAULT APPLICATION USER STATUS
+DECLARE @APPLICATION_USER_STATUS_NAME NVARCHAR(50) = 'PendingApproval'
+IF NOT EXISTS(SELECT * FROM [dbo].[ApplicationUserStatus] AUS WHERE [AUS].[Name] = @APPLICATION_USER_STATUS_NAME)
+BEGIN
+    INSERT INTO [dbo].[ApplicationUserStatus]([ApplicationUserStatusId],[Name],[Description]) 
+    VALUES(1, @APPLICATION_USER_STATUS_NAME, 'User has pending approval')
+END
+SET @APPLICATION_USER_STATUS_NAME = 'Approved'
+IF NOT EXISTS(SELECT * FROM [dbo].[ApplicationUserStatus] AUS WHERE [AUS].[Name] = @APPLICATION_USER_STATUS_NAME)
+BEGIN
+    INSERT INTO [dbo].[ApplicationUserStatus]([ApplicationUserStatusId],[Name],[Description]) 
+    VALUES(2, @APPLICATION_USER_STATUS_NAME, 'User has received approval')
+END
+--END OF DEFAULT APPLICATION USER STATUS

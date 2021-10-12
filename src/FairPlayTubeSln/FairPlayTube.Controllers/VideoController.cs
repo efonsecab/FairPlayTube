@@ -81,6 +81,20 @@ namespace FairPlayTube.Controllers
         }
 
         /// <summary>
+        /// Gets all of the videosids for the bought videos
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task<string[]> GetBoughtVideosIds(CancellationToken cancellationToken)
+        {
+            var userObjectId = this.CurrentUserProvider.GetObjectId();
+            var result = await this.VideoService.GetBoughtVideosIds(userObjectId);
+            return result;
+        }
+
+        /// <summary>
         /// Gets videos by person
         /// </summary>
         /// <param name="personName"></param>
@@ -312,6 +326,46 @@ namespace FairPlayTube.Controllers
         {
             await this.VideoService.AnalyzeVideoCommentAsync(videoCommentId, cancellationToken);
             return Ok();
+        }
+
+        /// <summary>
+        /// Creates a new custom rendering project
+        /// </summary>
+        /// <param name="projectModel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        [FeatureGate(FeatureType.PaidFeature)]
+        public async Task<ProjectModel> CreateCustomRenderingProject(ProjectModel projectModel, CancellationToken cancellationToken)
+        {
+            var userObjectId = this.CurrentUserProvider.GetObjectId();
+            var allVideoIds = projectModel.Videos.Select(p => p.VideoId).ToArray();
+            var isVideosOwner = await this.VideoService
+                .IsVideosOwnerAsync(videosIds: allVideoIds, azureAdB2cobjectId: userObjectId, cancellationToken: cancellationToken);
+            if (!isVideosOwner)
+                throw new Exception("Access denied. User does not own all of the specified videos");
+            var result = await this.VideoService.CreateCustomRenderingProject(projectModel, cancellationToken);
+            return result;
+        }
+
+        /// <summary>
+        /// Download the source file for the specified video id
+        /// </summary>
+        /// <param name="videoId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        [FeatureGate(FeatureType.PaidFeature)]
+        public async Task<DownloadVideoModel> DownloadVideo(string videoId, CancellationToken cancellationToken)
+        {
+            var videoBytes = await this.VideoService.DownloadVideoAsync(videoId, cancellationToken);
+            return new DownloadVideoModel()
+            {
+                VideoId = videoId,
+                VideoBytes = videoBytes
+            };
         }
     }
 }

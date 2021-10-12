@@ -119,4 +119,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ApplicationUserFeatureId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="b665d24a-25b3-4721-9078-00e73754ffea" ChangeDateTime="09/17/2021 10:12:09">
+    <Property Name="ElementName" Value="[dbo].[VideoPlaylist].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VideoPlaylist]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VideoPlaylistId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0fe87c9c-5cfc-4834-b0f8-3a76546c471b" ChangeDateTime="09/21/2021 13:00:59">
+    <Property Name="ElementName" Value="[dbo].[ApplicationUserStatus].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ApplicationUserStatus]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ApplicationUserStatusId" />
+  </Operation>
 </Operations>

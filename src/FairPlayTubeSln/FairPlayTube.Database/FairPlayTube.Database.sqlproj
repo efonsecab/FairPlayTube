@@ -92,6 +92,9 @@
     <Build Include="dbo\Tables\VideoCommentAnalysis.sql" />
     <Build Include="dbo\Tables\GatedFeature.sql" />
     <Build Include="dbo\Tables\ApplicationUserFeature.sql" />
+    <Build Include="dbo\Tables\UserVerificationStatus.sql" />
+    <Build Include="dbo\Tables\VideoPlaylist.sql" />
+    <Build Include="dbo\Tables\ApplicationUserStatus.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

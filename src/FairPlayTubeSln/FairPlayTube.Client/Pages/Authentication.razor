@@ -13,5 +13,8 @@
     {
         var state = await AuthenticationStateTask;
         var claims = state.User.Claims.ToList();
+        //var userStatusClaim = claims.Where(p => p.Type == "UserStatus").Single();
+        //if (userStatusClaim.Value != "Approved")
+        //    remoteAuthenticationState.ReturnUrl = Common.Global.Constants.UserPagesRoutes.ValidateInviteCode;
     }
 }

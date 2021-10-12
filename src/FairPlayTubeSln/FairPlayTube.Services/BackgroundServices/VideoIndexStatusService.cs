@@ -41,7 +41,7 @@ namespace FairPlayTube.Services.BackgroundServices
                     //Check https://stackoverflow.com/questions/48368634/how-should-i-inject-a-dbcontext-instance-into-an-ihostedservice
                     try
                     {
-                        await CheckProcessingVideos(videoService, stoppingToken);
+                        await CheckProcessingVideos(videoService, fairplaytubeDatabaseContext, stoppingToken);
                         var pendingIndexingVideos = fairplaytubeDatabaseContext.VideoInfo.Where(p => p.VideoIndexStatusId ==
                         (short)Common.Global.Enums.VideoIndexStatus.Pending)
                             .OrderBy(p => p.VideoInfoId)
@@ -108,7 +108,7 @@ namespace FairPlayTube.Services.BackgroundServices
             }
         }
 
-        private async Task CheckProcessingVideos(VideoService videoService, CancellationToken stoppingToken)
+        private async Task CheckProcessingVideos(VideoService videoService, FairplaytubeDatabaseContext fairplaytubeDatabaseContext, CancellationToken stoppingToken)
         {
             var processingInDB = await videoService.GetDatabaseProcessingVideosIdsAsync(stoppingToken);
             if (processingInDB.Length > 0)
@@ -121,20 +121,11 @@ namespace FairPlayTube.Services.BackgroundServices
                     if (indexCompleteVideos.Count() > 0)
                     {
                         var indexCompleteVideosIds = indexCompleteVideos.Select(p => p.id).ToArray();
-
                         await videoService.AddVideoIndexTransactionsAsync(indexCompleteVideosIds, stoppingToken);
+                        var videosCompleted = fairplaytubeDatabaseContext.VideoInfo.Where(video => indexCompleteVideosIds.Contains(video.VideoId));
 
-                        foreach (var singleIndexedVideo in indexCompleteVideos)
-                        {
-                            await videoService.SaveIndexedVideoKeywordsAsync(singleIndexedVideo.id, stoppingToken);
-                        }
-                        foreach (var singleIndexedVideo in indexCompleteVideos)
-                        {
-                            await videoService.SaveVideoThumbnailAsync(singleIndexedVideo.id, singleIndexedVideo.thumbnailId, stoppingToken);
-                        }
-                        await videoService.UpdateVideoIndexStatusAsync(indexCompleteVideosIds,
-                            Common.Global.Enums.VideoIndexStatus.Processed,
-                            cancellationToken: stoppingToken);
+                        foreach (var video in videosCompleted)
+                            await videoService.MarkVideoAsProcessed(video, stoppingToken);
                     }
                 }
             }

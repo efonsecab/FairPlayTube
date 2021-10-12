@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.FeatureManagement.Mvc;
+using System;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -94,18 +95,28 @@ namespace FairPlayTube.Controllers
         /// <summary>
         /// Invites a user to use the system
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="inviteUserModel"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
-        public async Task InviteUser(InviteUserModel model)
+        public async Task InviteUser(InviteUserModel inviteUserModel, CancellationToken cancellationToken)
         {
+            var userInvitation = await this.UserService.InviteUserAsync(inviteUserModel, cancellationToken: cancellationToken);
             var userName = this.CurrentUserProvider.GetUsername();
-            StringBuilder completeBody = new StringBuilder(model.CustomMessage);
+            StringBuilder completeBody = new StringBuilder(inviteUserModel.CustomMessage);
             completeBody.AppendLine();
-            string link = $"<a href='{this.Request.Host.Value}'>{this.Request.Host.Value}</a>";
+            string baseUrl = $"{this.Request.Scheme}://{this.Request.Host.Value}";
+            var userHomePagePath = Common.Global.Constants.UserPagesRoutes.UserHomePage
+                .Replace("{UserId:long}", userInvitation.InvitingApplicationUserId.ToString());
+            string invitingUserHomeUrl = $"{baseUrl}{userHomePagePath}";
+            string authPath = $"authentication/login?returnUrl={Uri.EscapeDataString(invitingUserHomeUrl)}";
+            string fullLink = $"{baseUrl}/{authPath}";
+            string link = $"<a href='{fullLink}'>{fullLink}</a>";
+            completeBody.AppendLine($"Once you are on the website you can create your account using the Sign up link." +
+                $"Your invite code is: {userInvitation.InviteCode}");
             completeBody.AppendLine(link);
-            await this.EmailService.SendEmail(model.ToEmailAddress, $"{userName} is inviting you to " +
-                $"FairPlayTube: The Next Generation Of Video Sharing Portals",
+            await this.EmailService.SendEmail(inviteUserModel.ToEmailAddress, $"{userName} is inviting you to " +
+                $"FairPlayTube: The Next Generation Of Video Sharing Portals.",
                 completeBody.ToString(), true);
         }
 
@@ -122,8 +133,8 @@ namespace FairPlayTube.Controllers
             var senderObjectId = this.CurrentUserProvider.GetObjectId();
             await this.MessageService.SendMessageAsync(model, senderObjectId, cancellationToken);
         }
-    
- 
+
+
         /// <summary>
         /// Adds a new user followed by the logged in user
         /// </summary>
@@ -132,12 +143,61 @@ namespace FairPlayTube.Controllers
         /// <returns></returns>
         [HttpPost("[action]")]
         [Authorize(Roles = Constants.Roles.User)]
-        public async Task<IActionResult> AddUserFollower(string followedApplicationUserId, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddUserFollower(long followedApplicationUserId, CancellationToken cancellationToken)
         {
             var userAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
+            var followedUser = await this.FairplaytubeDatabaseContext.ApplicationUser.SingleOrDefaultAsync(p => p.ApplicationUserId == followedApplicationUserId);
+            if (followedUser == null)
+                throw new Exception($"Invalid {nameof(followedApplicationUserId)}");
             await this.UserService.AddUserFollowerAsync(followerUserObjectId: userAdB2CObjectId,
-                followedUserObjectId: followedApplicationUserId, cancellationToken);
+                followedUserObjectId: followedUser.AzureAdB2cobjectId.ToString(), cancellationToken);
             return Ok();
+        }
+
+        /// <summary>
+        /// Gets a user status
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        [Authorize(Roles = Constants.Roles.User)]
+        public async Task<string> GetMyUserStatus(CancellationToken cancellationToken)
+        {
+            var userAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
+            var userStatus = await this.FairplaytubeDatabaseContext.ApplicationUser
+                .Include(p => p.ApplicationUserStatus)
+                .Where(p => p.AzureAdB2cobjectId.ToString() == userAdB2CObjectId)
+                .Select(p => p.ApplicationUserStatus.Name).SingleAsync();
+            return userStatus;
+        }
+
+        /// <summary>
+        /// Validates a user invite code
+        /// </summary>
+        /// <param name="userInviteCode"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        [Authorize(Roles = Constants.Roles.User)]
+        public async Task<IActionResult> ValidateUserInviteCode([FromQuery] string userInviteCode)
+        {
+            var userAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
+            var userInvitation = await this.FairplaytubeDatabaseContext.UserInvitation
+                .Where(p => p.InviteCode.ToString() == userInviteCode).SingleOrDefaultAsync();
+            if (userInvitation != null)
+            {
+                var userEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
+                    .Include(p => p.ApplicationUserStatus)
+                    .Where(p => p.AzureAdB2cobjectId.ToString() == userAdB2CObjectId)
+                    .SingleAsync();
+                if (userEntity.EmailAddress.ToLower() != userInvitation.InvitedUserEmail.ToLower())
+                {
+                    throw new Exception("Account email does not match invite code email");
+                }
+                userEntity.ApplicationUserStatusId = 2;
+                await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+                return Ok();
+            }
+            throw new Exception("Invalid Invite Code");
         }
     }
 }

@@ -46,6 +46,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
                 IsLoading = true;
                 await this.VideoClientService.DeleteVideoAsync(videoModel.VideoId);
                 this.AllVideos = await this.VideoClientService.GetMyProcessedVideos();
+                await this.ToastifyService.DisplaySuccessNotification("Your video has been deleted");
             }
             catch (Exception ex)
             {

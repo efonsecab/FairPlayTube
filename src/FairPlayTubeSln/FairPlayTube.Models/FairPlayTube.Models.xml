@@ -89,6 +89,11 @@
             Message of the SignalR notification
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.Notifications.NotificationModel.VideoId">
+            <summary>
+            VideoId sent in the message
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDataModel">
             <summary>
             Represents the PayPal Checkout Approval Data
@@ -749,6 +754,21 @@
             Available Funds for the user
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Video.DownloadVideoModel">
+            <summary>
+            Holds the bytes that composed the video with the given VideoId
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.DownloadVideoModel.VideoId">
+            <summary>
+            VideoId
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.DownloadVideoModel.VideoBytes">
+            <summary>
+            File bytes
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.GlobalKeywordModel">
             <summary>
             Represents the Global Keywords
@@ -762,6 +782,46 @@
         <member name="P:FairPlayTube.Models.Video.GlobalKeywordModel.Appeareances">
             <summary>
             Appeareances
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Video.ProjectModel">
+            <summary>
+            Holds the information required to create a custom rendering project
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.ProjectModel.ProjectId">
+            <summary>
+            The project's id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.ProjectModel.Name">
+            <summary>
+            Name of the Project
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.ProjectModel.Videos">
+            <summary>
+            Videos and ranges to be included for the custom project
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Video.ProjectVideoModel">
+            <summary>
+            Halds the informtion for the time ranges for the specified VideoId
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.ProjectVideoModel.VideoId">
+            <summary>
+            Azure Video Indexer Video Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.ProjectVideoModel.Start">
+            <summary>
+            Start Time
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.ProjectVideoModel.End">
+            <summary>
+            End Time
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.Video.UpdateVideoModel">
@@ -831,7 +891,12 @@
         </member>
         <member name="P:FairPlayTube.Models.Video.VideoInfoModel.Name">
             <summary>
-            NAme of the Video
+            Name of the Video
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.FileName">
+            <summary>
+            File's name
             </summary>
         </member>
         <member name="P:FairPlayTube.Models.Video.VideoInfoModel.Description">
@@ -899,6 +964,11 @@
             Video's Price
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.PriceAfterCommission">
+            <summary>
+            Video's price after commission
+            </summary>
+        </member>
         <member name="P:FairPlayTube.Models.Video.VideoInfoModel.AvailableJobs">
             <summary>
             Available Jobs associated with this video
@@ -929,6 +999,11 @@
             Video's indexing status
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.IsBought">
+            <summary>
+            Specified is the logged in user already bought the video
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.VideoJobModel">
             <summary>
             Represents a Job associated to a video
@@ -952,6 +1027,21 @@
         <member name="P:FairPlayTube.Models.Video.VideoJobModel.Description">
             <summary>
             Job Description
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Video.VideoPlaylistModel">
+            <summary>
+            Holds the information related to a video's playlist
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoPlaylistModel.PlaylistName">
+            <summary>
+            Playlist's name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoPlaylistModel.PlaylistDescription">
+            <summary>
+            Playlist's description
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.Video.VideoStatusModel">

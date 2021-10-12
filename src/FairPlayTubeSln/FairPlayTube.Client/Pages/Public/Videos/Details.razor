@@ -1,18 +1,23 @@
-﻿<Loading IsLoading="IsLoading"></Loading>
+﻿<Meta property="og:url" content="@this.NavigationManager.Uri" />
+<Meta property="og:type" content="website" />
+<Meta property="og:image" content="@VideoThumbnailUrl" />
+<Meta property="og:video" content="@this.NavigationManager.Uri" />
+<Meta property="og:video:secure_url" content="@this.NavigationManager.Uri" />
+<Meta property="og:video:type" content="video/mp4" />
+<Meta property="og:video:width" content="300" />
+<Meta property="og:video:height" content="300" />
+<Meta property="twitter:image" content="@VideoThumbnailUrl" />
+<Meta name="twitter:card" content="summary_large_image" />
+<Meta name="twitter:site" content="@("@FTube2021")" />
+<Meta name="twitter:creator" content="@("@efonsecabcr")" />
+
+<Loading IsLoading="IsLoading"></Loading>
+<VisitorTracking></VisitorTracking>
 
 @if (this.VideoModel != null)
 {
-    <Meta property="og:url" content="@this.NavigationManager.Uri" />
-    <Meta property="og:type" content="website" />
     <Meta property="og:title" content="@this.VideoModel.Name" />
-    <Meta property="og:image" content="@this.VideoModel.ThumbnailUrl" />
     <Meta property="og:description" content="@this.VideoModel.Description" />
-    <Meta property="og:video" content="@this.NavigationManager.Uri" />
-    <Meta property="og:video:secure_url" content="@this.NavigationManager.Uri" />
-    <Meta property="og:video:type" content="video/mp4" />
-    <Meta property="og:video:width" content="300" />
-    <Meta property="og:video:height" content="300" />
-    <Meta property="twitter:image" content="@this.VideoModel.ThumbnailUrl" />
     <Meta property="twitter:description" content="@this.VideoModel.Description" />
 
     <article>
@@ -25,7 +30,7 @@
             <FairPlayTube.Components.Videos.Video AllowEdit="false"
                                                   VideoModel="this.VideoModel"
                                                   ShowDetailsLink="false"
-                                                  ShowTwitterShareButton="true"></FairPlayTube.Components.Videos.Video>
+                                                  ShowTwitterShareButton="true" ShowDisplayAd="true"></FairPlayTube.Components.Videos.Video>
         </div>
     </article>
 }

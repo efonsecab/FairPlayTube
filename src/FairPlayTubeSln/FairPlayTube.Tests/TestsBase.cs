@@ -171,6 +171,12 @@ namespace FairPlayTube.Tests
             VideoClientService videoClientService = new VideoClientService(CreateHttpClientService());
             return videoClientService;
         }
+
+        protected VideoPlaylistClientService CreateVideoPlaylistClientService()
+        {
+            VideoPlaylistClientService videoPlaylistClientService = new VideoPlaylistClientService(CreateHttpClientService());
+            return videoPlaylistClientService;
+        }
     }
 
     public class TestsHttpClientFactory : IHttpClientFactory

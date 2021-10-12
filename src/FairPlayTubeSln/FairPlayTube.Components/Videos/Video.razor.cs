@@ -1,6 +1,7 @@
 ﻿using FairPlayTube.Common.Interfaces;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Components;
+using System;
 using System.Threading.Tasks;
 
 namespace FairPlayTube.Components.Videos
@@ -14,11 +15,19 @@ namespace FairPlayTube.Components.Videos
         [Parameter]
         public bool AllowDelete { get; set; } = false;
         [Parameter]
+        public bool AllowDownload { get; set; } = false;
+        [Parameter]
         public bool ShowDetailsLink { get; set; } = false;
         [Parameter]
         public bool ShowTwitterShareButton { get; set; } = false;
         [Parameter]
         public EventCallback<VideoInfoModel> OnDelete { get; set; }
+        [Parameter]
+        public EventCallback<VideoInfoModel> OnDownload { get; set; }
+        [Parameter]
+        public EventCallback<VideoInfoModel> OnBuyVideoAccess { get; set; }
+        [Parameter]
+        public bool ShowDisplayAd { get; set; }
         [Inject]
         private IVideoEditAccessTokenProvider VideoEditAccessTokenProvider { get; set; }
         [Inject]
@@ -93,6 +102,11 @@ namespace FairPlayTube.Components.Videos
             this.NavigationManager.NavigateTo(formattedUrl);
         }
 
+        private async Task OnBuyVideoAccessClicked()
+        {
+            await this.OnBuyVideoAccess.InvokeAsync(this.VideoModel);
+        }
+
         private void OnDeleteVideoClicked()
         {
             this.ShowDeleteConfirm = true;
@@ -102,7 +116,14 @@ namespace FairPlayTube.Components.Videos
         {
             this.ShowDeleteConfirm = false;
         }
-        
+
+        private async Task OnDownloadClicked()
+        {
+            var downloadTask = OnDownload.InvokeAsync(this.VideoModel);
+            await downloadTask;
+        }
+
+
         private async Task OnDeleteVideoConfirmedAsync()
         {
             var deleteTask = OnDelete.InvokeAsync(this.VideoModel);

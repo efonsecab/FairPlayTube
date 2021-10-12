@@ -229,5 +229,11 @@ namespace FairPlayTube.Controllers.Tests
         {
             Assert.Inconclusive();
         }
+
+        [TestMethod()]
+        public void DownloadVideoTest()
+        {
+            Assert.Inconclusive();
+        }
     }
 }

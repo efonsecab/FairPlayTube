@@ -1,4 +1,6 @@
-﻿<h3>List</h3>
+﻿@using FairPlayTube.Components.Notifications
+
+<h3>List</h3>
 
 
 <Loading IsLoading="IsLoading"></Loading>
@@ -12,7 +14,10 @@
             {
                 <Card Width="33.3%">
                     <CardHeader>
-                        @user.Name
+                        <a href="@GetUserHomePageLink(user)">@user.Name</a>
+                        <button type="button" @onclick="@(_ => OnOpenMessageSenderModal(user))">
+                            <i class="bi bi-chat-left-text-fill" />
+                        </button>
                     </CardHeader>
                     <CardBody>
                         <p>
@@ -24,6 +29,28 @@
                     </CardBody>
                 </Card>
             }
+        </div>
+    </div>
+}
+
+@if (this.ShowMessageSenderModal)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display:block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Send Message</h5>
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="OnSendMessageCancelled">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <MessageSender ToApplicationUserFullName="@SelectedUser.Name" 
+                                   ToApplicationUserId="@SelectedUser.ApplicationUserId"
+                                   OnSendAction="OnSendMessage"
+                                   OnCancelAction="OnSendMessageCancelled"/>
+                </div>
+            </div>
         </div>
     </div>
 }

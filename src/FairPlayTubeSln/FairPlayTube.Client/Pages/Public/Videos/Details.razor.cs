@@ -1,5 +1,6 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Common.Global;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -22,11 +23,15 @@ namespace FairPlayTube.Client.Pages.Public.Videos
         private NavigationManager NavigationManager { get; set; }
         private VideoInfoModel VideoModel { get; set; }
         private bool IsLoading { get; set; }
+        private string VideoThumbnailUrl { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
+                string baseUrl = this.NavigationManager.BaseUri;
+                var ogThumbnailurl = Constants.ApiRoutes.OpenGraphController.VideoThumbnail.Replace("{videoId}", this.VideoId);
+                this.VideoThumbnailUrl = $"{baseUrl}{ogThumbnailurl}";
                 IsLoading = true;
                 this.VideoModel = await this.VideoClientService.GetVideoAsync(VideoId);
             }
@@ -36,7 +41,8 @@ namespace FairPlayTube.Client.Pages.Public.Videos
             }
             finally
             {
-                IsLoading = false;            }
+                IsLoading = false;
+            }
         }
     }
 }

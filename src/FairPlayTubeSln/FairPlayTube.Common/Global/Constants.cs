@@ -2,6 +2,10 @@
 {
     public class Constants
     {
+        public class RegularExpressions
+        {
+            public const string AllowedFileNameFormat = "^[a-zA-Z0-9 ]+$";
+        }
         public class UploadLimits
         {
             public const int MaxMegabytesAllowed = 300;
@@ -65,18 +69,38 @@
             public const string MyFunds = "/Users/MyFunds";
             public const string Edit = "/Users/Videos/Edit/{VideoId}";
             public const string MyPendingVideosStatus = "/Users/Videos/MyPendingVideosStatus";
+            public const string UserHomePage = "/Users/Home/{UserId:long}";
+            public const string ValidateInviteCode = "/Users/ValidateInviteCode";
+            public const string InviteUser = "/Users/InviteUser";
         }
 
         public class RootPagesRoutes
         {
             public const string Persons = "/Persons";
+            public const string SearchWithSearchTerm = "/Search/{SearchTerm}";
+            public const string SearchEmpty = "/Search";
         }
 
         public class ApiRoutes
         {
+            public class OpenGraphController
+            {
+                public const string VideoThumbnail = "api/OpenGraph/VideoThumbnail/{videoId}";
+            }
             public class VisitorTrackingController
             {
                 public const string TrackClientInformation = "api/VisitorTracking/TrackClientInformation";
+            }
+
+            public class VideoPlaylistController
+            {
+                public const string CreateVideoPlaylist = "api/VideoPlaylist/CreateVideoPlaylist";
+                public const string DeleteVideoPlaylist = "api/VideoPlaylist/DeleteVideoPlaylist";
+            }
+
+            public class SearchController
+            {
+                public const string SearchPublicProcessedVideos = "api/Search/SearchPublicProcessedVideos";
             }
             public class VideoController
             {
@@ -92,6 +116,8 @@
                 public const string GetMyPendingVideosQueue = "api/Video/GetMyPendingVideosQueue";
                 public const string GetPersons = "api/Video/GetPersons";
                 public const string DeleteVideo = "api/Video/DeleteVideo";
+                public const string DownloadVideo = "api/Video/DownloadVideo";
+                public const string GetBoughtVideosIds = "api/Video/GetBoughtVideosIds";
             }
             public class UserController
             {
@@ -100,6 +126,8 @@
                 public const string InviteUser = "api/User/InviteUser";
                 public const string AddUserFollower = "API/uSER/AddUserFollower";
                 public const string SendMessage = "api/User/SendMessage";
+                public const string GetMyUserStatus = "api/User/GetMyUserStatus";
+                public const string ValidateUserInviteCode = "api/User/ValidateUserInviteCode";
             }
 
             public class UserProfileController

@@ -9,5 +9,9 @@
         /// Message of the SignalR notification
         /// </summary>
         public string Message { get; set; }
+        /// <summary>
+        /// VideoId sent in the message
+        /// </summary>
+        public string VideoId { get; set; }
     }
 }

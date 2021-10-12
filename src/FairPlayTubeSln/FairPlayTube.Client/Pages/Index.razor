@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿
 
 <h1>Welcome to @Constants.Titles.AppTitle</h1>
 <VisitorTracking></VisitorTracking>
@@ -23,12 +23,28 @@
                                 @Constants.Titles.AppTitle is the next generation of video sharing portals with a focus on users and transparency.
                             </p>
                             <p>
-                                @Constants.Titles.AppTitle is a 100% Open Source project, and you can contribute to it.
+                                @Constants.Titles.AppTitle is an Open Source project, and you can contribute to it.
                             </p>
                             <p>
                                 You can help keeping the project free and without ads by donating
                             </p>
                             <PayPalDonateButton></PayPalDonateButton>
+                            <p>
+                                We are aware of the struggle millions of creators have, finding it extremely difficult to earn
+                                the money they deserve when using other platforms.
+                            </p>
+                            <p>
+                                On @Constants.Titles.AppTitle we have creators in mind, giving them access to monetization options,
+                                from the very beginning of their journey.
+                            </p>
+                            <p>We also have content consumers in mind, allowing them to earn money by participating in jobs posted by the creators</p>
+                            <p>
+                                <strong>
+                                    Note: @Constants.Titles.AppTitle is a young system currently being developed and as such can have bugs.
+                                    If you find any, we appreciate your help by adding the infromation here:
+                                    <a href="https://github.com/efonsecab/FairPlayTube/issues/new?assignees=&labels=&template=bug_report.md&title=" target="_blank">Report Bug</a>
+                                </strong>
+                            </p>
                             <p>
                                 Visit the @Constants.Titles.AppTitle Repository on Github
                                 <a href="https://github.com/efonsecab/FairPlayTube" target="_blank">https://github.com/efonsecab/FairPlayTube</a>
@@ -44,4 +60,6 @@
     </div>
 </div>
 
-<FairPlayTube.Components.Videos.VideoList AllVideos="this.AllVideos"></FairPlayTube.Components.Videos.VideoList>
+<FairPlayTube.Components.Videos.VideoList AllVideos="this.AllVideos" OnDownload="OnDownload" 
+                                          OnBuyVideoAccess="OnBuyVideoAccess"
+                                          AllowDownload="AllowDownload"></FairPlayTube.Components.Videos.VideoList>

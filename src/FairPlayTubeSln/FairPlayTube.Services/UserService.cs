@@ -1,4 +1,7 @@
-﻿using FairPlayTube.DataAccess.Data;
+﻿using FairPlayTube.Common.Interfaces;
+using FairPlayTube.DataAccess.Data;
+using FairPlayTube.DataAccess.Models;
+using FairPlayTube.Models.Invites;
 using FairPlayTube.Models.UserAudience;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,9 +16,13 @@ namespace FairPlayTube.Services
     public class UserService
     {
         private FairplaytubeDatabaseContext FairplaytubeDatabaseContext { get; }
-        public UserService(FairplaytubeDatabaseContext fairplaytubeDatabaseContext)
+        private ICurrentUserProvider CurrentUserProvider { get; }
+
+        public UserService(FairplaytubeDatabaseContext fairplaytubeDatabaseContext, 
+            ICurrentUserProvider currentUserProvider)
         {
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
+            this.CurrentUserProvider = currentUserProvider;
         }
 
         public async Task AddUserFollowerAsync(string followerUserObjectId, string followedUserObjectId, CancellationToken cancellationToken)
@@ -36,6 +43,26 @@ namespace FairPlayTube.Services
                 FollowedApplicationUserId = followedUserEntity.ApplicationUserId
             });
             await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+        }
+
+        public async Task<UserInvitation> InviteUserAsync(InviteUserModel inviteUserModel, CancellationToken cancellationToken)
+        {
+            var userInvitationEntity = await this.FairplaytubeDatabaseContext.UserInvitation
+                .Where(p => p.InvitedUserEmail == inviteUserModel.ToEmailAddress).SingleOrDefaultAsync(cancellationToken: cancellationToken);
+            if (userInvitationEntity is not null)
+                throw new Exception($"An invitation already exists for user: {inviteUserModel.ToEmailAddress}");
+            var currentUserObjectId = this.CurrentUserProvider.GetObjectId();
+            var currentUserEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
+                .Where(p => p.AzureAdB2cobjectId.ToString() == currentUserObjectId).SingleAsync(cancellationToken: cancellationToken);
+            userInvitationEntity = new UserInvitation()
+            {
+                InviteCode = Guid.NewGuid(),
+                InvitedUserEmail = inviteUserModel.ToEmailAddress,
+                InvitingApplicationUserId = currentUserEntity.ApplicationUserId,
+            };
+            await this.FairplaytubeDatabaseContext.UserInvitation.AddAsync(userInvitationEntity, cancellationToken: cancellationToken);
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
+            return userInvitationEntity;
         }
 
     }

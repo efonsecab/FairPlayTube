@@ -10,6 +10,7 @@
             <div class="mx-auto">
                 <img class="img-thumbnail" src="images/ptilogo.png" style="height:45px;" />
             </div>
+            <SearchVideo OnSearchClicked="OnSearchClicked"></SearchVideo>
             <AuthorizeView>
                 <Authorized>
                     <FairPlayTube.Client.CustomComponents.SignalR.NotificationHub></FairPlayTube.Client.CustomComponents.SignalR.NotificationHub>
@@ -18,9 +19,23 @@
             <LoginDisplay></LoginDisplay>
         </div>
 
-        <div class="content px-4">
+        <div class="content px-4" style="height:95%; overflow-y:auto;">
             @Body
         </div>
+
+        @if (ShowFooter)
+        {
+            <footer id="" class="footer mt-auto py-3 bg-light position-fixed w-100 bottom-0"
+                    style="background-color: #f7f7f7 !important; border-bottom: 1px solid #d6d5d5 !important;">
+                <div class="container">
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="@CloseFooter">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </button>
+                    <a class="text-black-50" href="https://cr.linkedin.com/in/pticostarica" target="_blank">Designed by PTI Costa Rica</a>
+                </div>
+            </footer>
+        }
+
     </div>
 </div>
 
@@ -54,15 +69,46 @@
 }
 
 @code{
-    private bool ShowSupportBot { get; set; } = false;
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+private bool ShowFooter { get; set; } = true;
 
-    private void OpenSupportBot()
+protected override async Task OnAfterRenderAsync(bool firstRender)
+{
+    if (!this.NavigationManager.Uri.EndsWith(Common.Global.Constants.UserPagesRoutes.ValidateInviteCode) &&
+        this.AuthenticationStateTask != null)
     {
-        this.ShowSupportBot = true;
+        var state = await AuthenticationStateTask;
+        if (state != null && state.User != null && state.User.Identity.IsAuthenticated)
+        {
+            var userStatus = state.User.Claims.Where(p => p.Type == "UserStatus").Single();
+            if (userStatus.Value != "Approved")
+                NavigationManager.NavigateTo(Common.Global.Constants.UserPagesRoutes.ValidateInviteCode);
+        }
     }
+}
 
-    private void CloseSupportBot()
-    {
-        this.ShowSupportBot = false;
-    }
+private bool ShowSupportBot { get; set; } = false;
+
+private void OpenSupportBot()
+{
+    this.ShowSupportBot = true;
+}
+
+private void CloseSupportBot()
+{
+    this.ShowSupportBot = false;
+}
+
+private void CloseFooter()
+{
+    this.ShowFooter = false;
+}
+
+public void OnSearchClicked(string searchTerm)
+{
+    this.NavigationManager.NavigateTo($"{Constants.RootPagesRoutes.SearchWithSearchTerm.Replace("{SearchTerm}", searchTerm)}");
+}
 }

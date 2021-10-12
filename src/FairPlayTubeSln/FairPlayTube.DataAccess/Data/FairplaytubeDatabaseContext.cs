@@ -23,6 +23,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<ApplicationUser> ApplicationUser { get; set; }
         public virtual DbSet<ApplicationUserFeature> ApplicationUserFeature { get; set; }
         public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }
+        public virtual DbSet<ApplicationUserStatus> ApplicationUserStatus { get; set; }
         public virtual DbSet<Brand> Brand { get; set; }
         public virtual DbSet<BrandVideo> BrandVideo { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
@@ -35,6 +36,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<UserInvitation> UserInvitation { get; set; }
         public virtual DbSet<UserMessage> UserMessage { get; set; }
         public virtual DbSet<UserProfile> UserProfile { get; set; }
+        public virtual DbSet<UserVerificationStatus> UserVerificationStatus { get; set; }
         public virtual DbSet<UserVideoRating> UserVideoRating { get; set; }
         public virtual DbSet<VideoAccessTransaction> VideoAccessTransaction { get; set; }
         public virtual DbSet<VideoComment> VideoComment { get; set; }
@@ -47,12 +49,24 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<VideoInfo> VideoInfo { get; set; }
         public virtual DbSet<VideoJob> VideoJob { get; set; }
         public virtual DbSet<VideoJobApplication> VideoJobApplication { get; set; }
+        public virtual DbSet<VideoPlaylist> VideoPlaylist { get; set; }
         public virtual DbSet<VideoVisibility> VideoVisibility { get; set; }
         public virtual DbSet<VisitorTracking> VisitorTracking { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Scaffolding:ConnectionString", "Data Source=(local);Initial Catalog=FairPlayTube.Database;Integrated Security=true");
+
+            modelBuilder.Entity<ApplicationUser>(entity =>
+            {
+                entity.Property(e => e.ApplicationUserStatusId).HasDefaultValueSql("1");
+
+                entity.HasOne(d => d.ApplicationUserStatus)
+                    .WithMany(p => p.ApplicationUser)
+                    .HasForeignKey(d => d.ApplicationUserStatusId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ApplicationUser_ApplicationUserStatus");
+            });
 
             modelBuilder.Entity<ApplicationUserFeature>(entity =>
             {
@@ -82,6 +96,11 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey<ApplicationUserRole>(d => d.ApplicationUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ApplicationUserRole_ApplicationUser");
+            });
+
+            modelBuilder.Entity<ApplicationUserStatus>(entity =>
+            {
+                entity.Property(e => e.ApplicationUserStatusId).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<Brand>(entity =>
@@ -186,6 +205,12 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.ApplicationUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ApplicationUserId_UserProfile");
+
+                entity.HasOne(d => d.UserVerificationStatus)
+                    .WithMany(p => p.UserProfile)
+                    .HasForeignKey(d => d.UserVerificationStatusId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserProfile_VerificationStatus");
             });
 
             modelBuilder.Entity<UserVideoRating>(entity =>
@@ -205,8 +230,6 @@ namespace FairPlayTube.DataAccess.Data
 
             modelBuilder.Entity<VideoAccessTransaction>(entity =>
             {
-                entity.Property(e => e.VideoAccessTransactionId).ValueGeneratedNever();
-
                 entity.HasOne(d => d.BuyerApplicationUser)
                     .WithMany(p => p.VideoAccessTransaction)
                     .HasForeignKey(d => d.BuyerApplicationUserId)
@@ -329,6 +352,15 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.VideoInfoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VideoJobApplication_VideoInfoId");
+            });
+
+            modelBuilder.Entity<VideoPlaylist>(entity =>
+            {
+                entity.HasOne(d => d.OwnerApplicationUser)
+                    .WithMany(p => p.VideoPlaylist)
+                    .HasForeignKey(d => d.OwnerApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoPlaylist_ApplicationUser");
             });
 
             modelBuilder.Entity<VideoVisibility>(entity =>

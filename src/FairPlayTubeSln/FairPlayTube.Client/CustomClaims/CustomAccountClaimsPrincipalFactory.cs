@@ -32,6 +32,9 @@ namespace FairPlayTube.Client.CustomClaims
                 var userRole = await httpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyRole);
                 if (!string.IsNullOrWhiteSpace(userRole))
                     claimsIdentity.AddClaim(new Claim("Role", userRole));
+                var userStatus = await httpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyUserStatus);
+                if (!string.IsNullOrWhiteSpace(userRole))
+                    claimsIdentity.AddClaim(new Claim("UserStatus", userStatus));
             }
             return userClaimsPrincipal;
         }
