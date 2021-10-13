@@ -48,6 +48,8 @@
     [Inject]
     private ServerConfiguration ServerConfiguration { get; set; }
     [Inject]
+    private ClientAppConfiguration ClientAppConfiguration { get; set; }
+    [Inject]
     private NavigationManager NavigationManager { get; set; }
 
     protected override void OnInitialized()
@@ -58,6 +60,16 @@
 
     private void OnValidSubmit()
     {
+        this.ClientAppConfiguration.AzureAdB2C = new ClientAppAzureadb2c()
+        {
+            Authority = $"{this.ServerConfiguration.AzureAdB2C.Instance}/{this.ServerConfiguration.AzureAdB2C.Domain}/{this.ServerConfiguration.AzureAdB2C.SignUpSignInPolicyId}",
+            ClientId = this.ServerConfiguration.AzureAdB2C.ClientAppClientId,
+            ValidateAuthority=false
+        };
+        this.ClientAppConfiguration.AzureAdB2CScopes = new Azureadb2cscopes()
+        {
+            DefaultScope = this.ServerConfiguration.AzureAdB2C.ClientAppDefaultScope
+        };
         this.NavigationManager.NavigateTo("/ServerConfiguration/AzureBlobStorage");
     }
 }

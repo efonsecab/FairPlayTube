@@ -18,7 +18,10 @@
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <button type="button" @onclick="GenerateConfigurationFiles">Generate Files</button>
+            <button type="button" @onclick="GenerateServerConfigurationFile">Generate Server Files</button>
+        </li>
+        <li class="nav-item px-3">
+            <button type="button" @onclick="GenerateClientConfigurationFile">Generate Client File</button>
         </li>
     </ul>
 </div>
@@ -26,6 +29,8 @@
 @code {
     [Inject]
     private ServerConfiguration ServerConfiguration { get; set; }
+    [Inject]
+    private ClientAppConfiguration ClientAppConfiguration { get; set; }
     [Inject]
     private IJSRuntime JSRuntime { get; set; }
     private bool collapseNavMenu = true;
@@ -37,7 +42,7 @@
         collapseNavMenu = !collapseNavMenu;
     }
 
-    private async Task GenerateConfigurationFiles()
+    private async Task GenerateServerConfigurationFile()
     {
         var serverConfigurationJson = System.Text.Json.JsonSerializer.Serialize(ServerConfiguration);
         var fileBytes = System.Text.Encoding.UTF8.GetBytes(serverConfigurationJson);
@@ -47,6 +52,20 @@
               {
                   ByteArray = fileBytes,
                   FileName = "FairPlayTube.Server.appsettigs.json",
+                  ContentType = System.Net.Mime.MediaTypeNames.Application.Octet
+              });
+    }
+
+    private async Task GenerateClientConfigurationFile()
+    {
+        var serverConfigurationJson = System.Text.Json.JsonSerializer.Serialize(ClientAppConfiguration);
+        var fileBytes = System.Text.Encoding.UTF8.GetBytes(serverConfigurationJson);
+        await JSRuntime.InvokeVoidAsync(
+              "downloadFromByteArray",
+              new
+              {
+                  ByteArray = fileBytes,
+                  FileName = "FairPlayTube.Client.appsettigs.json",
                   ContentType = System.Net.Mime.MediaTypeNames.Application.Octet
               });
     }

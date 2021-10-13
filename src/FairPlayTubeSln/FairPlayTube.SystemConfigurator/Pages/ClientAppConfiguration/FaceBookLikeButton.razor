@@ -1,0 +1,43 @@
+﻿@page "/ClientConfiguration/FacebookLikeButton"
+
+<h3>Facebook Like Button Configuration</h3>
+<p>
+    <strong>Check how to configure Facebook like Button</strong>
+</p>
+
+<a href="https://developers.facebook.com/docs/plugins/like-button/"
+   target="_blank">
+    Like Button for the Web
+</a>
+
+<EditForm Model="ClientAppConfiguration.FaceBookLikeButtonConfiguration" OnValidSubmit="OnValidSubmit">
+    <div class="mb-3">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ClientAppConfiguration.FaceBookLikeButtonConfiguration.AppId)</label>
+        <InputText class="form-control" @bind-Value="ClientAppConfiguration.FaceBookLikeButtonConfiguration.AppId"></InputText>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+</EditForm>
+
+@code {
+    [Inject]
+    private ClientAppConfiguration ClientAppConfiguration { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (this.ClientAppConfiguration.FaceBookLikeButtonConfiguration is null)
+            this.ClientAppConfiguration.FaceBookLikeButtonConfiguration = new Facebooklikebuttonconfiguration();
+    }
+
+    private void OnValidSubmit()
+    {
+        this.NavigationManager.NavigateTo("/");
+    }
+}
