@@ -79,6 +79,7 @@
             public const string Persons = "/Persons";
             public const string SearchWithSearchTerm = "/Search/{SearchTerm}";
             public const string SearchEmpty = "/Search";
+            public const string SearchBing = "/SearchBing/{SearchTerm}";
         }
 
         public class ApiRoutes
@@ -106,6 +107,7 @@
             public class SearchController
             {
                 public const string SearchPublicProcessedVideos = "api/Search/SearchPublicProcessedVideos";
+                public const string SearchBingVideos = "api/Search/SearchBingVideos";
             }
             public class VideoController
             {

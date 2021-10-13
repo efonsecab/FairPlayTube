@@ -89,6 +89,14 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:FairPlayTube.Controllers.SearchController.SearchBingVideos(System.String,System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="searchTerm"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.SitemapController">
             <summary>
             Dynamically generates a sitemap

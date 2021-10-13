@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
+using FairPlayTube.Models.BingSearch;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.CognitiveServices.Search.VideoSearch.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -52,6 +54,27 @@ namespace FairPlayTube.Controllers
                .Select(p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p))
                .ToArrayAsync(cancellationToken: cancellationToken);
             return result;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="searchTerm"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        public async Task<IActionResult> SearchBingVideos(string searchTerm, CancellationToken cancellationToken)
+        {
+            var response = await this.SearchService.SearchBingVideo(searchTerm, cancellationToken);
+            var result = response.Value.Select(p=> new BingSearchVideoModel() 
+            {
+                embedHtml = p.EmbedHtml,
+                allowHttpsEmbed=p.AllowHttpsEmbed,
+                name=p.Name,
+                description=p.Description,
+                text=p.Text,
+            });
+            return Ok(result);
         }
     }
 }

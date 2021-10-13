@@ -88,6 +88,7 @@ namespace FairPlayTube
                 var handler = sp.GetRequiredService<CustomHttpClientHandler>();
                 return new CustomHttpClient(handler) { Timeout = TimeSpan.FromMinutes(30) };
             });
+            ConfigureAzureBingSearchC(services);
             ConfigureAzureTextAnalytics(services);
             ConfigureAzureContentModerator(services);
             ConfigureAzureVideoIndexer(services);
@@ -229,6 +230,15 @@ namespace FairPlayTube
                         StatusCode = (int)System.Net.HttpStatusCode.Forbidden
                     };
                 });
+        }
+
+        private void ConfigureAzureBingSearchC(IServiceCollection services)
+        {
+            AzureBingSearchConfiguration azureBingSearchConfiguration =
+                            Configuration.GetSection(nameof(AzureBingSearchConfiguration))
+                            .Get<AzureBingSearchConfiguration>();
+            services.AddSingleton(azureBingSearchConfiguration);
+            services.AddTransient<AzureBingSearchService>();
         }
 
         private void ConfigureAzureTextAnalytics(IServiceCollection services)

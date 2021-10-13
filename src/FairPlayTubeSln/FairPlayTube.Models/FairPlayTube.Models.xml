@@ -4,6 +4,216 @@
         <name>FairPlayTube.Models</name>
     </assembly>
     <members>
+        <member name="T:FairPlayTube.Models.BingSearch.BingSearchVideoModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.motionThumbnailUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.motionThumbnailId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.embedHtml">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.allowHttpsEmbed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.viewCount">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.thumbnail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.videoId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.allowMobileEmbed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.isSuperfresh">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.contentUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.hostPageUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.width">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.height">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.thumbnailUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.provider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.text">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.image">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.alternateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.bingId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.webSearchUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.BingSearchVideoModel.id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.BingSearch.Thumbnail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.thumbnail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.contentUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.hostPageUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.width">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.height">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.thumbnailUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.provider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.text">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.image">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.alternateName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.bingId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.webSearchUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.BingSearch.Thumbnail.id">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.CustomHttpResponse.ProblemHttpResponse">
             <summary>
             Represents an Http Problem Response

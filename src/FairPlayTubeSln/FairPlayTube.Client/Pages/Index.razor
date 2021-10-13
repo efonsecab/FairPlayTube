@@ -70,6 +70,13 @@
     </p>
 </div>
 
+@if (!String.IsNullOrWhiteSpace(SearchTerm) && this.AllVideos?.Length == 0)
+{
+    <p>
+        Did not find what you were looking for? You can still <a href="/SearchBing/@SearchTerm">search here</a>
+    </p>
+}
+
 <FairPlayTube.Components.Videos.VideoList AllVideos="this.AllVideos" OnDownload="OnDownload"
                                           OnBuyVideoAccess="OnBuyVideoAccess"
                                           AllowDownload="AllowDownload"></FairPlayTube.Components.Videos.VideoList>

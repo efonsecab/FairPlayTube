@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Models.Video;
+﻿using FairPlayTube.Models.BingSearch;
+using FairPlayTube.Models.Video;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,14 @@ namespace FairPlayTube.ClientServices
             var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
             return await anonymousHttpClient.GetFromJsonAsync<VideoInfoModel[]>(
                 $"{ApiRoutes.SearchController.SearchPublicProcessedVideos}" +
+                $"?searchTerm={WebUtility.UrlEncode(searchTerm)}");
+        }
+
+        public async Task<BingSearchVideoModel[]> SearchBingVideosAsync(string searchTerm)
+        {
+            var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
+            return await anonymousHttpClient.GetFromJsonAsync<BingSearchVideoModel[]>(
+                $"{ApiRoutes.SearchController.SearchBingVideos}" +
                 $"?searchTerm={WebUtility.UrlEncode(searchTerm)}");
         }
     }

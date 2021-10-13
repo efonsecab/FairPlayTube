@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using FairPlayTube.DataAccess.Models;
+using FairPlayTube.Models.BingSearch;
 using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Models.VideoComment;
+using Microsoft.Azure.CognitiveServices.Search.VideoSearch.Models;
 using System.Linq;
 
 namespace FairPlayTube.AutoMapperProfiles
