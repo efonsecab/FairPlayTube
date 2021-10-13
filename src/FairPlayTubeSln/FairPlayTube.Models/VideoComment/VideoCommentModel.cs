@@ -35,5 +35,9 @@ namespace FairPlayTube.Models.VideoComment
         /// User who created the comment
         /// </summary>
         public string RowCreationUser { get; set; }
+        /// <summary>
+        /// Number of Followers for the user who created the comment
+        /// </summary>
+        public long ApplicationUserFollowersCount { get; set; }
     }
 }

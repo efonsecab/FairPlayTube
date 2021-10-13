@@ -59,6 +59,8 @@ namespace FairPlayTube.Services
         {
             return this.FairplaytubeDatabaseContext.VideoComment
                 .Include(p => p.VideoInfo)
+                .Include(p=>p.ApplicationUser)
+                .ThenInclude(p=>p.UserFollowerFollowedApplicationUser)
                 .Where(p => p.VideoInfo.VideoId == videoId);
         }
 

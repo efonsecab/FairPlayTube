@@ -804,6 +804,11 @@
             User who created the comment
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.VideoComment.VideoCommentModel.ApplicationUserFollowersCount">
+            <summary>
+            Number of Followers for the user who created the comment
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.DownloadVideoModel">
             <summary>
             Holds the bytes that composed the video with the given VideoId
