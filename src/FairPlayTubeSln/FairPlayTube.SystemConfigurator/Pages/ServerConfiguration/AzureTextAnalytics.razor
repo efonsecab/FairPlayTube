@@ -1,0 +1,46 @@
+﻿@page "/ServerConfiguration/AzureTextAnalytics"
+<h3>Azure Text Analytics</h3>
+<p>
+    <strong>Check how to use Azure Text Analytics</strong>
+</p>
+
+<a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-call-api?tabs=synchronous"
+   target="_blank">
+    How to call the Text Analytics REST API
+</a>
+
+<EditForm Model="ServerConfiguration.AzureTextAnalyticsConfiguration" OnValidSubmit="OnValidSubmit">
+    <div class="mb-3">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.AzureTextAnalyticsConfiguration.Endpoint)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.AzureTextAnalyticsConfiguration.Endpoint"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.AzureTextAnalyticsConfiguration.Key)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.AzureTextAnalyticsConfiguration.Key"></InputText>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+</EditForm>
+
+@code {
+    [Inject]
+    private ServerConfiguration ServerConfiguration { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (this.ServerConfiguration.AzureTextAnalyticsConfiguration is null)
+            this.ServerConfiguration.AzureTextAnalyticsConfiguration = new Azuretextanalyticsconfiguration();
+    }
+
+    private void OnValidSubmit()
+    {
+        this.NavigationManager.NavigateTo("/ServerConfiguration/Connectionstrings");
+    }
+}

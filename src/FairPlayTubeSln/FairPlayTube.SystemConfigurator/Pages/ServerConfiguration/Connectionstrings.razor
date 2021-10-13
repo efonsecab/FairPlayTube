@@ -1,0 +1,42 @@
+﻿@page "/ServerConfiguration/ConnectionStrings"
+<h3>Database Connection Strings</h3>
+<p>
+    <strong>Check how to configure Entity Framework Core ConenctionString</strong>
+</p>
+
+<a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-strings"
+   target="_blank">
+    Connection Strings
+</a>
+
+<EditForm Model="ServerConfiguration.ConnectionStrings" OnValidSubmit="OnValidSubmit">
+    <div class="mb-3">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.ConnectionStrings.Default)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.ConnectionStrings.Default"></InputText>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+</EditForm>
+
+@code {
+    [Inject]
+    private ServerConfiguration ServerConfiguration { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (this.ServerConfiguration.ConnectionStrings is null)
+            this.ServerConfiguration.ConnectionStrings = new Configuration.Connectionstrings();
+    }
+
+    private void OnValidSubmit()
+    {
+        this.NavigationManager.NavigateTo("/ServerConfiguration/DataStorage");
+    }
+}

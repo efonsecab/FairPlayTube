@@ -1,0 +1,75 @@
+﻿@page "/ServerConfiguration/AzureAdB2C"
+
+<h3>@nameof(ServerConfiguration.AzureAdB2C) Configuration</h3>
+<p>
+    <strong>Check how to configure Blazor WebAssembly Hosted Apps with Azure AD B2C</strong>
+</p>
+
+<a href="https://docs.microsoft.com/en-us/aspnet/core/blazor/security/webassembly/hosted-with-azure-active-directory-b2c?view=aspnetcore-5.0"
+   target="_blank">
+    Secure an ASP.NET Core Blazor WebAssembly hosted app with Azure Active Directory B2C
+</a>
+
+<EditForm Model="ServerConfiguration.AzureAdB2C" OnValidSubmit="OnValidSubmit">
+    <div class="mb-3">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.AzureAdB2C.ClientAppClientId)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.AzureAdB2C.ClientAppClientId"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.AzureAdB2C.ClientAppDefaultScope)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.AzureAdB2C.ClientAppDefaultScope"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.AzureAdB2C.ClientId)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.AzureAdB2C.ClientId"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.AzureAdB2C.Domain)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.AzureAdB2C.Domain"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.AzureAdB2C.Instance)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.AzureAdB2C.Instance"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.AzureAdB2C.SignUpSignInPolicyId)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.AzureAdB2C.SignUpSignInPolicyId"></InputText>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+</EditForm>
+
+@code {
+    [Inject]
+    private ServerConfiguration ServerConfiguration { get; set; }
+    [Inject]
+    private ClientAppConfiguration ClientAppConfiguration { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (this.ServerConfiguration.AzureAdB2C is null)
+            this.ServerConfiguration.AzureAdB2C = new Azureadb2c();
+    }
+
+    private void OnValidSubmit()
+    {
+        this.ClientAppConfiguration.AzureAdB2C = new ClientAppAzureadb2c()
+        {
+            Authority = $"{this.ServerConfiguration.AzureAdB2C.Instance}/{this.ServerConfiguration.AzureAdB2C.Domain}/{this.ServerConfiguration.AzureAdB2C.SignUpSignInPolicyId}",
+            ClientId = this.ServerConfiguration.AzureAdB2C.ClientAppClientId,
+            ValidateAuthority=false
+        };
+        this.ClientAppConfiguration.AzureAdB2CScopes = new Azureadb2cscopes()
+        {
+            DefaultScope = this.ServerConfiguration.AzureAdB2C.ClientAppDefaultScope
+        };
+        this.NavigationManager.NavigateTo("/ServerConfiguration/AzureBlobStorage");
+    }
+}

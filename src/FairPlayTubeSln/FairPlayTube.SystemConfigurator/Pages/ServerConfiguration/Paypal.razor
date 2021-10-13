@@ -1,0 +1,50 @@
+﻿@page "/ServerConfiguration/Paypal"
+<h3>Paypal Configuration</h3>
+<p>
+    <strong>Check how to use Paypal API</strong>
+</p>
+
+<a href="https://developer.paypal.com/docs/api/overview/"
+   target="_blank">
+    Get Started
+</a>
+
+<EditForm Model="ServerConfiguration.PaypalConfiguration" OnValidSubmit="OnValidSubmit">
+    <div class="mb-3">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.PaypalConfiguration.ClientId)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.PaypalConfiguration.ClientId"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.PaypalConfiguration.Endpoint)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.PaypalConfiguration.Endpoint"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.PaypalConfiguration.Secret)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.PaypalConfiguration.Secret"></InputText>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+</EditForm>
+
+@code {
+    [Inject]
+    private ServerConfiguration ServerConfiguration { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (this.ServerConfiguration.PaypalConfiguration is null)
+            this.ServerConfiguration.PaypalConfiguration = new Paypalconfiguration();
+    }
+
+    private void OnValidSubmit()
+    {
+        this.NavigationManager.NavigateTo("/ServerConfiguration/Smtp");
+    }
+}

@@ -1,0 +1,46 @@
+﻿@page "/ServerConfiguration/AzureBlobStorage"
+<h3>Azure Blob Storage  Configuration</h3>
+<p>
+    <strong>Check how to configure Azure Blob Storage</strong>
+</p>
+
+<a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"
+   target="_blank">
+    Configure a connection string for an Azure storage account
+</a>
+
+<EditForm Model="ServerConfiguration.AzureConfiguration.AzureBlobStorageConfiguration" OnValidSubmit="OnValidSubmit">
+    <div class="mb-3">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.AzureConfiguration.AzureBlobStorageConfiguration.ConnectionString)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.AzureConfiguration.AzureBlobStorageConfiguration.ConnectionString"></InputText>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+</EditForm>
+
+@code {
+    [Inject]
+    private ServerConfiguration ServerConfiguration { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (this.ServerConfiguration.AzureConfiguration is null)
+            this.ServerConfiguration.AzureConfiguration = new Azureconfiguration()
+            {
+                AzureBlobStorageConfiguration = new Azureblobstorageconfiguration(),
+                AzureVideoIndexerConfiguration = new Azurevideoindexerconfiguration()
+            };
+    }
+
+    private void OnValidSubmit()
+    {
+        this.NavigationManager.NavigateTo("/ServerConfiguration/AzureVideoIndexer");
+    }
+}

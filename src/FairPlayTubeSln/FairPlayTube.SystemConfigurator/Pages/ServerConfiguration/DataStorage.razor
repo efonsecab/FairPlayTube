@@ -1,0 +1,52 @@
+﻿@page "/ServerConfiguration/DataStorage"
+
+<h3>Data Storage Configuration</h3>
+<p>
+    <strong>Check how to configure Azure Blob Storage</strong>
+</p>
+
+<a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"
+   target="_blank">
+    Configure a connection string for an Azure storage account
+</a>
+
+
+<EditForm Model="ServerConfiguration.DataStorageConfiguration" OnValidSubmit="OnValidSubmit">
+    <div class="mb-3">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.DataStorageConfiguration.AccountName)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.DataStorageConfiguration.AccountName"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.DataStorageConfiguration.ContainerName)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.DataStorageConfiguration.ContainerName"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.DataStorageConfiguration.UntrustedUploadsContainerName)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.DataStorageConfiguration.UntrustedUploadsContainerName"></InputText>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+</EditForm>
+
+@code {
+    [Inject]
+    private ServerConfiguration ServerConfiguration { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (this.ServerConfiguration.DataStorageConfiguration is null)
+            this.ServerConfiguration.DataStorageConfiguration = new Datastorageconfiguration();
+    }
+
+    private void OnValidSubmit()
+    {
+        this.NavigationManager.NavigateTo("/ServerConfiguration/IpStack");
+    }
+}

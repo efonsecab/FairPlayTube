@@ -1,0 +1,61 @@
+﻿@page "/ServerConfiguration/Smtp"
+<h3>SMTP Configuration</h3>
+<p>
+    <strong>Configuration depends on your SMTP provider</strong>
+</p>
+
+<EditForm Model="ServerConfiguration.SmtpConfiguration" OnValidSubmit="OnValidSubmit">
+    <div class="mb-3">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.SmtpConfiguration.Port)</label>
+        <InputNumber class="form-control" @bind-Value="ServerConfiguration.SmtpConfiguration.Port"></InputNumber>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.SmtpConfiguration.SenderDisplayName)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.SmtpConfiguration.SenderDisplayName"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.SmtpConfiguration.SenderEmail)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.SmtpConfiguration.SenderEmail"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.SmtpConfiguration.SenderPassword)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.SmtpConfiguration.SenderPassword"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.SmtpConfiguration.SenderUsername)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.SmtpConfiguration.SenderUsername"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.SmtpConfiguration.Server)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.SmtpConfiguration.Server"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.SmtpConfiguration.UseSSL)</label>
+        <InputCheckbox class="form-control" @bind-Value="ServerConfiguration.SmtpConfiguration.UseSSL"></InputCheckbox>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+</EditForm>
+
+@code {
+    [Inject]
+    private ServerConfiguration ServerConfiguration { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (this.ServerConfiguration.SmtpConfiguration is null)
+            this.ServerConfiguration.SmtpConfiguration = new Smtpconfiguration();
+    }
+
+    private void OnValidSubmit()
+    {
+        this.NavigationManager.NavigateTo("ServerConfiguration/General");
+    }
+}

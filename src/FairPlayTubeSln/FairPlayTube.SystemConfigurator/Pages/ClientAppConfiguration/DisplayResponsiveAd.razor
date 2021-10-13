@@ -1,0 +1,47 @@
+﻿@page "/ClientConfiguration/DisplayResponsiveAd"
+
+<h3>Google Display Responsive Ad Configuration</h3>
+<p>
+    <strong>Check how to configure Google AdSense</strong>
+</p>
+
+<a href="https://support.google.com/adsense/answer/9274019?hl=en"
+   target="_blank">
+    Get and copy the AdSense code
+</a>
+
+<EditForm Model="ClientAppConfiguration.DisplayResponsiveAdConfiguration" OnValidSubmit="OnValidSubmit">
+    <div class="mb-3">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ClientAppConfiguration.DisplayResponsiveAdConfiguration.AdClient)</label>
+        <InputText class="form-control" @bind-Value="ClientAppConfiguration.DisplayResponsiveAdConfiguration.AdClient"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ClientAppConfiguration.DisplayResponsiveAdConfiguration.AdSlot)</label>
+        <InputText class="form-control" @bind-Value="ClientAppConfiguration.DisplayResponsiveAdConfiguration.AdSlot"></InputText>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+</EditForm>
+
+@code {
+    [Inject]
+    private ClientAppConfiguration ClientAppConfiguration { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (this.ClientAppConfiguration.DisplayResponsiveAdConfiguration is null)
+            this.ClientAppConfiguration.DisplayResponsiveAdConfiguration = new Displayresponsiveadconfiguration();
+    }
+
+    private void OnValidSubmit()
+    {
+        this.NavigationManager.NavigateTo("/ClientConfiguration/FaceBookLikeButton");
+    }
+}

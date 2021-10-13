@@ -1,3 +1,4 @@
+using FairPlayTube.SystemConfigurator.Configuration;
 using FairPlayTube.SystemConfigurator.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +24,9 @@ namespace FairPlayTube.SystemConfigurator
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+
+            services.AddSingleton<ServerConfiguration>();
+            services.AddSingleton<ClientAppConfiguration>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
