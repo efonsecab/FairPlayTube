@@ -31,16 +31,21 @@ namespace FairPlayTube
                 config.AddEnvironmentVariables(prefix: "SERVER_");
                 config.AddUserSecrets<Program>(optional: true);
                 var configRoot = config.Build();
-                config.AddAzureAppConfiguration(options =>
+
+                if (configRoot["AzureAppConfigConnectionString"] != null)
                 {
-                    var azureAppConfigConnectionString =
-                        configRoot["AzureAppConfigConnectionString"];
-                    options
-                        .Connect(azureAppConfigConnectionString).UseFeatureFlags(
-                        featureFlagOptions=> {
-                            featureFlagOptions.CacheExpirationInterval = TimeSpan.FromMinutes(5);
-                        });
-                });
+                    config.AddAzureAppConfiguration(options =>
+                    {
+                        var azureAppConfigConnectionString =
+                            configRoot["AzureAppConfigConnectionString"];
+                        options
+                            .Connect(azureAppConfigConnectionString).UseFeatureFlags(
+                            featureFlagOptions =>
+                            {
+                                featureFlagOptions.CacheExpirationInterval = TimeSpan.FromMinutes(5);
+                            });
+                    });
+                }
             })
             .ConfigureWebHostDefaults(webBuilder =>
             {

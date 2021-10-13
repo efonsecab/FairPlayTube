@@ -13,19 +13,21 @@
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            <NavLink class="nav-link" href="ServerConfiguration/AzureAdB2C">
+                <span class="oi oi-plus" aria-hidden="true"></span> Server Configuration
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
+            <button type="button" @onclick="GenerateConfigurationFiles">Generate Files</button>
         </li>
     </ul>
 </div>
 
 @code {
+    [Inject]
+    private ServerConfiguration ServerConfiguration { get; set; }
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -33,5 +35,19 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private async Task GenerateConfigurationFiles()
+    {
+        var serverConfigurationJson = System.Text.Json.JsonSerializer.Serialize(ServerConfiguration);
+        var fileBytes = System.Text.Encoding.UTF8.GetBytes(serverConfigurationJson);
+        await JSRuntime.InvokeVoidAsync(
+              "downloadFromByteArray",
+              new
+              {
+                  ByteArray = fileBytes,
+                  FileName = "FairPlayTube.Server.appsettigs.json",
+                  ContentType = System.Net.Mime.MediaTypeNames.Application.Octet
+              });
     }
 }

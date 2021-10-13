@@ -1,0 +1,54 @@
+﻿@page "/ServerConfiguration/AzureVideoIndexer"
+<h3>@nameof(ServerConfiguration.AzureConfiguration.AzureVideoIndexerConfiguration) Configuration</h3>
+<p>
+    <strong>Check how to configure Azure Video Indexer</strong>
+</p>
+
+<a href="https://docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-for-media-docs/video-indexer-use-apis"
+   target="_blank">
+    Tutorial: Use the Video Analyzer for Media API
+</a>
+
+<EditForm Model="ServerConfiguration.AzureConfiguration.AzureVideoIndexerConfiguration" OnValidSubmit="OnValidSubmit">
+    <div class="mb-3">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.AzureConfiguration.AzureVideoIndexerConfiguration.AccountId)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.AzureConfiguration.AzureVideoIndexerConfiguration.AccountId"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.AzureConfiguration.AzureVideoIndexerConfiguration.Key)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.AzureConfiguration.AzureVideoIndexerConfiguration.Key"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.AzureConfiguration.AzureVideoIndexerConfiguration.Location)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.AzureConfiguration.AzureVideoIndexerConfiguration.Location"></InputText>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+</EditForm>
+
+@code {
+    [Inject]
+    private ServerConfiguration ServerConfiguration { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (this.ServerConfiguration.AzureConfiguration is null)
+            this.ServerConfiguration.AzureConfiguration = new Azureconfiguration()
+            {
+                AzureBlobStorageConfiguration = new Azureblobstorageconfiguration(),
+                AzureVideoIndexerConfiguration = new Azurevideoindexerconfiguration()
+            };
+    }
+
+    private void OnValidSubmit()
+    {
+        this.NavigationManager.NavigateTo("/ServerConfiguration/AzureContentModerator");
+    }
+}

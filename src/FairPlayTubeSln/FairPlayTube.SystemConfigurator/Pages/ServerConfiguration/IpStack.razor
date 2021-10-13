@@ -1,0 +1,42 @@
+﻿@page "/ServerConfiguration/IpStack"
+<h3>Ip Stack Configuration</h3>
+<p>
+    <strong>Check how to configure Ip Stack</strong>
+</p>
+
+<a href="https://ipstack.com/documentation"
+   target="_blank">
+    IpStck API
+</a>
+
+<EditForm Model="ServerConfiguration.IpStackConfiguration" OnValidSubmit="OnValidSubmit">
+    <div class="mb-3">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.IpStackConfiguration.Key)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.IpStackConfiguration.Key"></InputText>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+</EditForm>
+
+@code {
+    [Inject]
+    private ServerConfiguration ServerConfiguration { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (this.ServerConfiguration.IpStackConfiguration is null)
+            this.ServerConfiguration.IpStackConfiguration = new Ipstackconfiguration();
+    }
+
+    private void OnValidSubmit()
+    {
+        this.NavigationManager.NavigateTo("/ServerConfiguration/Paypal");
+    }
+}

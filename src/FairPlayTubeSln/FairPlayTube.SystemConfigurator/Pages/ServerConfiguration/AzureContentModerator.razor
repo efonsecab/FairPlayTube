@@ -1,0 +1,46 @@
+﻿@page "/ServerConfiguration/AzureContentModerator"
+<h3>Azure Content Moderator Configuration</h3>
+<p>
+    <strong>Check how to use Azure Content Moderator</strong>
+</p>
+
+<a href="https://docs.microsoft.com/en-us/azure/cognitive-services/content-moderator/client-libraries?tabs=visual-studio&pivots=programming-language-csharp"
+   target="_blank">
+    Quickstart: Use the Content Moderator client library
+</a>
+
+<EditForm Model="ServerConfiguration.AzureContentModeratorConfiguration" OnValidSubmit="OnValidSubmit">
+    <div class="mb-3">
+        <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.AzureContentModeratorConfiguration.Endpoint)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.AzureContentModeratorConfiguration.Endpoint"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@nameof(ServerConfiguration.AzureContentModeratorConfiguration.Key)</label>
+        <InputText class="form-control" @bind-Value="ServerConfiguration.AzureContentModeratorConfiguration.Key"></InputText>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+</EditForm>
+
+@code {
+    [Inject]
+    private ServerConfiguration ServerConfiguration { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (this.ServerConfiguration.AzureContentModeratorConfiguration is null)
+            this.ServerConfiguration.AzureContentModeratorConfiguration = new Azurecontentmoderatorconfiguration();
+    }
+
+    private void OnValidSubmit()
+    {
+        this.NavigationManager.NavigateTo("/ServerConfiguration/AzureTextAnalytics");
+    }
+}
