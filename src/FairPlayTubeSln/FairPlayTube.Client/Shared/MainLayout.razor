@@ -22,7 +22,7 @@
             <LoginDisplay></LoginDisplay>
         </div>
 
-        <div class="content px-4" style="height:95%; overflow-y:auto;">
+        <div class="content px-4">
             @Body
         </div>
 
@@ -86,42 +86,42 @@
     private Task<AuthenticationState> AuthenticationStateTask { get; set; }
     [Inject]
     private NavigationManager NavigationManager { get; set; }
-private bool ShowFooter { get; set; } = true;
+    private bool ShowFooter { get; set; } = true;
 
-protected override async Task OnAfterRenderAsync(bool firstRender)
-{
-    if (!this.NavigationManager.Uri.EndsWith(Common.Global.Constants.UserPagesRoutes.ValidateInviteCode) &&
-        this.AuthenticationStateTask != null)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var state = await AuthenticationStateTask;
-        if (state != null && state.User != null && state.User.Identity.IsAuthenticated)
+        if (!this.NavigationManager.Uri.EndsWith(Common.Global.Constants.UserPagesRoutes.ValidateInviteCode) &&
+            this.AuthenticationStateTask != null)
         {
-            var userStatus = state.User.Claims.Where(p => p.Type == "UserStatus").Single();
-            if (userStatus.Value != "Approved")
-                NavigationManager.NavigateTo(Common.Global.Constants.UserPagesRoutes.ValidateInviteCode);
+            var state = await AuthenticationStateTask;
+            if (state != null && state.User != null && state.User.Identity.IsAuthenticated)
+            {
+                var userStatus = state.User.Claims.Where(p => p.Type == "UserStatus").Single();
+                if (userStatus.Value != "Approved")
+                    NavigationManager.NavigateTo(Common.Global.Constants.UserPagesRoutes.ValidateInviteCode);
+            }
         }
     }
-}
 
-private bool ShowSupportBot { get; set; } = false;
+    private bool ShowSupportBot { get; set; } = false;
 
-private void OpenSupportBot()
-{
-    this.ShowSupportBot = true;
-}
+    private void OpenSupportBot()
+    {
+        this.ShowSupportBot = true;
+    }
 
-private void CloseSupportBot()
-{
-    this.ShowSupportBot = false;
-}
+    private void CloseSupportBot()
+    {
+        this.ShowSupportBot = false;
+    }
 
-private void CloseFooter()
-{
-    this.ShowFooter = false;
-}
+    private void CloseFooter()
+    {
+        this.ShowFooter = false;
+    }
 
-public void OnSearchClicked(string searchTerm)
-{
-    this.NavigationManager.NavigateTo($"{Constants.RootPagesRoutes.SearchWithSearchTerm.Replace("{SearchTerm}", searchTerm)}");
-}
+    public void OnSearchClicked(string searchTerm)
+    {
+        this.NavigationManager.NavigateTo($"{Constants.RootPagesRoutes.SearchWithSearchTerm.Replace("{SearchTerm}", searchTerm)}");
+    }
 }
