@@ -2,25 +2,21 @@
 {
     <div class="container">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-            <Virtualize Items="this.AllVideos" Context="singleVideo">
+            @foreach (var singleVideo in this.AllVideos)
+            {
                 <div class="col">
-                    <Video @key="@singleVideo.VideoId"
-                           AllowEdit="AllowEdit" AllowDelete="AllowDelete" AllowDownload="AllowDownload"
+                    <Video AllowEdit="AllowEdit" AllowDelete="AllowDelete" AllowDownload="AllowDownload" 
                            VideoModel="singleVideo"
                            ShowDetailsLink="true" OnDelete="OnDelete" OnDownload="OnDownload"
                            OnBuyVideoAccess="OnBuyVideoAccess" ShowDisplayAd="false"></Video>
                 </div>
-                @if (Random.Next(1, 6) == 2)
+                @if ((ItemPos++) % 2 == 0)
                 {
                     <div class="col">
                         <FairPlayTube.Components.GoogleAdsense.DisplayResponsiveAd></FairPlayTube.Components.GoogleAdsense.DisplayResponsiveAd>
                     </div>
                 }
-            </Virtualize>
+            }
         </div>
     </div>
-
-    @code{
-        private Random Random { get; set; } = new Random();
-    }
 }
