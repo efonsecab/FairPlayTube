@@ -9,9 +9,10 @@
     [Host] NVARCHAR(250) NOT NULL, 
     [VisitedUrl] NVARCHAR(250) NOT NULL
     CONSTRAINT [FK_VisitorTracking_ApplicationUser] FOREIGN KEY ([ApplicationUserId]) REFERENCES [ApplicationUser]([ApplicationUserId]), 
-    [VideoId] NVARCHAR(50) NULL
+    [VideoInfoId] BIGINT NULL, 
+    CONSTRAINT [FK_VisitorTracking_VideoInfo] FOREIGN KEY ([VideoInfoId]) REFERENCES [VideoInfo]([VideoInfoId])
 )
 
 GO
 
-CREATE INDEX [IX_VisitorTracking_VideoId] ON [dbo].[VisitorTracking] ([VideoId])
+CREATE INDEX [IX_VisitorTracking_VideoId] ON [dbo].[VisitorTracking] ([VideoInfoId])

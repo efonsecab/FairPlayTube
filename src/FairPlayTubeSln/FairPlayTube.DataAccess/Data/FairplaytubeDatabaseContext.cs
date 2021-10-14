@@ -372,6 +372,11 @@ namespace FairPlayTube.DataAccess.Data
                     .WithMany(p => p.VisitorTracking)
                     .HasForeignKey(d => d.ApplicationUserId)
                     .HasConstraintName("FK_VisitorTracking_ApplicationUser");
+
+                entity.HasOne(d => d.VideoInfo)
+                    .WithMany(p => p.VisitorTracking)
+                    .HasForeignKey(d => d.VideoInfoId)
+                    .HasConstraintName("FK_VisitorTracking_VideoInfo");
             });
 
             OnModelCreatingPartial(modelBuilder);

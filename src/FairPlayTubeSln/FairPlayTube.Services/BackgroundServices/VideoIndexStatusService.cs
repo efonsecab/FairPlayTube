@@ -106,14 +106,17 @@ namespace FairPlayTube.Services.BackgroundServices
                     }
                     var detailsPagePattern = Constants.PublicVideosPages.Details.Replace("{VideoId}", String.Empty);
                     var detailsPagesWithPendingVideoId = 
-                        fairplaytubeDatabaseContext.VisitorTracking.Where(p=>p.VideoId == null &&
+                        fairplaytubeDatabaseContext.VisitorTracking.Where(p=>p.VideoInfoId == null &&
                         p.VisitedUrl.Contains(detailsPagePattern));
                     foreach (var singleVisitedPage in detailsPagesWithPendingVideoId)
                     {
                         var pageUri = new Uri(singleVisitedPage.VisitedUrl);
                         var lastSegment = pageUri.Segments.Last();
                         if (!String.IsNullOrWhiteSpace(lastSegment))
-                            singleVisitedPage.VideoId = lastSegment;
+                        {
+                            var videoInfoEntity = fairplaytubeDatabaseContext.VideoInfo.Single(p => p.VideoId == lastSegment);
+                            singleVisitedPage.VideoInfoId = videoInfoEntity.VideoInfoId;
+                        }
                     }
                     await fairplaytubeDatabaseContext.SaveChangesAsync();
                     await Task.Delay(TimeSpan.FromMinutes(5));
