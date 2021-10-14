@@ -1,4 +1,5 @@
-﻿using FairPlayTube.DataAccess.Data;
+﻿using FairPlayTube.Common.Global;
+using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -103,6 +104,18 @@ namespace FairPlayTube.Services.BackgroundServices
                             //TODO: Add Email Notification
                         }
                     }
+                    var detailsPagePattern = Constants.PublicVideosPages.Details.Replace("{VideoId}", String.Empty);
+                    var detailsPagesWithPendingVideoId = 
+                        fairplaytubeDatabaseContext.VisitorTracking.Where(p=>p.VideoId == null &&
+                        p.VisitedUrl.Contains(detailsPagePattern));
+                    foreach (var singleVisitedPage in detailsPagesWithPendingVideoId)
+                    {
+                        var pageUri = new Uri(singleVisitedPage.VisitedUrl);
+                        var lastSegment = pageUri.Segments.Last();
+                        if (!String.IsNullOrWhiteSpace(lastSegment))
+                            singleVisitedPage.VideoId = lastSegment;
+                    }
+                    await fairplaytubeDatabaseContext.SaveChangesAsync();
                     await Task.Delay(TimeSpan.FromMinutes(5));
                 }
             }

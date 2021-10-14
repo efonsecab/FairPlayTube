@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlayTube.DataAccess.Models
 {
+    [Index(nameof(VideoId), Name = "IX_VisitorTracking_VideoId")]
     public partial class VisitorTracking
     {
         [Key]
@@ -30,6 +31,8 @@ namespace FairPlayTube.DataAccess.Models
         [Required]
         [StringLength(250)]
         public string VisitedUrl { get; set; }
+        [StringLength(50)]
+        public string VideoId { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("VisitorTracking")]
