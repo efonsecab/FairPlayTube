@@ -85,6 +85,24 @@ namespace FairPlayTube.Services.BackgroundServices
                             });
                             await fairplaytubeDatabaseContext.SaveChangesAsync();
                         }
+                        var detailsPagePattern = Constants.PublicVideosPages.Details.Replace("{VideoId}", String.Empty);
+                        var detailsPagesWithPendingVideoId =
+                            fairplaytubeDatabaseContext.VisitorTracking.Where(p => p.VideoInfoId == null &&
+                            p.VisitedUrl.Contains(detailsPagePattern));
+                        foreach (var singleVisitedPage in detailsPagesWithPendingVideoId)
+                        {
+                            var pageUri = new Uri(singleVisitedPage.VisitedUrl);
+                            var lastSegment = pageUri.Segments.Last().TrimEnd('/');
+                            if (!String.IsNullOrWhiteSpace(lastSegment))
+                            {
+                                var videoInfoEntity = fairplaytubeDatabaseContext.VideoInfo.SingleOrDefault(p => p.VideoId == lastSegment);
+                                if (videoInfoEntity != null)
+                                {
+                                    singleVisitedPage.VideoInfoId = videoInfoEntity.VideoInfoId;
+                                }
+                            }
+                        }
+                        await fairplaytubeDatabaseContext.SaveChangesAsync();
                     }
                     catch (Exception ex)
                     {
@@ -104,21 +122,6 @@ namespace FairPlayTube.Services.BackgroundServices
                             //TODO: Add Email Notification
                         }
                     }
-                    var detailsPagePattern = Constants.PublicVideosPages.Details.Replace("{VideoId}", String.Empty);
-                    var detailsPagesWithPendingVideoId = 
-                        fairplaytubeDatabaseContext.VisitorTracking.Where(p=>p.VideoInfoId == null &&
-                        p.VisitedUrl.Contains(detailsPagePattern));
-                    foreach (var singleVisitedPage in detailsPagesWithPendingVideoId)
-                    {
-                        var pageUri = new Uri(singleVisitedPage.VisitedUrl);
-                        var lastSegment = pageUri.Segments.Last();
-                        if (!String.IsNullOrWhiteSpace(lastSegment))
-                        {
-                            var videoInfoEntity = fairplaytubeDatabaseContext.VideoInfo.Single(p => p.VideoId == lastSegment);
-                            singleVisitedPage.VideoInfoId = videoInfoEntity.VideoInfoId;
-                        }
-                    }
-                    await fairplaytubeDatabaseContext.SaveChangesAsync();
                     await Task.Delay(TimeSpan.FromMinutes(5));
                 }
             }
