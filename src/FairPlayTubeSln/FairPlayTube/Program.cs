@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace FairPlayTube
 {
@@ -26,6 +28,13 @@ namespace FairPlayTube
         /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+            .ConfigureLogging(configureLogging: (builderContext)=> 
+            {
+                builderContext.AddSimpleConsole(simpleConsoleOptions => 
+                {
+                    simpleConsoleOptions.TimestampFormat = "[HH:mm:ss] ";
+                });
+            })
             .ConfigureAppConfiguration((hostingContext, config) =>
             {
                 config.AddEnvironmentVariables(prefix: "SERVER_");

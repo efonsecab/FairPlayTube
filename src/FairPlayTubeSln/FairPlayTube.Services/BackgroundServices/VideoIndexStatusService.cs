@@ -106,6 +106,7 @@ namespace FairPlayTube.Services.BackgroundServices
                     }
                     catch (Exception ex)
                     {
+                        this.Logger?.LogError(exception: ex, message:ex.Message);
                         try
                         {
                             fairplaytubeDatabaseContext.ChangeTracker.Clear();
@@ -117,11 +118,13 @@ namespace FairPlayTube.Services.BackgroundServices
                             });
                             await fairplaytubeDatabaseContext.SaveChangesAsync();
                         }
-                        catch (Exception)
+                        catch (Exception ex1)
                         {
+                            this.Logger?.LogError(exception: ex1, message: ex1.Message);
                             //TODO: Add Email Notification
                         }
                     }
+                    this.Logger?.LogInformation($"{nameof(VideoIndexStatusService)} waiting for 5 minutes.");
                     await Task.Delay(TimeSpan.FromMinutes(5));
                 }
             }
@@ -129,9 +132,13 @@ namespace FairPlayTube.Services.BackgroundServices
 
         private async Task CheckProcessingVideos(VideoService videoService, FairplaytubeDatabaseContext fairplaytubeDatabaseContext, CancellationToken stoppingToken)
         {
+            this.Logger?.LogInformation("Checking processing videos");
             var processingInDB = await videoService.GetDatabaseProcessingVideosIdsAsync(stoppingToken);
+            this.Logger?.LogInformation($"{processingInDB.Length} videos marked as processing In DB");
             if (processingInDB.Length > 0)
             {
+
+                this.Logger?.LogInformation("Retrieving videos status in Azure Video Indexer");
                 var videosIndex = await videoService.GetVideoIndexerStatus(processingInDB, stoppingToken);
                 if (videosIndex.results.Length > 0)
                 {
