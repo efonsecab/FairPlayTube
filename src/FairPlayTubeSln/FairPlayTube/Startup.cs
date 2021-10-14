@@ -72,6 +72,7 @@ namespace FairPlayTube
             GlobalPackageConfiguration.EnableHttpRequestInformationLog = enablePTILibrariesLogging;
             GlobalPackageConfiguration.RapidApiKey = Configuration.GetValue<string>("RapidApiKey");
             services.AddSignalR();
+            services.AddHealthChecks().AddDbContextCheck<FairplaytubeDatabaseContext>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<ICurrentUserProvider, CurrentUserProvider>();
@@ -413,6 +414,7 @@ namespace FairPlayTube
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/api/health");
                 endpoints.MapHub<NotificationHub>(Common.Global.Constants.Hubs.NotificationHub);
                 if (env.IsProduction())
                     endpoints.MapFallbackToFile("index.html");
