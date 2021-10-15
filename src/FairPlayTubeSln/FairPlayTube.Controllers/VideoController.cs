@@ -288,22 +288,6 @@ namespace FairPlayTube.Controllers
         }
 
         /// <summary>
-        /// Adds a job associatd to a given video
-        /// </summary>
-        /// <param name="videoJobModel"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        [HttpPost("[action]")]
-        [Authorize(Roles = Common.Global.Constants.Roles.User)]
-        public async Task AddVideoJob(VideoJobModel videoJobModel, CancellationToken cancellationToken)
-        {
-            var userObjectId = this.CurrentUserProvider.GetObjectId();
-            if (!await this.VideoService.IsVideoOwnerAsync(videoJobModel.VideoId, userObjectId, cancellationToken))
-                throw new Exception("You are not an owner of this video");
-            await this.VideoService.AddVideoJobAsync(videoJobModel, cancellationToken: cancellationToken);
-        }
-
-        /// <summary>
         /// Gets the persons found in the videos
         /// </summary>
         /// <param name="cancellationToken"></param>

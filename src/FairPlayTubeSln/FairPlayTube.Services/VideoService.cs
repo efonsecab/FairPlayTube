@@ -503,23 +503,6 @@ namespace FairPlayTube.Services
             return videosEntitities;
         }
 
-        public async Task AddVideoJobAsync(VideoJobModel videoJobModel, CancellationToken cancellationToken)
-        {
-            var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
-                .Include(p => p.ApplicationUser)
-                .FirstOrDefaultAsync(p => p.VideoId == videoJobModel.VideoId, cancellationToken: cancellationToken);
-            if (videoEntity == null)
-                throw new Exception($"Video with id: {videoJobModel.VideoId} does not exist");
-            await this.FairplaytubeDatabaseContext.VideoJob.AddAsync(new VideoJob()
-            {
-                Budget = videoJobModel.Budget,
-                Title = videoJobModel.Title,
-                Description = videoJobModel.Description,
-                VideoInfoId = videoEntity.VideoInfoId
-            }, cancellationToken: cancellationToken);
-            await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
-        }
-
         public async Task SaveVideoThumbnailAsync(string videoId, string thumbnailId, CancellationToken cancellationToken)
         {
             var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo

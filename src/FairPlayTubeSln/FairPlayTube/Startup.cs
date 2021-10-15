@@ -254,6 +254,7 @@ namespace FairPlayTube
             services.AddTransient<VideoPlaylistService>();
             services.AddTransient<SearchService>();
             services.AddTransient<VideoCommentService>();
+            services.AddTransient<VideoJobService>();
         }
 
         private void ConfigureAzureContentModerator(IServiceCollection services)
