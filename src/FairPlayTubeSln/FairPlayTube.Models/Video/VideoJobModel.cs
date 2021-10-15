@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FairPlayTube.Models.Video
 {
@@ -28,5 +29,9 @@ namespace FairPlayTube.Models.Video
         [Required]
         [StringLength(250)]
         public string Description { get; set; }
+        /// <summary>
+        /// DateTime the job was created
+        /// </summary>
+        public DateTimeOffset RowCreationDateTime { get; set; }
     }
 }

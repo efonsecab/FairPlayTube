@@ -357,14 +357,6 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:FairPlayTube.Controllers.VideoController.AddVideoJob(FairPlayTube.Models.Video.VideoJobModel,System.Threading.CancellationToken)">
-            <summary>
-            Adds a job associatd to a given video
-            </summary>
-            <param name="videoJobModel"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-        </member>
         <member name="M:FairPlayTube.Controllers.VideoController.GetPersons(System.Threading.CancellationToken)">
             <summary>
             Gets the persons found in the videos
@@ -393,6 +385,35 @@
             Download the source file for the specified video id
             </summary>
             <param name="videoId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FairPlayTube.Controllers.VideoJobController">
+            <summary>
+            Handles all the data related to videos jobs
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoJobController.#ctor(FairPlayTube.Services.VideoJobService,FairPlayTube.Services.VideoService,FairPlayTube.Common.Interfaces.ICurrentUserProvider,AutoMapper.IMapper)">
+            <summary>
+            Initializes <see cref="P:FairPlayTube.Controllers.VideoJobController.VideoJobService"/>
+            </summary>
+            <param name="videoJobService"></param>
+            <param name="videoService"></param>
+            <param name="currentUserProvider"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoJobController.AddVideoJob(FairPlayTube.Models.Video.VideoJobModel,System.Threading.CancellationToken)">
+            <summary>
+            Adds a job associatd to a given video
+            </summary>
+            <param name="videoJobModel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoJobController.GetVideosJobs(System.Threading.CancellationToken)">
+            <summary>
+            Retrieve a list of available jobs
+            </summary>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>

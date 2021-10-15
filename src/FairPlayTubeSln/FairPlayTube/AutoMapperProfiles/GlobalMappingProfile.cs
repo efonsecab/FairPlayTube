@@ -54,12 +54,20 @@ namespace FairPlayTube.AutoMapperProfiles
 
                 dest.VideoIndexStatus = (Common.Global.Enums.VideoIndexStatus)source.VideoIndexStatusId;
             });
-            this.CreateMap<VideoComment, VideoCommentModel>().AfterMap((source, dest) => 
+            this.CreateMap<VideoComment, VideoCommentModel>().AfterMap((source, dest) =>
             {
                 if (source.ApplicationUser != null && source.ApplicationUser.UserFollowerFollowedApplicationUser != null)
                 {
                     var followersCount = source.ApplicationUser.UserFollowerFollowedApplicationUser.LongCount();
                     dest.ApplicationUserFollowersCount = followersCount;
+                }
+            });
+
+            this.CreateMap<VideoJob, VideoJobModel>().AfterMap((source, dest) =>
+            {
+                if (source.VideoInfo != null)
+                {
+                    dest.VideoId = source.VideoInfo.VideoId;
                 }
             });
         }
