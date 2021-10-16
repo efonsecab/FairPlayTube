@@ -90,6 +90,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[UserYouTubeChannel]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoAccessTransaction]",
          "ObjectType": 0
       },
