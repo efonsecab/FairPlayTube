@@ -215,6 +215,30 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.UserYouTubeChannelController">
+            <summary>
+            Handles all of the dat regarding users YouTube channels
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserYouTubeChannelController.#ctor(FairPlayTube.Services.UserYouTubeChannelService,AutoMapper.IMapper)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.UserYouTubeChannelController"/>
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserYouTubeChannelController.AddUserYouTubeChannel(FairPlayTube.Models.UserYouTubeChannel.UserYouTubeChannelModel,System.Threading.CancellationToken)">
+            <summary>
+            Add a new youtube channel for a given user
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserYouTubeChannelController.GetUserYouTubeChannels(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            Retrieves the Youtube channels infor for a given user
+            </summary>
+            <param name="applicationUserId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.VideoCommentController">
             <summary>
             Handles all of the data regarding a VideoComment

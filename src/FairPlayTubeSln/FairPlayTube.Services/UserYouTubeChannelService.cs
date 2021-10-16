@@ -20,7 +20,7 @@ namespace FairPlayTube.Services
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
         }
 
-        public async Task AddUserYouTubeChannel(UserYouTubeChannelModel userYouTubeChannelModel,
+        public async Task<UserYouTubeChannel> AddUserYouTubeChannel(UserYouTubeChannelModel userYouTubeChannelModel,
             CancellationToken cancellationToken)
         {
             var entity = await this.FairplaytubeDatabaseContext.UserYouTubeChannel
@@ -29,12 +29,14 @@ namespace FairPlayTube.Services
                 cancellationToken: cancellationToken);
             if (entity is not null)
                 throw new Exception($"User {userYouTubeChannelModel.ApplicationUserId} has already added Channel: {userYouTubeChannelModel.YouTubeChannelId}");
-            await this.FairplaytubeDatabaseContext.UserYouTubeChannel.AddAsync(new DataAccess.Models.UserYouTubeChannel() 
+            entity = new DataAccess.Models.UserYouTubeChannel()
             {
-                ApplicationUserId=userYouTubeChannelModel.ApplicationUserId,
+                ApplicationUserId = userYouTubeChannelModel.ApplicationUserId,
                 YouTubeChannelId = userYouTubeChannelModel.YouTubeChannelId
-            }, cancellationToken: cancellationToken);
+            };
+            await this.FairplaytubeDatabaseContext.UserYouTubeChannel.AddAsync(entity, cancellationToken: cancellationToken);
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken:cancellationToken);
+            return entity;
         }
 
         public IQueryable<UserYouTubeChannel> GetUserYouTubeChannels(long applicationUserId)
