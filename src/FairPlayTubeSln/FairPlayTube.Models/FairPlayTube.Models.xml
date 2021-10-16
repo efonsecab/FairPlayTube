@@ -754,6 +754,26 @@
             Available Funds for the user
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.UserYouTubeChannel.UserYouTubeChannelModel">
+            <summary>
+            Holds the data related to a users YouTube channels
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.UserYouTubeChannelModel.ApplicationUserId">
+            <summary>
+            User's id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.UserYouTubeChannelModel.YouTubeChannelId">
+            <summary>
+            Youtube Channel Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.UserYouTubeChannelModel.RowCreationDateTime">
+            <summary>
+            DateTime the entry was created
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.VideoComment.CreateVideoCommentModel">
             <summary>
             Holds the information required to create a comment for a specified video
