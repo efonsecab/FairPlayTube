@@ -25,6 +25,6 @@ namespace FairPlayTube.Models.UserYouTubeChannel
         /// <summary>
         /// DateTime the entry was created
         /// </summary>
-        public DateTimeOffset RowCreationDateTime { get; set; }
+        public DateTimeOffset? RowCreationDateTime { get; set; }
     }
 }

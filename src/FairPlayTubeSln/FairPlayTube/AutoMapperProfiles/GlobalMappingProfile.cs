@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.Persons;
+using FairPlayTube.Models.UserYouTubeChannel;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Models.VideoComment;
 using System.Linq;
@@ -70,6 +71,8 @@ namespace FairPlayTube.AutoMapperProfiles
                     dest.VideoId = source.VideoInfo.VideoId;
                 }
             });
+
+            this.CreateMap<UserYouTubeChannel, UserYouTubeChannelModel>();
         }
     }
 }
