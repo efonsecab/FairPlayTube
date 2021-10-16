@@ -27,6 +27,10 @@ namespace FairPlayTube.Components.Videos
         [Parameter]
         public EventCallback<VideoInfoModel> OnBuyVideoAccess { get; set; }
         [Parameter]
+        public EventCallback<long> OnShowYouTubeLatestVideos { get; set; }
+        [Parameter]
+        public bool ShowYouTubeVideosLink { get; set; }
+        [Parameter]
         public bool ShowDisplayAd { get; set; }
         [Inject]
         private IVideoEditAccessTokenProvider VideoEditAccessTokenProvider { get; set; }
@@ -129,6 +133,11 @@ namespace FairPlayTube.Components.Videos
             var deleteTask = OnDelete.InvokeAsync(this.VideoModel);
             this.ShowDeleteConfirm = false;
             await deleteTask;
+        }
+
+        private async Task OnShowYouTubeLatestVideosClicked()
+        {
+            await this.OnShowYouTubeLatestVideos.InvokeAsync(this.VideoModel.ApplicationUserId);
         }
     }
 }

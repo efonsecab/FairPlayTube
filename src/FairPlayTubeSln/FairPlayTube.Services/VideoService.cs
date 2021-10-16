@@ -295,7 +295,8 @@ namespace FairPlayTube.Services
         {
             return this.FairplaytubeDatabaseContext.VideoInfo
                 .Include(p => p.VideoJob).Include(p => p.ApplicationUser)
-                .ThenInclude(p => p.UserExternalMonetization)
+                .ThenInclude(p => p.UserYouTubeChannel)
+                .Include(p => p.ApplicationUser.UserExternalMonetization)
                 .Where(p =>
             p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed
             && p.VideoVisibilityId == (short)Common.Global.Enums.VideoVisibility.Public

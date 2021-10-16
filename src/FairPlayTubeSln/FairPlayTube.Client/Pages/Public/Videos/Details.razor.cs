@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Client.Services;
+﻿using FairPlayTube.Client.Navigation;
+using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Global;
 using FairPlayTube.Models.Video;
@@ -74,6 +75,11 @@ namespace FairPlayTube.Client.Pages.Public.Videos
             {
                 this.IsLoading = false;
             }
+        }
+
+        private void OnShowYouTubeLatestVideos(long applicationUserId)
+        {
+            NavigationHelper.NavigateToUserYouTubeVideosPage(this.NavigationManager, applicationUserId);
         }
     }
 }

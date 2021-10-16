@@ -8,7 +8,10 @@
                     <Video AllowEdit="AllowEdit" AllowDelete="AllowDelete" AllowDownload="AllowDownload" 
                            VideoModel="singleVideo"
                            ShowDetailsLink="true" OnDelete="OnDelete" OnDownload="OnDownload"
-                           OnBuyVideoAccess="OnBuyVideoAccess" ShowDisplayAd="false"></Video>
+                           OnBuyVideoAccess="OnBuyVideoAccess" ShowDisplayAd="false"
+                           OnShowYouTubeLatestVideos="OnShowYouTubeLatestVideos"
+                           ShowYouTubeVideosLink="@(singleVideo.YouTubeChannels > 0)"
+                           ></Video>
                 </div>
                 @if ((ItemPos++) % 2 == 0)
                 {

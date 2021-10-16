@@ -47,6 +47,10 @@ namespace FairPlayTube.AutoMapperProfiles
                         };
 
                     }
+                    if (source.ApplicationUser.UserYouTubeChannel != null)
+                    {
+                        dest.YouTubeChannels = source.ApplicationUser.UserYouTubeChannel.Count;
+                    }
                     if (source.VideoJob != null)
                     {
                         dest.AvailableJobs = source.VideoJob.Count;

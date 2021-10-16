@@ -20,16 +20,16 @@ namespace FairPlayTube.ClientServices
 
         public async Task<UserYouTubeChannelModel[]> GetUserYouTubeChannelsAsync(long applicationUserId)
         {
-            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
-            return await authorizedHttpClient.GetFromJsonAsync<UserYouTubeChannelModel[]>(
+            var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
+            return await anonymousHttpClient.GetFromJsonAsync<UserYouTubeChannelModel[]>(
                 $"{Constants.ApiRoutes.UserYouTubeChannelController.GetUserYouTubeChannels}" +
                 $"?applicationUserId={applicationUserId}");
         }
 
         public async Task<YouTubeVideoModel[]> GetYouTubeChannelLatestVideos(string channelId)
         {
-            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
-            return await authorizedHttpClient.GetFromJsonAsync<YouTubeVideoModel[]>(
+            var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
+            return await anonymousHttpClient.GetFromJsonAsync<YouTubeVideoModel[]>(
                 $"{Constants.ApiRoutes.UserYouTubeChannelController.GetYouTubeChannelLatestVideos}" +
                 $"?channelId={channelId}");
         }

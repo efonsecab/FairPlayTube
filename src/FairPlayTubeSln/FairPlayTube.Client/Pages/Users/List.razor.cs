@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Client.Services;
+﻿using FairPlayTube.Client.Navigation;
+using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Global;
 using FairPlayTube.Models.UserMessage;
@@ -82,8 +83,7 @@ namespace FairPlayTube.Client.Pages.Users
 
         private void NavigateToUserYouTubeVideos(long applicationUserId)
         {
-            this.NavigationManager.NavigateTo(Constants.UserYouTubePagesRoutes.Videos
-                .Replace("{UserId:long}", applicationUserId.ToString()));
+            NavigationHelper.NavigateToUserYouTubeVideosPage(this.NavigationManager, applicationUserId);
         }
     }
 }

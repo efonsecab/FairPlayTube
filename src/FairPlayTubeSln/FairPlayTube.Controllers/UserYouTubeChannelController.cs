@@ -56,6 +56,7 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
+        [AllowAnonymous]
         public async Task<UserYouTubeChannelModel[]> GetUserYouTubeChannels(long applicationUserId, CancellationToken cancellationToken)
         {
             var result = await this.UserYouTubeChannelService.GetUserYouTubeChannels(applicationUserId)
@@ -71,6 +72,7 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
+        [AllowAnonymous]
         public async Task<YouTubeVideoModel[]> GetYouTubeChannelLatestVideos(string channelId, CancellationToken cancellationToken)
         {
             var response = await this.UserYouTubeChannelService.GetYouTubeChannelLatestVideosAsync(channelId, cancellationToken);

@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 namespace FairPlayTube.Client.Pages.Users.YouTube
 {
     [Route(Common.Global.Constants.UserYouTubePagesRoutes.Videos)]
-    [Authorize(Roles = Common.Global.Constants.Roles.User)]
     public partial class Videos
     {
         private YouTubeVideoModel[] ChannelVideos;
