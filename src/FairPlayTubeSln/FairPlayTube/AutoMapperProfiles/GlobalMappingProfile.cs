@@ -4,6 +4,7 @@ using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.UserYouTubeChannel;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Models.VideoComment;
+using PTI.Microservices.Library.YouTube.Models.GetChannelLatestVideos;
 using System.Linq;
 
 namespace FairPlayTube.AutoMapperProfiles
@@ -73,6 +74,7 @@ namespace FairPlayTube.AutoMapperProfiles
             });
 
             this.CreateMap<UserYouTubeChannel, UserYouTubeChannelModel>();
+            this.CreateMap<Item, YouTubeVideoModel>();
         }
     }
 }

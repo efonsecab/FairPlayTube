@@ -82,12 +82,14 @@ namespace FairPlayTube.Controllers
             var result = await this.FairplaytubeDatabaseContext.ApplicationUser
                 .Include(p => p.VideoInfo)
                 .Include(p => p.Brand)
+                .Include(p => p.UserYouTubeChannel)
                 .Select(p => new UserModel
                 {
                     ApplicationUserId = p.ApplicationUserId,
                     Name = p.FullName,
                     BrandsCount = p.Brand.Count,
-                    VideosCount = p.VideoInfo.Count
+                    VideosCount = p.VideoInfo.Count,
+                    YouTubeChannels = p.UserYouTubeChannel == null ? null : p.UserYouTubeChannel.Select(p => p.YouTubeChannelId).ToArray()
                 }).ToArrayAsync();
             return result;
         }

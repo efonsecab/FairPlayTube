@@ -1,0 +1,38 @@
+﻿<h1>User YouTube Videos</h1>
+@if (UserYouTubeChannels != null)
+{
+    <div class="mb-3">
+        <label class="form-label">Select a channel</label>
+        <select class="form-control" @onchange="OnChange">
+            @foreach (var singleChannel in this.UserYouTubeChannels)
+            {
+                <option value="@singleChannel.YouTubeChannelId">Channel @singleChannel.YouTubeChannelId</option>
+            }
+        </select>
+    </div>
+    @if (this.ChannelVideos != null)
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-1">
+            @foreach (var singleChannelVideo in this.ChannelVideos)
+            {
+                <div class="col">
+                    <Card Width="auto">
+                        <CardHeader>
+                            <strong>
+                                @singleChannelVideo.snippet.title
+                            </strong>
+                        </CardHeader>
+                        <CardBody>
+                            <iframe width="560" height="315"
+                                    src="https://www.youtube.com/embed/@singleChannelVideo.id.videoId"
+                                    title="@singleChannelVideo.snippet.title"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                        </CardBody>
+                    </Card>
+                </div>
+            }
+        </div>
+    }
+}
