@@ -25,6 +25,7 @@ namespace FairPlayTube.DataAccess.Models
             UserMessageFromApplicationUser = new HashSet<UserMessage>();
             UserMessageToApplicationUser = new HashSet<UserMessage>();
             UserProfile = new HashSet<UserProfile>();
+            UserYouTubeChannel = new HashSet<UserYouTubeChannel>();
             VideoAccessTransaction = new HashSet<VideoAccessTransaction>();
             VideoComment = new HashSet<VideoComment>();
             VideoInfo = new HashSet<VideoInfo>();
@@ -77,6 +78,8 @@ namespace FairPlayTube.DataAccess.Models
         public virtual ICollection<UserMessage> UserMessageToApplicationUser { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<UserProfile> UserProfile { get; set; }
+        [InverseProperty("ApplicationUser")]
+        public virtual ICollection<UserYouTubeChannel> UserYouTubeChannel { get; set; }
         [InverseProperty("BuyerApplicationUser")]
         public virtual ICollection<VideoAccessTransaction> VideoAccessTransaction { get; set; }
         [InverseProperty("ApplicationUser")]

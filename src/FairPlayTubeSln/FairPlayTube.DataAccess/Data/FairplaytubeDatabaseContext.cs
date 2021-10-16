@@ -38,6 +38,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<UserProfile> UserProfile { get; set; }
         public virtual DbSet<UserVerificationStatus> UserVerificationStatus { get; set; }
         public virtual DbSet<UserVideoRating> UserVideoRating { get; set; }
+        public virtual DbSet<UserYouTubeChannel> UserYouTubeChannel { get; set; }
         public virtual DbSet<VideoAccessTransaction> VideoAccessTransaction { get; set; }
         public virtual DbSet<VideoComment> VideoComment { get; set; }
         public virtual DbSet<VideoCommentAnalysis> VideoCommentAnalysis { get; set; }
@@ -226,6 +227,15 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey<UserVideoRating>(d => d.VideoInfoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserVideoRating_VideoInfoId");
+            });
+
+            modelBuilder.Entity<UserYouTubeChannel>(entity =>
+            {
+                entity.HasOne(d => d.ApplicationUser)
+                    .WithMany(p => p.UserYouTubeChannel)
+                    .HasForeignKey(d => d.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserYouTubeChannel_ApplicationUser");
             });
 
             modelBuilder.Entity<VideoAccessTransaction>(entity =>

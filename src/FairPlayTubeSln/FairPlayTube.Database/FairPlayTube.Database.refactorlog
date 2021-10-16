@@ -140,4 +140,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="VideoInfoId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="dd9dfc3d-c9d2-4b55-9f0a-3e7b38ea7910" ChangeDateTime="10/16/2021 10:17:31">
+    <Property Name="ElementName" Value="[dbo].[UserYouTubeChannel].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserYouTubeChannel]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserYouTubeChannelId" />
+  </Operation>
 </Operations>
