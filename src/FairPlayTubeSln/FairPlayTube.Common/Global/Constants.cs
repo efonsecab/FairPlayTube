@@ -59,6 +59,10 @@
             public const string Details = "/Public/Videos/Details/{VideoId}";
         }
 
+        public class UserYouTubePagesRoutes
+        {
+            public const string Videos = "/Users/{UserId:long}/YouTube/Videos";
+        }
         public class UserPagesRoutes
         {
             public const string UploadVideo = "/Users/Videos/Upload";
@@ -141,6 +145,12 @@
                 public const string GetMyMonetizationInfo = "api/UserProfile/GetMyMonetizationInfo";
                 public const string AddFunds = "api/UserProfile/AddFunds";
                 public const string GetMyFunds = "api/UserProfile/GetMyFunds";
+            }
+
+            public class UserYouTubeChannelController
+            {
+                public const string GetUserYouTubeChannels = "api/UserYouTubeChannel/GetUserYouTubeChannels";
+                public const string GetYouTubeChannelLatestVideos = "api/UserYouTubeChannel/GetYouTubeChannelLatestVideos";
             }
         }
     }

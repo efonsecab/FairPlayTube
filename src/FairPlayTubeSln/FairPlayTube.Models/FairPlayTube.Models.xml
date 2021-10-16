@@ -744,6 +744,11 @@
             # of Videos the user owns
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.UserProfile.UserModel.YouTubeChannels">
+            <summary>
+            Youtube channels ids
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.UserProfile.UserProfileModel">
             <summary>
             Represents the User Profile
@@ -772,6 +777,151 @@
         <member name="P:FairPlayTube.Models.UserYouTubeChannel.UserYouTubeChannelModel.RowCreationDateTime">
             <summary>
             DateTime the entry was created
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.UserYouTubeChannel.YouTubeVideoModel">
+            <summary>
+            Represents a YouTube video. From the YouTube Data API
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.YouTubeVideoModel.kind">
+            <summary>
+            Kind
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.YouTubeVideoModel.etag">
+            <summary>
+            Etag
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.YouTubeVideoModel.id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.YouTubeVideoModel.snippet">
+            <summary>
+            Snippet
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.UserYouTubeChannel.Id">
+            <summary>
+            Represents an Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Id.kind">
+            <summary>
+            Kind
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Id.videoId">
+            <summary>
+            Video Id
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.UserYouTubeChannel.Snippet">
+            <summary>
+            Represetns an Snippet
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Snippet.publishedAt">
+            <summary>
+            DateTime published
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Snippet.channelId">
+            <summary>
+            Channel Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Snippet.title">
+            <summary>
+            Title
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Snippet.description">
+            <summary>
+            Description
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Snippet.thumbnails">
+            <summary>
+            Thumbnail
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Snippet.channelTitle">
+            <summary>
+            Channel Title
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Snippet.liveBroadcastContent">
+            <summary>
+            Live Broadcst Content
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Snippet.publishTime">
+            <summary>
+            DateTime published
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.UserYouTubeChannel.Thumbnails">
+            <summary>
+            Represents the Thumbnails
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Thumbnails._default">
+            <summary>
+            Default
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Thumbnails.medium">
+            <summary>
+            Medium
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Thumbnails.high">
+            <summary>
+            High
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.UserYouTubeChannel.Medium">
+            <summary>
+            Represents a Medium Thumbnail
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Medium.url">
+            <summary>
+            Url
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Medium.width">
+            <summary>
+            Width
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.Medium.height">
+            <summary>
+            Height
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.UserYouTubeChannel.High">
+            <summary>
+            Represents a high Thumbnail
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.High.url">
+            <summary>
+            Url
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.High.width">
+            <summary>
+            Width
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserYouTubeChannel.High.height">
+            <summary>
+            Height
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.VideoComment.CreateVideoCommentModel">
@@ -959,6 +1109,11 @@
             Represents the VideoInfo entry
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.ApplicationUserId">
+            <summary>
+            User Id
+            </summary>
+        </member>
         <member name="P:FairPlayTube.Models.Video.VideoInfoModel.VideoId">
             <summary>
             Azure Video Indexer Video Id
@@ -1077,6 +1232,11 @@
         <member name="P:FairPlayTube.Models.Video.VideoInfoModel.IsBought">
             <summary>
             Specified is the logged in user already bought the video
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.YouTubeChannels">
+            <summary>
+            Number of YouTube channels the user has
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.Video.VideoJobModel">

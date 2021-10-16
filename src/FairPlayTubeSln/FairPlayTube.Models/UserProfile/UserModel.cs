@@ -1,4 +1,6 @@
-﻿namespace FairPlayTube.Models.UserProfile
+﻿using System.Collections.Generic;
+
+namespace FairPlayTube.Models.UserProfile
 {
     /// <summary>
     /// Represents the User entry
@@ -21,5 +23,9 @@
         /// # of Videos the user owns
         /// </summary>
         public long VideosCount { get; set; }
+        /// <summary>
+        /// Youtube channels ids
+        /// </summary>
+        public string[] YouTubeChannels { get; set; }
     }
 }

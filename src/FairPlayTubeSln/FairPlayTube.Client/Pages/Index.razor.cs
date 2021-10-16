@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Client.Services;
+﻿using FairPlayTube.Client.Navigation;
+using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Global;
 using FairPlayTube.Models.Video;
@@ -35,7 +36,8 @@ namespace FairPlayTube.Client.Pages
 
         [Parameter]
         public string SearchTerm { get; set; }
-
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
         protected override async Task OnParametersSetAsync()
         {
             await LoadData();
@@ -114,6 +116,11 @@ namespace FairPlayTube.Client.Pages
             {
                 await ToastifyService.DisplayErrorNotification(ex.Message);
             }
+        }
+
+        private void OnShowYouTubeLatestVideos(long applicationUserId)
+        {
+            NavigationHelper.NavigateToUserYouTubeVideosPage(this.NavigationManager, applicationUserId);
         }
     }
 }

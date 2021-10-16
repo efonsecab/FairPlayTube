@@ -18,6 +18,10 @@
                         <button type="button" @onclick="@(_ => OnOpenMessageSenderModal(user))">
                             <i class="bi bi-chat-left-text-fill" />
                         </button>
+                        <button @onclick="@( () => NavigateToUserYouTubeVideos(user.ApplicationUserId))"
+                                type="button">
+                            <i class="bi bi-youtube"></i>
+                        </button>
                     </CardHeader>
                     <CardBody>
                         <p>
@@ -25,6 +29,9 @@
                         </p>
                         <p>
                             Brands: @user.BrandsCount
+                        </p>
+                        <p>
+                            YouTube Channels: @user.YouTubeChannels?.Length
                         </p>
                     </CardBody>
                 </Card>

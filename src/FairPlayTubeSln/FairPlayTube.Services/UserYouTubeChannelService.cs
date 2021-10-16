@@ -2,6 +2,8 @@
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.UserYouTubeChannel;
 using Microsoft.EntityFrameworkCore;
+using PTI.Microservices.Library.Services;
+using PTI.Microservices.Library.YouTube.Models.GetChannelLatestVideos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +17,16 @@ namespace FairPlayTube.Services
     {
         private FairplaytubeDatabaseContext FairplaytubeDatabaseContext { get; }
 
-        public UserYouTubeChannelService(FairplaytubeDatabaseContext fairplaytubeDatabaseContext)
+        private YoutubeService YoutubeService { get; }
+
+        public UserYouTubeChannelService(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
+            YoutubeService youtubeService)
         {
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
+            this.YoutubeService = youtubeService;
         }
 
-        public async Task<UserYouTubeChannel> AddUserYouTubeChannel(UserYouTubeChannelModel userYouTubeChannelModel,
+        public async Task<UserYouTubeChannel> AddUserYouTubeChannelAsync(UserYouTubeChannelModel userYouTubeChannelModel,
             CancellationToken cancellationToken)
         {
             var entity = await this.FairplaytubeDatabaseContext.UserYouTubeChannel
@@ -43,6 +49,13 @@ namespace FairPlayTube.Services
         {
             return this.FairplaytubeDatabaseContext.UserYouTubeChannel
                 .Where(p => p.ApplicationUserId == applicationUserId);
+        }
+
+        public async Task<GetChannelLatestVideosResponse> GetYouTubeChannelLatestVideosAsync(string channelId,
+            CancellationToken cancellationToken)
+        {
+            var result = await this.YoutubeService.GetChannelLatestVideosAsync(channelId);
+            return result;
         }
     }
 }

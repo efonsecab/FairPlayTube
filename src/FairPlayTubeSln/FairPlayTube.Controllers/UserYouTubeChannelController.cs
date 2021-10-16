@@ -5,10 +5,12 @@ using FairPlayTube.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PTI.Microservices.Library.YouTube.Models.GetChannelLatestVideos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -43,7 +45,7 @@ namespace FairPlayTube.Controllers
         public async Task<UserYouTubeChannelModel> AddUserYouTubeChannel(UserYouTubeChannelModel userYouTubeChannelModel,
             CancellationToken cancellationToken)
         {
-            var entity = await this.UserYouTubeChannelService.AddUserYouTubeChannel(userYouTubeChannelModel, cancellationToken);
+            var entity = await this.UserYouTubeChannelService.AddUserYouTubeChannelAsync(userYouTubeChannelModel, cancellationToken);
             return this.Mapper.Map<UserYouTubeChannel, UserYouTubeChannelModel>(entity);
         }
 
@@ -54,11 +56,28 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
+        [AllowAnonymous]
         public async Task<UserYouTubeChannelModel[]> GetUserYouTubeChannels(long applicationUserId, CancellationToken cancellationToken)
         {
             var result = await this.UserYouTubeChannelService.GetUserYouTubeChannels(applicationUserId)
                 .Select(p => this.Mapper.Map<UserYouTubeChannel, UserYouTubeChannelModel>(p))
                 .ToArrayAsync();
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves the latest videos for the given Youtube channel id
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        [AllowAnonymous]
+        public async Task<YouTubeVideoModel[]> GetYouTubeChannelLatestVideos(string channelId, CancellationToken cancellationToken)
+        {
+            var response = await this.UserYouTubeChannelService.GetYouTubeChannelLatestVideosAsync(channelId, cancellationToken);
+            var json = JsonSerializer.Serialize(response.items);
+            var result = JsonSerializer.Deserialize<YouTubeVideoModel[]>(json);
             return result;
         }
     }

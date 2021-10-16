@@ -30,7 +30,10 @@
             <FairPlayTube.Components.Videos.Video AllowEdit="false"
                                                   VideoModel="this.VideoModel"
                                                   ShowDetailsLink="false"
-                                                  ShowTwitterShareButton="true" ShowDisplayAd="true"></FairPlayTube.Components.Videos.Video>
+                                                  ShowTwitterShareButton="true" ShowDisplayAd="true"
+                                                  ShowYouTubeVideosLink="@(VideoModel.YouTubeChannels > 0)"
+                                                  OnShowYouTubeLatestVideos="OnShowYouTubeLatestVideos"
+                                                  ></FairPlayTube.Components.Videos.Video>
 
             <AuthorizeView>
                 <Authorized Context="authContext">

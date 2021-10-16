@@ -4,6 +4,7 @@ using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.UserYouTubeChannel;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Models.VideoComment;
+using PTI.Microservices.Library.YouTube.Models.GetChannelLatestVideos;
 using System.Linq;
 
 namespace FairPlayTube.AutoMapperProfiles
@@ -46,6 +47,10 @@ namespace FairPlayTube.AutoMapperProfiles
                         };
 
                     }
+                    if (source.ApplicationUser.UserYouTubeChannel != null)
+                    {
+                        dest.YouTubeChannels = source.ApplicationUser.UserYouTubeChannel.Count;
+                    }
                     if (source.VideoJob != null)
                     {
                         dest.AvailableJobs = source.VideoJob.Count;
@@ -73,6 +78,7 @@ namespace FairPlayTube.AutoMapperProfiles
             });
 
             this.CreateMap<UserYouTubeChannel, UserYouTubeChannelModel>();
+            this.CreateMap<Item, YouTubeVideoModel>();
         }
     }
 }

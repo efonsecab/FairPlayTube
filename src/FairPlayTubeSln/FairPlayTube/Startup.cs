@@ -96,6 +96,7 @@ namespace FairPlayTube
             ConfigureDataStorage(services);
             ConfigurePayPal(services);
             ConfigureIpStackService(services);
+            ConfigureYouTube(services);
 
             var smtpConfiguration = Configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
             services.AddSingleton(smtpConfiguration);
@@ -230,6 +231,14 @@ namespace FairPlayTube
                         StatusCode = (int)System.Net.HttpStatusCode.Forbidden
                     };
                 });
+        }
+
+        private void ConfigureYouTube(IServiceCollection services)
+        {
+            YoutubeConfiguration youtubeConfiguration = Configuration.GetSection(nameof(YoutubeConfiguration))
+                            .Get<YoutubeConfiguration>();
+            services.AddSingleton(youtubeConfiguration);
+            services.AddTransient<YoutubeService>();
         }
 
         private void ConfigureAzureTextAnalytics(IServiceCollection services)

@@ -22,6 +22,7 @@
     <PackageReference Include="PTI.Microservices.Library.AzureVideoIndexer" Version="2.0.0.4-preview" />
     <PackageReference Include="PTI.Microservices.Library.IpStack" Version="2.0.0.1-preview" />
     <PackageReference Include="PTI.Microservices.Library.PayPal" Version="2.0.0.1-preview" />
+    <PackageReference Include="PTI.Microservices.Library.YouTube" Version="2.0.0.1-preview" />
   </ItemGroup>
 
   <ItemGroup>

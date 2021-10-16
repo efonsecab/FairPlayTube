@@ -1,5 +1,7 @@
-﻿using FairPlayTube.Client.Services;
+﻿using FairPlayTube.Client.Navigation;
+using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Common.Global;
 using FairPlayTube.Models.UserMessage;
 using FairPlayTube.Models.UserProfile;
 using Microsoft.AspNetCore.Authorization;
@@ -18,6 +20,8 @@ namespace FairPlayTube.Client.Pages.Users
         private UserClientService UserClientService { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
         private bool IsLoading { get; set; }
         private bool ShowMessageSenderModal { get; set; }
         private UserModel SelectedUser { get; set; }
@@ -75,6 +79,11 @@ namespace FairPlayTube.Client.Pages.Users
         {
             return Common.Global.Constants.UserPagesRoutes.UserHomePage
                 .Replace("{UserId:long}", userModel.ApplicationUserId.ToString());
+        }
+
+        private void NavigateToUserYouTubeVideos(long applicationUserId)
+        {
+            NavigationHelper.NavigateToUserYouTubeVideosPage(this.NavigationManager, applicationUserId);
         }
     }
 }

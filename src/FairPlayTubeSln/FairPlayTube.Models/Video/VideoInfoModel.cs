@@ -10,6 +10,10 @@ namespace FairPlayTube.Models.Video
     public class VideoInfoModel
     {
         /// <summary>
+        /// User Id
+        /// </summary>
+        public long ApplicationUserId { get; set; }
+        /// <summary>
         /// Azure Video Indexer Video Id
         /// </summary>
         public string VideoId { get; set; }
@@ -107,5 +111,9 @@ namespace FairPlayTube.Models.Video
         /// Specified is the logged in user already bought the video
         /// </summary>
         public bool IsBought { get; set; }
+        /// <summary>
+        /// Number of YouTube channels the user has
+        /// </summary>
+        public int YouTubeChannels { get; set; }
     }
 }
