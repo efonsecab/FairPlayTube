@@ -115,5 +115,9 @@ namespace FairPlayTube.Models.Video
         /// Number of YouTube channels the user has
         /// </summary>
         public int YouTubeChannels { get; set; }
+        /// <summary>
+        /// Number of visits the video has had
+        /// </summary>
+        public long VisitsCount { get; set; }
     }
 }

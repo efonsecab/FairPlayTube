@@ -1239,6 +1239,11 @@
             Number of YouTube channels the user has
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.VisitsCount">
+            <summary>
+            Number of visits the video has had
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.VideoJobModel">
             <summary>
             Represents a Job associated to a video

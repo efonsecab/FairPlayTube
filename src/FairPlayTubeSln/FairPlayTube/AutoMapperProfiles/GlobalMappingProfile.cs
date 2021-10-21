@@ -57,7 +57,10 @@ namespace FairPlayTube.AutoMapperProfiles
                         dest.CombinedBudget = source.VideoJob.Sum(p => p.Budget);
                     }
                 }
-
+                if (source.VisitorTracking != null)
+                {
+                    dest.VisitsCount = source.VisitorTracking.LongCount();
+                }
                 dest.VideoIndexStatus = (Common.Global.Enums.VideoIndexStatus)source.VideoIndexStatusId;
             });
             this.CreateMap<VideoComment, VideoCommentModel>().AfterMap((source, dest) =>
