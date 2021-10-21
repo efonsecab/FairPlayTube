@@ -32,8 +32,7 @@
                                                   ShowDetailsLink="false"
                                                   ShowTwitterShareButton="true" ShowDisplayAd="true"
                                                   ShowYouTubeVideosLink="@(VideoModel.YouTubeChannels > 0)"
-                                                  OnShowYouTubeLatestVideos="OnShowYouTubeLatestVideos"
-                                                  ></FairPlayTube.Components.Videos.Video>
+                                                  OnShowYouTubeLatestVideos="OnShowYouTubeLatestVideos"></FairPlayTube.Components.Videos.Video>
 
             <AuthorizeView>
                 <Authorized Context="authContext">
@@ -63,10 +62,18 @@
                             <div class="col">
                                 <Card Width="100%">
                                     <CardHeader>
-                                        <strong>@singleComment.RowCreationUser</strong> - @singleComment.RowCreationDateTime - @singleComment.ApplicationUserFollowersCount Follower(s) 
+                                        <strong>@singleComment.RowCreationUser</strong> - @singleComment.RowCreationDateTime - @singleComment.ApplicationUserFollowersCount Follower(s)
                                     </CardHeader>
                                     <CardBody>
-                                        @singleComment.Comment
+                                        @{
+                                            //based on sample here: https://stackoverflow.com/questions/10576686/c-sharp-regex-pattern-to-extract-urls-from-given-string-not-full-html-urls-but
+                                            var linkParser = new Regex(@"\b(?:https?://|www\.)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                                            foreach (Match m in linkParser.Matches(singleComment.Comment))
+                                            {
+                                                var replacedText = singleComment.Comment.Replace(m.Value, $"<a href=\"{m.Value}\" target=\"_blank\">{m.Value}</a>");
+                                                @( (MarkupString)replacedText)
+                                            }
+                                        }
                                     </CardBody>
                                 </Card>
                             </div>
