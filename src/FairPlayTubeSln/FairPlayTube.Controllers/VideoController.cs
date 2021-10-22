@@ -229,7 +229,7 @@ namespace FairPlayTube.Controllers
         [AllowAnonymous]
         public async Task<VideoInfoModel> GetVideo(string videoId, CancellationToken cancellationToken)
         {
-            return await this.VideoService.GetvideoAsync(videoId).Select(
+            return await this.VideoService.GetVideoAsync(videoId).Select(
                 p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p)).SingleOrDefaultAsync();
         }
 

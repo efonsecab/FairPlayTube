@@ -12,7 +12,7 @@
     </div>
     @if (this.ChannelVideos != null)
     {
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-1">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
             @foreach (var singleChannelVideo in this.ChannelVideos)
             {
                 <div class="col">
@@ -23,12 +23,13 @@
                             </strong>
                         </CardHeader>
                         <CardBody>
-                            <iframe width="560" height="315"
-                                    src="https://www.youtube.com/embed/@singleChannelVideo.id.videoId"
-                                    title="@singleChannelVideo.snippet.title"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen></iframe>
+                            <div class="embed-responsive embed-responsive-1by1">
+                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/@singleChannelVideo.id.videoId"
+                                        title="@singleChannelVideo.snippet.title"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
+                            </div>
                         </CardBody>
                     </Card>
                 </div>

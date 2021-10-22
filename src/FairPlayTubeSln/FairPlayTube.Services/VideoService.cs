@@ -237,11 +237,6 @@ namespace FairPlayTube.Services
                 .Select(p => p.VideoId).ToArrayAsync(cancellationToken: cancellationToken);
         }
 
-        public IQueryable<VideoInfo> GetvideoAsync(string videoId)
-        {
-            return this.FairplaytubeDatabaseContext.VideoInfo.Where(p => p.VideoId == videoId);
-        }
-
         public async Task<string> GetVideoEditAccessTokenAsync(string videoId)
         {
             var accessToken = await this.AzureVideoIndexerService.GetVideoAccessTokenStringAsync(videoId, allowEdit: true);
@@ -297,12 +292,22 @@ namespace FairPlayTube.Services
                 .Include(p => p.VideoJob).Include(p => p.ApplicationUser)
                 .ThenInclude(p => p.UserYouTubeChannel)
                 .Include(p => p.ApplicationUser.UserExternalMonetization)
-                .Include(p=>p.VisitorTracking)
+                .Include(p => p.VisitorTracking)
                 .Where(p =>
             p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed
             && p.VideoVisibilityId == (short)Common.Global.Enums.VideoVisibility.Public
             )
                 .OrderByDescending(p => p.VideoInfoId);
+        }
+
+        public IQueryable<VideoInfo> GetVideoAsync(string videoId)
+        {
+            return this.FairplaytubeDatabaseContext.VideoInfo
+                .Include(p => p.VideoJob).Include(p => p.ApplicationUser)
+                .ThenInclude(p => p.UserYouTubeChannel)
+                .Include(p => p.ApplicationUser.UserExternalMonetization)
+                .Include(p => p.VisitorTracking)
+                .Where(p => p.VideoId == videoId);
         }
 
         public async Task<string[]> GetBoughtVideosIds(string userObjectId)

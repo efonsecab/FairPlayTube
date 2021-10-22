@@ -150,6 +150,15 @@
                                     <i class="bi bi-briefcase-fill"></i>
                                 </button>
                             }
+                            @if (ShowYouTubeVideosLink)
+                            {
+                                <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="Watch User YouTube Videos"
+                                        @onclick="OnShowYouTubeLatestVideosClicked">
+                                    <i class="bi bi-youtube"></i>
+                                </button>
+                            }
                             @if (ShowDetailsLink)
                             {
                                 <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip"
