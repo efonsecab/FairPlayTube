@@ -16,7 +16,7 @@ namespace FairPlayTube.DataAccess.Models
         public long VideoIndexKwywordId { get; set; }
         public long VideoInfoId { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(500)]
         public string Keyword { get; set; }
         public DateTimeOffset RowCreationDateTime { get; set; }
         [Required]

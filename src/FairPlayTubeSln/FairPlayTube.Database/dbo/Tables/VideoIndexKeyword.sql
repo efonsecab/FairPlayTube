@@ -2,7 +2,7 @@
 (
 	[VideoIndexKwywordId] BIGINT NOT NULL CONSTRAINT PK_VideoIndex PRIMARY KEY IDENTITY, 
     [VideoInfoId] BIGINT NOT NULL, 
-    [Keyword] NVARCHAR(50) NOT NULL,
+    [Keyword] NVARCHAR(500) NOT NULL,
     [RowCreationDateTime] DATETIMEOFFSET NOT NULL, 
     [RowCreationUser] NVARCHAR(256) NOT NULL,
     [SourceApplication] NVARCHAR(250) NOT NULL, 
