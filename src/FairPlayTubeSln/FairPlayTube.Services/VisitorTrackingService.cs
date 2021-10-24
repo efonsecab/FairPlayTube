@@ -44,7 +44,7 @@ namespace FairPlayTube.Services
                 ApplicationUser userEntity = null;
                 if (!String.IsNullOrWhiteSpace(visitorTrackingModel.UserAzureAdB2cObjectId))
                     userEntity = await this.FairplaytubeDatabaseContext.ApplicationUser.SingleOrDefaultAsync(p => p.AzureAdB2cobjectId.ToString() == visitorTrackingModel.UserAzureAdB2cObjectId);
-                await this.FairplaytubeDatabaseContext.VisitorTracking.AddAsync(new DataAccess.Models.VisitorTracking()
+                var visitedPage = new DataAccess.Models.VisitorTracking()
                 {
                     ApplicationUserId = userEntity != null ? userEntity.ApplicationUserId : null,
                     Country = country,
@@ -53,8 +53,20 @@ namespace FairPlayTube.Services
                     UserAgent = userAgent,
                     VisitDateTime = DateTime.UtcNow,
                     VisitedUrl = visitorTrackingModel.VisitedUrl
-                });
+                };
+                await this.FairplaytubeDatabaseContext.VisitorTracking.AddAsync(visitedPage);
                 await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+                var pageUri = new Uri(visitedPage.VisitedUrl);
+                var lastSegment = pageUri.Segments.Last().TrimEnd('/');
+                if (!String.IsNullOrWhiteSpace(lastSegment))
+                {
+                    var videoInfoEntity = await this.FairplaytubeDatabaseContext.VideoInfo.SingleOrDefaultAsync(p => p.VideoId == lastSegment);
+                    if (videoInfoEntity != null)
+                    {
+                        visitedPage.VideoInfoId = videoInfoEntity.VideoInfoId;
+                        await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+                    }
+                }
             }
             catch (Exception ex)
             {
