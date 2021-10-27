@@ -98,7 +98,8 @@
             }
             public class VisitorTrackingController
             {
-                public const string TrackClientInformation = "api/VisitorTracking/TrackClientInformation";
+                public const string TrackAnonymousClientInformation = "api/VisitorTracking/TrackAnonymousClientInformation";
+                public const string TrackAuthenticatedClientInformation = "api/VisitorTracking/TrackAuthenticatedClientInformation";
             }
 
             public class VideoPlaylistController

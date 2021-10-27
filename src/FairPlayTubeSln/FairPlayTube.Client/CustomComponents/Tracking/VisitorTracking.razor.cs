@@ -33,8 +33,12 @@ namespace FairPlayTube.Client.CustomComponents.Tracking
                 {
                     var userObjectId = state.User.Claims.GetAzureAdB2CUserObjectId();
                     visitorTrackingModel.UserAzureAdB2cObjectId = userObjectId;
+                    await this.VisitorTrackingClientService.TrackAuthenticatedVisit(visitorTrackingModel);
                 }
-                await this.VisitorTrackingClientService.TrackVisit(visitorTrackingModel);
+                else
+                {
+                    await this.VisitorTrackingClientService.TrackAnonymousVisit(visitorTrackingModel);
+                }
             }
             catch (Exception ex)
             {

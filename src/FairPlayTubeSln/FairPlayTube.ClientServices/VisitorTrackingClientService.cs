@@ -15,10 +15,24 @@ namespace FairPlayTube.ClientServices
             this.HttpClientService = httpClientService;
         }
 
-        public async Task TrackVisit(VisitorTrackingModel visitorTrackingModel)
+        public async Task TrackAnonymousVisit(VisitorTrackingModel visitorTrackingModel)
         {
             var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
-            var response = await anonymousHttpClient.PostAsJsonAsync(ApiRoutes.VisitorTrackingController.TrackClientInformation, visitorTrackingModel);
+            var response = await anonymousHttpClient.PostAsJsonAsync(ApiRoutes.VisitorTrackingController.TrackAnonymousClientInformation, visitorTrackingModel);
+            if (!response.IsSuccessStatusCode)
+            {
+                ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
+                if (problemHttpResponse != null)
+                    throw new Exception(problemHttpResponse.Detail);
+                else
+                    throw new Exception(response.ReasonPhrase);
+            }
+        }
+
+        public async Task TrackAuthenticatedVisit(VisitorTrackingModel visitorTrackingModel)
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient.PostAsJsonAsync(ApiRoutes.VisitorTrackingController.TrackAuthenticatedClientInformation, visitorTrackingModel);
             if (!response.IsSuccessStatusCode)
             {
                 ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();

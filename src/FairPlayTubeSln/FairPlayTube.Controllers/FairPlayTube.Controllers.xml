@@ -487,11 +487,19 @@
             </summary>
             <param name="visitorTrackingService"></param>
         </member>
-        <member name="M:FairPlayTube.Controllers.VisitorTrackingController.TrackClientInformation(FairPlayTube.Models.VisitorTracking.VisitorTrackingModel)">
+        <member name="M:FairPlayTube.Controllers.VisitorTrackingController.TrackAnonymousClientInformation(FairPlayTube.Models.VisitorTracking.VisitorTrackingModel)">
             <summary>
             Persists the visitors information and visited page
             </summary>
             <param name="visitorTrackingModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VisitorTrackingController.TrackAuthenticatedClientInformation(FairPlayTube.Models.VisitorTracking.VisitorTrackingModel,FairPlayTube.Common.Interfaces.ICurrentUserProvider)">
+            <summary>
+            Persists the visitors information and visited page
+            </summary>
+            <param name="visitorTrackingModel"></param>
+            <param name="currentUserProvider"></param>
             <returns></returns>
         </member>
     </members>
