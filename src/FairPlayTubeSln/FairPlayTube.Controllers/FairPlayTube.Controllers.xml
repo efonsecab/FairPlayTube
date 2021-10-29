@@ -68,6 +68,22 @@
             <param name="videoId"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.RssFeedController">
+            <summary>
+            Exposes the Rss feeds
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.RssFeedController.#ctor(FairPlayTube.Services.RssFeedService)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.RssFeedController"/>
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.RssFeedController.Videos">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.SearchController">
             <summary>
             Handles all of the search functionality
