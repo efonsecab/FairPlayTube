@@ -297,12 +297,21 @@
         <div class="modal-dialog modal-fullscreen" style="max-height:none; max-width:none;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">@VideoModel.Name</h5>
+                    <h5 class="modal-title">Creators External Monetization</h5>
                     <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="HideMonetizationModal">
                         <i class="bi bi-x-circle-fill"></i>
                     </button>
                 </div>
                 <div class="modal-body">
+                    <p>
+                        <strong>Say Thanks To Your Creators by Visiting these links</strong>
+                    <p>
+                        One of the main sources if income for content creators is through
+                        monetization links, such as Affiliate Marketing.
+                        By visiting these links, you can say thanks to your creators and help them make a living
+                        to continue creating content for you.
+                    </p>
+                    </p>
                     @if (
 this.VideoModel.UserGlobalMonetization != null &&
 this.VideoModel.UserGlobalMonetization.MonetizationItems.Count > 0)
