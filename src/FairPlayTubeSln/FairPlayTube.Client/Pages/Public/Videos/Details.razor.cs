@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FairPlayTube.Client.Pages.Public.Videos
@@ -80,6 +81,18 @@ namespace FairPlayTube.Client.Pages.Public.Videos
         private void OnShowYouTubeLatestVideos(long applicationUserId)
         {
             NavigationHelper.NavigateToUserYouTubeVideosPage(this.NavigationManager, applicationUserId);
+        }
+
+        private MarkupString GetFormattedComment(VideoCommentModel singleComment)
+        {
+            //based on sample here: https://stackoverflow.com/questions/10576686/c-sharp-regex-pattern-to-extract-urls-from-given-string-not-full-html-urls-but
+            var linkParser = new Regex(@"\b(?:https?://|www\.)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            string replacedText = singleComment.Comment;
+            foreach (Match m in linkParser.Matches(singleComment.Comment))
+            {
+                replacedText = replacedText.Replace(m.Value, $"<a href=\"{m.Value}\" target=\"_blank\">{m.Value}</a>");
+            }
+            return (MarkupString)replacedText;
         }
     }
 }
