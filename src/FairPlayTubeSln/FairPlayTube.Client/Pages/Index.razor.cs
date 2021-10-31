@@ -158,6 +158,8 @@ namespace FairPlayTube.Client.Pages
         public const string VisitRepoTextKey = "VisitRepoText";
         [ResourceKey(defaultValue: "See Known Issues")]
         public const string SeeKnownIssuesTextKey = "SeeKnownIssuesText";
+        [ResourceKey(defaultValue: "Welcome To")]
+        public const string WelcomeToTextKey = "WelcomeToText";
         #endregion Resource Keys
     }
 }

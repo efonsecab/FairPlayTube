@@ -27,6 +27,7 @@ namespace FairPlayTube.Client
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddSingleton<IStringLocalizerFactory, ApiLocalizerFactory>();
+            builder.Services.AddSingleton<IStringLocalizer, ApiLocalizer>();
 
             builder.Services.AddHttpClient($"{assemblyName}.ServerAPI", client =>
                 client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))

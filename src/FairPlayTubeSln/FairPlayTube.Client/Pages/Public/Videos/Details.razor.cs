@@ -2,9 +2,11 @@
 using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Global;
+using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Models.VideoComment;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +28,8 @@ namespace FairPlayTube.Client.Pages.Public.Videos
         private VideoCommentClientService VideoCommentClientService { get; set; }
         [Inject]
         private NavigationManager NavigationManager { get; set; }
+        [Inject]
+        private IStringLocalizer<Details> Localizer { get; set; }
         private VideoInfoModel VideoModel { get; set; }
         private VideoCommentModel[] VideoComments { get; set; }
         private bool IsLoading { get; set; }
@@ -94,5 +98,16 @@ namespace FairPlayTube.Client.Pages.Public.Videos
             }
             return (MarkupString)replacedText;
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue:"Comment")]
+        public const string CommentTitleTextKey = "CommentTitleText";
+        [ResourceKey(defaultValue: "Submit")]
+        public const string SubmitButtonTextKey = "SubmitButtonText";
+        [ResourceKey(defaultValue: "Only logged in users are able to add comments")]
+        public const string OnlyLoggedInCanAddCommentsTextKey = "OnlyLoggedInCanAddCommentsText";
+        [ResourceKey(defaultValue: "Comments")]
+        public const string CommentsTitleTextKey = "CommentsTitleText";
+        #endregion Resource Keys
     }
 }

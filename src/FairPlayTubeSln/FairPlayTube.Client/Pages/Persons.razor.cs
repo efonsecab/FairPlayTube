@@ -1,8 +1,10 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.Persons;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Threading.Tasks;
 
@@ -16,6 +18,9 @@ namespace FairPlayTube.Client.Pages
         private VideoClientService VideoClientService { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
+
+        [Inject]
+        private IStringLocalizer<Persons> Localizer { get; set; }
         private PersonModel[] AllPersons { get; set; }
         private bool IsLoading { get; set; }
 
@@ -35,5 +40,10 @@ namespace FairPlayTube.Client.Pages
                 IsLoading = false;
             }
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue:"Persons In Videos")]
+        public const string PersonsInVideosTitleKey = "PersonsInVideosTitle";
+        #endregion Resource Keys
     }
 }

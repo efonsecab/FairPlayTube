@@ -42,20 +42,20 @@
                             <ValidationSummary></ValidationSummary>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Comment</label>
+                            <label class="form-label">@Localizer[CommentTitleTextKey]</label>
                             <InputText class="form-control" @bind-Value="@NewCommentModel.Comment"></InputText>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">@Localizer[SubmitButtonTextKey]</button>
                     </EditForm>
                 </Authorized>
                 <NotAuthorized>
-                    Only logged in users are able to add comments
+                    @Localizer[OnlyLoggedInCanAddCommentsTextKey]
                 </NotAuthorized>
             </AuthorizeView>
             <div class="mb-3">
                 @if (this.VideoComments != null)
                 {
-                    <h2>Comments</h2>
+                    <h2>@Localizer[CommentsTitleTextKey]</h2>
                     @foreach (var singleComment in this.VideoComments)
                     {
                         <div class="row">
