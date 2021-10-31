@@ -3,6 +3,7 @@ using FairPlayTube.Client.Navigation;
 using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Global;
+using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -47,7 +48,7 @@ namespace FairPlayTube.Client.Pages
 
         protected override void OnInitialized()
         {
-            this.Localizer =LocalizerFactory.Create(typeof(Index));
+            this.Localizer = LocalizerFactory.Create(typeof(Index));
         }
         protected override async Task OnParametersSetAsync()
         {
@@ -134,5 +135,29 @@ namespace FairPlayTube.Client.Pages
         {
             NavigationHelper.NavigateToUserYouTubeVideosPage(this.NavigationManager, applicationUserId);
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue: "What is FairPlayTube?")]
+        public const string WhatIsFairPlayTubeTitleKey = "WhatIsFairPlayTube";
+        [ResourceKey(defaultValue: "FairPlayTube is the next generation of video sharing portals with a focus on users and transparency.")]
+        public const string SystemDescriptionParagraph1Key = "SystemDescriptionParagraph1";
+        [ResourceKey(defaultValue: "We are aware of the struggle millions of creators have, " +
+            "finding it extremely difficult to earn money they deserve when using other platforms.")]
+        public const string StrugglingCreatorsTextKey = "StrugglingCreatorsText";
+        [ResourceKey(defaultValue: "At FairPlayTube we have creators in mind, giving them access to monetization options, " +
+            "from the very beginning of their journey.")]
+        public const string CreatorsInMindTextKey = "CreatorsInMindText";
+        [ResourceKey(defaultValue: "We also have content consumers in mind, allowing them to earn money by participating in jobs posted by the creators")]
+        public const string ContentConsumersInMindTextKey = "ContentConsumersInMindText";
+        [ResourceKey(defaultValue: "Note: FairPlayTube is a young system currently being developed and as such can have bugs." +
+            "If you find any, we appreciate your help by adding the information here: ")]
+        public const string NotesIssuesTextKey = "NotesIssuesText";
+        [ResourceKey(defaultValue:"Report Bug")]
+        public const string ReportBugTextKey = "ReportBugText";
+        [ResourceKey(defaultValue: "Visit the FairPlayTube Repository on GitHub")]
+        public const string VisitRepoTextKey = "VisitRepoText";
+        [ResourceKey(defaultValue: "See Known Issues")]
+        public const string SeeKnownIssuesTextKey = "SeeKnownIssuesText";
+        #endregion Resource Keys
     }
 }

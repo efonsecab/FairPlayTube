@@ -188,7 +188,7 @@ namespace FairPlayTube
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
             });
-
+            services.AddHostedService<Translations.TranslationService>();
             services.AddHostedService<VideoIndexStatusService>();
             bool enableSwagger = Convert.ToBoolean(Configuration["EnableSwaggerUI"]);
             if (enableSwagger)

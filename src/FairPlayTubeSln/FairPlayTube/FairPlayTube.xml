@@ -250,5 +250,23 @@
             <param name="operation"></param>
             <param name="context"></param>
         </member>
+        <member name="T:FairPlayTube.Translations.TranslationService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Translations.TranslationService.#ctor(Microsoft.Extensions.DependencyInjection.IServiceScopeFactory)">
+            <summary>
+            
+            </summary>
+            <param name="serviceScopeFactory"></param>
+        </member>
+        <member name="M:FairPlayTube.Translations.TranslationService.ExecuteAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="stoppingToken"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
