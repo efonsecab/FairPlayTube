@@ -65,9 +65,9 @@ namespace FairPlayTube.Translations
                             singleField.GetCustomAttributes<ResourceKeyAttribute>();
                         if (resourceKeyAttributes != null && resourceKeyAttributes.Count() > 0)
                         {
-                            ResourceKeyAttribute keyAttribute = resourceKeyAttributes.Single() as ResourceKeyAttribute;
+                            ResourceKeyAttribute keyAttribute = resourceKeyAttributes.Single();
                             var defaultValue = keyAttribute.DefaultValue;
-                            string key = singleField.GetRawConstantValue()?.ToString();
+                            string key = singleField.GetRawConstantValue().ToString();
                             var entity =
                                 await fairplaytubeDatabaseContext.Resource
                                 .SingleOrDefaultAsync(p => p.CultureId == 1 && 
