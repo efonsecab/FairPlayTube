@@ -6,7 +6,7 @@
             <FairPlayTube.Components.Bootstrap.Card Width="100%">
                 <CardHeader>
                     <div>
-                        <strong>Duration: </strong>@VideoModel.VideoDurationFormatted
+                        <strong>@Localizer[VideoDurationTextKey]: </strong>@VideoModel.VideoDurationFormatted
                     </div>
                     <div>
                         <button type="button" class="btn btn-info rounded-circle"
@@ -16,7 +16,7 @@
                         <MonetizationIconButton OnClicked="@(  () => OnMonetizationIconClicked())">
                         </MonetizationIconButton>
                         <button type="button" class="btn btn-info rounded-circle"
-                                @onclick="@(  () => OnVideoDescriptionClicked())" data-bs-toggle="tooltip" data-bs-placement="top" title="Description">
+                                @onclick="@(  () => OnVideoDescriptionClicked())" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[VideoDescriptionTitleKey]">
                             <i class="bi bi-card-text"></i>
                         </button>
                         @if (VideoModel.Price > 0 && !VideoModel.IsBought)
@@ -122,7 +122,7 @@
                 <FairPlayTube.Components.Bootstrap.Card Width="100%">
                     <CardHeader>
                         <div>
-                            <strong>Duration: </strong>@VideoModel.VideoDurationFormatted
+                            <strong>@Localizer[VideoDurationTextKey]: </strong>@VideoModel.VideoDurationFormatted
                         </div>
                         <div>
                             <button type="button" class="btn btn-info rounded-circle"
@@ -132,7 +132,7 @@
                             <MonetizationIconButton OnClicked="@(  () => OnMonetizationIconClicked())">
                             </MonetizationIconButton>
                             <button type="button" class="btn btn-info rounded-circle"
-                                    @onclick="@(  () => OnVideoDescriptionClicked())" data-bs-toggle="tooltip" data-bs-placement="top" title="Description">
+                                    @onclick="@(  () => OnVideoDescriptionClicked())" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[VideoDescriptionTitleKey]">
                                 <i class="bi bi-card-text"></i>
                             </button>
                             @if (VideoModel.Price > 0 && !VideoModel.IsBought)
@@ -305,12 +305,12 @@
                 <div class="modal-body">
                     <p>
                         <strong>Say Thanks To Your Creators by Visiting these links</strong>
+                    </p>
                     <p>
                         One of the main sources if income for content creators is through
                         monetization links, such as Affiliate Marketing.
                         By visiting these links, you can say thanks to your creators and help them make a living
                         to continue creating content for you.
-                    </p>
                     </p>
                     @if (
 this.VideoModel.UserGlobalMonetization != null &&

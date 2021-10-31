@@ -1,6 +1,8 @@
 ﻿using FairPlayTube.Common.Interfaces;
+using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Threading.Tasks;
 
@@ -36,6 +38,9 @@ namespace FairPlayTube.Components.Videos
         private IVideoEditAccessTokenProvider VideoEditAccessTokenProvider { get; set; }
         [Inject]
         private NavigationManager NavigationManager { get; set; }
+        [Inject]
+        IStringLocalizerFactory LocalizerFactory { get; set; }
+        private IStringLocalizer Localizer { get; set; }
         private bool IsLoading { get; set; }
         private bool ShowInsights { get; set; }
         private bool ShowMonetizationLinks { get; set; }
@@ -43,6 +48,11 @@ namespace FairPlayTube.Components.Videos
         private bool ShowDeleteConfirm { get; set; }
         private string EditAccessToken { get; set; }
 
+
+        protected override void OnInitialized()
+        {
+            this.Localizer = this.LocalizerFactory.Create(typeof(Video));
+        }
         private async Task SelectVideo()
         {
             if (AllowEdit)
@@ -139,5 +149,12 @@ namespace FairPlayTube.Components.Videos
         {
             await this.OnShowYouTubeLatestVideos.InvokeAsync(this.VideoModel.ApplicationUserId);
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue:"Duration")]
+        public const string VideoDurationTextKey = "VideoDurationText";
+        [ResourceKey(defaultValue:"Description")]
+        public const string VideoDescriptionTitleKey = "VideoDescriptionTitle";
+        #endregion Resource Keys
     }
 }
