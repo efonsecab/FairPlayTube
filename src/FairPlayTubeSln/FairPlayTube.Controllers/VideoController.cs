@@ -8,6 +8,7 @@ using FairPlayTube.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Microsoft.FeatureManagement.Mvc;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ namespace FairPlayTube.Controllers
         private ICurrentUserProvider CurrentUserProvider { get; }
         private VideoCommentService VideoCommentService { get; }
 
+        private IStringLocalizer Localizer { get; }
+
         /// <summary>
         /// Initializes <see cref="VideoController"/>
         /// </summary>
@@ -37,13 +40,17 @@ namespace FairPlayTube.Controllers
         /// <param name="videoCommentService"></param>
         /// <param name="mapper"></param>
         /// <param name="currentUserProvider"></param>
+        /// <param name="localizerFactory"></param>
         public VideoController(VideoService videoService, VideoCommentService videoCommentService,
-            IMapper mapper, ICurrentUserProvider currentUserProvider)
+            IMapper mapper, ICurrentUserProvider currentUserProvider, 
+            IStringLocalizerFactory localizerFactory)
         {
             this.VideoService = videoService;
             this.Mapper = mapper;
             this.CurrentUserProvider = currentUserProvider;
             this.VideoCommentService = videoCommentService;
+
+            this.Localizer = localizerFactory.Create(typeof(VideoController));
         }
 
         /// <summary>

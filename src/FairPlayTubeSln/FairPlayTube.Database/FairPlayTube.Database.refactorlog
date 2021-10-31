@@ -147,4 +147,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="UserYouTubeChannelId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="0c001873-2193-4b15-9a91-3da94a15263c" ChangeDateTime="10/31/2021 00:14:36">
+    <Property Name="ElementName" Value="[dbo].[Culture].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Culture]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CultureId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="52436ee7-b39e-4141-a583-40778453191b" ChangeDateTime="10/31/2021 00:26:30">
+    <Property Name="ElementName" Value="[dbo].[Resource].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Resource]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ResourceId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="152b1d4b-efa1-4631-8f04-d846b3556be3" ChangeDateTime="10/31/2021 00:44:00">
+    <Property Name="ElementName" Value="[dbo].[Resource].[IX_Resource_Column]" />
+    <Property Name="ElementType" Value="SqlIndex" />
+    <Property Name="ParentElementName" Value="[dbo].[Resource]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[UI_Resource_Type_Key_Value_CultureId]" />
+  </Operation>
 </Operations>

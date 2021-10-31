@@ -26,10 +26,12 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<ApplicationUserStatus> ApplicationUserStatus { get; set; }
         public virtual DbSet<Brand> Brand { get; set; }
         public virtual DbSet<BrandVideo> BrandVideo { get; set; }
+        public virtual DbSet<Culture> Culture { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
         public virtual DbSet<GatedFeature> GatedFeature { get; set; }
         public virtual DbSet<PaypalTransaction> PaypalTransaction { get; set; }
         public virtual DbSet<Person> Person { get; set; }
+        public virtual DbSet<Resource> Resource { get; set; }
         public virtual DbSet<UserExternalMonetization> UserExternalMonetization { get; set; }
         public virtual DbSet<UserFeedback> UserFeedback { get; set; }
         public virtual DbSet<UserFollower> UserFollower { get; set; }
@@ -128,6 +130,11 @@ namespace FairPlayTube.DataAccess.Data
                     .HasConstraintName("FK_BrandVideo_VideoInfo");
             });
 
+            modelBuilder.Entity<Culture>(entity =>
+            {
+                entity.Property(e => e.CultureId).ValueGeneratedNever();
+            });
+
             modelBuilder.Entity<GatedFeature>(entity =>
             {
                 entity.Property(e => e.DefaultValue).HasDefaultValueSql("1");
@@ -140,6 +147,15 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.ApplicationUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PaypalTransaction_ApplicationUser");
+            });
+
+            modelBuilder.Entity<Resource>(entity =>
+            {
+                entity.HasOne(d => d.Culture)
+                    .WithMany(p => p.Resource)
+                    .HasForeignKey(d => d.CultureId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Resource_Culture");
             });
 
             modelBuilder.Entity<UserExternalMonetization>(entity =>

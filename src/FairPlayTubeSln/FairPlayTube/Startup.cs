@@ -1,5 +1,6 @@
 using FairPlayTube.Common.Configuration;
 using FairPlayTube.Common.Interfaces;
+using FairPlayTube.CustomLocalization.EF;
 using FairPlayTube.CustomProviders;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
@@ -16,6 +17,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -23,6 +25,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
@@ -32,6 +35,7 @@ using PTI.Microservices.Library.Interceptors;
 using PTI.Microservices.Library.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -68,6 +72,7 @@ namespace FairPlayTube
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IStringLocalizerFactory, EFStringLocalizerFactory>();
             bool enablePTILibrariesLogging = Convert.ToBoolean(Configuration["EnablePTILibrariesLogging"]);
             GlobalPackageConfiguration.EnableHttpRequestInformationLog = enablePTILibrariesLogging;
             GlobalPackageConfiguration.RapidApiKey = Configuration.GetValue<string>("RapidApiKey");
@@ -266,6 +271,7 @@ namespace FairPlayTube
             services.AddTransient<VideoJobService>();
             services.AddTransient<UserYouTubeChannelService>();
             services.AddTransient<RssFeedService>();
+
         }
 
         private void ConfigureAzureContentModerator(IServiceCollection services)
@@ -332,8 +338,22 @@ namespace FairPlayTube
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        /// <param name="localizerFactory"></param>
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            IStringLocalizerFactory localizerFactory)
         {
+            var supportedCultures = new List<CultureInfo>
+            {
+                new CultureInfo("en-US"),
+                new CultureInfo("es-CR")
+            };
+            var options = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-US"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            };
+            app.UseRequestLocalization(options);
             app.UseResponseCompression();
             bool useHttpsRedirection = Convert.ToBoolean(Configuration["UseHttpsRedirection"]);
             bool enableSwagger = Convert.ToBoolean(Configuration["EnableSwaggerUI"]);

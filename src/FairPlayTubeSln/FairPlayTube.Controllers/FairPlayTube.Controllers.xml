@@ -296,7 +296,7 @@
             Handles all of the data related to a video
             </summary>
         </member>
-        <member name="M:FairPlayTube.Controllers.VideoController.#ctor(FairPlayTube.Services.VideoService,FairPlayTube.Services.VideoCommentService,AutoMapper.IMapper,FairPlayTube.Common.Interfaces.ICurrentUserProvider)">
+        <member name="M:FairPlayTube.Controllers.VideoController.#ctor(FairPlayTube.Services.VideoService,FairPlayTube.Services.VideoCommentService,AutoMapper.IMapper,FairPlayTube.Common.Interfaces.ICurrentUserProvider,Microsoft.Extensions.Localization.IStringLocalizerFactory)">
             <summary>
             Initializes <see cref="T:FairPlayTube.Controllers.VideoController"/>
             </summary>
@@ -304,6 +304,7 @@
             <param name="videoCommentService"></param>
             <param name="mapper"></param>
             <param name="currentUserProvider"></param>
+            <param name="localizerFactory"></param>
         </member>
         <member name="M:FairPlayTube.Controllers.VideoController.DeleteVideo(System.String,System.Threading.CancellationToken)">
             <summary>
