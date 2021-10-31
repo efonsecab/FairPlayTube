@@ -44,10 +44,17 @@ namespace FairPlayTube.Translations
                     scope.ServiceProvider.GetRequiredService<FairplaytubeDatabaseContext>();
                 var clientAppAssembly = typeof(Client.Program).Assembly;
                 var clientAppTypes = clientAppAssembly.GetTypes();
-                foreach (var singleClientAppType in clientAppTypes)
+
+                var componentsAssembly = typeof(Components._Imports).Assembly;
+                var componentsTypes = componentsAssembly.GetTypes();
+
+                List<Type> typesToCheck = new List<Type>();
+                typesToCheck.AddRange(clientAppTypes);
+                typesToCheck.AddRange(componentsTypes);
+                foreach (var singleTypeToCheck in typesToCheck)
                 {
-                    string typeFullName = singleClientAppType.FullName;
-                    var fields = singleClientAppType.GetFields(
+                    string typeFullName = singleTypeToCheck.FullName;
+                    var fields = singleTypeToCheck.GetFields(
                         BindingFlags.Public |
                         BindingFlags.Static |
                         BindingFlags.FlattenHierarchy
