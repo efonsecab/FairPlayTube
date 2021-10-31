@@ -49,6 +49,24 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.LocalizationController">
+            <summary>
+            In charge of exposing localization values
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.LocalizationController.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext,AutoMapper.IMapper)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.LocalizationController"/>
+            </summary>
+            <param name="fairplaytubeDatabaseContext"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.LocalizationController.GetAllResources">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.OpenGraphController">
             <summary>
             Handles all of the Open Graph routes

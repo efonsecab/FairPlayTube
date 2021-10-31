@@ -1,4 +1,5 @@
 using FairPlayTube.Client.CustomClaims;
+using FairPlayTube.Client.CustomLocalization.Api;
 using FairPlayTube.Client.CustomProviders;
 using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -23,6 +25,8 @@ namespace FairPlayTube.Client
             string assemblyName = "FairPlayTube";
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
+
+            builder.Services.AddSingleton<IStringLocalizerFactory, ApiLocalizerFactory>();
 
             builder.Services.AddHttpClient($"{assemblyName}.ServerAPI", client =>
                 client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
@@ -65,6 +69,9 @@ namespace FairPlayTube.Client
 
             builder.Services.AddTransient<IVideoEditAccessTokenProvider, VideoEditAccessTokenProvider>();
 
+            builder.Services.AddLocalization();
+
+            builder.Services.AddSingleton<LocalizationClientService>();
             builder.Services.AddTransient<HttpClientService>();
             builder.Services.AddTransient<ToastifyService>();
             builder.Services.AddTransient<VideoClientService>();
