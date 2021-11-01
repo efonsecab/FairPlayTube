@@ -5,16 +5,16 @@
 
 <AuthorizeView>
     <Authorized>
-        Hello, @context.User.Identity.Name!
+        @Localizer[HelloTextKey], @context.User.Identity.Name!
         <button class="btn btn-info rounded-circle" @onclick="BeginLogout">
             <i class="bi bi-person-circle"></i>
-            Logout
+            @Localizer[LogoutTextKey]
         </button>
     </Authorized>
     <NotAuthorized>
         <button class="btn btn-info rounded-circle" @onclick="Login">
             <i class="bi bi-person-circle"></i>
-            Sign In/Sign Up
+            @Localizer[SignInTextKey]/@Localizer[SignUpTextKey]
         </button>
     </NotAuthorized>
 </AuthorizeView>
@@ -22,6 +22,8 @@
 @code {
     [Inject]
     private NavigationManager NavigationManager { get; set; }
+    [Inject]
+    private IStringLocalizer<LoginDisplay> Localizer { get; set; }
     private async Task BeginLogout(MouseEventArgs args)
     {
         await SignOutManager.SetSignOutState();
@@ -32,4 +34,15 @@
     {
         this.NavigationManager.NavigateTo("authentication/login");
     }
+
+    #region Resource Keys
+    [ResourceKey(defaultValue: "Hello")]
+    public const string HelloTextKey = "HelloText";
+    [ResourceKey(defaultValue:"Sign In")]
+    public const string SignInTextKey = "SignInText";
+    [ResourceKey(defaultValue: "Sign Up")]
+    public const string SignUpTextKey = "SignUpText";
+    [ResourceKey(defaultValue: "Logout")]
+    public const string LogoutTextKey = "LogoutText";
+    #endregion Resource Keys
 }

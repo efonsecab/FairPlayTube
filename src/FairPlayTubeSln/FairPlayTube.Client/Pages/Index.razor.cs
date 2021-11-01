@@ -20,7 +20,8 @@ namespace FairPlayTube.Client.Pages
     [Route(Constants.RootPagesRoutes.SearchEmpty)]
     public partial class Index
     {
-        private IStringLocalizer Localizer;
+        [Inject]
+        private IStringLocalizer<Index> Localizer { get; set; }
 
         private VideoInfoModel[] AllVideos { get; set; }
         private VideoInfoModel SelectedVideo { get; set; }
@@ -33,8 +34,6 @@ namespace FairPlayTube.Client.Pages
         private ToastifyService ToastifyService { get; set; }
         [Inject]
         private IJSRuntime JSRuntime { get; set; }
-        [Inject]
-        IStringLocalizerFactory LocalizerFactory { get; set; }
         private bool IsLoading { get; set; }
         private bool AllowDownload { get; set; } = false;
         [CascadingParameter]
@@ -45,11 +44,6 @@ namespace FairPlayTube.Client.Pages
         public string SearchTerm { get; set; }
         [Inject]
         private NavigationManager NavigationManager { get; set; }
-
-        protected override void OnInitialized()
-        {
-            this.Localizer = LocalizerFactory.Create(typeof(Index));
-        }
         protected override async Task OnParametersSetAsync()
         {
             await LoadData();
@@ -59,7 +53,6 @@ namespace FairPlayTube.Client.Pages
         {
             try
             {
-                var a = Localizer["Message"];
                 IsLoading = true;
                 var state = await this.AuthenticationStateTask;
                 //if (state.User.Identity.IsAuthenticated)
@@ -160,6 +153,8 @@ namespace FairPlayTube.Client.Pages
         public const string SeeKnownIssuesTextKey = "SeeKnownIssuesText";
         [ResourceKey(defaultValue: "Welcome To")]
         public const string WelcomeToTextKey = "WelcomeToText";
+        [ResourceKey(defaultValue: "About")]
+        public const string AboutTextKey = "AboutText";
         #endregion Resource Keys
     }
 }

@@ -1,17 +1,17 @@
 ﻿@inherits LayoutComponentBase
 @inject Common.Configuration.AzureQnABotConfiguration AzureQnABotConfiguration
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    @if (IsLoading)
+    {
+        <Loading IsLoading="true"></Loading>
+    }
+    else
+    {
+        <div class="sidebar">
+            <NavMenu />
+        </div>
 
-    <div class="main">
-        @if (IsLoading)
-        {
-            <Loading IsLoading="true"></Loading>
-        }
-        else
-        {
+        <div class="main">
             <div class="top-row px-4">
                 <div class="mx-auto">
                     <img class="img-thumbnail" src="images/ptilogo.png" style="height:45px;" />
@@ -82,9 +82,9 @@
                     </div>
                 </footer>
             }
-        }
 
-    </div>
+        </div>
+    }
 </div>
 
 @code{
