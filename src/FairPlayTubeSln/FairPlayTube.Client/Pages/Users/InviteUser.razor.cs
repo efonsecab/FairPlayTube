@@ -1,8 +1,10 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.Invites;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,8 @@ namespace FairPlayTube.Client.Pages.Users
         private ToastifyService ToastifyService { get; set; }
         [Inject]
         private UserClientService UserClientService { get; set; }
+        [Inject]
+        private IStringLocalizer<InviteUser> Localizer { get; set; }
         private InviteUserModel InviteUserModel = new Models.Invites.InviteUserModel();
         private bool IsLoading { get; set; } = false;
 
@@ -38,5 +42,12 @@ namespace FairPlayTube.Client.Pages.Users
                 IsLoading = false;
             }
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue:"Invite User")]
+        public const string InviteUserTextKey = "InviteUserText";
+        [ResourceKey(defaultValue:"Email Address")]
+        public const string EmailAddressTextKey = "EmailAddressText";
+        #endregion Resource Keys
     }
 }

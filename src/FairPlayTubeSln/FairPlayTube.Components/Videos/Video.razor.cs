@@ -1,6 +1,8 @@
 ﻿using FairPlayTube.Common.Interfaces;
+using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Threading.Tasks;
 
@@ -36,6 +38,8 @@ namespace FairPlayTube.Components.Videos
         private IVideoEditAccessTokenProvider VideoEditAccessTokenProvider { get; set; }
         [Inject]
         private NavigationManager NavigationManager { get; set; }
+        [Inject]
+        private IStringLocalizer<Video> Localizer { get; set; }
         private bool IsLoading { get; set; }
         private bool ShowInsights { get; set; }
         private bool ShowMonetizationLinks { get; set; }
@@ -139,5 +143,59 @@ namespace FairPlayTube.Components.Videos
         {
             await this.OnShowYouTubeLatestVideos.InvokeAsync(this.VideoModel.ApplicationUserId);
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue:"Duration")]
+        public const string VideoDurationTextKey = "VideoDurationText";
+        [ResourceKey(defaultValue:"Description")]
+        public const string VideoDescriptionTitleKey = "VideoDescriptionTitle";
+        [ResourceKey(defaultValue: "Insights")]
+        public const string InsightsTextKey = "InsightsText";
+        [ResourceKey(defaultValue: "Buy Video Access")]
+        public const string BuyVideoAccessTextKey = "BuyVideoAccessText";
+        [ResourceKey(defaultValue: "You could earn")]
+        public const string YouCouldEarnTextKey = "YouCouldEarnText";
+        [ResourceKey(defaultValue: "from")]
+        public const string FromTextKey = "FromText";
+        [ResourceKey(defaultValue: "Available Job(s)")]
+        public const string AvailableJobsTextKey = "AvailableJobsText";
+        [ResourceKey(defaultValue: "Watch User YouTube Videos")]
+        public const string WatchUserYouTubeVideosTextKey = "WatchUserYouTubeVideosText";
+        [ResourceKey(defaultValue: "Watch FairPlayTube Video")]
+        public const string WtchFairPlayTubeVideoTextKey = "WtchFairPlayTubeVideoText";
+        [ResourceKey(defaultValue: "Delete")]
+        public const string DeleteTextKey = "DeleteText";
+        [ResourceKey(defaultValue: "Download")]
+        public const string DownloadTextKey = "DownloadText";
+        [ResourceKey(defaultValue: "Visits")]
+        public const string VisitsTextKey = "VisitsText";
+        [ResourceKey(defaultValue: "Name")]
+        public const string NameTextKey = "NameText";
+        [ResourceKey(defaultValue: "Publisher")]
+        public const string PublisherTextKey = "PublisherText";
+        [ResourceKey(defaultValue: "Price")]
+        public const string PriceTextKey = "PriceText";
+        [ResourceKey(defaultValue: "Details")]
+        public const string DetailsTextKey = "DetailsText";
+        [ResourceKey(defaultValue: "Close")]
+        public const string CloseTextKey = "CloseText";
+        [ResourceKey(defaultValue: "Creators External Monetization")]
+        public const string ExternalMonetizationTitleKey = "ExternalMonetizationTitle";
+        [ResourceKey(defaultValue: "Say Thanks To Your Creators by Visiting these links")]
+        public const string SayThanksTextKey = "SayThanksText";
+        [ResourceKey(defaultValue: "One of the main sources if income for content creators is through " +
+            "monetization links, such as Affiliate Marketing. " +
+            "By visiting these links, you can say thanks to your creators and help them make a living " +
+            "to continue creating content for you.")]
+        public const string SourceOfIncomeTextKey = "SourceOfIncomeText";
+        [ResourceKey(defaultValue: "Video owner does not have global monetization items configured")]
+        public const string NoGlobalMonetizationTextKey = "NoGlobalMonetizationText";
+        [ResourceKey(defaultValue: "Are you sure you want to delete the selected video")]
+        public const string DeleteVideoConfirmationTextKey = "DeleteVideoConfirmationText";
+        [ResourceKey(defaultValue: "No")]
+        public const string NoTextKey = "NoTextKey";
+        [ResourceKey(defaultValue: "Yes")]
+        public const string YesTextKey = "YesTextKey";
+        #endregion Resource Keys
     }
 }

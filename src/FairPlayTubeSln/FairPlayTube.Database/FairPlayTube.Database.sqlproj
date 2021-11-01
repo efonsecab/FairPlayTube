@@ -96,6 +96,8 @@
     <Build Include="dbo\Tables\VideoPlaylist.sql" />
     <Build Include="dbo\Tables\ApplicationUserStatus.sql" />
     <Build Include="dbo\Tables\UserYouTubeChannel.sql" />
+    <Build Include="dbo\Tables\Culture.sql" />
+    <Build Include="dbo\Tables\Resource.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

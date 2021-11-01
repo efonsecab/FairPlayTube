@@ -1,7 +1,7 @@
-﻿<h3>ValidateInviteCode</h3>
+﻿<h3>@Localizer[ValidateInviteCodeTextKey]</h3>
 
 <div class="mb-3">
-    <label class="form-label">Please type your Invite Code</label>
+    <label class="form-label">@Localizer[TypeInviteCodeTextKey]</label>
     <input type="text" class="form-control" @bind-value="@InviteCode" />
-    <button type="button" @onclick="( async ()=> await OnValidateInviteCode())">Validate</button>
+    <button type="button" @onclick="( async ()=> await OnValidateInviteCode())">@Localizer[ValidateInviteCodeTextKey]</button>
 </div>

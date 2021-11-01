@@ -1,6 +1,6 @@
 ﻿
 
-<h1>Welcome to @Constants.Titles.AppTitle</h1>
+<h1>@Localizer[WelcomeToTextKey] @Constants.Titles.AppTitle</h1>
 <VisitorTracking></VisitorTracking>
 <Loading IsLoading="IsLoading"></Loading>
 
@@ -8,7 +8,7 @@
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                About @Constants.Titles.AppTitle
+                @Localizer[AboutTextKey] @Constants.Titles.AppTitle
             </button>
         </h2>
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -16,41 +16,30 @@
                 <div class="mb-3">
                     <Card Width="100%">
                         <CardHeader>
-                            What is @Constants.Titles.AppTitle?
+                            @Localizer[WhatIsFairPlayTubeTitleKey]
                         </CardHeader>
                         <CardBody>
-                            <p>
-                                @Constants.Titles.AppTitle is the next generation of video sharing portals with a focus on users and transparency.
-                            </p>
-                            <p>
-                                @Constants.Titles.AppTitle is an Open Source project, and you can contribute to it.
-                            </p>
-                            <p>
-                                You can help keeping the project free and without ads by donating
-                            </p>
+                            @( (MarkupString)Localizer[SystemDescriptionParagraph1Key].Value)
                             <PayPalDonateButton></PayPalDonateButton>
                             <p>
-                                We are aware of the struggle millions of creators have, finding it extremely difficult to earn
-                                money they deserve when using other platforms.
+                                @Localizer[StrugglingCreatorsTextKey]
                             </p>
                             <p>
-                                At @Constants.Titles.AppTitle we have creators in mind, giving them access to monetization options,
-                                from the very beginning of their journey.
+                                @Localizer[CreatorsInMindTextKey]
                             </p>
-                            <p>We also have content consumers in mind, allowing them to earn money by participating in jobs posted by the creators</p>
+                            <p>@Localizer[ContentConsumersInMindTextKey]</p>
                             <p>
                                 <strong>
-                                    Note: @Constants.Titles.AppTitle is a young system currently being developed and as such can have bugs.
-                                    If you find any, we appreciate your help by adding the information here:
-                                    <a href="https://github.com/efonsecab/FairPlayTube/issues/new?assignees=&labels=&template=bug_report.md&title=" target="_blank">Report Bug</a>
+                                    @Localizer[NotesIssuesTextKey]
+                                    <a href="https://github.com/efonsecab/FairPlayTube/issues/new?assignees=&labels=&template=bug_report.md&title=" target="_blank">@Localizer[ReportBugTextKey]</a>
                                 </strong>
                             </p>
                             <p>
-                                Visit the @Constants.Titles.AppTitle Repository on GitHub
+                                @Localizer[VisitRepoTextKey]
                                 <a href="https://github.com/efonsecab/FairPlayTube" target="_blank">https://github.com/efonsecab/FairPlayTube</a>
                             </p>
                             <p>
-                                <a href="https://github.com/efonsecab/FairPlayTube/issues?q=is%3Aopen+is%3Aissue+label%3Abug" target="_blank">See Known Issues</a>
+                                <a href="https://github.com/efonsecab/FairPlayTube/issues?q=is%3Aopen+is%3Aissue+label%3Abug" target="_blank">@Localizer[SeeKnownIssuesTextKey]</a>
                             </p>
                         </CardBody>
                     </Card>
@@ -63,5 +52,4 @@
 <FairPlayTube.Components.Videos.VideoList AllVideos="this.AllVideos" OnDownload="OnDownload"
                                           OnBuyVideoAccess="OnBuyVideoAccess"
                                           AllowDownload="AllowDownload"
-                                          OnShowYouTubeLatestVideos="OnShowYouTubeLatestVideos"
-                                          ></FairPlayTube.Components.Videos.VideoList>
+                                          OnShowYouTubeLatestVideos="OnShowYouTubeLatestVideos"></FairPlayTube.Components.Videos.VideoList>

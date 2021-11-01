@@ -1,7 +1,7 @@
 ﻿<Loading IsLoading="IsLoading"></Loading>
 <p>
     <label class="form-label">
-        Upload file(s). Max: @(Common.Global.Constants.UploadLimits.MaxMegabytesAllowed) MB
+        @Localizer[UploadFileTextKey]. Max: @(Common.Global.Constants.UploadLimits.MaxMegabytesAllowed) MB
         <InputFile class="form-control" OnChange="@OnInputFileChange" multiple accept="video/mp4" />
     </label>
 </p>
@@ -14,21 +14,21 @@
                 @foreach (var file in files)
                 {
                     <li>
-                        Details
+                        @Localizer[DetailsTextKey]
                         <br>
                         @if (Upload(uploadResults, file.Name, Logger,
                          out var result))
                         {
                             <span>
-                                File: @file.Name
+                                @Localizer[FileTextKey]: @file.Name
                                 @*Stored File Name: @result.StoredFileName*@
                             </span>
                         }
                         else
                         {
                             <span>
-                                There was an error uploading the file
-                                (Error: @result.ErrorCode).
+                                @Localizer[ErrorTextKey]:
+                                @result.ErrorCode).
                             </span>
                         }
                     </li>

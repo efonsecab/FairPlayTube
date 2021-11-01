@@ -112,6 +112,11 @@
             {
                 public const string SearchPublicProcessedVideos = "api/Search/SearchPublicProcessedVideos";
             }
+
+            public class LocalizationController
+            {
+                public const string GetAllResources = "api/Localization/GetAllResources";
+            }
             public class VideoController
             {
                 public const string GetPublicProcessedVideos = "api/Video/GetPublicProcessedVideos";

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FairPlayTube.DataAccess.Models;
+using FairPlayTube.Models.Localization;
 using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.UserYouTubeChannel;
 using FairPlayTube.Models.Video;
@@ -82,6 +83,13 @@ namespace FairPlayTube.AutoMapperProfiles
 
             this.CreateMap<UserYouTubeChannel, UserYouTubeChannelModel>();
             this.CreateMap<Item, YouTubeVideoModel>();
+            this.CreateMap<Resource, ResourceModel>().AfterMap((source, dest)=>
+            {
+                if (source.Culture != null)
+                {
+                    dest.CultureName = source.Culture.Name;
+                }
+            });
         }
     }
 }

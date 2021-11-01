@@ -1,10 +1,10 @@
 ﻿<VisitorTracking></VisitorTracking>
 
-<h1>User YouTube Latest 50 Videos</h1>
+<h1>@Localizer[UserLatestVideosTextKey]</h1>
 @if (UserYouTubeChannels != null)
 {
     <div class="mb-3">
-        <label class="form-label">Select a channel</label>
+        <label class="form-label">@Localizer[SelectChannelTextKey]</label>
         <select class="form-control" @onchange="OnChange">
             @foreach (var singleChannel in this.UserYouTubeChannels)
             {

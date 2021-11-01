@@ -79,6 +79,31 @@
             Custom message for the invitation
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Localization.ResourceModel">
+            <summary>
+            Represents the culture
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Localization.ResourceModel.Type">
+            <summary>
+            The resource type
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Localization.ResourceModel.Key">
+            <summary>
+            Key
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Localization.ResourceModel.Value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Localization.ResourceModel.CultureName">
+            <summary>
+            Culture Name
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Notifications.NotificationModel">
             <summary>
             Rpresents a Notification used in the SignalR communication

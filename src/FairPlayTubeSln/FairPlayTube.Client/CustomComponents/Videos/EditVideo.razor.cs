@@ -1,7 +1,9 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Threading.Tasks;
 
@@ -15,6 +17,8 @@ namespace FairPlayTube.Client.CustomComponents.Videos
         private VideoClientService VideoClientService { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
+        [Inject]
+        private IStringLocalizer<EditVideo> Localizer { get; set; }
         private UpdateVideoModel UpdateVideoModel { get; set; } = new UpdateVideoModel();
         private bool IsSubmitting { get; set; }
 
@@ -41,5 +45,14 @@ namespace FairPlayTube.Client.CustomComponents.Videos
                 StateHasChanged();
             }
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue:"Price")]
+        public const string PriceTextKey = "PriceText";
+        [ResourceKey(defaultValue: "The Price must be a valid integer number")]
+        public const string PriceParsingErrorTextKey = "PriceParsingErrorText";
+        [ResourceKey(defaultValue: "Submit")]
+        public const string SubmitTextKey = "SubmitText";
+        #endregion Resource Keys
     }
 }

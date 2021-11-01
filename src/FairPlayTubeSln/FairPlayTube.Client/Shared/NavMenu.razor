@@ -11,61 +11,61 @@
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[HomeTextKey]">
                 <i class="bi bi-house-door-fill"></i>
             </NavLink>
         </li>
         <AuthorizeView Roles="@Common.Global.Constants.Roles.User">
             <Authorized>
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.UploadVideo" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Video">
+                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.UploadVideo" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[UploadVideoTextKey]">
                         <i class="bi bi-cloud-upload-fill"></i>
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyPendingVideosStatus" data-bs-toggle="tooltip" data-bs-placement="top" title="My Videos Queue">
+                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyPendingVideosStatus" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[MyVideosQueueTextKey]">
                         <i class="bi bi-list-check"></i>
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyVideos" data-bs-toggle="tooltip" data-bs-placement="top" title="My Videos">
+                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyVideos" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[MyVideosTextKey]">
                         <i class="bi bi-play-btn-fill"></i>
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.InviteUser" data-bs-toggle="tooltip" data-bs-placement="top" title="Invite User">
+                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.InviteUser" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[InviteUserTextKey]">
                         <i class="bi bi-envelope-fill"></i>
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="@Common.Global.Constants.RootPagesRoutes.Persons" data-bs-toggle="tooltip" data-bs-placement="top" title="Persons in videos">
+                    <NavLink class="nav-link" href="@Common.Global.Constants.RootPagesRoutes.Persons" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[PersonsInVideosTextKey]">
                         <i class="bi bi-person-circle"></i>
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.List" data-bs-toggle="tooltip" data-bs-placement="top" title="Users">
+                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.List" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[UsersTextKey]">
                         <i class="bi bi-people-fill"></i>
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyFunds" data-bs-toggle="tooltip" data-bs-placement="top" title="My Funds">
+                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyFunds" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[MyFundsTextKey]">
                         <i class="bi bi-wallet-fill"></i>
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.ProfileMonetization" data-bs-toggle="tooltip" data-bs-placement="top" title="Monetization Profile">
+                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.ProfileMonetization" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[MonetizationProfileTextKey]">
                         <i class="bi bi-cash-stack"></i>
                     </NavLink>
                 </li>
             </Authorized>
         </AuthorizeView>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.Keywords" data-bs-toggle="tooltip" data-bs-placement="top" title="Search">
+            <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.Keywords" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[SearchTextKey]">
                 <i class="bi bi-tags-fill"></i>
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/Visits" data-bs-toggle="tooltip" data-bs-placement="top" title="Visits">
+            <NavLink class="nav-link" href="/Visits" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[VisitsTextKey]">
                 <i class="bi bi-globe"></i>
             </NavLink>
         </li>
@@ -75,7 +75,7 @@
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="https://github.com/efonsecab/FairPlayTube/issues?q=is%3Aopen+is%3Aissue+label%3Abug" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="Known Issues">
+            <NavLink class="nav-link" href="https://github.com/efonsecab/FairPlayTube/issues?q=is%3Aopen+is%3Aissue+label%3Abug" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[KnownIssuesTextKey]">
                 <i class="bi bi-bug-fill"></i>
             </NavLink>
         </li>
@@ -93,6 +93,8 @@
 </div>
 
 @code {
+    [Inject]
+    private IStringLocalizer<NavMenu> Localizer { get; set; }
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -101,4 +103,32 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
+
+    #region Resource Keys
+    [ResourceKey(defaultValue:"Home")]
+    public const string HomeTextKey = "HomeText";
+    [ResourceKey(defaultValue:"Upload Video")]
+    public const string UploadVideoTextKey = "UploadVideoText";
+    [ResourceKey(defaultValue: "My Videos Queue")]
+    public const string MyVideosQueueTextKey = "MyVideosQueueText";
+    [ResourceKey(defaultValue: "My Videos")]
+    public const string MyVideosTextKey = "MyVideosText";
+    [ResourceKey(defaultValue: "Invite User")]
+    public const string InviteUserTextKey = "InviteUserText";
+    [ResourceKey(defaultValue: "Persons In Videos")]
+    public const string PersonsInVideosTextKey = "PersonsInVideosText";
+    [ResourceKey(defaultValue:"Users")]
+    public const string UsersTextKey = "UsersText";
+    [ResourceKey(defaultValue:"My Funds")]
+    public const string MyFundsTextKey = "MyFundsText";
+    [ResourceKey(defaultValue: "Monetization Profile")]
+    public const string MonetizationProfileTextKey = "MonetizationProfileText";
+    [ResourceKey(defaultValue:"Search")]
+    public const string SearchTextKey = "SearchText";
+    [ResourceKey(defaultValue:"Visits")]
+    public const string VisitsTextKey = "VisitsText";
+    [ResourceKey(defaultValue: "Known Issues")]
+    public const string KnownIssuesTextKey = "KnownIssuesText";
+    #endregion Resource Keys
 }

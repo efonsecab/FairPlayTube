@@ -5,14 +5,14 @@
     <ValidationSummary />
 
     <div class="form-group mb-3">
-        <label for="Name">Name</label>
+        <label for="Name">@Localizer[NameTextKey]</label>
         <InputText class="form-control" @bind-Value=ToApplicationUserFullName disabled="true" id="Name" />
     </div>
     <div class="form-group mb-3">
-        <label for="Message">Message</label>
+        <label for="Message">@Localizer[MessageTextKey]</label>
         <InputTextArea class="form-control" @bind-Value=UserMessageModel.Message id="Message" />
     </div>
 
-    <button type="button" class="btn btn-secondary" @onclick="OnCancelAction">Cancel</button>
-    <button type="submit" class="btn btn-primary">Send</button>
+    <button type="button" class="btn btn-secondary" @onclick="OnCancelAction">@Localizer[CancelTextKey]</button>
+    <button type="submit" class="btn btn-primary">@Localizer[SendTextKey]</button>
 </EditForm>

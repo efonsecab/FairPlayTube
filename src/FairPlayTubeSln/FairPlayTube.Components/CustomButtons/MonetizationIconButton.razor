@@ -1,9 +1,17 @@
 ﻿<button type="button" class="btn btn-info rounded-circle" style="background-color:gold; color:black;"
         @onclick=OnClicked>
-    <i class="bi bi-currency-dollar blink_me" data-bs-toggle="tooltip" data-bs-placement="top" title="Help The Creators"></i>
+    <i class="bi bi-currency-dollar blink_me" data-bs-toggle="tooltip" data-bs-placement="top" 
+       title="@Localizer[HelpCreatorsTextKey]"></i>
 </button>
 @code
 {
     [Parameter]
     public EventCallback<MouseEventArgs> OnClicked { get; set; }
+    [Inject]
+    private IStringLocalizer<MonetizationIconButton> Localizer { get; set; }
+
+    #region Resource Keys
+    [ResourceKey(defaultValue: "Help The Creators")]
+    public const string HelpCreatorsTextKey = "HelpCreatorsText";
+    #endregion Resource Keys
 }

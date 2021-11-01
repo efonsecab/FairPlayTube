@@ -14,6 +14,113 @@
             Initializes <see cref="T:FairPlayTube.AutoMapperProfiles.GlobalMappingProfile"/>
             </summary>
         </member>
+        <member name="T:FairPlayTube.CustomLocalization.EF.EFStringLocalizer">
+            <summary>
+            Handles EF-based localization
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.CustomLocalization.EF.EFStringLocalizer.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.CustomLocalization.EF.EFStringLocalizer"/>
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="P:FairPlayTube.CustomLocalization.EF.EFStringLocalizer.Item(System.String)">
+            <summary>
+            Returns the value for the given key
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="P:FairPlayTube.CustomLocalization.EF.EFStringLocalizer.Item(System.String,System.Object[])">
+            <summary>
+            Returns the value for the given key using the supplied arguments
+            </summary>
+            <param name="name"></param>
+            <param name="arguments"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.CustomLocalization.EF.EFStringLocalizer.WithCulture(System.Globalization.CultureInfo)">
+            <summary>
+            Sets the Culture to use
+            </summary>
+            <param name="culture"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.CustomLocalization.EF.EFStringLocalizer.GetAllStrings(System.Boolean)">
+            <summary>
+            Gets all of the strings
+            </summary>
+            <param name="includeAncestorCultures"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FairPlayTube.CustomLocalization.EF.EFStringLocalizerFactory">
+            <summary>
+            Handles EF-based lcoalization
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.CustomLocalization.EF.EFStringLocalizerFactory.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.CustomLocalization.EF.EFStringLocalizerFactory"/>
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:FairPlayTube.CustomLocalization.EF.EFStringLocalizerFactory.Create(System.Type)">
+            <summary>
+            Creates the localizer
+            </summary>
+            <param name="resourceSource"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.CustomLocalization.EF.EFStringLocalizerFactory.Create(System.String,System.String)">
+            <summary>
+            Create the localizeer using the location
+            </summary>
+            <param name="baseName"></param>
+            <param name="location"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FairPlayTube.CustomLocalization.EF.EFStringLocalizer`1">
+            <summary>
+            Handles EF-based localization
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:FairPlayTube.CustomLocalization.EF.EFStringLocalizer`1.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.CustomLocalization.EF.EFStringLocalizer`1"/>
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="P:FairPlayTube.CustomLocalization.EF.EFStringLocalizer`1.Item(System.String)">
+            <summary>
+            Retrieves the value for the given key
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="P:FairPlayTube.CustomLocalization.EF.EFStringLocalizer`1.Item(System.String,System.Object[])">
+            <summary>
+            Tetrieves the value for the given key using the specified arguments
+            </summary>
+            <param name="name"></param>
+            <param name="arguments"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.CustomLocalization.EF.EFStringLocalizer`1.WithCulture(System.Globalization.CultureInfo)">
+            <summary>
+            Sets the Culture to use
+            </summary>
+            <param name="culture"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.CustomLocalization.EF.EFStringLocalizer`1.GetAllStrings(System.Boolean)">
+            <summary>
+            Gets all of the values
+            </summary>
+            <param name="includeAncestorCultures"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.CustomProviders.CurrentUserProvider">
             <summary>
             Holds the logic to retrieve the current user's information
@@ -123,12 +230,13 @@
             </summary>
             <param name="services"></param>
         </member>
-        <member name="M:FairPlayTube.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="M:FairPlayTube.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Localization.IStringLocalizerFactory)">
             <summary>
             Configure the Application Behavior and pipleline execution
             </summary>
             <param name="app"></param>
             <param name="env"></param>
+            <param name="localizerFactory"></param>
         </member>
         <member name="T:FairPlayTube.Swagger.Filters.SecurityRequirementsOperationFilter">
             <summary>
@@ -141,6 +249,24 @@
             </summary>
             <param name="operation"></param>
             <param name="context"></param>
+        </member>
+        <member name="T:FairPlayTube.Translations.TranslationService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Translations.TranslationService.#ctor(Microsoft.Extensions.DependencyInjection.IServiceScopeFactory)">
+            <summary>
+            
+            </summary>
+            <param name="serviceScopeFactory"></param>
+        </member>
+        <member name="M:FairPlayTube.Translations.TranslationService.ExecuteAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="stoppingToken"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>
