@@ -102,6 +102,7 @@ namespace FairPlayTube
             ConfigurePayPal(services);
             ConfigureIpStackService(services);
             ConfigureYouTube(services);
+            ConfigureAzureTranslator(services);
 
             var smtpConfiguration = Configuration.GetSection(nameof(SmtpConfiguration)).Get<SmtpConfiguration>();
             services.AddSingleton(smtpConfiguration);
@@ -188,7 +189,7 @@ namespace FairPlayTube
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
             });
-            services.AddHostedService<Translations.TranslationService>();
+            services.AddHostedService<Translations.BackgroundTranslationService>();
             services.AddHostedService<VideoIndexStatusService>();
             bool enableSwagger = Convert.ToBoolean(Configuration["EnableSwaggerUI"]);
             if (enableSwagger)
@@ -238,6 +239,15 @@ namespace FairPlayTube
                 });
         }
 
+        private void ConfigureAzureTranslator(IServiceCollection services)
+        {
+            AzureTranslatorConfiguration azureTranslatorConfiguration =
+                Configuration.GetSection(nameof(AzureTranslatorConfiguration))
+                .Get<AzureTranslatorConfiguration>();
+            services.AddSingleton(azureTranslatorConfiguration);
+            services.AddTransient<AzureTranslatorService>();
+        }
+
         private void ConfigureYouTube(IServiceCollection services)
         {
             YoutubeConfiguration youtubeConfiguration = Configuration.GetSection(nameof(YoutubeConfiguration))
@@ -271,7 +281,7 @@ namespace FairPlayTube
             services.AddTransient<VideoJobService>();
             services.AddTransient<UserYouTubeChannelService>();
             services.AddTransient<RssFeedService>();
-
+            services.AddTransient<TranslationService>();
         }
 
         private void ConfigureAzureContentModerator(IServiceCollection services)

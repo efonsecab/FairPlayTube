@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FairPlayTube.Client
@@ -28,13 +30,18 @@ namespace FairPlayTube.Client
 
             builder.Services.AddSingleton<IStringLocalizerFactory, ApiLocalizerFactory>();
             builder.Services.AddSingleton<IStringLocalizer, ApiLocalizer>();
+            builder.Services.AddLocalization();
+
+            builder.Services.AddScoped<LocalizationMessageHandler>();
 
             builder.Services.AddHttpClient($"{assemblyName}.ServerAPI", client =>
                 client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+                .AddHttpMessageHandler<LocalizationMessageHandler>()
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
             builder.Services.AddHttpClient($"{assemblyName}.ServerAPI.Anonymous", client =>
-                client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+                client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+                .AddHttpMessageHandler<LocalizationMessageHandler>();
 
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
                 .CreateClient($"{assemblyName}.ServerAPI"));
@@ -70,8 +77,6 @@ namespace FairPlayTube.Client
 
             builder.Services.AddTransient<IVideoEditAccessTokenProvider, VideoEditAccessTokenProvider>();
 
-            builder.Services.AddLocalization();
-
             builder.Services.AddSingleton<LocalizationClientService>();
             builder.Services.AddTransient<HttpClientService>();
             builder.Services.AddTransient<ToastifyService>();
@@ -83,7 +88,28 @@ namespace FairPlayTube.Client
             builder.Services.AddTransient<SearchClientService>();
             builder.Services.AddTransient<VideoCommentClientService>();
             builder.Services.AddTransient<UserYouTubeChannelClientService>();
-            await builder.Build().RunAsync();
+            var host = builder.Build();
+            await host.SetDefaultCulture();
+            await host.RunAsync();
+        }
+    }
+
+    public class LocalizationMessageHandler: DelegatingHandler
+    {
+        protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            var currentCulture = System.Globalization.CultureInfo.CurrentUICulture;
+            request.Headers.AcceptLanguage.Clear();
+            request.Headers.AcceptLanguage.Add(new StringWithQualityHeaderValue(currentCulture.Name));
+            return base.Send(request, cancellationToken);
+        }
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            var currentCulture = System.Globalization.CultureInfo.CurrentUICulture;
+            request.Headers.AcceptLanguage.Clear();
+            request.Headers.AcceptLanguage.Add(new StringWithQualityHeaderValue(currentCulture.Name));
+            return await base.SendAsync(request, cancellationToken);
         }
     }
 }

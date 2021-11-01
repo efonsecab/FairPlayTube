@@ -58,7 +58,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Controllers", "FairPlayTube.Controllers\FairPlayTube.Controllers.csproj", "{6041E6CB-CADD-408E-A32E-887C815BFEB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayTube.Translator.Windows", "FairPlayTube.Translator.Windows\FairPlayTube.Translator.Windows.csproj", "{2FDD6BF6-C668-4DD2-AE61-0083511694CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Translator.Windows", "FairPlayTube.Translator.Windows\FairPlayTube.Translator.Windows.csproj", "{2FDD6BF6-C668-4DD2-AE61-0083511694CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

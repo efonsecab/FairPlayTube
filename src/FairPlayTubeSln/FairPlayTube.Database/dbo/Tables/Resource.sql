@@ -10,4 +10,4 @@
 
 GO
 
-CREATE UNIQUE INDEX [UI_Resource_Type_Key] ON [dbo].[Resource] ([Type],[Key])
+CREATE UNIQUE INDEX [UI_Resource_Type_Key_CultureId] ON [dbo].[Resource] ([Type],[Key], [CultureId])
