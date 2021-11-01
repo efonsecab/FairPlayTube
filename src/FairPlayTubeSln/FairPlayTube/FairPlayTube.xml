@@ -250,18 +250,19 @@
             <param name="operation"></param>
             <param name="context"></param>
         </member>
-        <member name="T:FairPlayTube.Translations.TranslationService">
+        <member name="T:FairPlayTube.Translations.BackgroundTranslationService">
             <summary>
             
             </summary>
         </member>
-        <member name="M:FairPlayTube.Translations.TranslationService.#ctor(Microsoft.Extensions.DependencyInjection.IServiceScopeFactory)">
+        <member name="M:FairPlayTube.Translations.BackgroundTranslationService.#ctor(Microsoft.Extensions.DependencyInjection.IServiceScopeFactory,Microsoft.Extensions.Logging.ILogger{FairPlayTube.Translations.BackgroundTranslationService})">
             <summary>
             
             </summary>
             <param name="serviceScopeFactory"></param>
+            <param name="logger"></param>
         </member>
-        <member name="M:FairPlayTube.Translations.TranslationService.ExecuteAsync(System.Threading.CancellationToken)">
+        <member name="M:FairPlayTube.Translations.BackgroundTranslationService.ExecuteAsync(System.Threading.CancellationToken)">
             <summary>
             
             </summary>

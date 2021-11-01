@@ -45,7 +45,7 @@ namespace FairPlayTube.Controllers
         [HttpGet("[action]")]
         public async Task<ResourceModel[]> GetAllResources()
         {
-            var currentCulture = CultureInfo.CurrentUICulture;
+            var currentCulture = CultureInfo.CurrentCulture;
             var result = await this.FairplaytubeDatabaseContext.Resource
                 .Include(p=>p.Culture)
                 .Where(p=>p.Culture.Name == currentCulture.Name)
