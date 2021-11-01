@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using FairPlayTube.Common.Localization;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,8 @@ namespace FairPlayTube.Client.Shared
 
         [Inject]
         public IJSRuntime JSRuntime { get; set; }
+        [Inject]
+        private IStringLocalizer<CultureSelector> Localizer { get; set; }
 
         CultureInfo[] cultures = new[]
         {
@@ -47,5 +51,10 @@ namespace FairPlayTube.Client.Shared
             };
             return result;
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue:"Language")]
+        public const string LanguageTextKey = "LanguageText";
+        #endregion Resource Keys
     }
 }
