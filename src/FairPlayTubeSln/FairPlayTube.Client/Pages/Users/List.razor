@@ -1,6 +1,6 @@
 ﻿@using FairPlayTube.Components.Notifications
 
-<h3>List</h3>
+<h3>@Localizer[UsersTextKey]</h3>
 
 
 <Loading IsLoading="IsLoading"></Loading>
@@ -25,13 +25,13 @@
                     </CardHeader>
                     <CardBody>
                         <p>
-                            Videos: @user.VideosCount
+                            @Localizer[VideosTextKey]: @user.VideosCount
                         </p>
                         <p>
-                            Brands: @user.BrandsCount
+                            @Localizer[BrandsTextKey]: @user.BrandsCount
                         </p>
                         <p>
-                            YouTube Channels: @user.YouTubeChannels?.Length
+                            @Localizer[YouTubeChannelsTextKey]: @user.YouTubeChannels?.Length
                         </p>
                     </CardBody>
                 </Card>
@@ -46,7 +46,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Send Message</h5>
+                    <h5 class="modal-title">@Localizer[SendMessageTextKey]</h5>
                     <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="OnSendMessageCancelled">
                         <i class="bi bi-x-circle-fill"></i>
                     </button>

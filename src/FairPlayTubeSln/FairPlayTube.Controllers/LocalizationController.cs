@@ -51,6 +51,12 @@ namespace FairPlayTube.Controllers
                 .Where(p=>p.Culture.Name == currentCulture.Name)
                 .Select(p => this.Mapper.Map<Resource,ResourceModel>(p))
                 .ToArrayAsync();
+            if (result.Length == 0)
+                result = await this.FairplaytubeDatabaseContext.Resource
+                .Include(p => p.Culture)
+                .Where(p => p.Culture.Name == "en-US")
+                .Select(p => this.Mapper.Map<Resource, ResourceModel>(p))
+                .ToArrayAsync();
             return result;
         }
     }

@@ -2,10 +2,12 @@
 using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Global;
+using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.UserMessage;
 using FairPlayTube.Models.UserProfile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Threading.Tasks;
 
@@ -22,6 +24,8 @@ namespace FairPlayTube.Client.Pages.Users
         private ToastifyService ToastifyService { get; set; }
         [Inject]
         private NavigationManager NavigationManager { get; set; }
+        [Inject]
+        private IStringLocalizer<List> Localizer { get; set; }
         private bool IsLoading { get; set; }
         private bool ShowMessageSenderModal { get; set; }
         private UserModel SelectedUser { get; set; }
@@ -85,5 +89,19 @@ namespace FairPlayTube.Client.Pages.Users
         {
             NavigationHelper.NavigateToUserYouTubeVideosPage(this.NavigationManager, applicationUserId);
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue:"Users")]
+        public const string UsersTextKey = "UsersText";
+        [ResourceKey(defaultValue: "Videos")]
+        public const string VideosTextKey = "VideosText";
+        [ResourceKey(defaultValue: "Brands")]
+        public const string BrandsTextKey = "BrandsText";
+        [ResourceKey(defaultValue: "YouTube Channels")]
+        public const string YouTubeChannelsTextKey = "YouTubeChannelsText";
+        [ResourceKey(defaultValue:"Send Message")]
+        public const string SendMessageTextKey = "SendMessageText";
+
+        #endregion Resource Keys
     }
 }

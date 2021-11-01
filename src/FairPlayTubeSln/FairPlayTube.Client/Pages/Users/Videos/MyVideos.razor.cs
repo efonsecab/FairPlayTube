@@ -1,8 +1,10 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Threading.Tasks;
 
@@ -17,6 +19,8 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         private VideoClientService VideoClientService { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
+        [Inject]
+        private IStringLocalizer<MyVideos> Localizer { get; set; }
         private bool IsLoading { get; set; }
         private VideoInfoModel SelectedVideo { get; set; }
         private bool ShowModal { get; set; } = false;
@@ -57,5 +61,10 @@ namespace FairPlayTube.Client.Pages.Users.Videos
                 IsLoading = false;
             }
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue:"My Videos")]
+        public const string MyVideosTextKey = "MyVideosText";
+        #endregion Resource Keys
     }
 }

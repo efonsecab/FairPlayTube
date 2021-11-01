@@ -1,4 +1,4 @@
-﻿<h3>Invite User</h3>
+﻿<h3>@Localizer[InviteUserTextKey]</h3>
 
 <Loading IsLoading="IsLoading"></Loading>
 
@@ -9,7 +9,7 @@
         <ValidationSummary></ValidationSummary>
     </div>
     <div class="mb-3">
-        <label class="form-label">Email Address</label>
+        <label class="form-label">@Localizer[EmailAddressTextKey]</label>
         <InputText class="form-control" @bind-Value="@InviteUserModel.ToEmailAddress"></InputText>
     </div>
     <div class="mb-3">
@@ -18,6 +18,6 @@
                        rows="4" cols="50" maxlength="500"></InputTextArea>
     </div>
     <div class="mb-3">
-        <button type="submit" class="btn btn-primary">Invite User</button>
+        <button type="submit" class="btn btn-primary">@Localizer[InviteUserTextKey]</button>
     </div>
 </EditForm>

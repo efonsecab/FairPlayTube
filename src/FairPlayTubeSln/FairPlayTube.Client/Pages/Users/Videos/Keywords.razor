@@ -6,7 +6,7 @@
 @if (this.AllKeywords != null)
 {
     <div class="mb-3">
-        <label class="form-label">Search</label>
+        <label class="form-label">@Localizer[SearchTextKey]</label>
         <input type="text" class="form-control" list="keywordDataList" @oninput="OnKeywordSearchChanged" />
     </div>
 
@@ -14,7 +14,7 @@
         @foreach (var singleKwyword in this.AllKeywords)
         {
             @*<option value="@singleKwyword.Keyword">@($"{(singleKwyword.Appeareances)} videos - {singleKwyword.Keyword}")</option>*@
-            <option value="@singleKwyword.Keyword">@($"{(singleKwyword.Appeareances)} video(s)")</option>
+            <option value="@singleKwyword.Keyword">@($"{(singleKwyword.Appeareances)} {Localizer[VideoTextKey]}")</option>
         }
     </datalist>
 }

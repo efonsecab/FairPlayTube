@@ -1,4 +1,4 @@
-﻿<h3>My Videos Status</h3>
+﻿<h3>@Localizer[MyPendingVideosStatusTextKey]</h3>
 <Loading IsLoading="IsLoading"></Loading>
 
 @if (this.MyPendingVideosQueue != null && this.MyPendingVideosQueue.Count > 0)
@@ -11,8 +11,8 @@
                     <CardHeader>@singleVideo.Name</CardHeader>
                     <CardBody>
                         <ul class="list-group">
-                            <li>Status: @singleVideo.Status</li>
-                            <li>Progress: @singleVideo.ProcessingProgress</li>
+                            <li>@Localizer[StatusTextKey]: @singleVideo.Status</li>
+                            <li>@Localizer[ProgressTextKey]: @singleVideo.ProcessingProgress</li>
                         </ul>
                     </CardBody>
                 </Card>
@@ -22,5 +22,5 @@
 }
 else
 {
-    <strong>There are no pending videos on your queue</strong>
+    <strong>@Localizer[NoPendingVideosTextKey]</strong>
 }

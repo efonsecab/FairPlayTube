@@ -1,8 +1,10 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.UserYouTubeChannel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,8 @@ namespace FairPlayTube.Client.Pages.Users.YouTube
         private UserYouTubeChannelClientService UserYouTubeChannelClientService { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
+        [Inject]
+        private IStringLocalizer<Videos> Localizer { get; set; }
         private UserYouTubeChannelModel[] UserYouTubeChannels { get; set; }
         private string SelectedChannelId { get; set; }
 
@@ -59,5 +63,12 @@ namespace FairPlayTube.Client.Pages.Users.YouTube
                 await this.ToastifyService.DisplayErrorNotification(ex.Message);
             }
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue: "User YouTube Latest 50 Videos")]
+        public const string UserLatestVideosTextKey = "UserLatestVideosText";
+        [ResourceKey(defaultValue: "Select a channel")]
+        public const string SelectChannelTextKey = "SelectChannelText";
+        #endregion Resource Keys
     }
 }

@@ -1,8 +1,10 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.UserProfile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,6 +19,8 @@ namespace FairPlayTube.Client.Pages.Users.Profile
         private UserProfileClientService UserProfileClientService { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
+        [Inject]
+        private IStringLocalizer<Monetization> Localizer { get; set; }
         private bool IsLoading { get; set; }
         private GlobalMonetizationModel GlobalMonetizationModel =
             new GlobalMonetizationModel()
@@ -71,6 +75,15 @@ namespace FairPlayTube.Client.Pages.Users.Profile
                 IsLoading = false;
             }
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue: "Monetization Profile")]
+        public const string MonetizationProfileTitleKey = "MonetizationProfileTitle";
+        [ResourceKey(defaultValue:"Add New Item")]
+        public const string AddNewItemTextKey = "AddNewItemText";
+        [ResourceKey(defaultValue: "Submit")]
+        public const string SubmitTextKey = "SubmitText";
+        #endregion Resource Keys
     }
 }
 

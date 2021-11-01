@@ -1,4 +1,4 @@
-﻿<h3>Upload</h3>
+﻿<h3>@Localizer[UploadTextKey]</h3>
 
 <VisitorTracking></VisitorTracking>
 <Loading IsLoading="IsLoading"></Loading>
@@ -8,17 +8,17 @@
     <FairPlayTube.Client.CustomValidators.UploadVideoValidator></FairPlayTube.Client.CustomValidators.UploadVideoValidator>
     <ValidationSummary></ValidationSummary>
     <div class="mb-3">
-        <label class="form-label">Name</label>
+        <label class="form-label">@Localizer[NameTextKey]</label>
         <InputText class="form-control" @bind-Value="UploadVideoModel.Name"></InputText>
     </div>
     <div class="mb-3">
-        <label class="form-label">Use Url?</label>
+        <label class="form-label">@Localizer[UseUrlTextKey]?</label>
         <InputCheckbox @bind-Value="UploadVideoModel.UseSourceUrl"  @onchange="OnFileSourceModeChanged"></InputCheckbox>
     </div>
     <div class="mb-3">
         @if (UploadVideoModel.UseSourceUrl)
         {
-            <label class="form-label">Source Url</label>
+            <label class="form-label">@Localizer[SourceUrlTextKey]</label>
             <InputText class="form-control" @bind-Value="UploadVideoModel.SourceUrl"></InputText>
         }
         else
@@ -30,7 +30,7 @@
 
     </div>
     <div class="mb-3">
-        <label class="form-label">Video's Language</label>
+        <label class="form-label">@Localizer[VideoLanguageTextKey]</label>
         <InputSelect class="form-control" @bind-Value="UploadVideoModel.Language">
             @foreach (var singleLanguage in AvailableLanguages)
             {
@@ -39,17 +39,17 @@
         </InputSelect>
     </div>
     <div class="mb-3">
-        <label class="form-label">Description</label>
+        <label class="form-label">@Localizer[DescriptionTextKey]</label>
         <InputTextArea class="form-control" @bind-Value="UploadVideoModel.Description" 
                        rows="4" cols="50" maxlength="500"></InputTextArea>
     </div>
     <div class="mb-3">
-        <label class="form-label">Price (@Common.Global.Constants.CurrencySymbols.Dollars) - (@Constants.PriceLimits.MinVideoPrice, @Constants.PriceLimits.MaxVideoPrice)</label>
+        <label class="form-label">@Localizer[PriceTextKey] (@Common.Global.Constants.CurrencySymbols.Dollars) - (@Constants.PriceLimits.MinVideoPrice, @Constants.PriceLimits.MaxVideoPrice)</label>
         <InputNumber class="form-control" @bind-Value="UploadVideoModel.Price"
-                     ParsingErrorMessage="The Price must be a valid integer number"></InputNumber>
+                     ParsingErrorMessage="@Localizer[PriceParsingErrorTextKey]"></InputNumber>
     </div>
     <div class="mb-3">
-        <label class="form-label">Visibility</label>
+        <label class="form-label">@Localizer[VisibilityTextKey]</label>
         <InputSelect class="form-control" @bind-Value="UploadVideoModel.VideoVisibility">
             @foreach (var singleValue in Enum.GetValues<Common.Global.Enums.VideoVisibility>())
             {
@@ -60,13 +60,12 @@
     @if (!IsSubmitting)
     {
         <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">@Localizer[SubmitTextKey]</button>
         </div>
     }
 </EditForm>
 <div class="mb-3">
     <strong>
-        Note: Once uploaded, videos will be visible until they finish processing, it could take up to 10 minutes for small videos.
-        The longer the video, the longer the processing time will take
+        @Localizer[NoteTextKey]
     </strong>
 </div>

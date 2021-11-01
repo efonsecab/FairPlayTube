@@ -1,11 +1,13 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Global.Enums;
+using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.FileUpload;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,8 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         private VideoClientService VideoClientService { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
+        [Inject]
+        private IStringLocalizer<Upload> Localizer { get; set; }
         private UploadVideoModel UploadVideoModel = new UploadVideoModel();
         private bool IsLoading { get; set; } = false;
         private bool IsSubmitting { get; set; } = false;
@@ -117,5 +121,31 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             this.UploadVideoModel.StoredFileName = string.Empty;
             this.UploadVideoModel.SourceUrl = string.Empty;
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue:"Upload")]
+        public const string UploadTextKey = "UploadText";
+        [ResourceKey(defaultValue:"Name")]
+        public const string NameTextKey = "NameText";
+        [ResourceKey(defaultValue: "Use Url")]
+        public const string UseUrlTextKey = "UseUrlText";
+        [ResourceKey(defaultValue: "Source Url")]
+        public const string SourceUrlTextKey = "SourceUrlText";
+        [ResourceKey(defaultValue:"Video's Language")]
+        public const string VideoLanguageTextKey = "VideoLanguageText";
+        [ResourceKey(defaultValue: "Description")]
+        public const string DescriptionTextKey = "DescriptionText";
+        [ResourceKey(defaultValue: "Price")]
+        public const string PriceTextKey = "PriceText";
+        [ResourceKey(defaultValue: "The Price must be a valid integer number")]
+        public const string PriceParsingErrorTextKey = "PriceParsingErrorText";
+        [ResourceKey(defaultValue: "Visibility")]
+        public const string VisibilityTextKey = "VisibilityText";
+        [ResourceKey(defaultValue: "Submit")]
+        public const string SubmitTextKey = "SubmitText";
+        [ResourceKey(defaultValue: "Note: Once uploaded, videos will be visible until they finish processing, it could take up to 10 minutes for small videos. " +
+            "The longer the video, the longer the processing time will take")]
+        public const string NoteTextKey = "NoteText";
+        #endregion Resource Keys
     }
 }

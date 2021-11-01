@@ -1,7 +1,9 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Common.Localization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Threading.Tasks;
 
@@ -15,6 +17,8 @@ namespace FairPlayTube.Client.Pages.Users.Profile
         private UserProfileClientService UserProfileClientService { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
+        [Inject]
+        private IStringLocalizer<MyFunds> Localizer { get; set; }
         private bool IsLoading { get; set; } = false;
         private decimal AvailableFunds { get; set; }
 
@@ -44,5 +48,10 @@ namespace FairPlayTube.Client.Pages.Users.Profile
                 IsLoading = false;
             }
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue:"Available Funds")]
+        public const string AvailableFundsTextKey = "AvailableFundsText";
+        #endregion Resource Keys
     }
 }

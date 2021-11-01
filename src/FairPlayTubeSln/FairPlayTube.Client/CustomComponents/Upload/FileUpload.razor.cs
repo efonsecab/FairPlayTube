@@ -12,6 +12,8 @@ using FairPlayTube.ClientServices;
 using Microsoft.AspNetCore.Authorization;
 using FairPlayTube.Client.Services;
 using FairPlayTube.Models.CustomHttpResponse;
+using FairPlayTube.Common.Localization;
+using Microsoft.Extensions.Localization;
 
 namespace FairPlayTube.Client.CustomComponents.Upload
 {
@@ -24,6 +26,8 @@ namespace FairPlayTube.Client.CustomComponents.Upload
         private ILogger<FileUpload> Logger { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
+        [Inject]
+        private IStringLocalizer<FileUpload> Localizer { get; set; }
         private List<File> files = new();
         private List<UploadResult> uploadResults = new();
         private int maxAllowedFiles = 1;
@@ -65,7 +69,8 @@ namespace FairPlayTube.Client.CustomComponents.Upload
                         }
                         catch (Exception ex)
                         {
-                            await ToastifyService.DisplayErrorNotification($"Please specify a smaller file. Max: " +
+                            await ToastifyService.DisplayErrorNotification(
+                                $"{Localizer[SpecifySmallerFileTextKey]}. Max: " +
                                 $"{Common.Global.Constants.UploadLimits.MaxBytesAllowed / 1024 / 1024} MB");
                             Logger.LogInformation(
                                 "{FileName} not uploaded (Err: 6): {Message}",
@@ -89,7 +94,7 @@ namespace FairPlayTube.Client.CustomComponents.Upload
                     var response = await authorizedHttpClient.PostAsync("api/Filesave/PostFile", content);
                     if (!response.IsSuccessStatusCode)
                     {
-                        await ToastifyService.DisplayErrorNotification("Unable to upload file. Please try a small file");
+                        await ToastifyService.DisplayErrorNotification(Localizer[UnableToUploadTextKey]);
                     }
                     else
                     {
@@ -129,5 +134,20 @@ namespace FairPlayTube.Client.CustomComponents.Upload
         {
             public string Name { get; set; }
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue: "Please specify a smaller file")]
+        public const string SpecifySmallerFileTextKey = "SpecifySmallerFileText";
+        [ResourceKey(defaultValue: "Unable to upload file. Please try a small file")]
+        public const string UnableToUploadTextKey = "UnableToUploadText";
+        [ResourceKey(defaultValue: "Upload file(s)")]
+        public const string UploadFileTextKey = "UploadFileText";
+        [ResourceKey(defaultValue: "Details")]
+        public const string DetailsTextKey = "DetailsText";
+        [ResourceKey(defaultValue:"File")]
+        public const string FileTextKey = "FileText";
+        [ResourceKey(defaultValue: "There was an error uploading the file")]
+        public const string ErrorTextKey = "ErrorText";
+        #endregion Resource Keys
     }
 }

@@ -1,7 +1,9 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.Paypal;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
@@ -16,6 +18,8 @@ namespace FairPlayTube.Client.CustomComponents.Paypal
         private UserProfileClientService UserProfileClientService { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
+        [Inject]
+        private IStringLocalizer<PaypalCheckout> Localizer { get; set; }
         [Parameter]
         public EventCallback OnFundsAdded { get; set; }
         private DotNetObjectReference<PaypalCheckout> objRef;
@@ -47,5 +51,10 @@ namespace FairPlayTube.Client.CustomComponents.Paypal
                 await ToastifyService.DisplayErrorNotification(ex.Message);
             }
         }
+
+        #region Resource Keys
+        [ResourceKey(defaultValue: "Add Funds To FairPlayTube")]
+        public const string AddFundsTextKey = "AddFundsText";
+        #endregion Resource Keys
     }
 }
