@@ -511,6 +511,14 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:FairPlayTube.Controllers.VideoPlaylistController.AddVideoToPlaylist(FairPlayTube.Models.Video.VideoPlaylistItemModel,System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="videoPlaylistItemModel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.VisitorTrackingController">
             <summary>
             Used to persis a visitor informaation

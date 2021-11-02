@@ -12,6 +12,11 @@ namespace FairPlayTube.DataAccess.Models
     [Index(nameof(OwnerApplicationUserId), nameof(PlaylistName), Name = "UI_VideoPlaylist_PlaylistName", IsUnique = true)]
     public partial class VideoPlaylist
     {
+        public VideoPlaylist()
+        {
+            VideoPlaylistItem = new HashSet<VideoPlaylistItem>();
+        }
+
         [Key]
         public long VideoPlaylistId { get; set; }
         public long OwnerApplicationUserId { get; set; }
@@ -36,5 +41,7 @@ namespace FairPlayTube.DataAccess.Models
         [ForeignKey(nameof(OwnerApplicationUserId))]
         [InverseProperty(nameof(ApplicationUser.VideoPlaylist))]
         public virtual ApplicationUser OwnerApplicationUser { get; set; }
+        [InverseProperty("VideoPlaylist")]
+        public virtual ICollection<VideoPlaylistItem> VideoPlaylistItem { get; set; }
     }
 }

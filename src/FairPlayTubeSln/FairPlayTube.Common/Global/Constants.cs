@@ -107,6 +107,7 @@
             {
                 public const string CreateVideoPlaylist = "api/VideoPlaylist/CreateVideoPlaylist";
                 public const string DeleteVideoPlaylist = "api/VideoPlaylist/DeleteVideoPlaylist";
+                public const string AddVideoToPlaylist = "api/VideoPlaylist/AddVideoToPlaylist";
             }
 
             public class SearchController

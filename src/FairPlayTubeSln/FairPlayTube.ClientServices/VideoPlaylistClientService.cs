@@ -48,5 +48,21 @@ namespace FairPlayTube.ClientServices
                     throw new Exception(response.ReasonPhrase);
             }
         }
+
+        public async Task AddVideoToPlaylist(VideoPlaylistItemModel videoPlaylistItemModel)
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var response = await authorizedHttpClient
+                .PostAsJsonAsync(ApiRoutes.VideoPlaylistController.AddVideoToPlaylist,
+                videoPlaylistItemModel);
+            if (!response.IsSuccessStatusCode)
+            {
+                ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
+                if (problemHttpResponse != null)
+                    throw new Exception(problemHttpResponse.Detail);
+                else
+                    throw new Exception(response.ReasonPhrase);
+            }
+        }
     }
 }
