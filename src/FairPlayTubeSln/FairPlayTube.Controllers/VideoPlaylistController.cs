@@ -57,6 +57,20 @@ namespace FairPlayTube.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="videoPlaylistItemModel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        public async Task<IActionResult> AddVideoToPlaylist(VideoPlaylistItemModel videoPlaylistItemModel,
+            CancellationToken cancellationToken)
+        {
+            var response = await VideoPlaylistService.AddVideoToPlaylist(videoPlaylistItemModel, cancellationToken);
+            return Ok();
+        }
+
 
     }
 }

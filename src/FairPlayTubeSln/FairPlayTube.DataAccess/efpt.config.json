@@ -150,6 +150,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[VideoPlaylistItem]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoVisibility]",
          "ObjectType": 0
       },

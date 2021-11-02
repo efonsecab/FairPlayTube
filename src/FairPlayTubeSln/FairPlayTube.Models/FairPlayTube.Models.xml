@@ -1299,6 +1299,31 @@
             DateTime the job was created
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Video.VideoPlaylistItemModel">
+            <summary>
+            Hold the data related to a video's playlist item
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoPlaylistItemModel.VideoPlaylistItemId">
+            <summary>
+            Playlist Item Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoPlaylistItemModel.VideoPlaylistId">
+            <summary>
+            Playlist Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoPlaylistItemModel.VideoId">
+            <summary>
+            Video's Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoPlaylistItemModel.Order">
+            <summary>
+            Order of item in playlist
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.VideoPlaylistModel">
             <summary>
             Holds the information related to a video's playlist

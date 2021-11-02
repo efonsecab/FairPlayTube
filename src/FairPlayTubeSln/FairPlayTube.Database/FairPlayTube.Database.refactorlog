@@ -168,4 +168,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="[UI_Resource_Type_Key_Value_CultureId]" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="f4ad88ca-1d2b-45cc-9d8a-a8c1341e8527" ChangeDateTime="11/02/2021 12:55:41">
+    <Property Name="ElementName" Value="[dbo].[VideoPlaylistItem].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VideoPlaylistItem]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VideoPlaylistItemId" />
+  </Operation>
 </Operations>
