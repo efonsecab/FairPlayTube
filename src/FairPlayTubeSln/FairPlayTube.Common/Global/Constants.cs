@@ -100,6 +100,7 @@
             {
                 public const string TrackAnonymousClientInformation = "api/VisitorTracking/TrackAnonymousClientInformation";
                 public const string TrackAuthenticatedClientInformation = "api/VisitorTracking/TrackAuthenticatedClientInformation";
+                public const string UpdateVisitTimeElapsed = "api/VisitorTracking/UpdateVisitTimeElapsed";
             }
 
             public class VideoPlaylistController

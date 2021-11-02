@@ -1344,6 +1344,11 @@
             Holds the information required to track visitors information/behavior
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.VisitorTracking.VisitorTrackingModel.VisitorTrackingId">
+            <summary>
+            Id for the VisitorTracking record
+            </summary>
+        </member>
         <member name="P:FairPlayTube.Models.VisitorTracking.VisitorTrackingModel.VisitedUrl">
             <summary>
             Visisted Url
@@ -1352,6 +1357,16 @@
         <member name="P:FairPlayTube.Models.VisitorTracking.VisitorTrackingModel.UserAzureAdB2cObjectId">
             <summary>
             Logged In user Azure Ad B2C Object Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VisitorTracking.VisitorTrackingModel.SessionId">
+            <summary>
+            Id for the User's Session
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VisitorTracking.VisitorTrackingModel.TimeOnPage">
+            <summary>
+            Time in page
             </summary>
         </member>
         <member name="T:Errors">

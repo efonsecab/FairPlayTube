@@ -5,6 +5,7 @@ using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.UserYouTubeChannel;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Models.VideoComment;
+using FairPlayTube.Models.VisitorTracking;
 using PTI.Microservices.Library.YouTube.Models.GetChannelLatestVideos;
 using System.Linq;
 
@@ -90,6 +91,7 @@ namespace FairPlayTube.AutoMapperProfiles
                     dest.CultureName = source.Culture.Name;
                 }
             });
+            this.CreateMap<VisitorTracking, VisitorTrackingModel>();
         }
     }
 }

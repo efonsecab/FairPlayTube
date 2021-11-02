@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FairPlayTube.Models.VisitorTracking
 {
@@ -8,6 +9,10 @@ namespace FairPlayTube.Models.VisitorTracking
     public class VisitorTrackingModel
     {
         /// <summary>
+        /// Id for the VisitorTracking record
+        /// </summary>
+        public long VisitorTrackingId { get; set; }
+        /// <summary>
         /// Visisted Url
         /// </summary>
         [Url]
@@ -16,5 +21,13 @@ namespace FairPlayTube.Models.VisitorTracking
         /// Logged In user Azure Ad B2C Object Id
         /// </summary>
         public string UserAzureAdB2cObjectId { get; set; }
+        /// <summary>
+        /// Id for the User's Session
+        /// </summary>
+        public Guid SessionId { get; set; }
+        /// <summary>
+        /// Time in page
+        /// </summary>
+        public TimeSpan TimeOnPage { get; set; }
     }
 }

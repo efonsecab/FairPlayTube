@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using PTI.Microservices.Library.Services;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FairPlayTube.Services
@@ -25,7 +26,7 @@ namespace FairPlayTube.Services
             this.IpStackService = ipStackService;
         }
 
-        public async Task TrackVisit(VisitorTrackingModel visitorTrackingModel)
+        public async Task<VisitorTracking> TrackVisit(VisitorTrackingModel visitorTrackingModel)
         {
             try
             {
@@ -52,7 +53,8 @@ namespace FairPlayTube.Services
                     RemoteIpAddress = remoteIpAddress,
                     UserAgent = userAgent,
                     VisitDateTime = DateTime.UtcNow,
-                    VisitedUrl = visitorTrackingModel.VisitedUrl
+                    VisitedUrl = visitorTrackingModel.VisitedUrl,
+                    SessionId = visitorTrackingModel.SessionId
                 };
                 await this.FairplaytubeDatabaseContext.VisitorTracking.AddAsync(visitedPage);
                 await this.FairplaytubeDatabaseContext.SaveChangesAsync();
@@ -67,6 +69,7 @@ namespace FairPlayTube.Services
                         await this.FairplaytubeDatabaseContext.SaveChangesAsync();
                     }
                 }
+                return visitedPage;
             }
             catch (Exception ex)
             {
@@ -84,6 +87,21 @@ namespace FairPlayTube.Services
                 {
                 }
             }
+            return null;
+        }
+
+        public async Task<VisitorTracking> UpdateVisitTimeElapsedAsync(long visitorTrackingId, CancellationToken cancellationToken)
+        {
+            var entity = await this.FairplaytubeDatabaseContext.VisitorTracking
+                .SingleOrDefaultAsync(p => p.VisitorTrackingId == visitorTrackingId, cancellationToken);
+            if (entity != null)
+            {
+                TimeSpan newTimeElapsed = TimeSpan.Zero;
+                newTimeElapsed = DateTimeOffset.UtcNow.Subtract(entity.VisitDateTime);
+                entity.TimeElapsed = newTimeElapsed;
+                await FairplaytubeDatabaseContext.SaveChangesAsync();
+            }
+            return entity;
         }
     }
 }

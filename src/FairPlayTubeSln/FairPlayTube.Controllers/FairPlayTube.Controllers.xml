@@ -516,11 +516,12 @@
             Used to persis a visitor informaation
             </summary>
         </member>
-        <member name="M:FairPlayTube.Controllers.VisitorTrackingController.#ctor(FairPlayTube.Services.VisitorTrackingService)">
+        <member name="M:FairPlayTube.Controllers.VisitorTrackingController.#ctor(FairPlayTube.Services.VisitorTrackingService,AutoMapper.IMapper)">
             <summary>
             Initialized <see cref="T:FairPlayTube.Controllers.VisitorTrackingController"/>
             </summary>
             <param name="visitorTrackingService"></param>
+            <param name="mapper"></param>
         </member>
         <member name="M:FairPlayTube.Controllers.VisitorTrackingController.TrackAnonymousClientInformation(FairPlayTube.Models.VisitorTracking.VisitorTrackingModel)">
             <summary>
@@ -535,6 +536,12 @@
             </summary>
             <param name="visitorTrackingModel"></param>
             <param name="currentUserProvider"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VisitorTrackingController.UpdateVisitTimeElapsed(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
             <returns></returns>
         </member>
     </members>

@@ -10,6 +10,8 @@
     [VisitedUrl] NVARCHAR(250) NOT NULL
     CONSTRAINT [FK_VisitorTracking_ApplicationUser] FOREIGN KEY ([ApplicationUserId]) REFERENCES [ApplicationUser]([ApplicationUserId]), 
     [VideoInfoId] BIGINT NULL, 
+    [SessionId] UNIQUEIDENTIFIER NULL, 
+    [TimeElapsed] TIME NULL, 
     CONSTRAINT [FK_VisitorTracking_VideoInfo] FOREIGN KEY ([VideoInfoId]) REFERENCES [VideoInfo]([VideoInfoId])
 )
 

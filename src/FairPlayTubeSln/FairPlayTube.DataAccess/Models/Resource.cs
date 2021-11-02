@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlayTube.DataAccess.Models
 {
-    [Index(nameof(Type), nameof(Key), Name = "UI_Resource_Type_Key", IsUnique = true)]
+    [Index(nameof(Type), nameof(Key), nameof(CultureId), Name = "UI_Resource_Type_Key_CultureId", IsUnique = true)]
     public partial class Resource
     {
         [Key]
