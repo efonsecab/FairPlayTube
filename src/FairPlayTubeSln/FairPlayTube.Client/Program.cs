@@ -88,6 +88,7 @@ namespace FairPlayTube.Client
             builder.Services.AddTransient<SearchClientService>();
             builder.Services.AddTransient<VideoCommentClientService>();
             builder.Services.AddTransient<UserYouTubeChannelClientService>();
+            builder.Services.AddTransient<VideoPlaylistClientService>();
             var host = builder.Build();
             await host.SetDefaultCulture();
             await host.RunAsync();
