@@ -41,6 +41,9 @@ namespace FairPlayTube.Client.Shared
 
         private async Task TrackVisit(bool createNewSession)
         {
+            //We do not want to track authentication flow pages visits
+            if (NavigationManager.Uri.Contains("/authentication/"))
+                return;
             VisitorTrackingModel visitorTrackingModel = new VisitorTrackingModel()
             {
                 VisitedUrl = this.NavigationManager.Uri
