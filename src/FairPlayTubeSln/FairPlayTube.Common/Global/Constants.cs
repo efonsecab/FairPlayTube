@@ -76,6 +76,7 @@
             public const string UserHomePage = "/Users/Home/{UserId:long}";
             public const string ValidateInviteCode = "/Users/ValidateInviteCode";
             public const string InviteUser = "/Users/InviteUser";
+            public const string MyPlaylists = "/Users/VideoPlaylists/MyPlaylists";
         }
 
         public class RootPagesRoutes

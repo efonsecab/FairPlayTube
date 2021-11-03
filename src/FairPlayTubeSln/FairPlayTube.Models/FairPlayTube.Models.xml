@@ -949,6 +949,126 @@
             Height
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.Localizer">
+            <summary>
+            Types localizer to retrieve the localized messages
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.VideoDescriptionRequired">
+            <summary>
+            Retrieves the description required localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.DescriptionTooLong">
+            <summary>
+            Retrieves the description too long localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.VideoNameRequired">
+            <summary>
+            Retrieves the video name required localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.NameTooLong">
+            <summary>
+            Retrieves the name too long localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.InvalidNameFormat">
+            <summary>
+            Retrieves the invalida name format localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.InvalidUrlFormat">
+            <summary>
+            Retrieves the invalid url format localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.UrlTooLong">
+            <summary>
+            Retrieves the url too long localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.PriceRequired">
+            <summary>
+            Retrieves the price required localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.PriceRange">
+            <summary>
+            Retrieves the price range localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.LanguageRequired">
+            <summary>
+            Retrieves the language required localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.VideoVisibilityRequired">
+            <summary>
+            Retrieves the video visibility required localized message
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.VideoNameRequiredTextKey">
+            <summary>
+            Resource key for video name required
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.NameTooLongTextKey">
+            <summary>
+            Resource key for name too long
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.InvalidNameFormatTextKey">
+            <summary>
+            Resource key for invalid name format text
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.VideoDescriptionRequiredTextKey">
+            <summary>
+            Resource key for video description required
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.DescriptionTooLongTextKey">
+            <summary>
+            Resource key for description too long
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.InvalidUrlFormatTextKey">
+            <summary>
+            Resource key for invalid url format
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.UrlTooLongTextKey">
+            <summary>
+            Resource key for url too long
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.PriceRequiredTextKey">
+            <summary>
+            Resource key for price required
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.PriceRangeTextKey">
+            <summary>
+            Resource key for price range
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.LanguageRequiredTextKey">
+            <summary>
+            Resource key for language required
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.VideoVisibilityRequiredTextKey">
+            <summary>
+            Resource key for video visibility required
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.VideoComment.CreateVideoCommentModel">
             <summary>
             Holds the information required to create a comment for a specified video

@@ -23,6 +23,11 @@
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyPlaylists" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[MyPlaylistsTextKey]">
+                        <i class="bi bi-list-ol"></i>
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
                     <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyPendingVideosStatus" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[MyVideosQueueTextKey]">
                         <i class="bi bi-list-check"></i>
                     </NavLink>
@@ -130,5 +135,7 @@
     public const string VisitsTextKey = "VisitsText";
     [ResourceKey(defaultValue: "Known Issues")]
     public const string KnownIssuesTextKey = "KnownIssuesText";
+    [ResourceKey(defaultValue: "My Playlists")]
+    public const string MyPlaylistsTextKey = "MyPlaylistsText";
     #endregion Resource Keys
 }

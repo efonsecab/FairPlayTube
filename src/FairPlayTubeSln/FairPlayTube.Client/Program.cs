@@ -7,6 +7,7 @@ using FairPlayTube.Common.Configuration;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.Components.FacebookButtons;
 using FairPlayTube.Components.GoogleAdsense;
+using FairPlayTube.Models.Validations.Video;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -88,9 +89,20 @@ namespace FairPlayTube.Client
             builder.Services.AddTransient<SearchClientService>();
             builder.Services.AddTransient<VideoCommentClientService>();
             builder.Services.AddTransient<UserYouTubeChannelClientService>();
+            builder.Services.AddTransient<VideoPlaylistClientService>();
             var host = builder.Build();
+            ConfigureModelsLocalizers(host);
             await host.SetDefaultCulture();
             await host.RunAsync();
+        }
+
+        private static void ConfigureModelsLocalizers(WebAssemblyHost host)
+        {
+            var localizerFactory =
+                        host.Services.GetRequiredService<IStringLocalizerFactory>();
+            UploadVideoModelLocalizer.Localizer =
+                localizerFactory.Create(typeof(UploadVideoModelLocalizer))
+                as IStringLocalizer<UploadVideoModelLocalizer>;
         }
     }
 
