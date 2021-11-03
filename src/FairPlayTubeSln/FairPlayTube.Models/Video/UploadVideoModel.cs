@@ -1,6 +1,6 @@
-﻿using FairPlayTube.Client.CustomLocalization;
-using FairPlayTube.Common.Global;
+﻿using FairPlayTube.Common.Global;
 using FairPlayTube.Common.Global.Enums;
+using FairPlayTube.Models.Validations.Video;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -42,23 +42,25 @@ namespace FairPlayTube.Models.Video
         /// <summary>
         /// Video's Price
         /// </summary>
-        [Required(ErrorMessageResourceName = nameof(UploadVideoModelLocalizer.PriceRquired),
+        [Required(ErrorMessageResourceName = nameof(UploadVideoModelLocalizer.PriceRequired),
             ErrorMessageResourceType = typeof(UploadVideoModelLocalizer))]
         [Range(Constants.PriceLimits.MinVideoPrice, Constants.PriceLimits.MaxVideoPrice,
-            
-            ErrorMessageResourceName =nameof(UploadVideoModelLocalizer.PriceRange),
-            ErrorMessageResourceType =typeof(UploadVideoModelLocalizer))]
+
+            ErrorMessageResourceName = nameof(UploadVideoModelLocalizer.PriceRange),
+            ErrorMessageResourceType = typeof(UploadVideoModelLocalizer))]
         public int Price { get; set; }
 
         /// <summary>
         /// The video's language
         /// </summary>
-        [Required]
+        [Required(ErrorMessageResourceName = nameof(UploadVideoModelLocalizer.LanguageRequired),
+            ErrorMessageResourceType = typeof(UploadVideoModelLocalizer))]
         public string Language { get; set; }
         /// <summary>
         /// The video's visibility
         /// </summary>
-        [Required]
+        [Required(ErrorMessageResourceName =nameof(UploadVideoModelLocalizer.VideoVisibilityRequired),
+            ErrorMessageResourceType =typeof(UploadVideoModelLocalizer))]
         public VideoVisibility VideoVisibility { get; set; } = VideoVisibility.Public;
         /// <summary>
         /// Generated unique name
