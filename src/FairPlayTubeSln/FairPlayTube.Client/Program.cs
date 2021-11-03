@@ -90,6 +90,11 @@ namespace FairPlayTube.Client
             builder.Services.AddTransient<UserYouTubeChannelClientService>();
             builder.Services.AddTransient<VideoPlaylistClientService>();
             var host = builder.Build();
+            var localizerFactory=
+            host.Services.GetRequiredService<IStringLocalizerFactory>();
+            CustomLocalization.UploadVideoModelLocalizer.Localizer =
+                localizerFactory.Create(typeof(CustomLocalization.UploadVideoModelLocalizer)) 
+                as IStringLocalizer<CustomLocalization.UploadVideoModelLocalizer>;
             await host.SetDefaultCulture();
             await host.RunAsync();
         }

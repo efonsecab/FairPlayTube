@@ -72,9 +72,14 @@ namespace FairPlayTube.Translations
                 var componentsAssembly = typeof(Components._Imports).Assembly;
                 var componentsTypes = componentsAssembly.GetTypes();
 
+                var modelsAssembly = typeof(Models.Video.UploadVideoModel).Assembly;
+                var modelsTypes = modelsAssembly.GetTypes();
+
                 List<Type> typesToCheck = new List<Type>();
                 typesToCheck.AddRange(clientAppTypes);
                 typesToCheck.AddRange(componentsTypes);
+                typesToCheck.AddRange(modelsTypes);
+
                 foreach (var singleTypeToCheck in typesToCheck)
                 {
                     string typeFullName = singleTypeToCheck.FullName;
@@ -96,7 +101,7 @@ namespace FairPlayTube.Translations
                                 await fairplaytubeDatabaseContext.Resource
                                 .SingleOrDefaultAsync(p => p.CultureId == 1 &&
                                 p.Key == key &&
-                                p.Type == p.Type, stoppingToken);
+                                p.Type == typeFullName, stoppingToken);
                             if (entity is null)
                             {
                                 entity = new Resource()

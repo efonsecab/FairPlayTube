@@ -1394,6 +1394,106 @@
             Time in page
             </summary>
         </member>
+        <member name="T:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.Localizer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.VideoDescriptionRequired">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.DescriptionTooLong">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.VideoNameRequired">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.NameTooLong">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.InvalidNameFormat">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.InvalidUrlFormat">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.UrlTooLong">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.PriceRquired">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.PriceRange">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.VideoNameRequiredTextKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.NameTooLongTextKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.InvalidNameFormatTextKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.VideoDescriptionRequiredTextKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.DescriptionTooLongTextKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.InvalidUrlFormatTextKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.UrlTooLongTextKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.PriceRquiredTextKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Client.CustomLocalization.UploadVideoModelLocalizer.PriceRangeTextKey">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Errors">
             <summary>
             Errors
