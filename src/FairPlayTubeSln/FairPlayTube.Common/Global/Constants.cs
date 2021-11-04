@@ -14,6 +14,7 @@
         public class Commissions
         {
             public const decimal VideoAccess = 0.05M;//5% 
+            public const decimal VideoJobComission = 0.05M; //5%
         }
         public class PriceLimits
         {

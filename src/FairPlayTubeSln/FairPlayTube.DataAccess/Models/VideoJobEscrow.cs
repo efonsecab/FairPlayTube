@@ -9,24 +9,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlayTube.DataAccess.Models
 {
-    public partial class VideoJob
+    [Index(nameof(VideoJobId), Name = "UI_VideoJobEscrow_VideoJobId", IsUnique = true)]
+    public partial class VideoJobEscrow
     {
-        public VideoJob()
-        {
-            VideoJobApplication = new HashSet<VideoJobApplication>();
-        }
-
         [Key]
+        public long VideoJobEscrowId { get; set; }
         public long VideoJobId { get; set; }
-        public long VideoInfoId { get; set; }
         [Column(TypeName = "money")]
-        public decimal Budget { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Title { get; set; }
-        [Required]
-        [StringLength(250)]
-        public string Description { get; set; }
+        public decimal Amount { get; set; }
+        public long PaypalPayoutBatchItemId { get; set; }
         public DateTimeOffset RowCreationDateTime { get; set; }
         [Required]
         [StringLength(256)]
@@ -39,12 +30,11 @@ namespace FairPlayTube.DataAccess.Models
         [StringLength(100)]
         public string OriginatorIpaddress { get; set; }
 
-        [ForeignKey(nameof(VideoInfoId))]
-        [InverseProperty("VideoJob")]
-        public virtual VideoInfo VideoInfo { get; set; }
-        [InverseProperty("VideoJob")]
-        public virtual VideoJobEscrow VideoJobEscrow { get; set; }
-        [InverseProperty("VideoJob")]
-        public virtual ICollection<VideoJobApplication> VideoJobApplication { get; set; }
+        [ForeignKey(nameof(PaypalPayoutBatchItemId))]
+        [InverseProperty("VideoJobEscrow")]
+        public virtual PaypalPayoutBatchItem PaypalPayoutBatchItem { get; set; }
+        [ForeignKey(nameof(VideoJobId))]
+        [InverseProperty("VideoJobEscrow")]
+        public virtual VideoJob VideoJob { get; set; }
     }
 }

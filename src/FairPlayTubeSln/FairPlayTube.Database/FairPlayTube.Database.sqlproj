@@ -102,6 +102,7 @@
     <Build Include="dbo\Tables\PaypalPayoutBatch.sql" />
     <Build Include="dbo\Tables\PaypalPayoutBatchItem.sql" />
     <Build Include="dbo\Tables\VideoJobApplicationStatus.sql" />
+    <Build Include="dbo\Tables\VideoJobEscrow.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

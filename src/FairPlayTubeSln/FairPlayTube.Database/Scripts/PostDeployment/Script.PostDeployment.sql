@@ -121,4 +121,14 @@ IF NOT EXISTS (SELECT * FROM [dbo].[VideoJobApplicationStatus] WHERE [Name] = @V
 BEGIN
     INSERT INTO VideoJobApplicationStatus([VideoJobApplicationStatusId],[Name],[Description]) VALUES(3, @VIDEOJOBAPPLICATIONSTATUSNAME, 'Application has not been selected')
 END
+SET @VIDEOJOBAPPLICATIONSTATUSNAME = 'Pending Payment'
+IF NOT EXISTS (SELECT * FROM [dbo].[VideoJobApplicationStatus] WHERE [Name] = @VIDEOJOBAPPLICATIONSTATUSNAME)
+BEGIN
+    INSERT INTO VideoJobApplicationStatus([VideoJobApplicationStatusId],[Name],[Description]) VALUES(4, @VIDEOJOBAPPLICATIONSTATUSNAME, 'Work has been performed. Payment is pending')
+END
+SET @VIDEOJOBAPPLICATIONSTATUSNAME = 'Paid'
+IF NOT EXISTS (SELECT * FROM [dbo].[VideoJobApplicationStatus] WHERE [Name] = @VIDEOJOBAPPLICATIONSTATUSNAME)
+BEGIN
+    INSERT INTO VideoJobApplicationStatus([VideoJobApplicationStatusId],[Name],[Description]) VALUES(5, @VIDEOJOBAPPLICATIONSTATUSNAME, 'Work has been performed and it is already paid')
+END
 --END OF VIDEO JOB APPLICATION STATUS

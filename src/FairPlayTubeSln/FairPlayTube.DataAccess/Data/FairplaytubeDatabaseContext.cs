@@ -55,6 +55,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<VideoJob> VideoJob { get; set; }
         public virtual DbSet<VideoJobApplication> VideoJobApplication { get; set; }
         public virtual DbSet<VideoJobApplicationStatus> VideoJobApplicationStatus { get; set; }
+        public virtual DbSet<VideoJobEscrow> VideoJobEscrow { get; set; }
         public virtual DbSet<VideoPlaylist> VideoPlaylist { get; set; }
         public virtual DbSet<VideoPlaylistItem> VideoPlaylistItem { get; set; }
         public virtual DbSet<VideoVisibility> VideoVisibility { get; set; }
@@ -376,8 +377,6 @@ namespace FairPlayTube.DataAccess.Data
 
             modelBuilder.Entity<VideoJobApplication>(entity =>
             {
-                entity.Property(e => e.VideoJobApplicationId).ValueGeneratedNever();
-
                 entity.HasOne(d => d.ApplicantApplicationUser)
                     .WithMany(p => p.VideoJobApplication)
                     .HasForeignKey(d => d.ApplicantApplicationUserId)
@@ -400,6 +399,21 @@ namespace FairPlayTube.DataAccess.Data
             modelBuilder.Entity<VideoJobApplicationStatus>(entity =>
             {
                 entity.Property(e => e.VideoJobApplicationStatusId).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<VideoJobEscrow>(entity =>
+            {
+                entity.HasOne(d => d.PaypalPayoutBatchItem)
+                    .WithMany(p => p.VideoJobEscrow)
+                    .HasForeignKey(d => d.PaypalPayoutBatchItemId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoJobEscrow_PaypalPayoutBatchItem");
+
+                entity.HasOne(d => d.VideoJob)
+                    .WithOne(p => p.VideoJobEscrow)
+                    .HasForeignKey<VideoJobEscrow>(d => d.VideoJobId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoJobEscrow_VideoJob");
             });
 
             modelBuilder.Entity<VideoPlaylist>(entity =>

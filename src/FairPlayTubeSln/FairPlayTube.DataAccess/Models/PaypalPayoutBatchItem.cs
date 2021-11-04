@@ -11,6 +11,11 @@ namespace FairPlayTube.DataAccess.Models
 {
     public partial class PaypalPayoutBatchItem
     {
+        public PaypalPayoutBatchItem()
+        {
+            VideoJobEscrow = new HashSet<VideoJobEscrow>();
+        }
+
         [Key]
         public long PaypalPayoutBatchItemId { get; set; }
         public long PaypalPayoutBatchId { get; set; }
@@ -49,5 +54,7 @@ namespace FairPlayTube.DataAccess.Models
         [ForeignKey(nameof(PaypalPayoutBatchId))]
         [InverseProperty("PaypalPayoutBatchItem")]
         public virtual PaypalPayoutBatch PaypalPayoutBatch { get; set; }
+        [InverseProperty("PaypalPayoutBatchItem")]
+        public virtual ICollection<VideoJobEscrow> VideoJobEscrow { get; set; }
     }
 }

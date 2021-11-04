@@ -210,4 +210,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="VideoJobApplicationStatusId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="eccd5d03-7689-4cb1-bbf5-646cc2aa9a08" ChangeDateTime="11/04/2021 15:01:36">
+    <Property Name="ElementName" Value="[dbo].[VideoJobEscrow].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VideoJobEscrow]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VideoJobEscrowId" />
+  </Operation>
 </Operations>

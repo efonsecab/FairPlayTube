@@ -96,7 +96,7 @@
             Initializes <see cref="T:FairPlayTube.Controllers.PayoutController"/>
             </summary>
         </member>
-        <member name="M:FairPlayTube.Controllers.PayoutController.SendVideoJobPaymentAsync(System.Int64,System.Threading.CancellationToken)">
+        <member name="M:FairPlayTube.Controllers.PayoutController.SendVideoJobPayment(System.Int64,System.Threading.CancellationToken)">
             <summary>
             Sends payout for a video job
             </summary>

@@ -10,6 +10,8 @@ namespace FairPlayTube.Common.Global.Enums
     {
         New = 1,
         Selected = 2,
-        NotSelected = 3
+        NotSelected = 3,
+        PendingPayment=4,
+        Paid=5
     }
 }

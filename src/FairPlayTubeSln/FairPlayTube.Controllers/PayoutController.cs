@@ -32,7 +32,7 @@ namespace FairPlayTube.Controllers
         /// </summary>
         [HttpPost("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
-        public async Task<IActionResult> SendVideoJobPaymentAsync(long videoJobId, CancellationToken cancellationToken)
+        public async Task<IActionResult> SendVideoJobPayment(long videoJobId, CancellationToken cancellationToken)
         {
             await this.PayoutService.SendVideoJobPaymentAsync(videoJobId, cancellationToken);
             return Ok();

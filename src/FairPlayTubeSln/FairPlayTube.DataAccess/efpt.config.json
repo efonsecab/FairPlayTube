@@ -158,6 +158,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[VideoJobEscrow]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoPlaylist]",
          "ObjectType": 0
       },

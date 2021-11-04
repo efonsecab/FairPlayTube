@@ -9,5 +9,5 @@
     [RowCreationUser] NVARCHAR(256) NOT NULL,
     [SourceApplication] NVARCHAR(250) NOT NULL, 
     [OriginatorIPAddress] NVARCHAR(100) NOT NULL, 
-    CONSTRAINT [FK_VideoJob_VideoInfo] FOREIGN KEY ([VideoInfoId]) REFERENCES [VideoInfo]([VideoInfoId]), 
+    CONSTRAINT [FK_VideoJob_VideoInfo] FOREIGN KEY ([VideoInfoId]) REFERENCES [VideoInfo]([VideoInfoId]) 
 )

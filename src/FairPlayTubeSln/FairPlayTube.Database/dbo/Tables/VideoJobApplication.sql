@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[VideoJobApplication]
 (
-	[VideoJobApplicationId] BIGINT NOT NULL CONSTRAINT PK_VideoJobApplication PRIMARY KEY,
+	[VideoJobApplicationId] BIGINT NOT NULL CONSTRAINT PK_VideoJobApplication PRIMARY KEY IDENTITY,
 	[VideoJobId] BIGINT NOT NULL CONSTRAINT FK_VideoJobApplication_VideoJobId REFERENCES [dbo].[VideoJob]([VideoJobId]),
 	[ApplicantApplicationUserId] BIGINT NOT NULL CONSTRAINT FK_VideoJobApplication_ApplicationUser REFERENCES [dbo].[ApplicationUser]([ApplicationUserId]),
 	[ApplicantCoverLetter] TEXT NOT NULL,
