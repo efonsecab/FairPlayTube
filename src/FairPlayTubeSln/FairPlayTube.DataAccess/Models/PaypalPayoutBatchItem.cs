@@ -25,13 +25,26 @@ namespace FairPlayTube.DataAccess.Models
         [Required]
         [Column(TypeName = "text")]
         public string Note { get; set; }
-        public Guid SenderItemId { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string SenderItemId { get; set; }
         [Required]
         [StringLength(150)]
         public string ReceiverEmailAddress { get; set; }
         [Required]
         [StringLength(50)]
         public string NotificationLanguage { get; set; }
+        public DateTimeOffset RowCreationDateTime { get; set; }
+        [Required]
+        [StringLength(256)]
+        public string RowCreationUser { get; set; }
+        [Required]
+        [StringLength(250)]
+        public string SourceApplication { get; set; }
+        [Required]
+        [Column("OriginatorIPAddress")]
+        [StringLength(100)]
+        public string OriginatorIpaddress { get; set; }
 
         [ForeignKey(nameof(PaypalPayoutBatchId))]
         [InverseProperty("PaypalPayoutBatchItem")]

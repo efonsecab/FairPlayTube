@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlayTube.DataAccess.Models
 {
+    [Index(nameof(PayoutBatchId), Name = "UI_PaypalPayoutBatch_PayoutBatchId", IsUnique = true)]
     [Index(nameof(SenderBatchId), Name = "UI_PaypalPayoutBatch_SenderBatchId", IsUnique = true)]
     public partial class PaypalPayoutBatch
     {
@@ -19,8 +20,12 @@ namespace FairPlayTube.DataAccess.Models
 
         [Key]
         public long PaypalPayoutBatchId { get; set; }
-        public Guid PayoutBatchId { get; set; }
-        public Guid SenderBatchId { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string PayoutBatchId { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string SenderBatchId { get; set; }
         [Required]
         [StringLength(250)]
         public string EmailSubject { get; set; }

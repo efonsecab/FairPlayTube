@@ -6,8 +6,12 @@
     [AmountValue] MONEY NOT NULL, 
     [AmountCurrency] NVARCHAR(50) NOT NULL, 
     [Note] TEXT NOT NULL, 
-    [SenderItemId] UNIQUEIDENTIFIER NOT NULL, 
+    [SenderItemId] NVARCHAR(50) NOT NULL, 
     [ReceiverEmailAddress] NVARCHAR(150) NOT NULL, 
-    [NotificationLanguage] NVARCHAR(50) NOT NULL, 
+    [NotificationLanguage] NVARCHAR(50) NOT NULL,
+    [RowCreationDateTime] DATETIMEOFFSET NOT NULL, 
+    [RowCreationUser] NVARCHAR(256) NOT NULL,
+    [SourceApplication] NVARCHAR(250) NOT NULL, 
+    [OriginatorIPAddress] NVARCHAR(100) NOT NULL
     CONSTRAINT [FK_PaypalPayoutBatchItem_PaypalPayoutBatch] FOREIGN KEY ([PaypalPayoutBatchId]) REFERENCES [PaypalPayoutBatch]([PaypalPayoutBatchId])
 )

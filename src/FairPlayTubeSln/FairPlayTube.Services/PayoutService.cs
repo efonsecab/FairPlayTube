@@ -1,6 +1,8 @@
-﻿using FairPlayTube.DataAccess.Data;
+﻿using FairPlayTube.Common.Interfaces;
+using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.Payouts;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PTI.Microservices.Library.Interceptors;
 using PTI.Microservices.Library.PayPal.Models.CreateBatchPayout;
@@ -19,70 +21,86 @@ namespace FairPlayTube.Services
         private PaypalService PaypalService { get; }
         private FairplaytubeDatabaseContext FairplaytubeDatabaseContext { get; }
         private ILogger<CustomHttpClientHandler> CustomHttpClientHandleerLogger { get; }
+        private ICurrentUserProvider CurrentUserProvider { get; }
 
         public PayoutService(PaypalService paypalService,
             FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
-            ILogger<CustomHttpClientHandler> customHttpClientHandleerLogger)
+            ILogger<CustomHttpClientHandler> customHttpClientHandleerLogger,
+            ICurrentUserProvider currentUserProvider)
         {
             this.PaypalService = paypalService;
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
             this.CustomHttpClientHandleerLogger = customHttpClientHandleerLogger;
+            this.CurrentUserProvider = currentUserProvider;
         }
 
-        public async Task<PaypalPayoutBatch> SendPayout(PaypalPayoutBatchModel paypalPayoutBatchModel,
-            CancellationToken cancellationToken)
+        public async Task<PaypalPayoutBatch> SendVideoJobPaymentAsync(long videoJobId, CancellationToken cancellationToken)
         {
+            var userObjectId = this.CurrentUserProvider.GetObjectId();
+            var user = await FairplaytubeDatabaseContext.ApplicationUser
+                .SingleAsync(p => p.AzureAdB2cobjectId.ToString() == userObjectId);
+            var videoJob = await this.FairplaytubeDatabaseContext.VideoJob.Include(p=>p.VideoInfo)
+                .SingleAsync(p => p.VideoJobId == videoJobId, cancellationToken);
+            if (user.ApplicationUserId != videoJob.VideoInfo.ApplicationUserId)
+                throw new Exception("Access denied. User did not create the job");
+            //var acceptedApplication = await this.FairplaytubeDatabaseContext
+            //    .VideoJobApplication.Include(p => p.ApplicantApplicationUser).SingleAsync();
+            //var userPaypalEmailAddress = acceptedApplication.ApplicantApplicationUser.EmailAddress;
+            var userPaypalEmailAddress = user.EmailAddress;
             CreateBatchPayoutRequest createBatchPayoutRequest =
                 new CreateBatchPayoutRequest()
                 {
                     sender_batch_header =
                     new Sender_Batch_Header()
                     {
-                        email_message = paypalPayoutBatchModel.EmailMessage,
-                        email_subject = paypalPayoutBatchModel.EmailSubject,
-                        sender_batch_id = paypalPayoutBatchModel.SenderBatchId.ToString()
+                        email_message = $"You have been paid for your work on the FairPlayTube Platform",
+                        email_subject = $"You have been paid on FairPlayTube",
+                        sender_batch_id = Guid.NewGuid().ToString()
                     },
-                    items = paypalPayoutBatchModel.PaypalPayoutBatchItem.Select(p => new Item
+                    items = new Item[]
                     {
-                        amount = new Amount()
+                        new Item()
                         {
-                            currency = p.AmountCurrency,
-                            value = p.AmountValue.ToString()
-                        },
-                        note = p.Note,
-                        notification_language = p.NotificationLanguage,
-                        receiver = p.ReceiverEmailAddress,
-                        recipient_type = p.RecipientType,
-                        sender_item_id = p.SenderItemId.ToString()
-                    }).ToArray()
+                            amount=new Amount()
+                            {
+                                currency="USD",
+                                value = videoJob.Budget.ToString("0.00")
+                            },
+                            note= "This is an automated message",
+                            notification_language = "en-US",
+                            receiver=userPaypalEmailAddress,
+                            recipient_type="EMAIL",
+                            sender_item_id=Guid.NewGuid().ToString()
+                        }
+                    }
                 };
-            var accessTokenResponse = await this.PaypalService.GetAccessTokenAsync(CustomHttpClientHandleerLogger,
-                cancellationToken);
+            var accessTokenResponse = await this.PaypalService.GetAccessTokenAsync(null, cancellationToken);
             var response = await this.PaypalService.CreateBatchPayoutAsync(createBatchPayoutRequest,
-                accessTokenResponse.access_token,
-                cancellationToken);
+                accessTokenResponse.access_token, cancellationToken);
             PaypalPayoutBatch paypalPayoutBatch = new PaypalPayoutBatch()
             {
-                PayoutBatchId = Guid.Parse(response.batch_header.payout_batch_id),
-                EmailMessage = paypalPayoutBatchModel.EmailMessage,
-                EmailSubject = paypalPayoutBatchModel.EmailSubject,
-                SenderBatchId = paypalPayoutBatchModel.SenderBatchId,
-                PaypalPayoutBatchItem = paypalPayoutBatchModel.PaypalPayoutBatchItem.
-                Select(p => new PaypalPayoutBatchItem()
-                {
-                    AmountCurrency = p.AmountCurrency,
-                    AmountValue = p.AmountValue,
-                    Note = p.Note,
-                    NotificationLanguage = p.NotificationLanguage,
-                    RecipientType = p.RecipientType,
-                    ReceiverEmailAddress = p.ReceiverEmailAddress,
-                    SenderItemId = p.SenderItemId
-                }).ToArray()
+                PayoutBatchId = response.batch_header.payout_batch_id,
+                EmailMessage = createBatchPayoutRequest.sender_batch_header.email_message,
+                EmailSubject = createBatchPayoutRequest.sender_batch_header.email_subject,
+                SenderBatchId = createBatchPayoutRequest.sender_batch_header.sender_batch_id,
+                PaypalPayoutBatchItem = createBatchPayoutRequest.items.
+                            Select(p => new PaypalPayoutBatchItem()
+                            {
+                                AmountCurrency = p.amount.currency,
+                                AmountValue = Convert.ToDecimal(p.amount.value),
+                                Note = p.note,
+                                NotificationLanguage = p.notification_language,
+                                RecipientType = p.recipient_type,
+                                ReceiverEmailAddress = p.receiver,
+                                SenderItemId = p.sender_item_id
+                            }).ToArray()
             };
             await FairplaytubeDatabaseContext.PaypalPayoutBatch.AddAsync(paypalPayoutBatch, cancellationToken);
+            var amountToDeduct = videoJob.Budget + videoJob.Budget * Common.Global.Constants.Commissions.VideoAccess;
+            user.AvailableFunds -= amountToDeduct;
             await FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
             return paypalPayoutBatch;
-        }
 
+        }
     }
 }

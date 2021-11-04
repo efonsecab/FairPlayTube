@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dbo].[PaypalPayoutBatch]
 (
 	[PaypalPayoutBatchId] BIGINT NOT NULL CONSTRAINT PK_PaypalPayout PRIMARY KEY IDENTITY, 
-    [PayoutBatchId] UNiQUEiDENTIFIER NOT NULL,
-    [SenderBatchId] UNIQUEIDENTIFIER NOT NULL, 
+    [PayoutBatchId] NVARCHAR(50) NOT NULL,
+    [SenderBatchId] NVARCHAR(50) NOT NULL, 
     [EmailSubject] NVARCHAR(250) NOT NULL, 
     [EmailMessage] TEXT NOT NULL,
     [RowCreationDateTime] DATETIMEOFFSET NOT NULL, 
