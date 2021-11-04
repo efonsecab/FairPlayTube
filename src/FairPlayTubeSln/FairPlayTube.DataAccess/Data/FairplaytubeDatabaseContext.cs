@@ -29,6 +29,8 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<Culture> Culture { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
         public virtual DbSet<GatedFeature> GatedFeature { get; set; }
+        public virtual DbSet<PaypalPayoutBatch> PaypalPayoutBatch { get; set; }
+        public virtual DbSet<PaypalPayoutBatchItem> PaypalPayoutBatchItem { get; set; }
         public virtual DbSet<PaypalTransaction> PaypalTransaction { get; set; }
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<Resource> Resource { get; set; }
@@ -139,6 +141,15 @@ namespace FairPlayTube.DataAccess.Data
             modelBuilder.Entity<GatedFeature>(entity =>
             {
                 entity.Property(e => e.DefaultValue).HasDefaultValueSql("1");
+            });
+
+            modelBuilder.Entity<PaypalPayoutBatchItem>(entity =>
+            {
+                entity.HasOne(d => d.PaypalPayoutBatch)
+                    .WithMany(p => p.PaypalPayoutBatchItem)
+                    .HasForeignKey(d => d.PaypalPayoutBatchId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PaypalPayoutBatchItem_PaypalPayoutBatch");
             });
 
             modelBuilder.Entity<PaypalTransaction>(entity =>

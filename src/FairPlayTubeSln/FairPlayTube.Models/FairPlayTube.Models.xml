@@ -119,6 +119,76 @@
             VideoId sent in the message
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel">
+            <summary>
+            Holds the data for a Paypal Payout Batch Item
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.PaypalPayoutBatchId">
+            <summary>
+            Paypal Payout Batch Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.RecipientType">
+            <summary>
+            Rcipient Type
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.AmountValue">
+            <summary>
+            Amount value
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.AmountCurrency">
+            <summary>
+            Amount currency
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.Note">
+            <summary>
+            Note
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.SenderItemId">
+            <summary>
+            Sender Item Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.ReceiverEmailAddress">
+            <summary>
+            Receiver Email Address
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.NotificationLanguage">
+            <summary>
+            Notification Laguage
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Payouts.PaypalPayoutBatchModel">
+            <summary>
+            Holds the data for a paypal payout batch
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchModel.SenderBatchId">
+            <summary>
+            Sender Batch Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchModel.EmailSubject">
+            <summary>
+            Email Subject
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchModel.EmailMessage">
+            <summary>
+            Email Message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchModel.PaypalPayoutBatchItem">
+            <summary>
+            Payout Batch Items
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDataModel">
             <summary>
             Represents the PayPal Checkout Approval Data
