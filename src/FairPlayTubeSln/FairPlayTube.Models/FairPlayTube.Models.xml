@@ -1019,14 +1019,34 @@
             Height
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer">
+            <summary>
+            Holds the logic required to retrieve the localized values for <see cref="T:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer"/>
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer.Localizer">
+            <summary>
+            Typed localizer to retrieve the localized messages
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer.ApplicantCoverLetterRequired">
+            <summary>
+            Retrieves the applicant cover letter required localized message
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer.ApplicantCoverLetterRequiredTextKey">
+            <summary>
+            Resource key for application cover letter required
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer">
             <summary>
-            
+            Holds the logic required to retrieve the localized values for <see cref="T:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer"/>
             </summary>
         </member>
         <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.Localizer">
             <summary>
-            Types localizer to retrieve the localized messages
+            Typed localizer to retrieve the localized messages
             </summary>
         </member>
         <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.VideoDescriptionRequired">
@@ -1192,6 +1212,21 @@
         <member name="P:FairPlayTube.Models.VideoComment.VideoCommentModel.ApplicationUserFollowersCount">
             <summary>
             Number of Followers for the user who created the comment
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.VideoJobApplications.CreateVideoJobApplicationModel">
+            <summary>
+            Holds the data for a video job application
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.CreateVideoJobApplicationModel.VideoJobId">
+            <summary>
+            Video job id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.CreateVideoJobApplicationModel.ApplicantCoverLetter">
+            <summary>
+            Applicant's cover letter
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.Video.DownloadVideoModel">

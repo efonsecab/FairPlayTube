@@ -13,11 +13,12 @@ namespace FairPlayTube.DataAccess.Models
     {
         [Key]
         public long VideoJobApplicationId { get; set; }
-        public long VideoInfoId { get; set; }
+        public long VideoJobId { get; set; }
         public long ApplicantApplicationUserId { get; set; }
         [Required]
         [Column(TypeName = "text")]
         public string ApplicantCoverLetter { get; set; }
+        public short VideoJobApplicationStatusId { get; set; }
         public DateTimeOffset RowCreationDateTime { get; set; }
         [Required]
         [StringLength(256)]
@@ -33,8 +34,11 @@ namespace FairPlayTube.DataAccess.Models
         [ForeignKey(nameof(ApplicantApplicationUserId))]
         [InverseProperty(nameof(ApplicationUser.VideoJobApplication))]
         public virtual ApplicationUser ApplicantApplicationUser { get; set; }
-        [ForeignKey(nameof(VideoInfoId))]
+        [ForeignKey(nameof(VideoJobId))]
         [InverseProperty("VideoJobApplication")]
-        public virtual VideoInfo VideoInfo { get; set; }
+        public virtual VideoJob VideoJob { get; set; }
+        [ForeignKey(nameof(VideoJobApplicationStatusId))]
+        [InverseProperty("VideoJobApplication")]
+        public virtual VideoJobApplicationStatus VideoJobApplicationStatus { get; set; }
     }
 }

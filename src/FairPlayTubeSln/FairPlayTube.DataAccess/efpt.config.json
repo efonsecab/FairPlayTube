@@ -154,6 +154,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[VideoJobApplicationStatus]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoPlaylist]",
          "ObjectType": 0
       },

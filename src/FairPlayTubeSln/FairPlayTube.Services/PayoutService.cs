@@ -43,10 +43,11 @@ namespace FairPlayTube.Services
                 .SingleAsync(p => p.VideoJobId == videoJobId, cancellationToken);
             if (user.ApplicationUserId != videoJob.VideoInfo.ApplicationUserId)
                 throw new Exception("Access denied. User did not create the job");
-            //var acceptedApplication = await this.FairplaytubeDatabaseContext
-            //    .VideoJobApplication.Include(p => p.ApplicantApplicationUser).SingleAsync();
-            //var userPaypalEmailAddress = acceptedApplication.ApplicantApplicationUser.EmailAddress;
-            var userPaypalEmailAddress = user.EmailAddress;
+            var acceptedApplication = await this.FairplaytubeDatabaseContext
+                .VideoJobApplication.Include(p => p.ApplicantApplicationUser)
+                .Where(p=>p.VideoJobApplicationStatusId == (short)Common.Global.Enums.VideoJobApplicationStatus.Selected)
+                .SingleAsync();
+            var userPaypalEmailAddress = acceptedApplication.ApplicantApplicationUser.EmailAddress;
             CreateBatchPayoutRequest createBatchPayoutRequest =
                 new CreateBatchPayoutRequest()
                 {

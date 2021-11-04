@@ -54,6 +54,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<VideoInfo> VideoInfo { get; set; }
         public virtual DbSet<VideoJob> VideoJob { get; set; }
         public virtual DbSet<VideoJobApplication> VideoJobApplication { get; set; }
+        public virtual DbSet<VideoJobApplicationStatus> VideoJobApplicationStatus { get; set; }
         public virtual DbSet<VideoPlaylist> VideoPlaylist { get; set; }
         public virtual DbSet<VideoPlaylistItem> VideoPlaylistItem { get; set; }
         public virtual DbSet<VideoVisibility> VideoVisibility { get; set; }
@@ -383,11 +384,22 @@ namespace FairPlayTube.DataAccess.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VideoJobApplication_ApplicationUser");
 
-                entity.HasOne(d => d.VideoInfo)
+                entity.HasOne(d => d.VideoJobApplicationStatus)
                     .WithMany(p => p.VideoJobApplication)
-                    .HasForeignKey(d => d.VideoInfoId)
+                    .HasForeignKey(d => d.VideoJobApplicationStatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_VideoJobApplication_VideoInfoId");
+                    .HasConstraintName("FK_VideoJobApplication_VideoJobApplicationStatus");
+
+                entity.HasOne(d => d.VideoJob)
+                    .WithMany(p => p.VideoJobApplication)
+                    .HasForeignKey(d => d.VideoJobId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoJobApplication_VideoJobId");
+            });
+
+            modelBuilder.Entity<VideoJobApplicationStatus>(entity =>
+            {
+                entity.Property(e => e.VideoJobApplicationStatusId).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<VideoPlaylist>(entity =>
