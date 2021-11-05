@@ -35,7 +35,7 @@ namespace FairPlayTube.Services
             var userEntity = videoEntity.ApplicationUser;
             var fundsToDeduct = videoJobModel.Budget + (videoJobModel.Budget * Common.Global.Constants.Commissions.VideoJobComission);
             if (fundsToDeduct > userEntity.AvailableFunds)
-                throw new Exception($"User does not have enough funds. Funds required: {fundsToDeduct}");
+                throw new Exception($"User does not have enough funds. Funds required: {fundsToDeduct}. Funds available: {userEntity.AvailableFunds}");
             VideoJob videoJobEntity = new VideoJob()
             {
                 Budget = videoJobModel.Budget,
@@ -47,6 +47,7 @@ namespace FairPlayTube.Services
             {
                 Amount = fundsToDeduct
             };
+            userEntity.AvailableFunds -= fundsToDeduct;
             await this.FairplaytubeDatabaseContext.VideoJob.AddAsync(videoJobEntity, cancellationToken: cancellationToken);
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
         }

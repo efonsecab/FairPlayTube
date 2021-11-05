@@ -34,6 +34,8 @@ namespace FairPlayTube.Components.Videos
         public bool ShowYouTubeVideosLink { get; set; }
         [Parameter]
         public bool ShowDisplayAd { get; set; }
+        [Parameter]
+        public bool ShowAddVideoJobButton { get; set; }
         [Inject]
         private IVideoEditAccessTokenProvider VideoEditAccessTokenProvider { get; set; }
         [Inject]
@@ -142,6 +144,12 @@ namespace FairPlayTube.Components.Videos
         private async Task OnShowYouTubeLatestVideosClicked()
         {
             await this.OnShowYouTubeLatestVideos.InvokeAsync(this.VideoModel.ApplicationUserId);
+        }
+
+        private void NavigateToAddVideoJob()
+        {
+            string url = Common.Global.Constants.UserPagesRoutes.AddVideoJob.Replace("{VideoId}", this.VideoModel.VideoId);
+            NavigationManager.NavigateTo(url);
         }
 
         #region Resource Keys

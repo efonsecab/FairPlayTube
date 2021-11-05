@@ -10,24 +10,24 @@
                     </div>
                     <div>
                         <button type="button" class="btn btn-info rounded-circle"
-                                @onclick="@( async () => await SelectVideo())" 
-                                data-bs-toggle="tooltip" data-bs-placement="top" 
+                                @onclick="@( async () => await SelectVideo())"
+                                data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="@Localizer[InsightsTextKey]">
                             <i class="bi bi-eye-fill"></i>
                         </button>
                         <MonetizationIconButton OnClicked="@(  () => OnMonetizationIconClicked())">
                         </MonetizationIconButton>
                         <button type="button" class="btn btn-info rounded-circle"
-                                @onclick="@(  () => OnVideoDescriptionClicked())" 
-                                data-bs-toggle="tooltip" data-bs-placement="top" 
+                                @onclick="@(  () => OnVideoDescriptionClicked())"
+                                data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="@Localizer[VideoDescriptionTitleKey]">
                             <i class="bi bi-card-text"></i>
                         </button>
                         @if (VideoModel.Price > 0 && !VideoModel.IsBought)
                         {
-                            <button type="button" class="btn btn-info rounded-circle" 
+                            <button type="button" class="btn btn-info rounded-circle"
                                     data-bs-toggle="tooltip"
-                                    data-bs-placement="top" 
+                                    data-bs-placement="top"
                                     title="@Localizer[BuyVideoAccessTextKey]"
                                     @onclick="OnBuyVideoAccessClicked">
                                 <i class="bi bi-cart-plus-fill"></i>
@@ -41,6 +41,14 @@
                                               $"" +
                                               $"{Localizer[AvailableJobsTextKey]}")">
                                 <i class="bi bi-briefcase-fill"></i>
+                            </button>
+                        }
+                        @if (ShowAddVideoJobButton)
+                        {
+                            <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Add Video Job"
+                                    @onclick="NavigateToAddVideoJob">
+                                <i class="bi bi-person-workspace"></i>
                             </button>
                         }
                         @if (ShowYouTubeVideosLink)
@@ -74,8 +82,8 @@
                         }
                         @if (AllowDelete && VideoModel.VideoIndexStatus == Common.Global.Enums.VideoIndexStatus.Processed)
                         {
-                            <button type="button" class="btn btn-info rounded-circle" 
-                                    data-bs-toggle="tooltip" data-bs-placement="top" 
+                            <button type="button" class="btn btn-info rounded-circle"
+                                    data-bs-toggle="tooltip" data-bs-placement="top"
                                     title="@Localizer[DeleteTextKey]"
                                     @onclick="OnDeleteVideoClicked">
                                 <i class="bi bi-x-circle-fill"></i>
@@ -83,8 +91,8 @@
                         }
                         @if (AllowDownload)
                         {
-                            <button type="button" class="btn btn-info rounded-circle" 
-                                    data-bs-toggle="tooltip" data-bs-placement="top" 
+                            <button type="button" class="btn btn-info rounded-circle"
+                                    data-bs-toggle="tooltip" data-bs-placement="top"
                                     title="@Localizer[DownloadTextKey]"
                                     @onclick="OnDownloadClicked">
                                 <i class="bi bi-cloud-download-fill"></i>
@@ -139,24 +147,24 @@
                         </div>
                         <div>
                             <button type="button" class="btn btn-info rounded-circle"
-                                    @onclick="@( async () => await SelectVideo())" 
-                                    data-bs-toggle="tooltip" data-bs-placement="top" 
+                                    @onclick="@( async () => await SelectVideo())"
+                                    data-bs-toggle="tooltip" data-bs-placement="top"
                                     title="@Localizer[InsightsTextKey]">
                                 <i class="bi bi-eye-fill"></i>
                             </button>
                             <MonetizationIconButton OnClicked="@(  () => OnMonetizationIconClicked())">
                             </MonetizationIconButton>
                             <button type="button" class="btn btn-info rounded-circle"
-                                    @onclick="@(  () => OnVideoDescriptionClicked())" 
-                                    data-bs-toggle="tooltip" data-bs-placement="top" 
+                                    @onclick="@(  () => OnVideoDescriptionClicked())"
+                                    data-bs-toggle="tooltip" data-bs-placement="top"
                                     title="@Localizer[VideoDescriptionTitleKey]">
                                 <i class="bi bi-card-text"></i>
                             </button>
                             @if (VideoModel.Price > 0 && !VideoModel.IsBought)
                             {
-                                <button type="button" class="btn btn-info rounded-circle" 
+                                <button type="button" class="btn btn-info rounded-circle"
                                         data-bs-toggle="tooltip"
-                                        data-bs-placement="top" 
+                                        data-bs-placement="top"
                                         title="@Localizer[BuyVideoAccessTextKey]"
                                         @onclick="OnBuyVideoAccessClicked">
                                     <i class="bi bi-cart-plus-fill"></i>
@@ -172,6 +180,14 @@
                                     <i class="bi bi-briefcase-fill"></i>
                                 </button>
                             }
+                            @if (ShowAddVideoJobButton)
+                            {
+                                <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Add Video Job"
+                                        @onclick="NavigateToAddVideoJob">
+                                    <i class="bi bi-person-workspace"></i>
+                                </button>
+                            }
                             @if (ShowYouTubeVideosLink)
                             {
                                 <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip"
@@ -183,7 +199,7 @@
                             }
                             @if (ShowDetailsLink)
                             {
-                                <button type="button" class="btn btn-info rounded-circle" 
+                                <button type="button" class="btn btn-info rounded-circle"
                                         data-bs-toggle="tooltip"
                                         data-bs-placement="top"
                                         title="@Localizer[WtchFairPlayTubeVideoTextKey]"
@@ -204,7 +220,7 @@
                             }
                             @if (AllowDelete && VideoModel.VideoIndexStatus == Common.Global.Enums.VideoIndexStatus.Processed)
                             {
-                                <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" 
+                                <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top"
                                         title="@Localizer[DeleteTextKey]"
                                         @onclick="OnDeleteVideoClicked">
                                     <i class="bi bi-x-circle-fill"></i>
@@ -212,7 +228,7 @@
                             }
                             @if (AllowDownload)
                             {
-                                <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" 
+                                <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top"
                                         title="@Localizer[DownloadTextKey]"
                                         @onclick="OnDownloadClicked">
                                     <i class="bi bi-cloud-download-fill"></i>

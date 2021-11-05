@@ -4,7 +4,12 @@
 
 <Loading IsLoading="IsLoading"></Loading>
 
-<EditForm Model="VideoJobModel">
+@if (VideoModel is not null)
+{
+    <h3>@Localizer[VideoNameTextKey]: @VideoModel.Name</h3>
+}
+
+<EditForm Model="VideoJobModel" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
     <div class="mb-3">

@@ -18,7 +18,9 @@ namespace FairPlayTube
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            Client.Program.ConfigureModelsLocalizers(host.Services);
+            host.Run();
         }
 
         /// <summary>
@@ -28,9 +30,9 @@ namespace FairPlayTube
         /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            .ConfigureLogging(configureLogging: (builderContext)=> 
+            .ConfigureLogging(configureLogging: (builderContext) =>
             {
-                builderContext.AddSimpleConsole(simpleConsoleOptions => 
+                builderContext.AddSimpleConsole(simpleConsoleOptions =>
                 {
                     simpleConsoleOptions.TimestampFormat = "[HH:mm:ss] ";
                 });

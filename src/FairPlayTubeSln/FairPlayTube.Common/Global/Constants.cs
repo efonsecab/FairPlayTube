@@ -66,6 +66,7 @@
         }
         public class UserPagesRoutes
         {
+            public const string AddVideoJob = "/Users/Videos/{VideoId}/AddVideoJob";
             public const string UploadVideo = "/Users/Videos/Upload";
             public const string MyVideos = "/Users/Videos/MyVideos";
             public const string Keywords = "/Users/Videos/Keywords";
