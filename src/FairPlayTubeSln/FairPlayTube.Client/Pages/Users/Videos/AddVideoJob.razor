@@ -1,0 +1,26 @@
+﻿@using FairPlayTube.Models.Video
+<h3>@Localizer[AddVideoJobTitleTextKey]</h3>
+
+
+<Loading IsLoading="IsLoading"></Loading>
+
+<EditForm Model="VideoJobModel">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <div class="mb-3">
+        <label class="form-label">@( DisplayHelper.DisplayFor<VideoJobModel>(p=> VideoJobModel.Title))</label>
+        <InputText class="form-control" @bind-Value="VideoJobModel.Title"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@( DisplayHelper.DisplayFor<VideoJobModel>(p=> VideoJobModel.Description))</label>
+        <InputTextArea class="form-control" @bind-Value="VideoJobModel.Description"
+                       rows="4" cols="50" maxlength="500"></InputTextArea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">@( DisplayHelper.DisplayFor<VideoJobModel>(p=> VideoJobModel.Budget))</label>
+        <InputNumber class="form-control" @bind-Value="VideoJobModel.Budget"></InputNumber>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">@Localizer[SubmitTextKey]</button>
+    </div>
+</EditForm>

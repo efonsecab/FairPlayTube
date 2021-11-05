@@ -1159,6 +1159,47 @@
             Resource key for video visibility required
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer">
+            <summary>
+            Holds the logic required to retrieve the localized values for <see cref="T:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer"/>
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer.Localizer">
+            <summary>
+            Typed localizer to retrieve the localized messages
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer.TitleDisplayName">
+            <summary>
+            Retrieves the Title Display Name localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer.BudgetDisplayName">
+            <summary>
+            Retrieves the Budget Display Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer.DescriptionDisplayName">
+            <summary>
+            Retrieves the Description Display Name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer.TitleDisplayNameTextKey">
+            <summary>
+            Resource key for Title Display Name
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer.BudgetDisplayNameTextKey">
+            <summary>
+            Resource key for Budget
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer.DescriptionDisplayNameTextKey">
+            <summary>
+            Resource ket for Description
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.VideoComment.CreateVideoCommentModel">
             <summary>
             Holds the information required to create a comment for a specified video

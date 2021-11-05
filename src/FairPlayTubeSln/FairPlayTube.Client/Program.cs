@@ -103,6 +103,9 @@ namespace FairPlayTube.Client
             UploadVideoModelLocalizer.Localizer =
                 localizerFactory.Create(typeof(UploadVideoModelLocalizer))
                 as IStringLocalizer<UploadVideoModelLocalizer>;
+            VideoJobModelLocalizer.Localizer =
+                localizerFactory.Create(typeof(VideoJobModelLocalizer)) 
+                as IStringLocalizer<VideoJobModelLocalizer>;
         }
     }
 
