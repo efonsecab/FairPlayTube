@@ -3,7 +3,7 @@
 	[VideoJobEscrowId] BIGINT NOT NULL CONSTRAINT PK_VideoJobEscrow PRIMARY KEY IDENTITY, 
     [VideoJobId] BIGINT NOT NULL, 
     [Amount] MONEY NOT NULL, 
-    [PaypalPayoutBatchItemId] BIGINT NOT NULL,
+    [PaypalPayoutBatchItemId] BIGINT NULL,
     [RowCreationDateTime] DATETIMEOFFSET NOT NULL, 
     [RowCreationUser] NVARCHAR(256) NOT NULL,
     [SourceApplication] NVARCHAR(250) NOT NULL, 

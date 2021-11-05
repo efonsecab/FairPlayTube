@@ -406,7 +406,6 @@ namespace FairPlayTube.DataAccess.Data
                 entity.HasOne(d => d.PaypalPayoutBatchItem)
                     .WithMany(p => p.VideoJobEscrow)
                     .HasForeignKey(d => d.PaypalPayoutBatchItemId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VideoJobEscrow_PaypalPayoutBatchItem");
 
                 entity.HasOne(d => d.VideoJob)

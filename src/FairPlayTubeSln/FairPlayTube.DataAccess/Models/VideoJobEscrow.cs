@@ -17,7 +17,7 @@ namespace FairPlayTube.DataAccess.Models
         public long VideoJobId { get; set; }
         [Column(TypeName = "money")]
         public decimal Amount { get; set; }
-        public long PaypalPayoutBatchItemId { get; set; }
+        public long? PaypalPayoutBatchItemId { get; set; }
         public DateTimeOffset RowCreationDateTime { get; set; }
         [Required]
         [StringLength(256)]
