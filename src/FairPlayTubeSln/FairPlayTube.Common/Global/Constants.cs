@@ -89,6 +89,10 @@
 
         public class ApiRoutes
         {
+            public class VideoJobController
+            {
+                public const string AddVideoJob = "api/VideoJob/AddVideoJob";
+            }
             public class VideoCommentController
             {
                 public const string GetVideoComments = "api/VideoComment/GetVideoComments";

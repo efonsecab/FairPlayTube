@@ -516,6 +516,14 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:FairPlayTube.Controllers.VideoJobController.GetVideoJobs(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Retrieves the jobs available for the specified video
+            </summary>
+            <param name="videoId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.VideoPlaylistController">
             <summary>
             Handles actions related to videos playlists
