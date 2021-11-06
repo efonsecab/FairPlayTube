@@ -58,6 +58,7 @@
         public class PublicVideosPages
         {
             public const string Details = "/Public/Videos/Details/{VideoId}";
+            public const string VideosJobs = "/Public/Videos/VideosJobs";
         }
 
         public class UserYouTubePagesRoutes
