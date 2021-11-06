@@ -90,19 +90,23 @@ namespace FairPlayTube.Client
             builder.Services.AddTransient<VideoCommentClientService>();
             builder.Services.AddTransient<UserYouTubeChannelClientService>();
             builder.Services.AddTransient<VideoPlaylistClientService>();
+            builder.Services.AddTransient<VideoJobClientService>();
+
             var host = builder.Build();
-            ConfigureModelsLocalizers(host);
+            ConfigureModelsLocalizers(host.Services);
             await host.SetDefaultCulture();
             await host.RunAsync();
         }
 
-        private static void ConfigureModelsLocalizers(WebAssemblyHost host)
+        public static void ConfigureModelsLocalizers(IServiceProvider services)
         {
-            var localizerFactory =
-                        host.Services.GetRequiredService<IStringLocalizerFactory>();
+            var localizerFactory = services.GetRequiredService<IStringLocalizerFactory>();
             UploadVideoModelLocalizer.Localizer =
                 localizerFactory.Create(typeof(UploadVideoModelLocalizer))
                 as IStringLocalizer<UploadVideoModelLocalizer>;
+            VideoJobModelLocalizer.Localizer =
+                localizerFactory.Create(typeof(VideoJobModelLocalizer)) 
+                as IStringLocalizer<VideoJobModelLocalizer>;
         }
     }
 

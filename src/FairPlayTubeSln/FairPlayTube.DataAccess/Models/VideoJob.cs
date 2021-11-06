@@ -11,6 +11,11 @@ namespace FairPlayTube.DataAccess.Models
 {
     public partial class VideoJob
     {
+        public VideoJob()
+        {
+            VideoJobApplication = new HashSet<VideoJobApplication>();
+        }
+
         [Key]
         public long VideoJobId { get; set; }
         public long VideoInfoId { get; set; }
@@ -37,5 +42,9 @@ namespace FairPlayTube.DataAccess.Models
         [ForeignKey(nameof(VideoInfoId))]
         [InverseProperty("VideoJob")]
         public virtual VideoInfo VideoInfo { get; set; }
+        [InverseProperty("VideoJob")]
+        public virtual VideoJobEscrow VideoJobEscrow { get; set; }
+        [InverseProperty("VideoJob")]
+        public virtual ICollection<VideoJobApplication> VideoJobApplication { get; set; }
     }
 }

@@ -51,6 +51,11 @@
 		</Content>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="CustomHelpers\" />
+	  <Folder Include="Pages\Users\VideoJobs\" />
+	</ItemGroup>
+
 	<ProjectExtensions>
 		<VisualStudio>
 			<UserProperties wwwroot_4appsettings_1json__JsonSchema="" />

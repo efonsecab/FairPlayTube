@@ -1,0 +1,42 @@
+﻿@using Models.Video
+<h3>@Localizer[VideosJobsTitleTextKey]</h3>
+
+<Loading IsLoading="IsLoading"></Loading>
+@if (this.AllVideosJobs != null)
+{
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+            @foreach (var singleJob in this.AllVideosJobs)
+            {
+                <div class="col">
+                    <Card>
+                        <CardHeader>
+                            @singleJob.Title
+                            <button type="button" class="btn btn-info rounded-circle" disabled 
+                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="@Localizer[ApplyToVideoJobTextKey]">
+                                <i class="bi bi-hand-index-thumb"></i>
+                            </button>
+                        </CardHeader>
+                        <CardBody>
+                            @singleJob.Description
+                            <FairPlayTube.Components.Videos.Video AllowDelete="false"
+                                                                  AllowDownload="false"
+                                                                  ShowAddVideoJobButton="false"
+                                                                  ShowDetailsLink="false"
+                                                                  ShowDisplayAd="false"
+                                                                  ShowTwitterShareButton="false"
+                                                                  ShowYouTubeVideosLink="false"
+                                                                  AllowEdit="false"
+                                                                  VideoModel="@singleJob.VideoInfo"
+                                                                  ></FairPlayTube.Components.Videos.Video>
+                        </CardBody>
+                        <CardFooter>
+                            @( DisplayHelper.DisplayFor<VideoJobModel>(p => p.Budget) ): @singleJob.Budget
+                        </CardFooter>
+                    </Card>
+                </div>
+            }
+        </div>
+    </div>
+}

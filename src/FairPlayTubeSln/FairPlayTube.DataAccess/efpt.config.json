@@ -54,6 +54,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[PaypalPayoutBatch]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PaypalPayoutBatchItem]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[PaypalTransaction]",
          "ObjectType": 0
       },
@@ -143,6 +151,14 @@
       },
       {
          "Name": "[dbo].[VideoJobApplication]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[VideoJobApplicationStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[VideoJobEscrow]",
          "ObjectType": 0
       },
       {

@@ -73,6 +73,8 @@ namespace FairPlayTube
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IStringLocalizerFactory, EFStringLocalizerFactory>();
+            services.AddSingleton<IStringLocalizer, EFStringLocalizer>();
+            services.AddLocalization();
             bool enablePTILibrariesLogging = Convert.ToBoolean(Configuration["EnablePTILibrariesLogging"]);
             GlobalPackageConfiguration.EnableHttpRequestInformationLog = enablePTILibrariesLogging;
             GlobalPackageConfiguration.RapidApiKey = Configuration.GetValue<string>("RapidApiKey");
@@ -282,6 +284,8 @@ namespace FairPlayTube
             services.AddTransient<UserYouTubeChannelService>();
             services.AddTransient<RssFeedService>();
             services.AddTransient<TranslationService>();
+            services.AddTransient<PayoutService>();
+            services.AddTransient<VideoJobApplicationService>();
         }
 
         private void ConfigureAzureContentModerator(IServiceCollection services)

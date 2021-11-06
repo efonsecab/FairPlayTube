@@ -86,6 +86,21 @@
             <param name="videoId"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.PayoutController">
+            <summary>
+            Payout Controller
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.PayoutController.#ctor(FairPlayTube.Services.PayoutService)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.PayoutController"/>
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.PayoutController.SendVideoJobPayment(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            Sends payout for a video job
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Controllers.RssFeedController">
             <summary>
             Exposes the Rss feeds
@@ -455,6 +470,23 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.VideoJobApplicationController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoJobApplicationController.#ctor(FairPlayTube.Services.VideoJobApplicationService)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.VideoJobApplicationController"/>
+            </summary>
+            <param name="videoJobApplicationService"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoJobApplicationController.AddVideoJobApplication(FairPlayTube.Models.VideoJobApplications.CreateVideoJobApplicationModel,System.Threading.CancellationToken)">
+            <summary>
+            Adda a new Video Job Application
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.VideoJobController">
             <summary>
             Handles all the data related to videos jobs
@@ -481,6 +513,14 @@
             <summary>
             Retrieve a list of available jobs
             </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoJobController.GetVideoJobs(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Retrieves the jobs available for the specified video
+            </summary>
+            <param name="videoId"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>

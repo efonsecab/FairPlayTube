@@ -105,3 +105,30 @@ BEGIN
     INSERT INTO Culture([CultureId],[Name]) VALUES(2, @CULTURE)
 END
 --END OF DEFAULT CULTURES
+--START OF VIDEO JOB APPLICATION STATUS
+DECLARE @VIDEOJOBAPPLICATIONSTATUSNAME NVARCHAR(50) = 'New'
+IF NOT EXISTS (SELECT * FROM [dbo].[VideoJobApplicationStatus] WHERE [Name] = @VIDEOJOBAPPLICATIONSTATUSNAME)
+BEGIN
+    INSERT INTO VideoJobApplicationStatus([VideoJobApplicationStatusId],[Name],[Description]) VALUES(1, @VIDEOJOBAPPLICATIONSTATUSNAME, 'Application is new')
+END
+SET @VIDEOJOBAPPLICATIONSTATUSNAME = 'Selected'
+IF NOT EXISTS (SELECT * FROM [dbo].[VideoJobApplicationStatus] WHERE [Name] = @VIDEOJOBAPPLICATIONSTATUSNAME)
+BEGIN
+    INSERT INTO VideoJobApplicationStatus([VideoJobApplicationStatusId],[Name], [Description]) VALUES(2, @VIDEOJOBAPPLICATIONSTATUSNAME, 'Application has been selected')
+END
+SET @VIDEOJOBAPPLICATIONSTATUSNAME = 'Not Selected'
+IF NOT EXISTS (SELECT * FROM [dbo].[VideoJobApplicationStatus] WHERE [Name] = @VIDEOJOBAPPLICATIONSTATUSNAME)
+BEGIN
+    INSERT INTO VideoJobApplicationStatus([VideoJobApplicationStatusId],[Name],[Description]) VALUES(3, @VIDEOJOBAPPLICATIONSTATUSNAME, 'Application has not been selected')
+END
+SET @VIDEOJOBAPPLICATIONSTATUSNAME = 'Pending Payment'
+IF NOT EXISTS (SELECT * FROM [dbo].[VideoJobApplicationStatus] WHERE [Name] = @VIDEOJOBAPPLICATIONSTATUSNAME)
+BEGIN
+    INSERT INTO VideoJobApplicationStatus([VideoJobApplicationStatusId],[Name],[Description]) VALUES(4, @VIDEOJOBAPPLICATIONSTATUSNAME, 'Work has been performed. Payment is pending')
+END
+SET @VIDEOJOBAPPLICATIONSTATUSNAME = 'Paid'
+IF NOT EXISTS (SELECT * FROM [dbo].[VideoJobApplicationStatus] WHERE [Name] = @VIDEOJOBAPPLICATIONSTATUSNAME)
+BEGIN
+    INSERT INTO VideoJobApplicationStatus([VideoJobApplicationStatusId],[Name],[Description]) VALUES(5, @VIDEOJOBAPPLICATIONSTATUSNAME, 'Work has been performed and it is already paid')
+END
+--END OF VIDEO JOB APPLICATION STATUS

@@ -175,4 +175,46 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="VideoPlaylistItemId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="55298d11-a7d7-4364-a508-00eb09544803" ChangeDateTime="11/03/2021 23:47:59">
+    <Property Name="ElementName" Value="[dbo].[PaypalPayoutBatch].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PaypalPayoutBatch]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PaypalPayoutBatchId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f9b48bfa-d62f-4c1b-8d95-7c3c603c143f" ChangeDateTime="11/03/2021 23:51:13">
+    <Property Name="ElementName" Value="[dbo].[PaypalPayoutBatchItem].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PaypalPayoutBatchItem]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PaypalPayoutBatchItem" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="94fc5595-429c-464c-9410-e23c6b986d63" ChangeDateTime="11/04/2021 00:14:57">
+    <Property Name="ElementName" Value="[dbo].[PaypalPayoutBatchItem].[PaypalPayoutBatchItem]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PaypalPayoutBatchItem]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PaypalPayoutBatchItemId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3c2e2fe7-3e0c-4916-873d-cdca2d31f07c" ChangeDateTime="11/04/2021 10:36:23">
+    <Property Name="ElementName" Value="[dbo].[VideoJobApplication].[VideoInfoId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VideoJobApplication]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VideoJobId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ac200955-d2b5-459f-9c46-073009bc4cbd" ChangeDateTime="11/04/2021 10:39:03">
+    <Property Name="ElementName" Value="[dbo].[VideoJobApplicationStatus].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VideoJobApplicationStatus]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VideoJobApplicationStatusId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="eccd5d03-7689-4cb1-bbf5-646cc2aa9a08" ChangeDateTime="11/04/2021 15:01:36">
+    <Property Name="ElementName" Value="[dbo].[VideoJobEscrow].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VideoJobEscrow]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VideoJobEscrowId" />
+  </Operation>
 </Operations>

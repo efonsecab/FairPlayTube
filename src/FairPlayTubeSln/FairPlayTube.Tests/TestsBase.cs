@@ -50,7 +50,7 @@ namespace FairPlayTube.Tests
                 options.Connect(azureAppConfigConnectionString);
             });
             IConfiguration configuration = configurationBuilder.Build();
-            Server = new TestServer(new WebHostBuilder()
+            var builder = new WebHostBuilder()
                 .ConfigureAppConfiguration((hostingContext, configurationBuilder) =>
                 {
                     IConfigurationRoot configurationRoot = configurationBuilder.Build();
@@ -65,7 +65,9 @@ namespace FairPlayTube.Tests
 
                 })
                 .UseConfiguration(configuration)
-                .UseStartup<Startup>());
+                .UseStartup<Startup>();
+            Server = new TestServer(builder);
+            Client.Program.ConfigureModelsLocalizers(Server.Services);
             Configuration = Server.Services.GetRequiredService<IConfiguration>();
             this.Mapper = Server.Services.GetRequiredService<IMapper>();
             HttpContextAccessor = Server.Services.GetRequiredService<IHttpContextAccessor>();
@@ -176,6 +178,12 @@ namespace FairPlayTube.Tests
         {
             VideoPlaylistClientService videoPlaylistClientService = new VideoPlaylistClientService(CreateHttpClientService());
             return videoPlaylistClientService;
+        }
+
+        protected VideoJobClientService CreateVideoJobClientService()
+        {
+            VideoJobClientService videoJobClientService = new VideoJobClientService(CreateHttpClientService());
+            return videoJobClientService;
         }
     }
 

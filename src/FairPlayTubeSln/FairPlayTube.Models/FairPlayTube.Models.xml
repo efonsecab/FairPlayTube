@@ -119,6 +119,76 @@
             VideoId sent in the message
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel">
+            <summary>
+            Holds the data for a Paypal Payout Batch Item
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.PaypalPayoutBatchId">
+            <summary>
+            Paypal Payout Batch Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.RecipientType">
+            <summary>
+            Rcipient Type
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.AmountValue">
+            <summary>
+            Amount value
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.AmountCurrency">
+            <summary>
+            Amount currency
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.Note">
+            <summary>
+            Note
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.SenderItemId">
+            <summary>
+            Sender Item Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.ReceiverEmailAddress">
+            <summary>
+            Receiver Email Address
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel.NotificationLanguage">
+            <summary>
+            Notification Laguage
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Payouts.PaypalPayoutBatchModel">
+            <summary>
+            Holds the data for a paypal payout batch
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchModel.SenderBatchId">
+            <summary>
+            Sender Batch Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchModel.EmailSubject">
+            <summary>
+            Email Subject
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchModel.EmailMessage">
+            <summary>
+            Email Message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Payouts.PaypalPayoutBatchModel.PaypalPayoutBatchItem">
+            <summary>
+            Payout Batch Items
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Paypal.PaypalCheckoutApprovedDataModel">
             <summary>
             Represents the PayPal Checkout Approval Data
@@ -949,14 +1019,34 @@
             Height
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer">
+            <summary>
+            Holds the logic required to retrieve the localized values for <see cref="T:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer"/>
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer.Localizer">
+            <summary>
+            Typed localizer to retrieve the localized messages
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer.ApplicantCoverLetterRequired">
+            <summary>
+            Retrieves the applicant cover letter required localized message
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer.ApplicantCoverLetterRequiredTextKey">
+            <summary>
+            Resource key for application cover letter required
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer">
             <summary>
-            
+            Holds the logic required to retrieve the localized values for <see cref="T:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer"/>
             </summary>
         </member>
         <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.Localizer">
             <summary>
-            Types localizer to retrieve the localized messages
+            Typed localizer to retrieve the localized messages
             </summary>
         </member>
         <member name="P:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer.VideoDescriptionRequired">
@@ -1069,6 +1159,47 @@
             Resource key for video visibility required
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer">
+            <summary>
+            Holds the logic required to retrieve the localized values for <see cref="T:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer"/>
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer.Localizer">
+            <summary>
+            Typed localizer to retrieve the localized messages
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer.TitleDisplayName">
+            <summary>
+            Retrieves the Title Display Name localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer.BudgetDisplayName">
+            <summary>
+            Retrieves the Budget Display Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer.DescriptionDisplayName">
+            <summary>
+            Retrieves the Description Display Name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer.TitleDisplayNameTextKey">
+            <summary>
+            Resource key for Title Display Name
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer.BudgetDisplayNameTextKey">
+            <summary>
+            Resource key for Budget
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.Video.VideoJobModelLocalizer.DescriptionDisplayNameTextKey">
+            <summary>
+            Resource ket for Description
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.VideoComment.CreateVideoCommentModel">
             <summary>
             Holds the information required to create a comment for a specified video
@@ -1122,6 +1253,21 @@
         <member name="P:FairPlayTube.Models.VideoComment.VideoCommentModel.ApplicationUserFollowersCount">
             <summary>
             Number of Followers for the user who created the comment
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.VideoJobApplications.CreateVideoJobApplicationModel">
+            <summary>
+            Holds the data for a video job application
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.CreateVideoJobApplicationModel.VideoJobId">
+            <summary>
+            Video job id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.CreateVideoJobApplicationModel.ApplicantCoverLetter">
+            <summary>
+            Applicant's cover letter
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.Video.DownloadVideoModel">
@@ -1417,6 +1563,11 @@
         <member name="P:FairPlayTube.Models.Video.VideoJobModel.RowCreationDateTime">
             <summary>
             DateTime the job was created
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoJobModel.VideoInfo">
+            <summary>
+            Related video
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.Video.VideoPlaylistItemModel">

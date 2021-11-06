@@ -14,6 +14,7 @@
         public class Commissions
         {
             public const decimal VideoAccess = 0.05M;//5% 
+            public const decimal VideoJobComission = 0.05M; //5%
         }
         public class PriceLimits
         {
@@ -57,6 +58,7 @@
         public class PublicVideosPages
         {
             public const string Details = "/Public/Videos/Details/{VideoId}";
+            public const string VideosJobs = "/Public/Videos/VideosJobs";
         }
 
         public class UserYouTubePagesRoutes
@@ -65,6 +67,7 @@
         }
         public class UserPagesRoutes
         {
+            public const string AddVideoJob = "/Users/Videos/{VideoId}/AddVideoJob";
             public const string UploadVideo = "/Users/Videos/Upload";
             public const string MyVideos = "/Users/Videos/MyVideos";
             public const string Keywords = "/Users/Videos/Keywords";
@@ -88,6 +91,12 @@
 
         public class ApiRoutes
         {
+            public class VideoJobController
+            {
+                public const string AddVideoJob = "api/VideoJob/AddVideoJob";
+
+                public const string GetVideosJobs = "api/VideoJob/GetVideosJobs";
+            }
             public class VideoCommentController
             {
                 public const string GetVideoComments = "api/VideoComment/GetVideoComments";

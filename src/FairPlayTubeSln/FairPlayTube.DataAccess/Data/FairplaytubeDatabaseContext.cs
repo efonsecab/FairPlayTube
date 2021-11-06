@@ -29,6 +29,8 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<Culture> Culture { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
         public virtual DbSet<GatedFeature> GatedFeature { get; set; }
+        public virtual DbSet<PaypalPayoutBatch> PaypalPayoutBatch { get; set; }
+        public virtual DbSet<PaypalPayoutBatchItem> PaypalPayoutBatchItem { get; set; }
         public virtual DbSet<PaypalTransaction> PaypalTransaction { get; set; }
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<Resource> Resource { get; set; }
@@ -52,6 +54,8 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<VideoInfo> VideoInfo { get; set; }
         public virtual DbSet<VideoJob> VideoJob { get; set; }
         public virtual DbSet<VideoJobApplication> VideoJobApplication { get; set; }
+        public virtual DbSet<VideoJobApplicationStatus> VideoJobApplicationStatus { get; set; }
+        public virtual DbSet<VideoJobEscrow> VideoJobEscrow { get; set; }
         public virtual DbSet<VideoPlaylist> VideoPlaylist { get; set; }
         public virtual DbSet<VideoPlaylistItem> VideoPlaylistItem { get; set; }
         public virtual DbSet<VideoVisibility> VideoVisibility { get; set; }
@@ -139,6 +143,15 @@ namespace FairPlayTube.DataAccess.Data
             modelBuilder.Entity<GatedFeature>(entity =>
             {
                 entity.Property(e => e.DefaultValue).HasDefaultValueSql("1");
+            });
+
+            modelBuilder.Entity<PaypalPayoutBatchItem>(entity =>
+            {
+                entity.HasOne(d => d.PaypalPayoutBatch)
+                    .WithMany(p => p.PaypalPayoutBatchItem)
+                    .HasForeignKey(d => d.PaypalPayoutBatchId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PaypalPayoutBatchItem_PaypalPayoutBatch");
             });
 
             modelBuilder.Entity<PaypalTransaction>(entity =>
@@ -364,19 +377,42 @@ namespace FairPlayTube.DataAccess.Data
 
             modelBuilder.Entity<VideoJobApplication>(entity =>
             {
-                entity.Property(e => e.VideoJobApplicationId).ValueGeneratedNever();
-
                 entity.HasOne(d => d.ApplicantApplicationUser)
                     .WithMany(p => p.VideoJobApplication)
                     .HasForeignKey(d => d.ApplicantApplicationUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VideoJobApplication_ApplicationUser");
 
-                entity.HasOne(d => d.VideoInfo)
+                entity.HasOne(d => d.VideoJobApplicationStatus)
                     .WithMany(p => p.VideoJobApplication)
-                    .HasForeignKey(d => d.VideoInfoId)
+                    .HasForeignKey(d => d.VideoJobApplicationStatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_VideoJobApplication_VideoInfoId");
+                    .HasConstraintName("FK_VideoJobApplication_VideoJobApplicationStatus");
+
+                entity.HasOne(d => d.VideoJob)
+                    .WithMany(p => p.VideoJobApplication)
+                    .HasForeignKey(d => d.VideoJobId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoJobApplication_VideoJobId");
+            });
+
+            modelBuilder.Entity<VideoJobApplicationStatus>(entity =>
+            {
+                entity.Property(e => e.VideoJobApplicationStatusId).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<VideoJobEscrow>(entity =>
+            {
+                entity.HasOne(d => d.PaypalPayoutBatchItem)
+                    .WithMany(p => p.VideoJobEscrow)
+                    .HasForeignKey(d => d.PaypalPayoutBatchItemId)
+                    .HasConstraintName("FK_VideoJobEscrow_PaypalPayoutBatchItem");
+
+                entity.HasOne(d => d.VideoJob)
+                    .WithOne(p => p.VideoJobEscrow)
+                    .HasForeignKey<VideoJobEscrow>(d => d.VideoJobId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoJobEscrow_VideoJob");
             });
 
             modelBuilder.Entity<VideoPlaylist>(entity =>

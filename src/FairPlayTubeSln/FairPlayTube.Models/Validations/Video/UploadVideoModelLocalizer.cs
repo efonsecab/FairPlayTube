@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace FairPlayTube.Models.Validations.Video
 {
     /// <summary>
-    /// 
+    /// Holds the logic required to retrieve the localized values for <see cref="UploadVideoModelLocalizer"/>
     /// </summary>
     public class UploadVideoModelLocalizer
     {
         /// <summary>
-        /// Types localizer to retrieve the localized messages
+        /// Typed localizer to retrieve the localized messages
         /// </summary>
         public static IStringLocalizer<UploadVideoModelLocalizer> Localizer { get; set; }
         /// <summary>
