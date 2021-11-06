@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace FairPlayTube.Client.CustomHelpers
+namespace FairPlayTube.Common.CustomHelpers
 {
     public static class DisplayHelper
     {

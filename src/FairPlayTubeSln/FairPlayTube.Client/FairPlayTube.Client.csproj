@@ -52,6 +52,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="CustomHelpers\" />
 	  <Folder Include="Pages\Users\VideoJobs\" />
 	</ItemGroup>
 
