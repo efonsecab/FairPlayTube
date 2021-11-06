@@ -1565,6 +1565,11 @@
             DateTime the job was created
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.Video.VideoJobModel.VideoInfo">
+            <summary>
+            Related video
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.VideoPlaylistItemModel">
             <summary>
             Hold the data related to a video's playlist item

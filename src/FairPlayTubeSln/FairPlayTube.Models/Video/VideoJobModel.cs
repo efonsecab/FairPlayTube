@@ -40,5 +40,9 @@ namespace FairPlayTube.Models.Video
         /// DateTime the job was created
         /// </summary>
         public DateTimeOffset RowCreationDateTime { get; set; }
+        /// <summary>
+        /// Related video
+        /// </summary>
+        public VideoInfoModel VideoInfo { get; set; }
     }
 }

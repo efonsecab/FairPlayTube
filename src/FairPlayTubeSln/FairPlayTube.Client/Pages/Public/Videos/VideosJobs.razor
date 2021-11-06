@@ -11,7 +11,7 @@
                 <div class="col">
                     <Card>
                         <CardHeader>
-                            @( DisplayHelper.DisplayFor<VideoJobModel>(p => p.Title) )
+                            @singleJob.Title
                             <button type="button" class="btn btn-info rounded-circle" disabled 
                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                     title="@Localizer[ApplyToVideoJobTextKey]">
@@ -20,6 +20,16 @@
                         </CardHeader>
                         <CardBody>
                             @singleJob.Description
+                            <FairPlayTube.Components.Videos.Video AllowDelete="false"
+                                                                  AllowDownload="false"
+                                                                  ShowAddVideoJobButton="false"
+                                                                  ShowDetailsLink="false"
+                                                                  ShowDisplayAd="false"
+                                                                  ShowTwitterShareButton="false"
+                                                                  ShowYouTubeVideosLink="false"
+                                                                  AllowEdit="false"
+                                                                  VideoModel="@singleJob.VideoInfo"
+                                                                  ></FairPlayTube.Components.Videos.Video>
                         </CardBody>
                         <CardFooter>
                             @( DisplayHelper.DisplayFor<VideoJobModel>(p => p.Budget) ): @singleJob.Budget
