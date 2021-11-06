@@ -62,6 +62,7 @@ namespace FairPlayTube.Services
         {
             return this.FairplaytubeDatabaseContext.VideoJob
                 .Include(p => p.VideoInfo)
+                .Include(p=> p.VideoJobApplication)
                 .Where(p => p.VideoInfo.VideoId == videoId);
         }
     }

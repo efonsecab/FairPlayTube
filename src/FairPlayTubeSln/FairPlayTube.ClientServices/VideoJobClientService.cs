@@ -21,7 +21,6 @@ namespace FairPlayTube.ClientServices
         public async Task AddVideoJobAsync(VideoJobModel videoJobModel)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
-            authorizedHttpClient.Timeout = TimeSpan.FromMinutes(15);
             var response = await authorizedHttpClient.PostAsJsonAsync(ApiRoutes.VideoJobController.AddVideoJob, videoJobModel);
             if (!response.IsSuccessStatusCode)
             {
@@ -31,6 +30,14 @@ namespace FairPlayTube.ClientServices
                 else
                     throw new Exception(response.ReasonPhrase);
             }
+        }
+
+        public async Task<VideoJobModel[]> GetVideosJobs()
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var result = await authorizedHttpClient.GetFromJsonAsync<VideoJobModel[]>(
+                ApiRoutes.VideoJobController.GetVideosJobs);
+            return result;
         }
     }
 }

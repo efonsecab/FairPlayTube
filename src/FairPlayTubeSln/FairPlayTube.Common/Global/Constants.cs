@@ -93,6 +93,8 @@
             public class VideoJobController
             {
                 public const string AddVideoJob = "api/VideoJob/AddVideoJob";
+
+                public const string GetVideosJobs = "api/VideoJob/GetVideosJobs";
             }
             public class VideoCommentController
             {
