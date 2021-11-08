@@ -1,18 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace FairPlayTube.Common.Providers
 {
     public class IpAddressProvider
     {
-        public static List<string> GetCurrentHostIPv4Addresses(bool getPublicIpAddress = true)
+        public static async Task<List<string>> GetCurrentHostIPv4AddressesAsync(bool getPublicIpAddress = true)
         {
             if (getPublicIpAddress)
             {
-                var publicIpAddress = GetPublicIp();
+                var publicIpAddress = await GetPublicIpAsync();
                 return new List<string>() { publicIpAddress.ToString() };
             }
             //Check https://stackoverflow.com/questions/50386546/net-core-2-x-how-to-get-the-current-active-local-network-ipv4-address
@@ -43,9 +45,11 @@ namespace FairPlayTube.Common.Providers
             return lstIps;
         }
 
-        public static IPAddress GetPublicIp(string serviceUrl = "https://ipinfo.io/ip")
+        public static async Task<IPAddress> GetPublicIpAsync(string serviceUrl = "https://ipinfo.io/ip")
         {
-            return IPAddress.Parse(new System.Net.WebClient().DownloadString(serviceUrl));
+            HttpClient httpClient = new();
+            var ipAddress = await httpClient.GetStringAsync(serviceUrl);
+            return IPAddress.Parse(ipAddress);
         }
     }
 }

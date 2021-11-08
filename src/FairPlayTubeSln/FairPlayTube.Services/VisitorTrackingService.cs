@@ -34,7 +34,7 @@ namespace FairPlayTube.Services
                 var remoteIpAddress = httpContext.Connection.RemoteIpAddress.ToString();
                 if (remoteIpAddress == "::1")
                 {
-                    var ipAddresses = IpAddressProvider.GetCurrentHostIPv4Addresses();
+                    var ipAddresses = await IpAddressProvider.GetCurrentHostIPv4AddressesAsync();
                     remoteIpAddress = ipAddresses.First();
                 }
                 var parsedIpAddress = System.Net.IPAddress.Parse(remoteIpAddress);
