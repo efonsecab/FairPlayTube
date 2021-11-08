@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PublishTrimmed>true</PublishTrimmed>
+		<PublishTrimmed>false</PublishTrimmed>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -56,8 +56,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="CustomHelpers\" />
-	  <Folder Include="Pages\Users\VideoJobs\" />
+		<Folder Include="CustomHelpers\" />
+		<Folder Include="Pages\Users\VideoJobs\" />
 	</ItemGroup>
 
 	<ProjectExtensions>
