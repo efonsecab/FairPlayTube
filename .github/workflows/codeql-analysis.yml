@@ -21,7 +21,7 @@ on:
     - cron: '23 5 * * 3'
 env:
   CONFIGURATION: Debug
-  DOTNET_CORE_VERSION: 5.0.x
+  DOTNET_CORE_VERSION: 6.0.x
   WORKING_DIRECTORY: src/FairPlayTubeSln/FairPlayTube
   TESTS_DIRECTORY: src/FairPlayTubeSln/FairPlayTube.Tests
 jobs:

@@ -87,7 +87,7 @@ namespace FairPlayTube.Controllers.Tests
                 .AsNoTracking().SingleOrDefaultAsync();
 
             Assert.IsNotNull(entity);
-            await videoPlaylistClientService.DeleteVideoPlaylist(entity.VideoPlaylistId);
+            await videoPlaylistClientService.DeleteVideoPlaylist(entity!.VideoPlaylistId);
             entity = await dbContext.VideoPlaylist
                 .Include(p => p.OwnerApplicationUser)
                 .Where(p => p.PlaylistName == testVideoPlaylist.PlaylistName &&

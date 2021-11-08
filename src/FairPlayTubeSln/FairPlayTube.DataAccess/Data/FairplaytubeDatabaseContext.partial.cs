@@ -22,29 +22,29 @@ namespace FairPlayTube.DataAccess.Data
 
         public override int SaveChanges()
         {
-            ValidateAndSetDefaults();
+            ValidateAndSetDefaultsAsync().RunSynchronously();
             return base.SaveChanges();
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            ValidateAndSetDefaults();
+            ValidateAndSetDefaultsAsync().RunSynchronously();
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            ValidateAndSetDefaults();
-            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+            await ValidateAndSetDefaultsAsync();
+            return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            ValidateAndSetDefaults();
-            return base.SaveChangesAsync(cancellationToken);
+            await ValidateAndSetDefaultsAsync();
+            return await base.SaveChangesAsync(cancellationToken);
         }
 
-        private void ValidateAndSetDefaults()
+        private async Task ValidateAndSetDefaultsAsync()
         {
             //Check https://www.bricelam.net/2016/12/13/validation-in-efcore.html
             var entities = from e in ChangeTracker.Entries()
@@ -56,7 +56,7 @@ namespace FairPlayTube.DataAccess.Data
             string rowCretionUser = String.Empty;
             if (entities.Any(p => p is IOriginatorInfo))
             {
-                ipAddresses = String.Join(",", IpAddressProvider.GetCurrentHostIPv4Addresses());
+                ipAddresses = String.Join(",", await IpAddressProvider.GetCurrentHostIPv4AddressesAsync());
                 assemblyFullName = System.Reflection.Assembly.GetEntryAssembly().FullName;
                 rowCretionUser = this.CurrentUserProvider.GetUsername();
             }
