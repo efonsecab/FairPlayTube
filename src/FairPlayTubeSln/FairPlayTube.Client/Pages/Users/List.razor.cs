@@ -79,7 +79,7 @@ namespace FairPlayTube.Client.Pages.Users
             }
         }
 
-        private string GetUserHomePageLink(UserModel userModel)
+        private static string GetUserHomePageLink(UserModel userModel)
         {
             return Common.Global.Constants.UserPagesRoutes.UserHomePage
                 .Replace("{UserId:long}", userModel.ApplicationUserId.ToString());

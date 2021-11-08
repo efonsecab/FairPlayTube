@@ -25,7 +25,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         private ToastifyService ToastifyService { get; set; }
         [Inject]
         private IStringLocalizer<Upload> Localizer { get; set; }
-        private UploadVideoModel UploadVideoModel = new UploadVideoModel();
+        private UploadVideoModel UploadVideoModel = new();
         private bool IsLoading { get; set; } = false;
         private bool IsSubmitting { get; set; } = false;
 
@@ -105,7 +105,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             }
         }
 
-        private string GetVisibilityName(VideoVisibility visibilityValue)
+        private static string GetVisibilityName(VideoVisibility visibilityValue)
         {
             return Enum.GetName<VideoVisibility>(visibilityValue);
         }

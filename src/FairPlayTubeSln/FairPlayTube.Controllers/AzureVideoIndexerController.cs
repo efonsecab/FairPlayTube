@@ -19,20 +19,17 @@ namespace FairPlayTube.Controllers
     {
         private FairplaytubeDatabaseContext FairplaytubeDatabaseContext { get; }
         private VideoService VideoService { get; }
-        private IHubContext<NotificationHub, INotificationHub> HubContext { get; }
 
         /// <summary>
         /// Initializes <see cref="AzureVideoIndexerController"/>
         /// </summary>
         /// <param name="fairplaytubeDatabaseContext"></param>
         /// <param name="videoService"></param>
-        /// <param name="hubContext"></param>
         public AzureVideoIndexerController(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
-            VideoService videoService, IHubContext<NotificationHub, INotificationHub> hubContext)
+            VideoService videoService)
         {
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
             this.VideoService = videoService;
-            this.HubContext = hubContext;
         }
 
         /// <summary>
@@ -49,7 +46,7 @@ namespace FairPlayTube.Controllers
             {
                 var videoInfoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
                     .Where(p => p.VideoId == id)
-                    .SingleOrDefaultAsync();
+                    .SingleOrDefaultAsync(cancellationToken: cancellationToken);
                 if (videoInfoEntity != null)
                 {
                     await this.VideoService.AddVideoIndexTransactionsAsync(new string[] { videoInfoEntity.VideoId }, cancellationToken);

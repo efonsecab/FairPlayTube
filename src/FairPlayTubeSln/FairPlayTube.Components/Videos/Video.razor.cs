@@ -42,7 +42,6 @@ namespace FairPlayTube.Components.Videos
         private NavigationManager NavigationManager { get; set; }
         [Inject]
         private IStringLocalizer<Video> Localizer { get; set; }
-        private bool IsLoading { get; set; }
         private bool ShowInsights { get; set; }
         private bool ShowMonetizationLinks { get; set; }
         private bool ShowVideoDescription { get; set; }

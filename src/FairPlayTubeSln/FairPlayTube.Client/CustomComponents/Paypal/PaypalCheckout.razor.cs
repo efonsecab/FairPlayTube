@@ -38,7 +38,8 @@ namespace FairPlayTube.Client.CustomComponents.Paypal
         }
 
         [JSInvokable]
-        public async void OnApprove(PaypalCheckoutApprovedDataModel data, PaypalCheckoutApprovedDetailsModel details)
+        public async void OnApprove(PaypalCheckoutApprovedDataModel data, 
+            PaypalCheckoutApprovedDetailsModel details)
         {
             try
             {

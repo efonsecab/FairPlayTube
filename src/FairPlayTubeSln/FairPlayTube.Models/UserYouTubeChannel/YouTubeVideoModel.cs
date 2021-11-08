@@ -91,7 +91,9 @@ namespace FairPlayTube.Models.UserYouTubeChannel
         /// <summary>
         /// Default
         /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
         public object _default { get; set; }
+#pragma warning restore IDE1006 // Naming Styles
         /// <summary>
         /// Medium
         /// </summary>

@@ -41,7 +41,7 @@ namespace FairPlayTube.Services
             var fundsToDeduct = videoJobModel.Budget + (videoJobModel.Budget * Common.Global.Constants.Commissions.VideoJobComission);
             if (fundsToDeduct > userEntity.AvailableFunds)
                 throw new Exception(String.Format(Localizer[NotEnoughFundsTextKey], fundsToDeduct, userEntity.AvailableFunds));
-            VideoJob videoJobEntity = new VideoJob()
+            VideoJob videoJobEntity = new()
             {
                 Budget = videoJobModel.Budget,
                 Title = videoJobModel.Title,

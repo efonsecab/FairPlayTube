@@ -237,7 +237,8 @@ namespace FairPlayTube.Controllers
         public async Task<VideoInfoModel> GetVideo(string videoId, CancellationToken cancellationToken)
         {
             return await this.VideoService.GetVideoAsync(videoId).Select(
-                p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p)).SingleOrDefaultAsync();
+                p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p))
+                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -263,7 +264,7 @@ namespace FairPlayTube.Controllers
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         public async Task<List<VideoStatusModel>> GetMyPendingVideosQueue(CancellationToken cancellationToken)
         {
-            List<VideoStatusModel> result = new List<VideoStatusModel>();
+            List<VideoStatusModel> result = new();
             var userObjectId = this.CurrentUserProvider.GetObjectId();
             var userVideosQueue = await this.VideoService
                 .GetUserPendingVideosQueueAsync(azureAdB2cobjectId: userObjectId, cancellationToken: cancellationToken);

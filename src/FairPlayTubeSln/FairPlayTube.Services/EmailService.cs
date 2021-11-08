@@ -15,14 +15,14 @@ namespace FairPlayTube.Services
         public async Task SendEmail(string toEmailAddress, string subject, string body,
             bool isBodyHtml)
         {
-            MailMessage msg = new MailMessage();
+            MailMessage msg = new();
             msg.To.Add(new MailAddress(toEmailAddress));
             msg.From = new MailAddress(this.SmtpConfiguration.SenderEmail, this.SmtpConfiguration.SenderDisplayName);
             msg.Subject = subject;
             msg.Body = body;
             msg.IsBodyHtml = isBodyHtml;
 
-            SmtpClient client = new SmtpClient();
+            SmtpClient client = new();
             client.UseDefaultCredentials = false;
             client.Credentials = new System.Net.NetworkCredential(this.SmtpConfiguration.SenderUsername,
                 this.SmtpConfiguration.SenderPassword);

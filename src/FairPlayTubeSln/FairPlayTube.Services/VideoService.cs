@@ -34,7 +34,6 @@ namespace FairPlayTube.Services
         private AzureVideoIndexerConfiguration AzureVideoIndexerConfiguration { get; }
         private CustomHttpClient CustomHttpClient { get; }
         private IHubContext<NotificationHub, INotificationHub> HubContext { get; }
-        private TextAnalysisService TextAnalysisService { get; }
 
         public VideoService(AzureVideoIndexerService azureVideoIndexerService, AzureBlobStorageService azureBlobStorageService,
             DataStorageConfiguration dataStorageConfiguration, ICurrentUserProvider currentUserProvider,
@@ -53,7 +52,6 @@ namespace FairPlayTube.Services
             this.AzureVideoIndexerConfiguration = azureVideoIndexerConfiguration;
             this.CustomHttpClient = customHttpClient;
             this.HubContext = hubContext;
-            this.TextAnalysisService = textAnalysisService;
         }
 
 
@@ -70,7 +68,7 @@ namespace FairPlayTube.Services
             var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
                                         .Include(p => p.ApplicationUser)
                                         .Include(p => p.VideoAccessTransaction)
-                                        .SingleOrDefaultAsync(p => p.VideoId == videoId);
+                                        .SingleOrDefaultAsync(p => p.VideoId == videoId, cancellationToken: cancellationToken);
 
             if (videoEntity == null)
                 throw new Exception($"Unable to find the video with id {videoId}");
@@ -89,15 +87,16 @@ namespace FairPlayTube.Services
             if (existentKeywords.Any())
             {
                 this.FairplaytubeDatabaseContext.VideoIndexKeyword.RemoveRange(existentKeywords);
-                await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+                await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
             }
 
             // UPDATING VIDEO INFO STATUS
             videoEntity.VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Deleted;
-            await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
 
             // DELETING VIDEO INDEXER
-            var azureVideoIndexerEntity = (await this.AzureVideoIndexerService.SearchVideosByIdsAsync(new string[] { videoId })).results.Single();
+            var azureVideoIndexerEntity = (await this.AzureVideoIndexerService
+                .SearchVideosByIdsAsync(new string[] { videoId }, cancellationToken)).results.Single();
             await this.AzureVideoIndexerService.DeleteVideoAsync(videoId, cancellationToken);
 
             // DELETING VIDEO FROM BLOB STORAGE (ThumbnailUrl)
@@ -149,7 +148,7 @@ namespace FairPlayTube.Services
             var followers = this.FairplaytubeDatabaseContext
                                 .UserFollower.Include(p => p.FollowerApplicationUser)
                                 .Where(p => p.FollowedApplicationUserId == singleVideoEntity.ApplicationUserId);
-            if (followers.Count() > 0)
+            if (followers.Any())
             {
                 foreach (var singleFollower in followers)
                 {
@@ -186,16 +185,17 @@ namespace FairPlayTube.Services
                 {
                     Keyword = p.Key,
                     Appeareances = p.Count()
-                }).ToArrayAsync();
+                }).ToArrayAsync(cancellationToken: cancellationToken);
         }
 
         public async Task SavePersonsAsync(List<PersonModel> personsModels, CancellationToken cancellationToken)
         {
             var videoIndexerPersonsIds = personsModels.Select(p => p.Id).ToArray();
             var existentIds = await this.FairplaytubeDatabaseContext.Person
-                .Where(p => videoIndexerPersonsIds.Contains(p.Id)).Select(p => p.Id).ToArrayAsync();
+                .Where(p => videoIndexerPersonsIds.Contains(p.Id)).Select(p => p.Id)
+                .ToArrayAsync(cancellationToken: cancellationToken);
             var modelstoInsert = personsModels.Where(p => !existentIds.Contains(p.Id));
-            if (modelstoInsert.Count() > 0)
+            if (modelstoInsert.Any())
             {
                 foreach (var singleModelToInsert in modelstoInsert)
                 {
@@ -205,7 +205,7 @@ namespace FairPlayTube.Services
                     var sampleFacePictureBytes = await this.AzureVideoIndexerService
                         .GetCustomFacePictureAsync(videoIndexerPersonModelId, videoIndexerPersonId, sampleFaceId, cancellationToken);
                     string relativePath = $"Persons/{videoIndexerPersonId}/Faces/{sampleFaceId}/SampleFace.jpg";
-                    MemoryStream sampleFaceStream = new MemoryStream(sampleFacePictureBytes);
+                    MemoryStream sampleFaceStream = new(sampleFacePictureBytes);
                     sampleFaceStream.Position = 0;
                     await this.AzureBlobStorageService.UploadFileAsync(this.DataStorageConfiguration.ContainerName, relativePath,
                         sampleFaceStream, true, cancellationToken);
@@ -248,11 +248,13 @@ namespace FairPlayTube.Services
             var videoAccessEntity = await this.FairplaytubeDatabaseContext.VideoAccessTransaction
                 .Where(p => p.VideoInfo.VideoId == videoId &&
                 p.BuyerApplicationUser.AzureAdB2cobjectId.ToString() == azureAdB2CObjectId)
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
             if (videoAccessEntity != null)
                 throw new Exception("User has already bought access to the specified video");
-            var userEntity = await this.FairplaytubeDatabaseContext.ApplicationUser.SingleAsync(p => p.AzureAdB2cobjectId.ToString() == azureAdB2CObjectId);
-            var videoInfoEntity = await this.FairplaytubeDatabaseContext.VideoInfo.SingleAsync(p => p.VideoId == videoId);
+            var userEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
+                .SingleAsync(p => p.AzureAdB2cobjectId.ToString() == azureAdB2CObjectId, cancellationToken: cancellationToken);
+            var videoInfoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
+                .SingleAsync(p => p.VideoId == videoId, cancellationToken: cancellationToken);
             var videoPrice = videoInfoEntity.Price;
             var userAvailableFunds = userEntity.AvailableFunds;
             var commissionToApply = Common.Global.Constants.Commissions.VideoAccess;
@@ -269,9 +271,9 @@ namespace FairPlayTube.Services
                 AppliedCommission = commissionToApply,
                 TotalPrice = totalPrice,
                 VideoInfoId = videoInfoEntity.VideoInfoId
-            });
+            }, cancellationToken);
             userEntity.AvailableFunds -= totalPrice;
-            await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<SearchVideosResponse> GetVideoIndexerStatus(string[] videoIds,
@@ -376,7 +378,8 @@ namespace FairPlayTube.Services
                 byte[] fileBytes = null;
                 if (!String.IsNullOrWhiteSpace(uploadVideoModel.SourceUrl))
                 {
-                    fileBytes = await this.CustomHttpClient.GetByteArrayAsync(uploadVideoModel.SourceUrl);
+                    fileBytes = await this.CustomHttpClient
+                        .GetByteArrayAsync(uploadVideoModel.SourceUrl, cancellationToken);
                 }
                 stream = new MemoryStream(fileBytes);
             }
@@ -391,7 +394,7 @@ namespace FairPlayTube.Services
                 $"/{this.DataStorageConfiguration.ContainerName}/{userAzueAdB2cObjectId}/{newFileName}";
             cancellationToken.ThrowIfCancellationRequested();
             var user = await this.FairplaytubeDatabaseContext.ApplicationUser
-                .SingleAsync(p => p.AzureAdB2cobjectId.ToString() == userAzueAdB2cObjectId);
+                .SingleAsync(p => p.AzureAdB2cobjectId.ToString() == userAzueAdB2cObjectId, cancellationToken: cancellationToken);
             cancellationToken.ThrowIfCancellationRequested();
             await this.FairplaytubeDatabaseContext.VideoInfo.AddAsync(new DataAccess.Models.VideoInfo()
             {
@@ -421,17 +424,18 @@ namespace FairPlayTube.Services
             var keywordsResponse = await this.GetIndexedVideoKeywordsAsync(videoId, cancellationToken);
             if (keywordsResponse.Count > 0)
             {
-                var videoInfoEntity = await this.FairplaytubeDatabaseContext.VideoInfo.Where(p => p.VideoId == videoId).SingleAsync();
+                var videoInfoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
+                    .Where(p => p.VideoId == videoId).SingleAsync(cancellationToken: cancellationToken);
                 var existentKeywords =
                     this.FairplaytubeDatabaseContext.VideoIndexKeyword
                     .Where(p => p.VideoInfoId == videoInfoEntity.VideoInfoId);
-                if (existentKeywords.Count() > 0)
+                if (existentKeywords.Any())
                 {
                     foreach (var singleExistentKeyword in existentKeywords)
                     {
                         this.FairplaytubeDatabaseContext.VideoIndexKeyword.Remove(singleExistentKeyword);
                     }
-                    await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+                    await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
                 }
                 foreach (var singleKeyword in keywordsResponse)
                 {
@@ -439,9 +443,9 @@ namespace FairPlayTube.Services
                     {
                         VideoInfoId = videoInfoEntity.VideoInfoId,
                         Keyword = singleKeyword.Keyword
-                    });
+                    }, cancellationToken);
                 }
-                await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+                await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
             }
         }
 
@@ -506,33 +510,34 @@ namespace FairPlayTube.Services
                 && p.VideoIndexStatusId != (short)Common.Global.Enums.VideoIndexStatus.Processed
                 )
                 .OrderByDescending(p => p.VideoId)
-                .ToListAsync();
+                .ToListAsync(cancellationToken: cancellationToken);
             return videosEntitities;
         }
 
         public async Task SaveVideoThumbnailAsync(string videoId, string thumbnailId, CancellationToken cancellationToken)
         {
             var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
-                .Include(p => p.ApplicationUser).SingleOrDefaultAsync(p => p.VideoId == videoId);
+                .Include(p => p.ApplicationUser).SingleOrDefaultAsync(p => p.VideoId == videoId, cancellationToken: cancellationToken);
             if (videoEntity == null)
                 throw new Exception($"Video: {videoId} does not exit");
-            var videoThumbnailBase64 = await this.AzureVideoIndexerService.GetVideoThumbnailAsync(videoId, thumbnailId);
+            var videoThumbnailBase64 = await this.AzureVideoIndexerService
+                .GetVideoThumbnailAsync(videoId, thumbnailId, cancellationToken);
             string relativePath =
                 $"{videoEntity.ApplicationUser.AzureAdB2cobjectId}/Video/{videoId}/Thumbnail/{thumbnailId}.jpg";
             var byteArray = Convert.FromBase64String(videoThumbnailBase64);
-            MemoryStream memoryStream = new MemoryStream(byteArray);
+            MemoryStream memoryStream = new(byteArray);
             memoryStream.Position = 0;
             var result =
             await this.AzureBlobStorageService.UploadFileAsync(this.DataStorageConfiguration.ContainerName, relativePath,
                 memoryStream, true, cancellationToken);
             string videoThumbnailUrl = $"https://{DataStorageConfiguration.AccountName}.blob.core.windows.net/{DataStorageConfiguration.ContainerName}/{relativePath}";
             videoEntity.ThumbnailUrl = videoThumbnailUrl;
-            await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<List<PersonModel>> GetAllPersonsAsync(CancellationToken cancellationToken)
         {
-            List<PersonModel> result = new List<PersonModel>();
+            List<PersonModel> result = new();
             var allPersonModels = await this.AzureVideoIndexerService.GetAllPersonModelsAsync(cancellationToken);
             var defaultModel = allPersonModels.Single(p => p.isDefault == true);
             Guid defaultModelId = Guid.Parse(defaultModel.id);
@@ -552,25 +557,16 @@ namespace FairPlayTube.Services
             return result;
         }
 
-        public async Task<List<Person>> GetPersistedPersonsAsync(CancellationToken cancellation)
+        public async Task<List<Person>> GetPersistedPersonsAsync(CancellationToken cancellationToken)
         {
-            return await this.FairplaytubeDatabaseContext.Person.ToListAsync();
+            return await this.FairplaytubeDatabaseContext.Person.ToListAsync(cancellationToken);
         }
         public async Task<ProjectModel> CreateCustomRenderingProject(ProjectModel projectModel, CancellationToken cancellationToken)
         {
-            CreateProjectRequest createProjectRequestModel = new CreateProjectRequest()
+            CreateProjectRequest createProjectRequestModel = new()
             {
                 name = projectModel.Name,
-                videosRanges = projectModel.Videos.Select(p =>
-                new PTI.Microservices.Library.AzureVideoIndexer.Models.CreateProject.Videosrange()
-                {
-                    videoId = p.VideoId,
-                    range = new PTI.Microservices.Library.AzureVideoIndexer.Models.CreateProject.Range()
-                    {
-                        start = p.Start,
-                        end = p.End
-                    }
-                }).ToArray()
+                videosRanges = projectModel.Videos.Select(p => new PTI.Microservices.Library.AzureVideoIndexer.Models.CreateProject.Videosrange() { videoId = p.VideoId, range = new PTI.Microservices.Library.AzureVideoIndexer.Models.CreateProject.Range() { start = p.Start, end = p.End } }).ToArray()
             };
             var result = await this.AzureVideoIndexerService.CreateProjectAsync(createProjectRequestModel, cancellationToken: cancellationToken);
             projectModel.ProjectId = result.id;

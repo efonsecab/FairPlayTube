@@ -75,7 +75,7 @@ namespace FairPlayTube.Controllers
             var result = await this.VideoJobService.GetVideosJobs()
                 .OrderByDescending(p => p.RowCreationDateTime)
                 .Select(p => this.Mapper.Map<VideoJob, VideoJobModel>(p))
-                .ToArrayAsync();
+                .ToArrayAsync(cancellationToken: cancellationToken);
             return Ok(result);
         }
 
@@ -92,7 +92,7 @@ namespace FairPlayTube.Controllers
             var result = await this.VideoJobService.GetVideoJobs(videoId)
                 .OrderByDescending(p => p.RowCreationDateTime)
                 .Select(p => this.Mapper.Map<VideoJob, VideoJobModel>(p))
-                .ToArrayAsync();
+                .ToArrayAsync(cancellationToken: cancellationToken);
             return Ok(result);
         }
     }

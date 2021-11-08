@@ -44,7 +44,7 @@ namespace FairPlayTube.Client.Shared
             //We do not want to track authentication flow pages visits
             if (NavigationManager.Uri.Contains("/authentication/"))
                 return;
-            VisitorTrackingModel visitorTrackingModel = new VisitorTrackingModel()
+            VisitorTrackingModel visitorTrackingModel = new()
             {
                 VisitedUrl = this.NavigationManager.Uri
             };

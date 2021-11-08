@@ -118,7 +118,7 @@ namespace FairPlayTube.Controllers.Tests
             testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
             await dbContext.VideoInfo.AddAsync(testVideoEntity);
             await dbContext.SaveChangesAsync();
-            VideoPlaylist testVideoPlaylist = new VideoPlaylist()
+            VideoPlaylist testVideoPlaylist = new()
             {
                 PlaylistDescription = "Test Desc",
                 PlaylistName = "Test Name",
@@ -126,7 +126,7 @@ namespace FairPlayTube.Controllers.Tests
             };
             await dbContext.VideoPlaylist.AddAsync(testVideoPlaylist);
             await dbContext.SaveChangesAsync();
-            VideoPlaylistItemModel videoPlaylistItemModel = new VideoPlaylistItemModel()
+            VideoPlaylistItemModel videoPlaylistItemModel = new()
             {
                 VideoPlaylistId = testVideoPlaylist.VideoPlaylistId,
                 VideoId = testVideoEntity.VideoId,

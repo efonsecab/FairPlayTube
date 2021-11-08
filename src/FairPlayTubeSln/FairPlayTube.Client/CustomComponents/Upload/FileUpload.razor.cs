@@ -28,9 +28,9 @@ namespace FairPlayTube.Client.CustomComponents.Upload
         private ToastifyService ToastifyService { get; set; }
         [Inject]
         private IStringLocalizer<FileUpload> Localizer { get; set; }
-        private List<File> files = new();
+        private readonly List<File> files = new();
         private List<UploadResult> uploadResults = new();
-        private int maxAllowedFiles = 1;
+        private readonly int maxAllowedFiles = 1;
         [Parameter]
         public EventCallback<List<UploadResult>> OnFilesUploaded { get; set; }
         private bool IsLoading { get; set; }

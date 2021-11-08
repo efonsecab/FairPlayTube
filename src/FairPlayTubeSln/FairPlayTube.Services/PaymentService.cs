@@ -29,11 +29,13 @@ namespace FairPlayTube.Services
             var paypalOrder = await this.PaypalService.GetOrderDetailsAsync(orderId, paypalAccessTokenResult.access_token, cancellationToken);
             if (paypalOrder.id != orderId)
                 throw new Exception($"Invalid Order: {orderId}");
-            var transactionEntity = await this.FairplaytubeDatabaseContext.PaypalTransaction.SingleOrDefaultAsync(p => p.OrderId == orderId);
+            var transactionEntity = await this.FairplaytubeDatabaseContext.PaypalTransaction
+                .SingleOrDefaultAsync(p => p.OrderId == orderId, cancellationToken: cancellationToken);
             if (transactionEntity != null)
                 throw new Exception($"Funds have already been added for Order: {orderId}");
 
-            var userEntity = await this.FairplaytubeDatabaseContext.ApplicationUser.SingleAsync(p => p.AzureAdB2cobjectId.ToString() == azureAdB2CObjectId);
+            var userEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
+                .SingleAsync(p => p.AzureAdB2cobjectId.ToString() == azureAdB2CObjectId, cancellationToken: cancellationToken);
             decimal orderAmount = Convert.ToDecimal(paypalOrder.gross_total_amount.value);
             userEntity.AvailableFunds += orderAmount;
             await this.FairplaytubeDatabaseContext.PaypalTransaction.AddAsync(new DataAccess.Models.PaypalTransaction()
@@ -41,8 +43,8 @@ namespace FairPlayTube.Services
                 ApplicationUserId = userEntity.ApplicationUserId,
                 OrderAmount = orderAmount,
                 OrderId = paypalOrder.id
-            });
-            await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+            }, cancellationToken);
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

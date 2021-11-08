@@ -36,7 +36,9 @@
 /// <summary>
 /// Errors
 /// </summary>
+#pragma warning disable CA1050 // Declare types in namespaces
 public class Errors
+#pragma warning restore CA1050 // Declare types in namespaces
 {
     /// <summary>
     /// Error messages
