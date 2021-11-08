@@ -4,6 +4,10 @@
 		<TargetFramework>net6.0</TargetFramework>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<PublishTrimmed>true</PublishTrimmed>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>TRACE</DefineConstants>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
