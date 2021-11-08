@@ -23,7 +23,7 @@ namespace FairPlayTube.Client.Pages.Users.Profile
         private IStringLocalizer<Monetization> Localizer { get; set; }
         private bool IsLoading { get; set; }
         private GlobalMonetizationModel GlobalMonetizationModel =
-            new GlobalMonetizationModel()
+            new()
             {
                 MonetizationItems = new List<MonetizationItem>()
                 {

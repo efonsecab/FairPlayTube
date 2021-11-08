@@ -49,7 +49,7 @@ namespace FairPlayTube.Services
                     FromApplicationUserId = sender.ApplicationUserId
                 }, cancellationToken);
 
-            await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
 
             await this.HubContext.Clients.User(receiver.AzureAdB2cobjectId.ToString())
                 .ReceiveMessage(new Models.Notifications.NotificationModel()

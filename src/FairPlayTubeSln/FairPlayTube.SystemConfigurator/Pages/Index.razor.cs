@@ -12,7 +12,7 @@ namespace FairPlayTube.SystemConfigurator.Pages
     public partial class Index
     {
         public string ErrorMessage { get; private set; }
-        public List<Controller> Controllers = new List<Controller>();
+        public List<Controller> Controllers = new();
         public string ConnectionString { get; set; }
         protected override void OnInitialized()
         {
@@ -22,7 +22,7 @@ namespace FairPlayTube.SystemConfigurator.Pages
                 var types = assembly.GetTypes().Where(p => p.Name.EndsWith("Controller"));
                 foreach (var singleType in types)
                 {
-                    Controller controller = new Controller()
+                    Controller controller = new()
                     {
                         Name = singleType.Name
                     };
@@ -57,11 +57,10 @@ namespace FairPlayTube.SystemConfigurator.Pages
 
         private async Task GenerateFeatures()
         {
-            DbContextOptionsBuilder<FairplaytubeDatabaseContext> optionsBuilder =
-                new DbContextOptionsBuilder<FairplaytubeDatabaseContext>();
+            DbContextOptionsBuilder<FairplaytubeDatabaseContext> optionsBuilder = new();
             optionsBuilder.UseSqlServer(this.ConnectionString);
             FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
-                new FairplaytubeDatabaseContext(optionsBuilder.Options);
+                new(optionsBuilder.Options);
 
             foreach (var singleController in this.Controllers)
             {

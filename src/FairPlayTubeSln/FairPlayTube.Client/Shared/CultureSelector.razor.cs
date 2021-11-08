@@ -20,7 +20,7 @@ namespace FairPlayTube.Client.Shared
         [Inject]
         private IStringLocalizer<CultureSelector> Localizer { get; set; }
 
-        CultureInfo[] cultures = new[]
+        readonly CultureInfo[] cultures = new[]
         {
             new CultureInfo("en-US"),
             new CultureInfo("es-CR")
@@ -41,13 +41,13 @@ namespace FairPlayTube.Client.Shared
             }
         }
 
-        public string GetDisplayName(CultureInfo culture)
+        public static string GetDisplayName(CultureInfo culture)
         {
             string result = culture.Name switch
             {
                 "en-US" => "English",
                 "es-CR" => "Spanish",
-                _ => throw new CultureNotFoundException()
+                _ => throw new CultureNotFoundException($"Culture '{culture.Name}' not found")
             };
             return result;
         }

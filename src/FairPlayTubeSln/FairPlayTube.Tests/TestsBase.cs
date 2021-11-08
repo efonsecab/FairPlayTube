@@ -24,7 +24,6 @@ namespace FairPlayTube.Tests
     {
         internal static TestServer? Server { get; set; }
         protected IMapper Mapper { get; }
-        private static IHttpContextAccessor? HttpContextAccessor { get; set; }
         internal static string? TestVideoBloblUrl { get; set; }
         public TestsHttpClientFactory TestsHttpClientFactory { get; }
         internal static DataStorageConfiguration? DataStorageConfiguration { get; set; }
@@ -70,7 +69,6 @@ namespace FairPlayTube.Tests
             Client.Program.ConfigureModelsLocalizers(Server.Services);
             Configuration = Server.Services.GetRequiredService<IConfiguration>();
             this.Mapper = Server.Services.GetRequiredService<IMapper>();
-            HttpContextAccessor = Server.Services.GetRequiredService<IHttpContextAccessor>();
             DataStorageConfiguration = Server.Services.GetRequiredService<DataStorageConfiguration>();
             AzureBlobStorageConfiguration = Server.Services.GetRequiredService<AzureBlobStorageConfiguration>();
             TestAzureAdB2CAuthConfiguration = Configuration.GetSection("TestAzureAdB2CAuthConfiguration").Get<TestAzureAdB2CAuthConfiguration>();
@@ -92,7 +90,7 @@ namespace FairPlayTube.Tests
             User
         }
 
-        protected HttpClient CreateAnonymousClient()
+        protected static HttpClient CreateAnonymousClient()
         {
             return Server!.CreateClient();
         }
@@ -100,7 +98,7 @@ namespace FairPlayTube.Tests
         protected async Task<HttpClient> SignIn(Role role)
         {
             var authorizedHttpClient = await CreateAuthorizedClientAsync(role);
-            var userRole = await authorizedHttpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyRole);
+            _ = await authorizedHttpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyRole);
             return authorizedHttpClient;
         }
 
@@ -158,31 +156,31 @@ namespace FairPlayTube.Tests
 
         private HttpClientService CreateHttpClientService()
         {
-            HttpClientService httpClientService = new HttpClientService(this.TestsHttpClientFactory);
+            HttpClientService httpClientService = new(this.TestsHttpClientFactory);
             return httpClientService;
         }
 
         protected UserClientService CreateUserClientService()
         {
-            UserClientService userClientService = new UserClientService(CreateHttpClientService());
+            UserClientService userClientService = new(CreateHttpClientService());
             return userClientService;
         }
 
         protected VideoClientService CreateVideoClientService()
         {
-            VideoClientService videoClientService = new VideoClientService(CreateHttpClientService());
+            VideoClientService videoClientService = new(CreateHttpClientService());
             return videoClientService;
         }
 
         protected VideoPlaylistClientService CreateVideoPlaylistClientService()
         {
-            VideoPlaylistClientService videoPlaylistClientService = new VideoPlaylistClientService(CreateHttpClientService());
+            VideoPlaylistClientService videoPlaylistClientService = new(CreateHttpClientService());
             return videoPlaylistClientService;
         }
 
         protected VideoJobClientService CreateVideoJobClientService()
         {
-            VideoJobClientService videoJobClientService = new VideoJobClientService(CreateHttpClientService());
+            VideoJobClientService videoJobClientService = new(CreateHttpClientService());
             return videoJobClientService;
         }
     }

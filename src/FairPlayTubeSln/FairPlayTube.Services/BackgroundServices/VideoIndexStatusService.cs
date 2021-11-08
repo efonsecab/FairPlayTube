@@ -28,105 +28,103 @@ namespace FairPlayTube.Services.BackgroundServices
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            using (var scope = this.ServiceScopeFactory.CreateScope())
+            using var scope = this.ServiceScopeFactory.CreateScope();
+            var videoService = scope.ServiceProvider.GetRequiredService<VideoService>();
+            var azureVideoIndexerService = scope.ServiceProvider.GetRequiredService<AzureVideoIndexerService>();
+            FairplaytubeDatabaseContext fairplaytubeDatabaseContext = scope.ServiceProvider.GetRequiredService<FairplaytubeDatabaseContext>();
+            var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+            var videoIndexerBaseCallbackUrl = config["VideoIndexerCallbackUrl"];
+            var videoIndexerCallbackUrl = $"{videoIndexerBaseCallbackUrl}/api/AzureVideoIndexer/OnVideoIndexed";
+            var indexingPreset = "Advanced"; //TODO: Temporaily set to show capabilities, later this needs to has business logic
+            while (!stoppingToken.IsCancellationRequested)
             {
-                var videoService = scope.ServiceProvider.GetRequiredService<VideoService>();
-                var azureVideoIndexerService = scope.ServiceProvider.GetRequiredService<AzureVideoIndexerService>();
-                FairplaytubeDatabaseContext fairplaytubeDatabaseContext = scope.ServiceProvider.GetRequiredService<FairplaytubeDatabaseContext>();
-                var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-                var videoIndexerBaseCallbackUrl = config["VideoIndexerCallbackUrl"];
-                var videoIndexerCallbackUrl = $"{videoIndexerBaseCallbackUrl}/api/AzureVideoIndexer/OnVideoIndexed";
-                var indexingPreset = "Advanced"; //TODO: Temporaily set to show capabilities, later this needs to has business logic
-                while (!stoppingToken.IsCancellationRequested)
+                //Check https://stackoverflow.com/questions/48368634/how-should-i-inject-a-dbcontext-instance-into-an-ihostedservice
+                try
                 {
-                    //Check https://stackoverflow.com/questions/48368634/how-should-i-inject-a-dbcontext-instance-into-an-ihostedservice
+                    await CheckProcessingVideos(videoService, fairplaytubeDatabaseContext, stoppingToken);
+                    var pendingIndexingVideos = fairplaytubeDatabaseContext.VideoInfo.Where(p => p.VideoIndexStatusId ==
+                    (short)Common.Global.Enums.VideoIndexStatus.Pending)
+                        .OrderBy(p => p.VideoInfoId)
+                        .Take(50);
+                    foreach (var singleVideo in pendingIndexingVideos)
+                    {
+                        var allPersonModels = await azureVideoIndexerService.GetAllPersonModelsAsync(stoppingToken);
+                        var defaultPersonModel = allPersonModels.Single(p => p.isDefault == true);
+                        stoppingToken.ThrowIfCancellationRequested();
+                        string encodedName = HttpUtility.UrlEncode(singleVideo.Name);
+                        string encodedDescription = HttpUtility.UrlEncode(singleVideo.Description);
+                        var indexVideoResponse =
+                        await azureVideoIndexerService.UploadVideoAsync(new Uri(singleVideo.VideoBloblUrl),
+                            encodedName, encodedDescription, singleVideo.FileName,
+                            personModelId: Guid.Parse(defaultPersonModel.id), privacy: AzureVideoIndexerService.VideoPrivacy.Public,
+                            callBackUri: new Uri(videoIndexerCallbackUrl),
+                            language: singleVideo.VideoLanguageCode,
+                            indexingPreset: indexingPreset,
+                            cancellationToken: stoppingToken);
+                        singleVideo.VideoId = indexVideoResponse.id;
+                        singleVideo.IndexedVideoUrl = $"https://www.videoindexer.ai/embed/player/{singleVideo.AccountId}" +
+                            $"/{indexVideoResponse.id}/" +
+                            $"?&locale=en&location={singleVideo.Location}";
+                        singleVideo.VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Processing;
+                        await fairplaytubeDatabaseContext.SaveChangesAsync(stoppingToken);
+                    }
                     try
                     {
-                        await CheckProcessingVideos(videoService, fairplaytubeDatabaseContext, stoppingToken);
-                        var pendingIndexingVideos = fairplaytubeDatabaseContext.VideoInfo.Where(p => p.VideoIndexStatusId ==
-                        (short)Common.Global.Enums.VideoIndexStatus.Pending)
-                            .OrderBy(p => p.VideoInfoId)
-                            .Take(50);
-                        foreach (var singleVideo in pendingIndexingVideos)
-                        {
-                            var allPersonModels = await azureVideoIndexerService.GetAllPersonModelsAsync(stoppingToken);
-                            var defaultPersonModel = allPersonModels.Single(p => p.isDefault == true);
-                            stoppingToken.ThrowIfCancellationRequested();
-                            string encodedName = HttpUtility.UrlEncode(singleVideo.Name);
-                            string encodedDescription = HttpUtility.UrlEncode(singleVideo.Description);
-                            var indexVideoResponse =
-                            await azureVideoIndexerService.UploadVideoAsync(new Uri(singleVideo.VideoBloblUrl),
-                                encodedName, encodedDescription, singleVideo.FileName,
-                                personModelId: Guid.Parse(defaultPersonModel.id), privacy: AzureVideoIndexerService.VideoPrivacy.Public,
-                                callBackUri: new Uri(videoIndexerCallbackUrl),
-                                language: singleVideo.VideoLanguageCode,
-                                indexingPreset: indexingPreset,
-                                cancellationToken: stoppingToken);
-                            singleVideo.VideoId = indexVideoResponse.id;
-                            singleVideo.IndexedVideoUrl = $"https://www.videoindexer.ai/embed/player/{singleVideo.AccountId}" +
-                                $"/{indexVideoResponse.id}/" +
-                                $"?&locale=en&location={singleVideo.Location}";
-                            singleVideo.VideoIndexStatusId = (short)Common.Global.Enums.VideoIndexStatus.Processing;
-                            await fairplaytubeDatabaseContext.SaveChangesAsync();
-                        }
-                        try
-                        {
-                            var allVideoIndexerPersons = await videoService.GetAllPersonsAsync(stoppingToken);
-                            await videoService.SavePersonsAsync(personsModels: allVideoIndexerPersons, cancellationToken: stoppingToken);
-                        }
-                        catch (Exception ex)
-                        {
-                            fairplaytubeDatabaseContext.ChangeTracker.Clear();
-                            await fairplaytubeDatabaseContext.ErrorLog.AddAsync(new ErrorLog()
-                            {
-                                FullException = ex.ToString(),
-                                StackTrace = ex.StackTrace,
-                                Message = ex.Message
-                            });
-                            await fairplaytubeDatabaseContext.SaveChangesAsync();
-                        }
-                        var detailsPagePattern = Constants.PublicVideosPages.Details.Replace("{VideoId}", String.Empty);
-                        var detailsPagesWithPendingVideoId =
-                            fairplaytubeDatabaseContext.VisitorTracking.Where(p => p.VideoInfoId == null &&
-                            p.VisitedUrl.Contains(detailsPagePattern));
-                        foreach (var singleVisitedPage in detailsPagesWithPendingVideoId)
-                        {
-                            var pageUri = new Uri(singleVisitedPage.VisitedUrl);
-                            var lastSegment = pageUri.Segments.Last().TrimEnd('/');
-                            if (!String.IsNullOrWhiteSpace(lastSegment))
-                            {
-                                var videoInfoEntity = fairplaytubeDatabaseContext.VideoInfo.SingleOrDefault(p => p.VideoId == lastSegment);
-                                if (videoInfoEntity != null)
-                                {
-                                    singleVisitedPage.VideoInfoId = videoInfoEntity.VideoInfoId;
-                                }
-                            }
-                        }
-                        await fairplaytubeDatabaseContext.SaveChangesAsync();
+                        var allVideoIndexerPersons = await videoService.GetAllPersonsAsync(stoppingToken);
+                        await videoService.SavePersonsAsync(personsModels: allVideoIndexerPersons, cancellationToken: stoppingToken);
                     }
                     catch (Exception ex)
                     {
-                        this.Logger?.LogError(exception: ex, message:ex.Message);
-                        try
+                        fairplaytubeDatabaseContext.ChangeTracker.Clear();
+                        await fairplaytubeDatabaseContext.ErrorLog.AddAsync(new ErrorLog()
                         {
-                            fairplaytubeDatabaseContext.ChangeTracker.Clear();
-                            await fairplaytubeDatabaseContext.ErrorLog.AddAsync(new ErrorLog()
+                            FullException = ex.ToString(),
+                            StackTrace = ex.StackTrace,
+                            Message = ex.Message
+                        }, stoppingToken);
+                        await fairplaytubeDatabaseContext.SaveChangesAsync(stoppingToken);
+                    }
+                    var detailsPagePattern = Constants.PublicVideosPages.Details.Replace("{VideoId}", String.Empty);
+                    var detailsPagesWithPendingVideoId =
+                        fairplaytubeDatabaseContext.VisitorTracking.Where(p => p.VideoInfoId == null &&
+                        p.VisitedUrl.Contains(detailsPagePattern));
+                    foreach (var singleVisitedPage in detailsPagesWithPendingVideoId)
+                    {
+                        var pageUri = new Uri(singleVisitedPage.VisitedUrl);
+                        var lastSegment = pageUri.Segments.Last().TrimEnd('/');
+                        if (!String.IsNullOrWhiteSpace(lastSegment))
+                        {
+                            var videoInfoEntity = fairplaytubeDatabaseContext.VideoInfo.SingleOrDefault(p => p.VideoId == lastSegment);
+                            if (videoInfoEntity != null)
                             {
-                                FullException = ex.ToString(),
-                                StackTrace = ex.StackTrace,
-                                Message = ex.Message
-                            });
-                            await fairplaytubeDatabaseContext.SaveChangesAsync();
-                        }
-                        catch (Exception ex1)
-                        {
-                            this.Logger?.LogError(exception: ex1, message: ex1.Message);
-                            //TODO: Add Email Notification
+                                singleVisitedPage.VideoInfoId = videoInfoEntity.VideoInfoId;
+                            }
                         }
                     }
-                    this.Logger?.LogInformation($"{nameof(VideoIndexStatusService)} waiting for 5 minutes.");
-                    await Task.Delay(TimeSpan.FromMinutes(5));
+                    await fairplaytubeDatabaseContext.SaveChangesAsync(stoppingToken);
                 }
+                catch (Exception ex)
+                {
+                    this.Logger?.LogError(exception: ex, message: ex.Message);
+                    try
+                    {
+                        fairplaytubeDatabaseContext.ChangeTracker.Clear();
+                        await fairplaytubeDatabaseContext.ErrorLog.AddAsync(new ErrorLog()
+                        {
+                            FullException = ex.ToString(),
+                            StackTrace = ex.StackTrace,
+                            Message = ex.Message
+                        }, stoppingToken);
+                        await fairplaytubeDatabaseContext.SaveChangesAsync(stoppingToken);
+                    }
+                    catch (Exception ex1)
+                    {
+                        this.Logger?.LogError(exception: ex1, message: ex1.Message);
+                        //TODO: Add Email Notification
+                    }
+                }
+                this.Logger?.LogInformation($"{nameof(VideoIndexStatusService)} waiting for 5 minutes.");
+                await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
             }
         }
 
@@ -144,7 +142,7 @@ namespace FairPlayTube.Services.BackgroundServices
                 {
                     var indexCompleteVideos = videosIndex.results.Where(p =>
                     p.state == Common.Global.Enums.VideoIndexStatus.Processed.ToString());
-                    if (indexCompleteVideos.Count() > 0)
+                    if (indexCompleteVideos.Any())
                     {
                         var indexCompleteVideosIds = indexCompleteVideos.Select(p => p.id).ToArray();
                         await videoService.AddVideoIndexTransactionsAsync(indexCompleteVideosIds, stoppingToken);

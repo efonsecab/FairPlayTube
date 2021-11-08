@@ -22,7 +22,7 @@ namespace FairPlayTube.Client.Pages.Users.VideoPlaylists
         private VideoPlaylistClientService VideoPlaylistClientService { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
-        private VideoPlaylistModel Model = new();
+        private readonly VideoPlaylistModel Model = new();
         private bool IsLoading { get; set; }
 
         private async Task OnValidSubmittedPlaylist()

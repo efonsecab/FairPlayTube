@@ -21,7 +21,6 @@ namespace FairPlayTube.Controllers
     [ApiController]
     public class SearchController : ControllerBase
     {
-        private FairplaytubeDatabaseContext FairplaytubeDatabaseContext { get; }
         private SearchService SearchService { get; }
         private IMapper Mapper { get; }
 
@@ -34,7 +33,6 @@ namespace FairPlayTube.Controllers
         public SearchController(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             SearchService searchService, IMapper mapper)
         {
-            this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
             this.SearchService = searchService;
             this.Mapper = mapper;
         }

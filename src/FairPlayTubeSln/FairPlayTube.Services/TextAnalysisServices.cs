@@ -21,7 +21,7 @@ namespace FairPlayTube.Services
 
         public async Task<string> DetectLanguageAsync(string text, CancellationToken cancellationToken)
         {
-            DetectLanguageRequest request = new DetectLanguageRequest()
+            DetectLanguageRequest request = new()
             {
                 documents = new DetectLanguageRequestDocument[]
                 {
@@ -44,7 +44,7 @@ namespace FairPlayTube.Services
         public async Task<string> GetSentimentAsync(string text, string textLanguage, CancellationToken cancellationToken)
         {
             Guid id = Guid.NewGuid();
-            GetSentimentRequest request = new GetSentimentRequest()
+            GetSentimentRequest request = new()
             {
                 documents = new GetSentimentRequestDocument[]
                 {
@@ -67,7 +67,7 @@ namespace FairPlayTube.Services
 
         public async Task<List<string>> GetKeyPhrasesAsync(string text, string textLanguage, CancellationToken cancellationToken)
         {
-            List<string> keyPhrases = new List<string>();
+            List<string> keyPhrases = new();
             Guid id = Guid.NewGuid();
             var request =
             new GetKeyPhrasesRequest()

@@ -49,9 +49,10 @@ namespace FairPlayTube.Controllers
             CancellationToken cancellationToken)
         {
             var userObjectId = this.CurrentUserProvider.GetObjectId();
-            var user = await this.FairplaytubeDatabaseContext.ApplicationUser.Include(p => p.UserExternalMonetization)
+            var user = await this.FairplaytubeDatabaseContext.ApplicationUser
+                .Include(p => p.UserExternalMonetization)
                 .Where(p => p.AzureAdB2cobjectId.ToString() == userObjectId)
-                .SingleAsync();
+                .SingleAsync(cancellationToken: cancellationToken);
             if (user.UserExternalMonetization.Count > 0)
             {
                 var userMonetizationItems = user.UserExternalMonetization;
@@ -59,20 +60,19 @@ namespace FairPlayTube.Controllers
                 {
                     this.FairplaytubeDatabaseContext.UserExternalMonetization.Remove(singleItem);
                 }
-                await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+                await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
             }
             if (globalMonetizationModel.MonetizationItems.Count > 0)
             {
                 foreach (var singleItem in globalMonetizationModel.MonetizationItems)
                 {
-                    await this.FairplaytubeDatabaseContext.UserExternalMonetization.AddAsync(
-                        new DataAccess.Models.UserExternalMonetization()
+                    await this.FairplaytubeDatabaseContext.UserExternalMonetization.AddAsync(new DataAccess.Models.UserExternalMonetization()
                         {
                             ApplicationUserId = user.ApplicationUserId,
                             MonetizationUrl = singleItem.MonetizationUrl
-                        });
+                        }, cancellationToken);
                 }
-                await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+                await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
             }
 
         }
@@ -88,7 +88,7 @@ namespace FairPlayTube.Controllers
             var userObjectId = this.CurrentUserProvider.GetObjectId();
             var user = await this.FairplaytubeDatabaseContext.ApplicationUser.Include(p => p.UserExternalMonetization)
                 .Where(p => p.AzureAdB2cobjectId.ToString() == userObjectId)
-                .SingleAsync();
+                .SingleAsync(cancellationToken: cancellationToken);
             if (user.UserExternalMonetization.Count > 0)
                 return new GlobalMonetizationModel()
                 {
@@ -134,7 +134,7 @@ namespace FairPlayTube.Controllers
             var result = await this.FairplaytubeDatabaseContext.ApplicationUser
                 .Where(p => p.AzureAdB2cobjectId.ToString() == azureAdB2CObjectId)
                 .Select(p => p.AvailableFunds)
-                .SingleAsync();
+                .SingleAsync(cancellationToken: cancellationToken);
             return result;
         }
     }

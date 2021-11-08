@@ -61,7 +61,7 @@ namespace FairPlayTube.AutoMapperProfiles
                 }
                 if (source.VisitorTracking != null)
                 {
-                    dest.VisitsCount = source.VisitorTracking.LongCount();
+                    dest.VisitsCount = source.VisitorTracking.Count;
                 }
                 dest.VideoIndexStatus = (Common.Global.Enums.VideoIndexStatus)source.VideoIndexStatusId;
             });
@@ -69,7 +69,7 @@ namespace FairPlayTube.AutoMapperProfiles
             {
                 if (source.ApplicationUser != null && source.ApplicationUser.UserFollowerFollowedApplicationUser != null)
                 {
-                    var followersCount = source.ApplicationUser.UserFollowerFollowedApplicationUser.LongCount();
+                    var followersCount = source.ApplicationUser.UserFollowerFollowedApplicationUser.Count;
                     dest.ApplicationUserFollowersCount = followersCount;
                 }
             });

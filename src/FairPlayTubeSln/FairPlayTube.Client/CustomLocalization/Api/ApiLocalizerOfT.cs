@@ -10,7 +10,7 @@ namespace FairPlayTube.Client.CustomLocalization.Api
 {
     public class ApiLocalizer<T> : IStringLocalizer<T>
     {
-        private LocalizationClientService _localizationClientService;
+        private readonly LocalizationClientService _localizationClientService;
 
         public ApiLocalizer(LocalizationClientService localizationClientService)
         {

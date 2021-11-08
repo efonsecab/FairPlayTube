@@ -13,7 +13,7 @@ namespace FairPlayTube.Services
 {
     public class TranslationService
     {
-        private AzureTranslatorService AzureTranslatorService;
+        private readonly AzureTranslatorService AzureTranslatorService;
         private ILogger<TranslationService> Logger { get;}
 
         public TranslationService(AzureTranslatorService azureTranslatorService,
@@ -26,14 +26,14 @@ namespace FairPlayTube.Services
             AzureTranslatorLanguage sourceLanguage, AzureTranslatorLanguage destLanguage,
             CancellationToken cancellationToken)
         {
-            List<TranslateResponseLanguageInforomation> result =
-                new List<TranslateResponseLanguageInforomation>();
+            List<TranslateResponseLanguageInforomation> result = new();
             foreach(var singleItem in model)
             {
                 try
                 {
-                    var response = await this.AzureTranslatorService.TranslateSimpleTextAsync(singleItem.Text,
-                        sourceLanguage, destLanguage);
+                    var response = await this.AzureTranslatorService
+                        .TranslateSimpleTextAsync(singleItem.Text, sourceLanguage, destLanguage, 
+                        cancellationToken);
                     result.AddRange(response);
                 }
                 catch (Exception ex)

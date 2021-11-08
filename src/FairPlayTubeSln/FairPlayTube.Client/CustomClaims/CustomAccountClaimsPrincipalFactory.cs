@@ -27,7 +27,7 @@ namespace FairPlayTube.Client.CustomClaims
             if (userClaimsPrincipal.Identity.IsAuthenticated)
             {
                 ClaimsIdentity claimsIdentity = userClaimsPrincipal.Identity as ClaimsIdentity;
-                var userObjectId = claimsIdentity.Claims.GetAzureAdB2CUserObjectId();
+                _ = claimsIdentity.Claims.GetAzureAdB2CUserObjectId();
                 var httpClient = this.HttpClientService.CreateAuthorizedClient();
                 var userRole = await httpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyRole);
                 if (!string.IsNullOrWhiteSpace(userRole))

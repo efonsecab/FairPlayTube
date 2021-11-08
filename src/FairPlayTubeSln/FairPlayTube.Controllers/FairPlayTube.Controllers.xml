@@ -9,13 +9,12 @@
             Enabled the callback to be invoked from Azure Video Indexer
             </summary>
         </member>
-        <member name="M:FairPlayTube.Controllers.AzureVideoIndexerController.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext,FairPlayTube.Services.VideoService,Microsoft.AspNetCore.SignalR.IHubContext{FairPlayTube.Notifications.Hubs.NotificationHub,FairPlayTube.Notifications.Hubs.INotificationHub})">
+        <member name="M:FairPlayTube.Controllers.AzureVideoIndexerController.#ctor(FairPlayTube.DataAccess.Data.FairplaytubeDatabaseContext,FairPlayTube.Services.VideoService)">
             <summary>
             Initializes <see cref="T:FairPlayTube.Controllers.AzureVideoIndexerController"/>
             </summary>
             <param name="fairplaytubeDatabaseContext"></param>
             <param name="videoService"></param>
-            <param name="hubContext"></param>
         </member>
         <member name="M:FairPlayTube.Controllers.AzureVideoIndexerController.OnVideoIndexed(System.String,System.String,System.Threading.CancellationToken)">
             <summary>

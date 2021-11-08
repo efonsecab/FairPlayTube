@@ -23,7 +23,7 @@ namespace FairPlayTube.Translations
     /// </summary>
     public class BackgroundTranslationService : BackgroundService
     {
-        private IServiceScopeFactory ServiceScopeFactory;
+        private readonly IServiceScopeFactory ServiceScopeFactory;
 
         private ILogger<BackgroundTranslationService> Logger { get; }
 
@@ -60,100 +60,98 @@ namespace FairPlayTube.Translations
 
         private async Task Process(CancellationToken stoppingToken)
         {
-            using (var scope = this.ServiceScopeFactory.CreateScope())
+            using var scope = this.ServiceScopeFactory.CreateScope();
+            FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
+                scope.ServiceProvider.GetRequiredService<FairplaytubeDatabaseContext>();
+            var translationService =
+                scope.ServiceProvider.GetRequiredService<TranslationService>();
+            var clientAppAssembly = typeof(Client.Program).Assembly;
+            var clientAppTypes = clientAppAssembly.GetTypes();
+
+            var componentsAssembly = typeof(Components._Imports).Assembly;
+            var componentsTypes = componentsAssembly.GetTypes();
+
+            var modelsAssembly = typeof(Models.Video.UploadVideoModel).Assembly;
+            var modelsTypes = modelsAssembly.GetTypes();
+
+            var servicesAssembly = typeof(FairPlayTube.Services.TranslationService).Assembly;
+            var servicesTypes = servicesAssembly.GetTypes();
+
+            List<Type> typesToCheck = new();
+            typesToCheck.AddRange(clientAppTypes);
+            typesToCheck.AddRange(componentsTypes);
+            typesToCheck.AddRange(modelsTypes);
+            typesToCheck.AddRange(servicesTypes);
+
+            foreach (var singleTypeToCheck in typesToCheck)
             {
-                FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
-                    scope.ServiceProvider.GetRequiredService<FairplaytubeDatabaseContext>();
-                var translationService =
-                    scope.ServiceProvider.GetRequiredService<TranslationService>();
-                var clientAppAssembly = typeof(Client.Program).Assembly;
-                var clientAppTypes = clientAppAssembly.GetTypes();
-
-                var componentsAssembly = typeof(Components._Imports).Assembly;
-                var componentsTypes = componentsAssembly.GetTypes();
-
-                var modelsAssembly = typeof(Models.Video.UploadVideoModel).Assembly;
-                var modelsTypes = modelsAssembly.GetTypes();
-
-                var servicesAssembly = typeof(FairPlayTube.Services.TranslationService).Assembly;
-                var servicesTypes = servicesAssembly.GetTypes();
-
-                List<Type> typesToCheck = new List<Type>();
-                typesToCheck.AddRange(clientAppTypes);
-                typesToCheck.AddRange(componentsTypes);
-                typesToCheck.AddRange(modelsTypes);
-                typesToCheck.AddRange(servicesTypes);
-
-                foreach (var singleTypeToCheck in typesToCheck)
+                string typeFullName = singleTypeToCheck.FullName;
+                var fields = singleTypeToCheck.GetFields(
+                    BindingFlags.Public |
+                    BindingFlags.Static |
+                    BindingFlags.FlattenHierarchy
+                    );
+                foreach (var singleField in fields)
                 {
-                    string typeFullName = singleTypeToCheck.FullName;
-                    var fields = singleTypeToCheck.GetFields(
-                        BindingFlags.Public |
-                        BindingFlags.Static |
-                        BindingFlags.FlattenHierarchy
-                        );
-                    foreach (var singleField in fields)
+                    var resourceKeyAttributes =
+                        singleField.GetCustomAttributes<ResourceKeyAttribute>();
+                    if (resourceKeyAttributes != null && resourceKeyAttributes.Any())
                     {
-                        var resourceKeyAttributes =
-                            singleField.GetCustomAttributes<ResourceKeyAttribute>();
-                        if (resourceKeyAttributes != null && resourceKeyAttributes.Count() > 0)
+                        ResourceKeyAttribute keyAttribute = resourceKeyAttributes.Single();
+                        var defaultValue = keyAttribute.DefaultValue;
+                        string key = singleField.GetRawConstantValue().ToString();
+                        var entity =
+                            await fairplaytubeDatabaseContext.Resource
+                            .SingleOrDefaultAsync(p => p.CultureId == 1 &&
+                            p.Key == key &&
+                            p.Type == typeFullName, stoppingToken);
+                        if (entity is null)
                         {
-                            ResourceKeyAttribute keyAttribute = resourceKeyAttributes.Single();
-                            var defaultValue = keyAttribute.DefaultValue;
-                            string key = singleField.GetRawConstantValue().ToString();
-                            var entity =
-                                await fairplaytubeDatabaseContext.Resource
-                                .SingleOrDefaultAsync(p => p.CultureId == 1 &&
-                                p.Key == key &&
-                                p.Type == typeFullName, stoppingToken);
-                            if (entity is null)
+                            entity = new Resource()
                             {
-                                entity = new Resource()
-                                {
-                                    CultureId = 1,
-                                    Key = key,
-                                    Type = typeFullName,
-                                    Value = keyAttribute.DefaultValue
-                                };
-                                await fairplaytubeDatabaseContext.Resource.AddAsync(entity, stoppingToken);
-                            }
+                                CultureId = 1,
+                                Key = key,
+                                Type = typeFullName,
+                                Value = keyAttribute.DefaultValue
+                            };
+                            await fairplaytubeDatabaseContext.Resource.AddAsync(entity, stoppingToken);
                         }
                     }
                 }
-                if (fairplaytubeDatabaseContext.ChangeTracker.HasChanges())
-                    await fairplaytubeDatabaseContext.SaveChangesAsync(stoppingToken);
-                var allEnglishUSKeys =
-                    await fairplaytubeDatabaseContext.Resource
-                    .Include(p => p.Culture)
-                    .Where(p => p.Culture.Name == "en-US")
-                    .ToListAsync(stoppingToken);
-                TranslateRequestTextItem[] translateRequestItems =
-                    allEnglishUSKeys.Select(p => new TranslateRequestTextItem() 
-                    {
-                        Text = p.Value
-                    }).ToArray();
-                var spanishTranslations = await
-                    translationService.TranslateAsync(translateRequestItems,
-                    AzureTranslatorLanguage.English,
-                    AzureTranslatorLanguage.Spanish, stoppingToken);
-
-                for (int iPos = 0; iPos < spanishTranslations.Length; iPos++)
-                {
-                    var singleEnglishUSKey = allEnglishUSKeys[iPos];
-                    var translatedValue = spanishTranslations[iPos].translations.First().text;
-
-                    Resource resource = new Resource()
-                    {
-                        Key = singleEnglishUSKey.Key,
-                        Type = singleEnglishUSKey.Type,
-                        Value = translatedValue,
-                        CultureId = 2
-                    };
-                    await fairplaytubeDatabaseContext.Resource.AddAsync(resource, stoppingToken);
-                }
-                if (fairplaytubeDatabaseContext.ChangeTracker.HasChanges())
-                    await fairplaytubeDatabaseContext.SaveChangesAsync(stoppingToken);
             }
+            if (fairplaytubeDatabaseContext.ChangeTracker.HasChanges())
+                await fairplaytubeDatabaseContext.SaveChangesAsync(stoppingToken);
+            var allEnglishUSKeys =
+                await fairplaytubeDatabaseContext.Resource
+                .Include(p => p.Culture)
+                .Where(p => p.Culture.Name == "en-US")
+                .ToListAsync(stoppingToken);
+            TranslateRequestTextItem[] translateRequestItems =
+                allEnglishUSKeys.Select(p => new TranslateRequestTextItem()
+                {
+                    Text = p.Value
+                }).ToArray();
+            var spanishTranslations = await
+                translationService.TranslateAsync(translateRequestItems,
+                AzureTranslatorLanguage.English,
+                AzureTranslatorLanguage.Spanish, stoppingToken);
+
+            for (int iPos = 0; iPos < spanishTranslations.Length; iPos++)
+            {
+                var singleEnglishUSKey = allEnglishUSKeys[iPos];
+                var translatedValue = spanishTranslations[iPos].translations.First().text;
+
+                Resource resource = new()
+                {
+                    Key = singleEnglishUSKey.Key,
+                    Type = singleEnglishUSKey.Type,
+                    Value = translatedValue,
+                    CultureId = 2
+                };
+                await fairplaytubeDatabaseContext.Resource.AddAsync(resource, stoppingToken);
+            }
+            if (fairplaytubeDatabaseContext.ChangeTracker.HasChanges())
+                await fairplaytubeDatabaseContext.SaveChangesAsync(stoppingToken);
         }
     }
 }

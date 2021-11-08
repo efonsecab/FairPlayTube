@@ -24,8 +24,8 @@ namespace FairPlayTube.Controllers
     [Authorize]
     public class UserYouTubeChannelController : ControllerBase
     {
-        private UserYouTubeChannelService UserYouTubeChannelService;
-        private IMapper Mapper;
+        private readonly UserYouTubeChannelService UserYouTubeChannelService;
+        private readonly IMapper Mapper;
 
         /// <summary>
         /// Initializes <see cref="UserYouTubeChannelController"/>
@@ -59,9 +59,10 @@ namespace FairPlayTube.Controllers
         [AllowAnonymous]
         public async Task<UserYouTubeChannelModel[]> GetUserYouTubeChannels(long applicationUserId, CancellationToken cancellationToken)
         {
-            var result = await this.UserYouTubeChannelService.GetUserYouTubeChannels(applicationUserId)
+            var result = await this.UserYouTubeChannelService
+                .GetUserYouTubeChannels(applicationUserId)
                 .Select(p => this.Mapper.Map<UserYouTubeChannel, UserYouTubeChannelModel>(p))
-                .ToArrayAsync();
+                .ToArrayAsync(cancellationToken: cancellationToken);
             return result;
         }
 

@@ -45,7 +45,7 @@ namespace FairPlayTube.Tests.Controllers
             await dbContext.VideoInfo.AddAsync(testVideoEntity);
             await dbContext.SaveChangesAsync();
             VideoJobClientService videoJobClientService = CreateVideoJobClientService();
-            VideoJobModel videoJobModel = new VideoJobModel()
+            VideoJobModel videoJobModel = new()
             {
                 Budget = 5,
                 Description = "Automated Test Description",
@@ -72,7 +72,7 @@ namespace FairPlayTube.Tests.Controllers
             await dbContext.VideoInfo.AddAsync(testVideoEntity);
             await dbContext.SaveChangesAsync();
             VideoJobClientService videoJobClientService = CreateVideoJobClientService();
-            VideoJobModel videoJobModel = new VideoJobModel()
+            VideoJobModel videoJobModel = new()
             {
                 Budget = 5,
                 Description = "Automated Test Description",

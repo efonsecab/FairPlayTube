@@ -28,12 +28,12 @@ namespace FairPlayTube.Services
         public async Task AddUserFollowerAsync(string followerUserObjectId, string followedUserObjectId, CancellationToken cancellationToken)
         {
             var followerUserEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
-                .SingleOrDefaultAsync(p => p.AzureAdB2cobjectId.ToString() == followerUserObjectId);
+                .SingleOrDefaultAsync(p => p.AzureAdB2cobjectId.ToString() == followerUserObjectId, cancellationToken: cancellationToken);
             if (followerUserEntity is null)
                 throw new Exception($"User {followerUserObjectId} does not exist");
 
             var followedUserEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
-                .SingleOrDefaultAsync(p => p.AzureAdB2cobjectId.ToString() == followedUserObjectId);
+                .SingleOrDefaultAsync(p => p.AzureAdB2cobjectId.ToString() == followedUserObjectId, cancellationToken: cancellationToken);
             if (followedUserEntity is null)
                 throw new Exception($"User {followedUserObjectId} does not exist");
 
@@ -41,8 +41,8 @@ namespace FairPlayTube.Services
             {
                 FollowerApplicationUserId = followerUserEntity.ApplicationUserId,
                 FollowedApplicationUserId = followedUserEntity.ApplicationUserId
-            });
-            await this.FairplaytubeDatabaseContext.SaveChangesAsync();
+            }, cancellationToken);
+            await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<UserInvitation> InviteUserAsync(InviteUserModel inviteUserModel, CancellationToken cancellationToken)

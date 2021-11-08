@@ -22,7 +22,7 @@ namespace FairPlayTube.Client.Pages.Users
         private UserClientService UserClientService { get; set; }
         [Inject]
         private IStringLocalizer<InviteUser> Localizer { get; set; }
-        private InviteUserModel InviteUserModel = new Models.Invites.InviteUserModel();
+        private readonly InviteUserModel InviteUserModel = new();
         private bool IsLoading { get; set; } = false;
 
         private async Task OnValidSubmit()

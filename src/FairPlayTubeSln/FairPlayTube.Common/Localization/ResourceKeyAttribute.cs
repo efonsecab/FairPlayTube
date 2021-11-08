@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace FairPlayTube.Common.Localization
 {
+    [AttributeUsage(AttributeTargets.Field)]
     public class ResourceKeyAttribute : Attribute
     {
         public string DefaultValue { get; }

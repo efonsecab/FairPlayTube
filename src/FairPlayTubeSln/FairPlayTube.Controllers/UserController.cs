@@ -90,7 +90,7 @@ namespace FairPlayTube.Controllers
                     BrandsCount = p.Brand.Count,
                     VideosCount = p.VideoInfo.Count,
                     YouTubeChannels = p.UserYouTubeChannel == null ? null : p.UserYouTubeChannel.Select(p => p.YouTubeChannelId).ToArray()
-                }).ToArrayAsync();
+                }).ToArrayAsync(cancellationToken: cancellationToken);
             return result;
         }
 
@@ -105,7 +105,7 @@ namespace FairPlayTube.Controllers
         {
             var userInvitation = await this.UserService.InviteUserAsync(inviteUserModel, cancellationToken: cancellationToken);
             var userName = this.CurrentUserProvider.GetUsername();
-            StringBuilder completeBody = new StringBuilder(inviteUserModel.CustomMessage);
+            StringBuilder completeBody = new(inviteUserModel.CustomMessage);
             completeBody.AppendLine();
             string baseUrl = $"{this.Request.Scheme}://{this.Request.Host.Value}";
             var userHomePagePath = Common.Global.Constants.UserPagesRoutes.UserHomePage
@@ -148,7 +148,8 @@ namespace FairPlayTube.Controllers
         public async Task<IActionResult> AddUserFollower(long followedApplicationUserId, CancellationToken cancellationToken)
         {
             var userAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
-            var followedUser = await this.FairplaytubeDatabaseContext.ApplicationUser.SingleOrDefaultAsync(p => p.ApplicationUserId == followedApplicationUserId);
+            var followedUser = await this.FairplaytubeDatabaseContext.ApplicationUser
+                .SingleOrDefaultAsync(p => p.ApplicationUserId == followedApplicationUserId, cancellationToken: cancellationToken);
             if (followedUser == null)
                 throw new Exception($"Invalid {nameof(followedApplicationUserId)}");
             await this.UserService.AddUserFollowerAsync(followerUserObjectId: userAdB2CObjectId,
@@ -169,7 +170,7 @@ namespace FairPlayTube.Controllers
             var userStatus = await this.FairplaytubeDatabaseContext.ApplicationUser
                 .Include(p => p.ApplicationUserStatus)
                 .Where(p => p.AzureAdB2cobjectId.ToString() == userAdB2CObjectId)
-                .Select(p => p.ApplicationUserStatus.Name).SingleAsync();
+                .Select(p => p.ApplicationUserStatus.Name).SingleAsync(cancellationToken: cancellationToken);
             return userStatus;
         }
 

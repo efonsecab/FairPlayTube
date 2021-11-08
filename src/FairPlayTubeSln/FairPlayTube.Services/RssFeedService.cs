@@ -15,14 +15,10 @@ namespace FairPlayTube.Services
 {
     public class RssFeedService
     {
-        private FairplaytubeDatabaseContext FairplaytubeDatabaseContext { get; }
-
         private VideoService VideoService { get; }
 
-        public RssFeedService(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
-            VideoService videoService)
+        public RssFeedService(VideoService videoService)
         {
-            this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
             this.VideoService = videoService;
         }
 
@@ -30,18 +26,18 @@ namespace FairPlayTube.Services
         {
             var videos = await this.VideoService.GetPublicProcessedVideos()
                 .ToListAsync();
-            StringWriter stringWriter = new StringWriter();
+            StringWriter stringWriter = new();
             using (XmlWriter xmlWriter = XmlWriter.Create(stringWriter,
                 new XmlWriterSettings() { Async = true, Indent = true }))
             {
-                RssFeedWriter rssFeedWriter = new RssFeedWriter(xmlWriter);
+                RssFeedWriter rssFeedWriter = new(xmlWriter);
                 await rssFeedWriter.WriteTitle("FairPlayTube");
                 await rssFeedWriter.WriteDescription("The Next Generation Of Video Sharing Portals focused on users and transparency");
                 await rssFeedWriter.WriteGenerator("PTI Costa Rica");
                 await rssFeedWriter.WriteValue("link", host);
                 foreach (var singleVideo in videos)
                 {
-                    AtomEntry atomEntry = new AtomEntry()
+                    AtomEntry atomEntry = new()
                     {
                         Title = singleVideo.Name,
                         Description = singleVideo.Description,

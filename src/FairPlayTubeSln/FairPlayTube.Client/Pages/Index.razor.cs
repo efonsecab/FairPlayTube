@@ -24,7 +24,6 @@ namespace FairPlayTube.Client.Pages
         private IStringLocalizer<Index> Localizer { get; set; }
 
         private VideoInfoModel[] AllVideos { get; set; }
-        private VideoInfoModel SelectedVideo { get; set; }
         [Inject]
         private VideoClientService VideoClientService { get; set; }
         [Inject]
@@ -99,7 +98,8 @@ namespace FairPlayTube.Client.Pages
                new
                {
                    ByteArray = result.VideoBytes,
-                   FileName = videoInfoModel.FileName,
+                   //infered name
+                   videoInfoModel.FileName,
                    ContentType = System.Net.Mime.MediaTypeNames.Application.Octet
                });
             }

@@ -34,7 +34,7 @@ namespace FairPlayTube.Controllers
         {
             
             Response.ContentType = "application/xml";
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder stringBuilder = new();
             using var xmlWriter = XmlWriter.Create(Response.Body, new XmlWriterSettings { Indent = true });
             xmlWriter.WriteStartDocument();
             xmlWriter.WriteStartElement("urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
@@ -57,7 +57,7 @@ namespace FairPlayTube.Controllers
             xmlWriter.WriteEndDocument();
         }
 
-        private void AddLocation(XmlWriter xmlWriter, string url)
+        private static void AddLocation(XmlWriter xmlWriter, string url)
         {
             xmlWriter.WriteStartElement("url");
             xmlWriter.WriteElementString("loc", url);

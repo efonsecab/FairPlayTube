@@ -45,26 +45,12 @@ namespace FairPlayTube.Client.CustomComponents.SignalR
             }
         }
 
-        private async Task Send(NotificationModel model)
-        {
-            await this.HubConnection.SendAsync(Common.Global.Constants.Hubs.SendMessage, model);
-        }
-
         public bool IsConnected =>
         HubConnection.State == HubConnectionState.Connected;
 
         public async ValueTask DisposeAsync()
         {
             await HubConnection.DisposeAsync();
-        }
-
-        private async Task OnSendClick()
-        {
-            NotificationModel notificationModel = new NotificationModel()
-            {
-                Message = "TestMessage"
-            };
-            await this.Send(notificationModel);
         }
 
         private void OnShowNotificationClick()
@@ -77,7 +63,7 @@ namespace FairPlayTube.Client.CustomComponents.SignalR
             this.ShowNotifications = false;
         }
 
-        private string GetVideoDetailsUrl(string videoId)
+        private static string GetVideoDetailsUrl(string videoId)
         {
             return Constants.PublicVideosPages.Details.Replace("{VideoId}", videoId);
         }
