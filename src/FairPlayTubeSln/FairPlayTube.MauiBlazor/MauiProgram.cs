@@ -62,7 +62,7 @@ namespace FairPlayTube.MauiBlazor
              * Use your correct FairPlayTube API port
              * */
             //ngrok.exe http https://localhost:44373 -host-header="localhost:44373"
-            //string fairPlayTubeapiAddress = REPLACE WITH GENERATED ADDRESS FROM NGROK;
+            //string fairPlayTubeapiAddress = "REPLACE_WITH_NGROK_GENERATED_URL";
             services.AddScoped<BaseAddressAuthorizationMessageHandler>();
             services.AddHttpClient($"{assemblyName}.ServerAPI", client =>
         client.BaseAddress = new Uri(fairPlayTubeapiAddress))

@@ -20,5 +20,7 @@ namespace FairPlayTube.MauiBlazor
                 .Build();
             MainPage = new MainPage();
         }
+
+        public static MainActivity ParentWindow { get; internal set; }
     }
 }

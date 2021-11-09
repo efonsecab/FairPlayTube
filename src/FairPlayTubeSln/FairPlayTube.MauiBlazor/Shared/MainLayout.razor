@@ -17,6 +17,10 @@
         <article class="content px-4">
             <ErrorBoundary>
                 <ChildContent>
+                    @if (!UserState.UserContext.IsLoggedOn)
+                    {
+                        <button class="btn btn-primary" @onclick="@( async () => await OnLoginClicked())">Sign In</button>
+                    }
                     @Body
                 </ChildContent>
                 <ErrorContent>
