@@ -23,7 +23,7 @@ jobs:
     - name: Restore
       run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
     - name: Build
-      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+      run: dotnet build "${{ env.WORKING_DIRECTORY }}" -r win-x64 --configuration ${{ env.CONFIGURATION }} --no-restore
     #- name: Test with dotnet
     #  run: dotnet test "${{ env.TESTS_DIRECTORY }}" --logger trx --results-directory "TestResults"
     #- name: Upload dotnet test results
