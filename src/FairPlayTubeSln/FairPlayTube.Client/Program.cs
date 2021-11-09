@@ -3,6 +3,8 @@ using FairPlayTube.Client.CustomLocalization.Api;
 using FairPlayTube.Client.CustomProviders;
 using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.ClientServices.CustomLocalization;
+using FairPlayTube.ClientServices.Extensions;
 using FairPlayTube.Common.Configuration;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.Components.FacebookButtons;
@@ -65,67 +67,14 @@ namespace FairPlayTube.Client
                 builder.Configuration.GetSection("AzureQnABotConfiguration").Get<AzureQnABotConfiguration>();
             builder.Services.AddSingleton(azureQnABotConfiguration);
 
+            var services = builder.Services;
 
-            DisplayResponsiveAdConfiguration displayResponsiveAdConfiguration =
-                builder.Configuration.GetSection("DisplayResponsiveAdConfiguration")
-                .Get<DisplayResponsiveAdConfiguration>();
-            builder.Services.AddSingleton(displayResponsiveAdConfiguration);
-
-            FaceBookLikeButtonConfiguration faceBookLikeButtonConfiguration =
-                builder.Configuration.GetSection(nameof(faceBookLikeButtonConfiguration))
-                .Get<FaceBookLikeButtonConfiguration>();
-            builder.Services.AddSingleton(faceBookLikeButtonConfiguration);
-
-            builder.Services.AddTransient<IVideoEditAccessTokenProvider, VideoEditAccessTokenProvider>();
-
-            builder.Services.AddSingleton<LocalizationClientService>();
-            builder.Services.AddTransient<HttpClientService>();
-            builder.Services.AddTransient<ToastifyService>();
-            builder.Services.AddTransient<VideoClientService>();
-            builder.Services.AddTransient<UserProfileClientService>();
-            builder.Services.AddTransient<ToastifyService>();
-            builder.Services.AddTransient<VisitorTrackingClientService>();
-            builder.Services.AddTransient<UserClientService>();
-            builder.Services.AddTransient<SearchClientService>();
-            builder.Services.AddTransient<VideoCommentClientService>();
-            builder.Services.AddTransient<UserYouTubeChannelClientService>();
-            builder.Services.AddTransient<VideoPlaylistClientService>();
-            builder.Services.AddTransient<VideoJobClientService>();
+            services.AddCrossPlatformServices(builder.Configuration);
 
             var host = builder.Build();
-            ConfigureModelsLocalizers(host.Services);
+            host.Services.ConfigureModelsLocalizers();
             await host.SetDefaultCulture();
             await host.RunAsync();
-        }
-
-        public static void ConfigureModelsLocalizers(IServiceProvider services)
-        {
-            var localizerFactory = services.GetRequiredService<IStringLocalizerFactory>();
-            UploadVideoModelLocalizer.Localizer =
-                localizerFactory.Create(typeof(UploadVideoModelLocalizer))
-                as IStringLocalizer<UploadVideoModelLocalizer>;
-            VideoJobModelLocalizer.Localizer =
-                localizerFactory.Create(typeof(VideoJobModelLocalizer)) 
-                as IStringLocalizer<VideoJobModelLocalizer>;
-        }
-    }
-
-    public class LocalizationMessageHandler: DelegatingHandler
-    {
-        protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            var currentCulture = System.Globalization.CultureInfo.CurrentUICulture;
-            request.Headers.AcceptLanguage.Clear();
-            request.Headers.AcceptLanguage.Add(new StringWithQualityHeaderValue(currentCulture.Name));
-            return base.Send(request, cancellationToken);
-        }
-
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            var currentCulture = System.Globalization.CultureInfo.CurrentUICulture;
-            request.Headers.AcceptLanguage.Clear();
-            request.Headers.AcceptLanguage.Add(new StringWithQualityHeaderValue(currentCulture.Name));
-            return await base.SendAsync(request, cancellationToken);
         }
     }
 }

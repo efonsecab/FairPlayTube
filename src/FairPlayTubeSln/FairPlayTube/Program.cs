@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using FairPlayTube.ClientServices.Extensions;
 
 namespace FairPlayTube
 {
@@ -19,7 +20,7 @@ namespace FairPlayTube
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            Client.Program.ConfigureModelsLocalizers(host.Services);
+            host.Services.ConfigureModelsLocalizers();
             host.Run();
         }
 

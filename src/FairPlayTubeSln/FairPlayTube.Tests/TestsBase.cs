@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Http;
 using FairPlayTube.ClientServices;
 using System.Threading;
+using FairPlayTube.ClientServices.Extensions;
 
 namespace FairPlayTube.Tests
 {
@@ -66,7 +67,7 @@ namespace FairPlayTube.Tests
                 .UseConfiguration(configuration)
                 .UseStartup<Startup>();
             Server = new TestServer(builder);
-            Client.Program.ConfigureModelsLocalizers(Server.Services);
+            Server.Services.ConfigureModelsLocalizers();
             Configuration = Server.Services.GetRequiredService<IConfiguration>();
             this.Mapper = Server.Services.GetRequiredService<IMapper>();
             DataStorageConfiguration = Server.Services.GetRequiredService<DataStorageConfiguration>();

@@ -57,7 +57,9 @@
 
 	<ItemGroup>
 		<Folder Include="CustomHelpers\" />
+		<Folder Include="CustomProviders\" />
 		<Folder Include="Pages\Users\VideoJobs\" />
+		<Folder Include="Services\" />
 	</ItemGroup>
 
 	<ProjectExtensions>

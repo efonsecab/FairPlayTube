@@ -1,0 +1,45 @@
+﻿@page "/"
+
+<h1>FairPlayTube! The MAUI Blazor Version!</h1>
+
+
+<FairPlayTube.Components.Bootstrap.Loading IsLoading="IsLoading"></FairPlayTube.Components.Bootstrap.Loading>
+<FairPlayTube.Components.Videos.VideoList AllVideos="AllVideos" AllowEdit="false"></FairPlayTube.Components.Videos.VideoList>
+
+@code
+{
+    [Inject]
+    private VideoClientService VideoClientService { get; set; }
+    [Inject]
+    private FairPlayTube.Client.Services.ToastifyService ToastifyService { get; set; }
+    private FairPlayTube.Models.Video.VideoInfoModel[] AllVideos { get; set; }
+    private bool IsLoading { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IsLoading = true;
+            this.AllVideos = await this.VideoClientService.GetPublicProcessedVideosAsync();
+        }
+        catch (Exception ex)
+        {
+            await ToastifyService.DisplayErrorNotification(ex.Message);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private async Task GetMyVideos()
+    {
+        try
+        {
+            this.AllVideos = await this.VideoClientService.GetMyProcessedVideos();
+        }
+        catch (Exception ex)
+        {
+            await ToastifyService.DisplayErrorNotification(ex.Message);
+        }
+    }
+}
