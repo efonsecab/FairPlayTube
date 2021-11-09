@@ -5,6 +5,7 @@
 		<AssemblyName>FairPlayTube</AssemblyName>
 		<UserSecretsId>82bf58f6-6b2c-44c4-800b-b2be4ae13d2e</UserSecretsId>
 		<Configurations>Release;Debug</Configurations>
+		<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
 	</PropertyGroup>
 
 	<PropertyGroup>
