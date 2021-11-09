@@ -1,89 +1,113 @@
 ﻿@inherits LayoutComponentBase
 @inject Common.Configuration.AzureQnABotConfiguration AzureQnABotConfiguration
-<div class="page">
-    @if (IsLoading)
-    {
-        <Loading IsLoading="true"></Loading>
-    }
-    else
-    {
-        <div class="sidebar">
-            <NavMenu />
-        </div>
 
-        <div class="main">
-            <div class="top-row px-4">
-                <div class="mx-auto">
-                    <img class="img-thumbnail" src="images/ptilogo.png" style="height:45px;" />
-                </div>
-                <CultureSelector></CultureSelector>
-                <a class="btn btn-outline-primary" style="margin:0;" href="https://us11.list-manage.com/contact-form?u=8b82a1556651be6b90abb39cb&form_id=ec99fae0af90bd739e8a29962e37657a" target="_blank">
-                    @Localizer[RequestDemoTextKey]
-                </a>
-                <a class="btn btn-outline-primary" style="margin:0;" href="api/RssFeed/Videos" target="_blank">
-                    <i class="bi bi-rss-fill"></i>
-                </a>
-                <a class="btn btn-outline-primary" style="margin:0;" href="https://twitter.com/ftube2021" target="_blank">
-                    <i class="bi bi-twitter"></i>
-                </a>
-                <a class="btn btn-outline-primary" style="margin:0;" href="https://twitter.com/efonsecabcr" target="_blank">
-                    <i class="bi bi-twitter"></i>
-                </a>
-                <a class="btn btn-outline-primary" style="margin:0;" href="https://www.linkedin.com/in/pticostarica" target="_blank">
-                    <i class="bi bi-linkedin"></i>
-                </a>
-                <a class="btn btn-outline-primary" style="margin:0;" href="https://www.facebook.com/Fairplaytube-106615948308091" target="_blank">
-                    <i class="bi bi-facebook"></i>
-                </a>
-                <a class="btn btn-outline-primary" style="margin:0;" href="https://github.com/efonsecab/FairPlayTube/wiki/Users-Manual" target="_blank">
-                    <i class="bi bi-book-half"></i>
-                </a>
-                <a class="btn btn-outline-primary blink_me" style="margin:0;" href="https://us11.list-manage.com/survey?u=8b82a1556651be6b90abb39cb&id=ff62326a87&attribution=false" target="_blank">
-                    <i class="bi bi-list-check"></i>
-                </a>
-                <SearchVideo OnSearchClicked="OnSearchClicked"></SearchVideo>
-                <AuthorizeView>
-                    <Authorized>
-                        <FairPlayTube.Client.CustomComponents.SignalR.NotificationHub></FairPlayTube.Client.CustomComponents.SignalR.NotificationHub>
-                    </Authorized>
-                </AuthorizeView>
-                <LoginDisplay></LoginDisplay>
-            </div>
-
-            <div class="content px-4" style="height:95%; overflow-y:auto;">
-                @Body
-            </div>
-
-            @if (ShowFooter)
+<ErrorBoundary>
+    <ChildContent>
+        <div class="page">
+            @if (IsLoading)
             {
-                <footer id="" class="footer mt-auto py-3 bg-light position-fixed w-100 bottom-0"
-                        style="background-color: #f7f7f7 !important; border-bottom: 1px solid #d6d5d5 !important;">
-                    <div class="container">
-                        <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="@CloseFooter">
-                            <i class="bi bi-x-circle-fill"></i>
-                        </button>
-                        <div class="mb-3">
-                            <p>
-                                <strong>
-                                    @Localizer[PleaseFillTextKey]
-                                    <a href="https://us11.list-manage.com/survey?u=8b82a1556651be6b90abb39cb&id=ff62326a87&attribution=false" target="_blank">
-                                        @Localizer[ThisSurveyTextKey]
-                                    </a>
-                                </strong>
-                            </p>
-                            <p>
-                                <label>
-                                    <strong>
-                                        @Localizer[BrowsersExensionsWarningTextKey]
-                                    </strong>
-                                </label>
-                            </p>
-                        </div>
-                        <a class="text-black-50" href="https://cr.linkedin.com/in/pticostarica" target="_blank">@Localizer[DesignedByTextKey] PTI Costa Rica</a>
-                    </div>
-                </footer>
+                <Loading IsLoading="true"></Loading>
             }
+            else
+            {
+                <div class="sidebar">
+                    <NavMenu />
+                </div>
 
+                <div class="main">
+                    <div class="top-row px-4">
+                        <div class="mx-auto">
+                            <img class="img-thumbnail" src="images/ptilogo.png" style="height:45px;" />
+                        </div>
+                        <CultureSelector></CultureSelector>
+                        <a class="btn btn-outline-primary" style="margin:0;" href="https://us11.list-manage.com/contact-form?u=8b82a1556651be6b90abb39cb&form_id=ec99fae0af90bd739e8a29962e37657a" target="_blank">
+                            @Localizer[RequestDemoTextKey]
+                        </a>
+                        <a class="btn btn-outline-primary" style="margin:0;" href="api/RssFeed/Videos" target="_blank">
+                            <i class="bi bi-rss-fill"></i>
+                        </a>
+                        <a class="btn btn-outline-primary" style="margin:0;" href="https://twitter.com/ftube2021" target="_blank">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+                        <a class="btn btn-outline-primary" style="margin:0;" href="https://twitter.com/efonsecabcr" target="_blank">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+                        <a class="btn btn-outline-primary" style="margin:0;" href="https://www.linkedin.com/in/pticostarica" target="_blank">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a class="btn btn-outline-primary" style="margin:0;" href="https://www.facebook.com/Fairplaytube-106615948308091" target="_blank">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a class="btn btn-outline-primary" style="margin:0;" href="https://github.com/efonsecab/FairPlayTube/wiki/Users-Manual" target="_blank">
+                            <i class="bi bi-book-half"></i>
+                        </a>
+                        <a class="btn btn-outline-primary blink_me" style="margin:0;" href="https://us11.list-manage.com/survey?u=8b82a1556651be6b90abb39cb&id=ff62326a87&attribution=false" target="_blank">
+                            <i class="bi bi-list-check"></i>
+                        </a>
+                        <SearchVideo OnSearchClicked="OnSearchClicked"></SearchVideo>
+                        <AuthorizeView>
+                            <Authorized>
+                                <FairPlayTube.Client.CustomComponents.SignalR.NotificationHub></FairPlayTube.Client.CustomComponents.SignalR.NotificationHub>
+                            </Authorized>
+                        </AuthorizeView>
+                        <LoginDisplay></LoginDisplay>
+                    </div>
+
+                    <div class="content px-4" style="height:95%; overflow-y:auto;">
+                        @Body
+                    </div>
+
+                    @if (ShowFooter)
+                    {
+                        <footer id="" class="footer mt-auto py-3 bg-light position-fixed w-100 bottom-0"
+                        style="background-color: #f7f7f7 !important; border-bottom: 1px solid #d6d5d5 !important;">
+                            <div class="container">
+                                <button type="button" data-bs-dismiss="modal" aria-label="Close" @onclick="@CloseFooter">
+                                    <i class="bi bi-x-circle-fill"></i>
+                                </button>
+                                <div class="mb-3">
+                                    <p>
+                                        <strong>
+                                            @Localizer[PleaseFillTextKey]
+                                            <a href="https://us11.list-manage.com/survey?u=8b82a1556651be6b90abb39cb&id=ff62326a87&attribution=false" target="_blank">
+                                                @Localizer[ThisSurveyTextKey]
+                                            </a>
+                                        </strong>
+                                    </p>
+                                    <p>
+                                        <label>
+                                            <strong>
+                                                @Localizer[BrowsersExensionsWarningTextKey]
+                                            </strong>
+                                        </label>
+                                    </p>
+                                </div>
+                                <a class="text-black-50" href="https://cr.linkedin.com/in/pticostarica" target="_blank">@Localizer[DesignedByTextKey] PTI Costa Rica</a>
+                            </div>
+                        </footer>
+                    }
+
+                </div>
+            }
         </div>
-    }
-</div>
+    </ChildContent>
+    <ErrorContent>
+        <div class="mb-3" style="background-color:red;">
+            An error has occured. Our apologies for the inconvenience.
+            You can report the error creating an issue here
+            <a target="_blank" href="https://github.com/efonsecab/FairPlayTube/issues/new?assignees=&labels=&template=bug_report.md&title=">
+                here
+            </a>
+        </div>
+        <div class="mb-3">
+            Error Message: @context.Message
+        </div>
+        @if (context.InnerException is not null)
+        {
+            <div class="mb-3">
+                Inner Message: @context.InnerException.Message
+            </div>
+        }
+
+    </ErrorContent>
+</ErrorBoundary>

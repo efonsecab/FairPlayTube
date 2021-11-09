@@ -145,7 +145,7 @@ namespace FairPlayTube.Client.Pages
         [ResourceKey(defaultValue: "Note: FairPlayTube is a young system currently being developed and as such can have bugs." +
             "If you find any, we appreciate your help by adding the information here: ")]
         public const string NotesIssuesTextKey = "NotesIssuesText";
-        [ResourceKey(defaultValue:"Report Bug")]
+        [ResourceKey(defaultValue: "Report Bug")]
         public const string ReportBugTextKey = "ReportBugText";
         [ResourceKey(defaultValue: "Visit the FairPlayTube Repository on GitHub")]
         public const string VisitRepoTextKey = "VisitRepoText";
