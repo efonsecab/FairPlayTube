@@ -60,7 +60,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Controllers", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Translator.Windows", "FairPlayTube.Translator.Windows\FairPlayTube.Translator.Windows.csproj", "{2FDD6BF6-C668-4DD2-AE61-0083511694CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayTube.MauiBlazor", "FairPlayTube.MauiBlazor\FairPlayTube.MauiBlazor.csproj", "{DADFF0FE-334E-41E8-8C7B-5F0CDBC435D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.MauiBlazor", "FairPlayTube.MauiBlazor\FairPlayTube.MauiBlazor.csproj", "{DADFF0FE-334E-41E8-8C7B-5F0CDBC435D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

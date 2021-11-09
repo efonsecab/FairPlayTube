@@ -1,34 +1,38 @@
-﻿@inherits LayoutComponentBase
+﻿@using FairPlayTube.MauiBlazor.Features.LogOn
+@inherits LayoutComponentBase
 
 <div class="page">
-	<div class="sidebar">
-		<NavMenu />
-	</div>
+    <div class="sidebar">
+        <NavMenu />
+    </div>
 
-	<main>
-		<div class="top-row px-4">
-			<a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-		</div>
+    <main>
+        <div class="top-row px-4">
+            @if (!UserState.UserContext.IsLoggedOn)
+            {
+                <button class="btn btn-primary" @onclick="@( async () => await OnLoginClicked())">Sign In</button>
+            }
+        </div>
 
-		<article class="content px-4">
-			<ErrorBoundary>
-				<ChildContent>
-					@Body
-				</ChildContent>
-				<ErrorContent>
-					An error is there: @context.ToString()
-				</ErrorContent>
-			</ErrorBoundary>
-		</article>
-	</main>
+        <article class="content px-4">
+            <ErrorBoundary>
+                <ChildContent>
+                    @Body
+                </ChildContent>
+                <ErrorContent>
+                    An error is there: @context.ToString()
+                </ErrorContent>
+            </ErrorBoundary>
+        </article>
+    </main>
 </div>
 
-@code{
-	[Inject]
-	private LocalizationClientService LocalizationClientService { get; set; }
-	
-	protected override async Task OnInitializedAsync()
-	{
-		await LocalizationClientService.LoadData();
-	}
+@code {
+    [Inject]
+    private LocalizationClientService LocalizationClientService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LocalizationClientService.LoadData();
+    }
 }
