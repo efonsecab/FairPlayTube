@@ -21,6 +21,7 @@ using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using System.IO;
 using System.Globalization;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace FairPlayTube.MauiBlazor
 {
@@ -56,6 +57,12 @@ namespace FairPlayTube.MauiBlazor
 
             string assemblyName = "FairPlayTube";
             string fairPlayTubeapiAddress = "https://localhost:44373";
+            /* When running in an emulator localhost woult not work as expected.
+             * You need to do forwarding, you can use ngrok, check an example before
+             * Use your correct FairPlayTube API port
+             * */
+            //ngrok.exe http https://localhost:44373 -host-header="localhost:44373"
+            //string fairPlayTubeapiAddress = REPLACE WITH GENERATED ADDRESS FROM NGROK;
             services.AddScoped<BaseAddressAuthorizationMessageHandler>();
             services.AddHttpClient($"{assemblyName}.ServerAPI", client =>
         client.BaseAddress = new Uri(fairPlayTubeapiAddress))
@@ -74,12 +81,22 @@ namespace FairPlayTube.MauiBlazor
             services.AddCrossPlatformServices(builder.Configuration);
             builder.Services.AddBlazorWebView();
             builder.Services.AddSingleton<WeatherForecastService>();
+            services.AddLogging();
+            services.AddScoped<IErrorBoundaryLogger, CustomBoundaryLogger>();
             var host = builder.Build();
             host.Services.ConfigureModelsLocalizers();
             CultureInfo culture = new("en-US");
             CultureInfo.DefaultThreadCurrentCulture = culture;
             CultureInfo.DefaultThreadCurrentUICulture = culture;
             return host;
+        }
+    }
+
+    public class CustomBoundaryLogger : IErrorBoundaryLogger
+    {
+        public ValueTask LogErrorAsync(Exception exception)
+        {
+            return ValueTask.CompletedTask;
         }
     }
 

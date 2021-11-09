@@ -11,7 +11,14 @@
 		</div>
 
 		<article class="content px-4">
-			@Body
+			<ErrorBoundary>
+				<ChildContent>
+					@Body
+				</ChildContent>
+				<ErrorContent>
+					An error is there: @context.ToString()
+				</ErrorContent>
+			</ErrorBoundary>
 		</article>
 	</main>
 </div>
