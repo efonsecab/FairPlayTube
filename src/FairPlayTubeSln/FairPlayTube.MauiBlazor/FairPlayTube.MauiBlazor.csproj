@@ -80,4 +80,10 @@
 	  <ProjectReference Include="..\FairPlayTube.Components\FairPlayTube.Components.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Content Update="wwwroot\js\localization\blazor-culture.js">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
 </Project>

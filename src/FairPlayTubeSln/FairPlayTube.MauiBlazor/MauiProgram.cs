@@ -20,6 +20,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using System.IO;
+using System.Globalization;
 
 namespace FairPlayTube.MauiBlazor
 {
@@ -58,10 +59,12 @@ namespace FairPlayTube.MauiBlazor
             services.AddScoped<BaseAddressAuthorizationMessageHandler>();
             services.AddHttpClient($"{assemblyName}.ServerAPI", client =>
         client.BaseAddress = new Uri(fairPlayTubeapiAddress))
+        .AddHttpMessageHandler<LocalizationMessageHandler>()
         .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
             services.AddHttpClient($"{assemblyName}.ServerAPI.Anonymous", client =>
-                client.BaseAddress = new Uri(fairPlayTubeapiAddress));
+                client.BaseAddress = new Uri(fairPlayTubeapiAddress))
+                .AddHttpMessageHandler<LocalizationMessageHandler>();
 
             services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
                 .CreateClient($"{assemblyName}.ServerAPI"));
@@ -73,6 +76,9 @@ namespace FairPlayTube.MauiBlazor
             builder.Services.AddSingleton<WeatherForecastService>();
             var host = builder.Build();
             host.Services.ConfigureModelsLocalizers();
+            CultureInfo culture = new("en-US");
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
             return host;
         }
     }

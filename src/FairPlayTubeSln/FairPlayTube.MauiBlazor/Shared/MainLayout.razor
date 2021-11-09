@@ -15,3 +15,13 @@
 		</article>
 	</main>
 </div>
+
+@code{
+	[Inject]
+	private LocalizationClientService LocalizationClientService { get; set; }
+	
+	protected override async Task OnInitializedAsync()
+	{
+		await LocalizationClientService.LoadData();
+	}
+}
