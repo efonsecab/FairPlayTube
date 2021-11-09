@@ -17,8 +17,6 @@ namespace FairPlayTube.Client.Pages.Public.Videos
         [Inject]
         private VideoJobClientService VideoJobClientService { get; set; }
         [Inject]
-        private VideoClientService VideoClientService { get; set; }
-        [Inject]
         private ToastifyService ToastifyService { get; set; }
         [Inject]
         private IStringLocalizer<VideosJobs> Localizer { get; set; }
@@ -41,11 +39,6 @@ namespace FairPlayTube.Client.Pages.Public.Videos
             {
                 IsLoading = false;
             }
-        }
-
-        private async Task<VideoInfoModel> GetVideoAsync(string videoId)
-        {
-            return await this.VideoClientService.GetVideoAsync(videoId);
         }
 
         #region Resource Keys

@@ -70,13 +70,12 @@ namespace FairPlayTube.Controllers
         /// Retrieves the latest videos for the given Youtube channel id
         /// </summary>
         /// <param name="channelId"></param>
-        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
         [AllowAnonymous]
-        public async Task<YouTubeVideoModel[]> GetYouTubeChannelLatestVideos(string channelId, CancellationToken cancellationToken)
+        public async Task<YouTubeVideoModel[]> GetYouTubeChannelLatestVideos(string channelId)
         {
-            var response = await this.UserYouTubeChannelService.GetYouTubeChannelLatestVideosAsync(channelId, cancellationToken);
+            var response = await this.UserYouTubeChannelService.GetYouTubeChannelLatestVideosAsync(channelId);
             var json = JsonSerializer.Serialize(response.items);
             var result = JsonSerializer.Deserialize<YouTubeVideoModel[]>(json);
             return result;

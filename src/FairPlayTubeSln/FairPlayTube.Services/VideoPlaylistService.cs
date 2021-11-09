@@ -60,10 +60,11 @@ namespace FairPlayTube.Services
             CancellationToken cancellationToken)
         {
             var videoEntity = await FairplaytubeDatabaseContext.VideoInfo
-                .SingleOrDefaultAsync(p => p.VideoId == videoPlaylistItemModel.VideoId);
+                .SingleOrDefaultAsync(p => p.VideoId == videoPlaylistItemModel.VideoId, cancellationToken: cancellationToken);
             var videoplaylistEntity = await this.FairplaytubeDatabaseContext.VideoPlaylist
                 .Include(p=>p.OwnerApplicationUser)
-                .SingleOrDefaultAsync(p => p.VideoPlaylistId == videoPlaylistItemModel.VideoPlaylistId);
+                .SingleOrDefaultAsync(p => p.VideoPlaylistId == 
+                videoPlaylistItemModel.VideoPlaylistId, cancellationToken: cancellationToken);
             var userobjectId = this.CurrentUserProvider.GetObjectId();
             if (userobjectId != videoplaylistEntity.OwnerApplicationUser.AzureAdB2cobjectId.ToString())
                 throw new Exception("Access denied. User does not own the specified videoplaylist");

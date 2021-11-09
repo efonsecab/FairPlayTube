@@ -47,7 +47,7 @@ namespace FairPlayTube.Services
                     userEntity = await this.FairplaytubeDatabaseContext.ApplicationUser.SingleOrDefaultAsync(p => p.AzureAdB2cobjectId.ToString() == visitorTrackingModel.UserAzureAdB2cObjectId);
                 var visitedPage = new DataAccess.Models.VisitorTracking()
                 {
-                    ApplicationUserId = userEntity != null ? userEntity.ApplicationUserId : null,
+                    ApplicationUserId = userEntity?.ApplicationUserId,
                     Country = country,
                     Host = host,
                     RemoteIpAddress = remoteIpAddress,
@@ -99,7 +99,7 @@ namespace FairPlayTube.Services
                 TimeSpan newTimeElapsed = TimeSpan.Zero;
                 newTimeElapsed = DateTimeOffset.UtcNow.Subtract(entity.VisitDateTime);
                 entity.TimeElapsed = newTimeElapsed;
-                await FairplaytubeDatabaseContext.SaveChangesAsync();
+                await FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
             }
             return entity;
         }

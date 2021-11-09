@@ -31,8 +31,6 @@ namespace FairPlayTube.Controllers
         private ICurrentUserProvider CurrentUserProvider { get; }
         private VideoCommentService VideoCommentService { get; }
 
-        private IStringLocalizer Localizer { get; }
-
         /// <summary>
         /// Initializes <see cref="VideoController"/>
         /// </summary>
@@ -40,17 +38,13 @@ namespace FairPlayTube.Controllers
         /// <param name="videoCommentService"></param>
         /// <param name="mapper"></param>
         /// <param name="currentUserProvider"></param>
-        /// <param name="localizerFactory"></param>
         public VideoController(VideoService videoService, VideoCommentService videoCommentService,
-            IMapper mapper, ICurrentUserProvider currentUserProvider, 
-            IStringLocalizerFactory localizerFactory)
+            IMapper mapper, ICurrentUserProvider currentUserProvider)
         {
             this.VideoService = videoService;
             this.Mapper = mapper;
             this.CurrentUserProvider = currentUserProvider;
             this.VideoCommentService = videoCommentService;
-
-            this.Localizer = localizerFactory.Create(typeof(VideoController));
         }
 
         /// <summary>
@@ -101,7 +95,7 @@ namespace FairPlayTube.Controllers
         public async Task<string[]> GetBoughtVideosIds(CancellationToken cancellationToken)
         {
             var userObjectId = this.CurrentUserProvider.GetObjectId();
-            var result = await this.VideoService.GetBoughtVideosIds(userObjectId);
+            var result = await this.VideoService.GetBoughtVideosIds(userObjectId, cancellationToken);
             return result;
         }
 

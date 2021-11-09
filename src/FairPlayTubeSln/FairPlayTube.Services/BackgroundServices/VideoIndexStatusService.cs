@@ -132,7 +132,8 @@ namespace FairPlayTube.Services.BackgroundServices
         {
             this.Logger?.LogInformation("Checking processing videos");
             var processingInDB = await videoService.GetDatabaseProcessingVideosIdsAsync(stoppingToken);
-            this.Logger?.LogInformation($"{processingInDB.Length} videos marked as processing In DB");
+            string message = $"{processingInDB.Length} videos marked as processing In DB";
+            this.Logger?.LogInformation(message);
             if (processingInDB.Length > 0)
             {
 

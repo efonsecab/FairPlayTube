@@ -40,8 +40,7 @@ namespace FairPlayTube.Services
             FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             AzureVideoIndexerConfiguration azureVideoIndexerConfiguration,
             CustomHttpClient customHttpClient,
-            IHubContext<NotificationHub, INotificationHub> hubContext,
-            TextAnalysisService textAnalysisService
+            IHubContext<NotificationHub, INotificationHub> hubContext
             )
         {
             this.AzureVideoIndexerService = azureVideoIndexerService;
@@ -312,13 +311,13 @@ namespace FairPlayTube.Services
                 .Where(p => p.VideoId == videoId);
         }
 
-        public async Task<string[]> GetBoughtVideosIds(string userObjectId)
+        public async Task<string[]> GetBoughtVideosIds(string userObjectId, CancellationToken cancellationToken)
         {
             var boughtVideos = this.FairplaytubeDatabaseContext.VideoAccessTransaction
                 .Include(p => p.VideoInfo).Include(p => p.BuyerApplicationUser)
                 .Where(p => p.BuyerApplicationUser.AzureAdB2cobjectId.ToString() == userObjectId)
                 .Select(p => p.VideoInfo);
-            var result = await boughtVideos.Select(p => p.VideoId).ToArrayAsync();
+            var result = await boughtVideos.Select(p => p.VideoId).ToArrayAsync(cancellationToken);
             return result;
         }
 
