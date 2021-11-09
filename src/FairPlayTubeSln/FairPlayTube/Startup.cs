@@ -352,9 +352,7 @@ namespace FairPlayTube
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        /// <param name="localizerFactory"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
-            IStringLocalizerFactory localizerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             var supportedCultures = new List<CultureInfo>
             {
@@ -508,7 +506,7 @@ namespace FairPlayTube
             return fairplaytubeDatabaseContext;
         }
 
-        private void ConfigureInMemoryDatabase(FairplaytubeDatabaseContext fairplaytubeDatabaseContext)
+        private static void ConfigureInMemoryDatabase(FairplaytubeDatabaseContext fairplaytubeDatabaseContext)
         {
             fairplaytubeDatabaseContext.Database.EnsureCreated();
             SeedDefaultRoles(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
@@ -528,7 +526,7 @@ namespace FairPlayTube
                 visibility: Common.Global.Enums.VideoVisibility.Private);
         }
 
-        private void SeedDefaultVideoVisibility(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
+        private static void SeedDefaultVideoVisibility(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             Common.Global.Enums.VideoVisibility visibility)
         {
             var visibilityEntity = fairplaytubeDatabaseContext.VideoVisibility
@@ -545,7 +543,7 @@ namespace FairPlayTube
             }
         }
 
-        private void SeedDefaultVideoIndexStatuses(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
+        private static void SeedDefaultVideoIndexStatuses(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             Common.Global.Enums.VideoIndexStatus videoIndexStatus)
         {
 
@@ -563,7 +561,7 @@ namespace FairPlayTube
             }
         }
 
-        private void SeedDefaultRoles(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
+        private static void SeedDefaultRoles(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             short roleId, string roleName)
         {
             var roleEntity = fairplaytubeDatabaseContext.ApplicationRole

@@ -34,12 +34,12 @@ namespace FairPlayTube.Services
         public async Task AnalyzeVideoCommentAsync(long videoCommentId, CancellationToken cancellationToken)
         {
             var videoCommentEntity = await this.FairplaytubeDatabaseContext.VideoComment
-                .Where(p => p.VideoCommentId == videoCommentId).SingleOrDefaultAsync();
+                .Where(p => p.VideoCommentId == videoCommentId).SingleOrDefaultAsync(cancellationToken: cancellationToken);
             if (videoCommentEntity == null)
                 throw new Exception($"Video comment id: {videoCommentId} does not exit");
             var videoCommentAnalysisEntity = await this.FairplaytubeDatabaseContext
                 .VideoCommentAnalysis.Where(p => p.VideoCommentId == videoCommentId)
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
             if (videoCommentAnalysisEntity != null)
                 throw new Exception($"Video comment id: {videoCommentId} has already been analyzed");
             var detectedLanguage = await this.TextAnalysisService.DetectLanguageAsync(videoCommentEntity.Comment, cancellationToken);

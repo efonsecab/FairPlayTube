@@ -51,8 +51,7 @@ namespace FairPlayTube.Services
                 .Where(p => p.ApplicationUserId == applicationUserId);
         }
 
-        public async Task<GetChannelLatestVideosResponse> GetYouTubeChannelLatestVideosAsync(string channelId,
-            CancellationToken cancellationToken)
+        public async Task<GetChannelLatestVideosResponse> GetYouTubeChannelLatestVideosAsync(string channelId)
         {
             var result = await this.YoutubeService.GetChannelLatestVideosAsync(channelId);
             return result;

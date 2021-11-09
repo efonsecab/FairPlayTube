@@ -22,17 +22,6 @@ namespace FairPlayTube.Pages
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
-        private readonly ILogger<ErrorModel> _logger;
-
-        /// <summary>
-        /// Initialized <see cref="ErrorModel"/>
-        /// </summary>
-        /// <param name="logger"></param>
-        public ErrorModel(ILogger<ErrorModel> logger)
-        {
-            _logger = logger;
-        }
-
         /// <summary>
         /// OnGet
         /// </summary>

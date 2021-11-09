@@ -38,7 +38,8 @@ namespace FairPlayTube.Services
             var videoJobApplicationEntity = await FairplaytubeDatabaseContext.VideoJobApplication
                 .Include(p => p.ApplicantApplicationUser)
                 .SingleOrDefaultAsync(p => p.VideoJobId == createVideoJobApplicationModel.VideoJobId &&
-                p.ApplicantApplicationUser.AzureAdB2cobjectId.ToString() == userObjectId);
+                p.ApplicantApplicationUser.AzureAdB2cobjectId.ToString() == userObjectId, 
+                cancellationToken: cancellationToken);
             if (videoJobApplicationEntity is not null)
                 throw new Exception(Localizer[UserApplicationAlreadyExistsTextKey]);
             videoJobApplicationEntity = new VideoJobApplication()
