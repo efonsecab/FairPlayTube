@@ -24,7 +24,6 @@ namespace FairPlayTube.Controllers
     [Authorize]
     public class FilesaveController : ControllerBase
     {
-        private readonly IWebHostEnvironment env;
         private readonly ILogger<FilesaveController> logger;
 
         private AzureBlobStorageService AzureBlobStorageService { get; set; }
@@ -34,18 +33,16 @@ namespace FairPlayTube.Controllers
         /// <summary>
         /// Initializes <see cref="FilesaveController"/>
         /// </summary>
-        /// <param name="env"></param>
         /// <param name="logger"></param>
         /// <param name="azureBlobStorageService"></param>
         /// <param name="dataStorageConfiguration"></param>
         /// <param name="currentUserProvider"></param>
-        public FilesaveController(IWebHostEnvironment env,
+        public FilesaveController(
             ILogger<FilesaveController> logger,
             AzureBlobStorageService azureBlobStorageService,
             DataStorageConfiguration dataStorageConfiguration,
             ICurrentUserProvider currentUserProvider)
         {
-            this.env = env;
             this.logger = logger;
             this.AzureBlobStorageService = azureBlobStorageService;
             this.DataStorageConfiguration = dataStorageConfiguration;

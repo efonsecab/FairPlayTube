@@ -22,10 +22,6 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         [Inject]
         private IStringLocalizer<MyVideos> Localizer { get; set; }
         private bool IsLoading { get; set; }
-        private VideoInfoModel SelectedVideo { get; set; }
-        private bool ShowModal { get; set; } = false;
-        [Inject]
-        private NavigationManager NavigationManager { get; set; }
         protected async override Task OnInitializedAsync()
         {
             try

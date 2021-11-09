@@ -2,7 +2,7 @@
 
 namespace FairPlayTube.Models.Paypal
 {
-
+#pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// Represents the PayPal Checkout Approval Details
     /// </summary>
@@ -481,5 +481,5 @@ namespace FairPlayTube.Models.Paypal
         /// </summary>
         public string method { get; set; }
     }
-
+#pragma warning restore IDE1006 // Naming Styles
 }

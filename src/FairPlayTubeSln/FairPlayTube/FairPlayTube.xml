@@ -179,12 +179,6 @@
             Show Request Id
             </summary>
         </member>
-        <member name="M:FairPlayTube.Pages.ErrorModel.#ctor(Microsoft.Extensions.Logging.ILogger{FairPlayTube.Pages.ErrorModel})">
-            <summary>
-            Initialized <see cref="T:FairPlayTube.Pages.ErrorModel"/>
-            </summary>
-            <param name="logger"></param>
-        </member>
         <member name="M:FairPlayTube.Pages.ErrorModel.OnGet">
             <summary>
             OnGet
@@ -230,13 +224,12 @@
             </summary>
             <param name="services"></param>
         </member>
-        <member name="M:FairPlayTube.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Localization.IStringLocalizerFactory)">
+        <member name="M:FairPlayTube.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
             <summary>
             Configure the Application Behavior and pipleline execution
             </summary>
             <param name="app"></param>
             <param name="env"></param>
-            <param name="localizerFactory"></param>
         </member>
         <member name="T:FairPlayTube.Swagger.Filters.SecurityRequirementsOperationFilter">
             <summary>

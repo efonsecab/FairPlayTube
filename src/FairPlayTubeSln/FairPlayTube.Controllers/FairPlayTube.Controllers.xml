@@ -30,11 +30,10 @@
             In charge to saving files
             </summary>
         </member>
-        <member name="M:FairPlayTube.Controllers.FilesaveController.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Logging.ILogger{FairPlayTube.Controllers.FilesaveController},PTI.Microservices.Library.Services.AzureBlobStorageService,FairPlayTube.Common.Configuration.DataStorageConfiguration,FairPlayTube.Common.Interfaces.ICurrentUserProvider)">
+        <member name="M:FairPlayTube.Controllers.FilesaveController.#ctor(Microsoft.Extensions.Logging.ILogger{FairPlayTube.Controllers.FilesaveController},PTI.Microservices.Library.Services.AzureBlobStorageService,FairPlayTube.Common.Configuration.DataStorageConfiguration,FairPlayTube.Common.Interfaces.ICurrentUserProvider)">
             <summary>
             Initializes <see cref="T:FairPlayTube.Controllers.FilesaveController"/>
             </summary>
-            <param name="env"></param>
             <param name="logger"></param>
             <param name="azureBlobStorageService"></param>
             <param name="dataStorageConfiguration"></param>
@@ -287,12 +286,11 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:FairPlayTube.Controllers.UserYouTubeChannelController.GetYouTubeChannelLatestVideos(System.String,System.Threading.CancellationToken)">
+        <member name="M:FairPlayTube.Controllers.UserYouTubeChannelController.GetYouTubeChannelLatestVideos(System.String)">
             <summary>
             Retrieves the latest videos for the given Youtube channel id
             </summary>
             <param name="channelId"></param>
-            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="T:FairPlayTube.Controllers.VideoCommentController">
@@ -328,7 +326,7 @@
             Handles all of the data related to a video
             </summary>
         </member>
-        <member name="M:FairPlayTube.Controllers.VideoController.#ctor(FairPlayTube.Services.VideoService,FairPlayTube.Services.VideoCommentService,AutoMapper.IMapper,FairPlayTube.Common.Interfaces.ICurrentUserProvider,Microsoft.Extensions.Localization.IStringLocalizerFactory)">
+        <member name="M:FairPlayTube.Controllers.VideoController.#ctor(FairPlayTube.Services.VideoService,FairPlayTube.Services.VideoCommentService,AutoMapper.IMapper,FairPlayTube.Common.Interfaces.ICurrentUserProvider)">
             <summary>
             Initializes <see cref="T:FairPlayTube.Controllers.VideoController"/>
             </summary>
@@ -336,7 +334,6 @@
             <param name="videoCommentService"></param>
             <param name="mapper"></param>
             <param name="currentUserProvider"></param>
-            <param name="localizerFactory"></param>
         </member>
         <member name="M:FairPlayTube.Controllers.VideoController.DeleteVideo(System.String,System.Threading.CancellationToken)">
             <summary>

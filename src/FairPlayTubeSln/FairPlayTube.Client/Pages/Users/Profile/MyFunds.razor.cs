@@ -24,7 +24,9 @@ namespace FairPlayTube.Client.Pages.Users.Profile
 
         protected async override Task OnInitializedAsync()
         {
+            IsLoading = true;
             await LoadAvailableFundsData();
+            IsLoading = false;
         }
 
         public async Task OnFundsAdded()

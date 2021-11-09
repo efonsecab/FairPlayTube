@@ -1,6 +1,6 @@
 ﻿namespace FairPlayTube.Models.Paypal
 {
-
+#pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// Represents the PayPal Checkout Approval Data
     /// </summary>
@@ -27,5 +27,5 @@
         /// </summary>
         public string facilitatorAccessToken { get; set; }
     }
-
+#pragma warning restore IDE1006 // Naming Styles
 }

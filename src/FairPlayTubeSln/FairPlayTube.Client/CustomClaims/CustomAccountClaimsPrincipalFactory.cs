@@ -10,13 +10,11 @@ namespace FairPlayTube.Client.CustomClaims
 {
     public class CustomAccountClaimsPrincipalFactory : AccountClaimsPrincipalFactory<CustomRemoteUserAccount>
     {
-        private IAccessTokenProviderAccessor Accessor { get; }
         private HttpClientService HttpClientService { get; }
 
         public CustomAccountClaimsPrincipalFactory(IAccessTokenProviderAccessor accessor,
             HttpClientService httpClientService) : base(accessor)
         {
-            this.Accessor = accessor;
             this.HttpClientService = httpClientService;
         }
 
