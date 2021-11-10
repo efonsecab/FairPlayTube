@@ -1,4 +1,5 @@
-﻿using FairPlayTube.ClientServices;
+﻿using FairPlayTube.Client.Services;
+using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Extensions;
 using FairPlayTube.Common.Global;
 using FairPlayTube.Common.Localization;
@@ -26,17 +27,29 @@ namespace FairPlayTube.Client.Shared
         private IStringLocalizer<MainLayout> Localizer { get; set; }
         [Inject]
         private VisitorTrackingClientService VisitorTrackingClientService { get; set; }
+        [Inject]
+        private ToastifyService ToastifyService { get; set; }
         private bool IsLoading { get; set; }
         private bool ShowFooter { get; set; } = true;
         private Timer VisitsTimer { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            IsLoading = true;
-            await TrackVisit(createNewSession:true);
-            this.NavigationManager.LocationChanged += NavigationManager_LocationChanged;
-            await LocalizationClientService.LoadData();
-            IsLoading = false;
+            try
+            {
+                IsLoading = true;
+                await TrackVisit(createNewSession: true);
+                this.NavigationManager.LocationChanged += NavigationManager_LocationChanged;
+                await LocalizationClientService.LoadData();
+            }
+            catch (Exception ex)
+            {
+                await ToastifyService.DisplayErrorNotification(ex.Message);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
 
         private async Task TrackVisit(bool createNewSession)
@@ -77,21 +90,35 @@ namespace FairPlayTube.Client.Shared
 
         private async void NavigationManager_LocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
         {
-            await TrackVisit(createNewSession: false);
+            try
+            {
+                await TrackVisit(createNewSession: false);
+            }
+            catch (Exception ex)
+            {
+                await ToastifyService.DisplayErrorNotification(ex.Message);
+            }
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (!this.NavigationManager.Uri.EndsWith(Common.Global.Constants.UserPagesRoutes.ValidateInviteCode) &&
-                this.AuthenticationStateTask != null)
+            try
             {
-                var state = await AuthenticationStateTask;
-                if (state != null && state.User != null && state.User.Identity.IsAuthenticated)
+                if (!this.NavigationManager.Uri.EndsWith(Common.Global.Constants.UserPagesRoutes.ValidateInviteCode) &&
+                                this.AuthenticationStateTask != null)
                 {
-                    var userStatus = state.User.Claims.Where(p => p.Type == "UserStatus").Single();
-                    if (userStatus.Value != "Approved")
-                        NavigationManager.NavigateTo(Common.Global.Constants.UserPagesRoutes.ValidateInviteCode);
+                    var state = await AuthenticationStateTask;
+                    if (state != null && state.User != null && state.User.Identity.IsAuthenticated)
+                    {
+                        var userStatus = state.User.Claims.Where(p => p.Type == "UserStatus").Single();
+                        if (userStatus.Value != "Approved")
+                            NavigationManager.NavigateTo(Common.Global.Constants.UserPagesRoutes.ValidateInviteCode);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                await ToastifyService.DisplayErrorNotification(ex.Message);
             }
         }
 
