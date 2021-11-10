@@ -46,7 +46,6 @@ namespace FairPlayTube.Client.Shared
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification($"{ex.Message} - {ex.StackTrace}");
                 Error.ProcessError(ex);
             }
             finally
@@ -99,7 +98,7 @@ namespace FairPlayTube.Client.Shared
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification($"{ex.Message} - {ex.StackTrace}");
+                Error.ProcessError(ex);
             }
         }
 
@@ -121,7 +120,7 @@ namespace FairPlayTube.Client.Shared
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification($"{ex.Message} - {ex.StackTrace}");
+                Error.ProcessError(ex);
             }
         }
 
