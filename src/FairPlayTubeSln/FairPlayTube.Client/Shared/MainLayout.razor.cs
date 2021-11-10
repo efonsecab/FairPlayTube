@@ -19,6 +19,8 @@ namespace FairPlayTube.Client.Shared
     {
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+        [CascadingParameter]
+        private Error Error { get; set; }
         [Inject]
         private NavigationManager NavigationManager { get; set; }
         [Inject]
@@ -44,7 +46,8 @@ namespace FairPlayTube.Client.Shared
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification(ex.Message);
+                await ToastifyService.DisplayErrorNotification($"{ex.Message} - {ex.StackTrace}");
+                Error.ProcessError(ex);
             }
             finally
             {
@@ -96,7 +99,7 @@ namespace FairPlayTube.Client.Shared
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification(ex.Message);
+                await ToastifyService.DisplayErrorNotification($"{ex.Message} - {ex.StackTrace}");
             }
         }
 
@@ -118,7 +121,7 @@ namespace FairPlayTube.Client.Shared
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification(ex.Message);
+                await ToastifyService.DisplayErrorNotification($"{ex.Message} - {ex.StackTrace}");
             }
         }
 
