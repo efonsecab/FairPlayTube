@@ -27,11 +27,20 @@ namespace FairPlayTube.ClientServices
             var response = await anonymousHttpClient.PostAsJsonAsync(ApiRoutes.VisitorTrackingController.TrackAnonymousClientInformation, visitorTrackingModel);
             if (!response.IsSuccessStatusCode)
             {
-                ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
-                if (problemHttpResponse != null)
-                    throw new Exception(problemHttpResponse.Detail);
-                else
-                    throw new Exception(response.ReasonPhrase);
+                try
+                {
+                    ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
+                    if (problemHttpResponse != null)
+                        throw new Exception(problemHttpResponse.Detail);
+                    else
+                        throw new Exception(response.ReasonPhrase);
+                }
+                catch (Exception)
+                {
+                    string errorText = await response.Content.ReadAsStringAsync();
+                    string reasonPhrase = response.ReasonPhrase;
+                    throw new Exception($"{reasonPhrase} - {errorText}");
+                }
             }
             else
             {
