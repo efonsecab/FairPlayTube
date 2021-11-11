@@ -52,7 +52,7 @@ namespace FairPlayTube.Services
                     Host = host,
                     RemoteIpAddress = remoteIpAddress,
                     UserAgent = userAgent,
-                    VisitDateTime = DateTime.UtcNow,
+                    VisitDateTime = DateTimeOffset.UtcNow,
                     VisitedUrl = visitorTrackingModel.VisitedUrl,
                     SessionId = visitorTrackingModel.SessionId
                 };
