@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Models.CustomHttpResponse;
+﻿using FairPlayTube.Common.CustomExceptions;
+using FairPlayTube.Models.CustomHttpResponse;
 using FairPlayTube.Models.VisitorTracking;
 using System;
 using System.Net.Http.Json;
@@ -31,15 +32,15 @@ namespace FairPlayTube.ClientServices
                 {
                     ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
                     if (problemHttpResponse != null)
-                        throw new Exception(problemHttpResponse.Detail);
+                        throw new CustomValidationException(problemHttpResponse.Detail);
                     else
-                        throw new Exception(response.ReasonPhrase);
+                        throw new CustomValidationException(response.ReasonPhrase);
                 }
                 catch (Exception)
                 {
                     string errorText = await response.Content.ReadAsStringAsync();
                     string reasonPhrase = response.ReasonPhrase;
-                    throw new Exception($"{reasonPhrase} - {errorText}");
+                    throw new CustomValidationException($"{reasonPhrase} - {errorText}");
                 }
             }
             else
@@ -61,9 +62,9 @@ namespace FairPlayTube.ClientServices
             {
                 ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
                 if (problemHttpResponse != null)
-                    throw new Exception(problemHttpResponse.Detail);
+                    throw new CustomValidationException(problemHttpResponse.Detail);
                 else
-                    throw new Exception(response.ReasonPhrase);
+                    throw new CustomValidationException(response.ReasonPhrase);
             }
             else
             {
@@ -82,9 +83,9 @@ namespace FairPlayTube.ClientServices
             {
                 ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
                 if (problemHttpResponse != null)
-                    throw new Exception(problemHttpResponse.Detail);
+                    throw new CustomValidationException(problemHttpResponse.Detail);
                 else
-                    throw new Exception(response.ReasonPhrase);
+                    throw new CustomValidationException(response.ReasonPhrase);
             }
         }
     }

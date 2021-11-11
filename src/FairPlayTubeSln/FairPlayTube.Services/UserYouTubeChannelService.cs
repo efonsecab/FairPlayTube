@@ -1,4 +1,5 @@
-﻿using FairPlayTube.DataAccess.Data;
+﻿using FairPlayTube.Common.CustomExceptions;
+using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.UserYouTubeChannel;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +35,7 @@ namespace FairPlayTube.Services
                 && p.YouTubeChannelId == userYouTubeChannelModel.YouTubeChannelId,
                 cancellationToken: cancellationToken);
             if (entity is not null)
-                throw new Exception($"User {userYouTubeChannelModel.ApplicationUserId} has already added Channel: {userYouTubeChannelModel.YouTubeChannelId}");
+                throw new CustomValidationException($"User {userYouTubeChannelModel.ApplicationUserId} has already added Channel: {userYouTubeChannelModel.YouTubeChannelId}");
             entity = new DataAccess.Models.UserYouTubeChannel()
             {
                 ApplicationUserId = userYouTubeChannelModel.ApplicationUserId,

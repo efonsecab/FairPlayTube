@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Common.Interfaces;
+﻿using FairPlayTube.Common.CustomExceptions;
+using FairPlayTube.Common.Interfaces;
 using FairPlayTube.Common.Localization;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
@@ -41,7 +42,7 @@ namespace FairPlayTube.Services
                 p.ApplicantApplicationUser.AzureAdB2cobjectId.ToString() == userObjectId, 
                 cancellationToken: cancellationToken);
             if (videoJobApplicationEntity is not null)
-                throw new Exception(Localizer[UserApplicationAlreadyExistsTextKey]);
+                throw new CustomValidationException(Localizer[UserApplicationAlreadyExistsTextKey]);
             videoJobApplicationEntity = new VideoJobApplication()
             {
                 ApplicantApplicationUserId = userEntity.ApplicationUserId,

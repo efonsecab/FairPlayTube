@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FairPlayTube.Common.CustomExceptions;
 using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Models;
@@ -62,12 +63,12 @@ namespace FairPlayTube.Controllers
             bool isVideoOwner = await VideoService.IsVideoOwnerAsync(videoId: videoId, azureAdB2cobjectId: userObjectId,
                 cancellationToken: cancellationToken);
             if (!isVideoOwner)
-                throw new Exception($"Delete denied. You are not an owner of this video");
+                throw new CustomValidationException($"Delete denied. You are not an owner of this video");
 
             if (await VideoService.DeleteVideoAsync(userAzureAdB2cObjectId: userObjectId, videoId: videoId, cancellationToken))
                 return Ok();
             else
-                throw new Exception("An error occurred trying to delete your video");
+                throw new CustomValidationException("An error occurred trying to delete your video");
 
         }
 
@@ -126,13 +127,13 @@ namespace FairPlayTube.Controllers
         public async Task<IActionResult> UploadVideo(UploadVideoModel uploadVideoModel, CancellationToken cancellationToken)
         {
             if (uploadVideoModel.UseSourceUrl && String.IsNullOrWhiteSpace(uploadVideoModel.SourceUrl))
-                throw new Exception("You muse specify a Source Url");
+                throw new CustomValidationException("You muse specify a Source Url");
             if (!uploadVideoModel.UseSourceUrl && String.IsNullOrWhiteSpace(uploadVideoModel.StoredFileName))
-                throw new Exception("You muse upload a file");
+                throw new CustomValidationException("You muse upload a file");
             if (await this.VideoService.UploadVideoAsync(uploadVideoModel, cancellationToken: cancellationToken))
                 return Ok();
             else
-                throw new Exception("An error occurred trying to upload your video");
+                throw new CustomValidationException("An error occurred trying to upload your video");
         }
 
         /// <summary>
@@ -165,7 +166,7 @@ namespace FairPlayTube.Controllers
             bool isVideoOwner = await VideoService.IsVideoOwnerAsync(videoId: videoId, azureAdB2cobjectId: azureAdB2cobjectId,
                 cancellationToken: cancellationToken);
             if (!isVideoOwner)
-                throw new Exception("You are not allowed to edit this video");
+                throw new CustomValidationException("You are not allowed to edit this video");
             string accessToken = await this.VideoService.GetVideoEditAccessTokenAsync(videoId: videoId);
             return accessToken;
         }
@@ -215,7 +216,7 @@ namespace FairPlayTube.Controllers
             var userObjectId = this.CurrentUserProvider.GetObjectId();
 
             if (!await this.VideoService.IsVideoOwnerAsync(videoId, userObjectId, cancellationToken))
-                throw new Exception($"User {userObjectId} is not allowed to modify Video: {videoId}");
+                throw new CustomValidationException($"User {userObjectId} is not allowed to modify Video: {videoId}");
             await this.VideoService.UpdateVideo(videoId, model);
             return Ok();
         }
@@ -334,7 +335,7 @@ namespace FairPlayTube.Controllers
             var isVideosOwner = await this.VideoService
                 .IsVideosOwnerAsync(videosIds: allVideoIds, azureAdB2cobjectId: userObjectId, cancellationToken: cancellationToken);
             if (!isVideosOwner)
-                throw new Exception("Access denied. User does not own all of the specified videos");
+                throw new CustomValidationException("Access denied. User does not own all of the specified videos");
             var result = await this.VideoService.CreateCustomRenderingProject(projectModel, cancellationToken);
             return result;
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FairPlayTube.Common.CustomExceptions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace FairPlayTube.Common.CustomHelpers
             PropertyInfo propertyBeingAccessed = (PropertyInfo)memberExpression.Member;
             DisplayAttribute displayAttribute = propertyBeingAccessed.GetCustomAttribute<DisplayAttribute>();
             if (displayAttribute is null)
-                throw new Exception($"Property '{propertyBeingAccessed.Name}' of type " +
+                throw new CustomValidationException($"Property '{propertyBeingAccessed.Name}' of type " +
                     $"'{expression.Parameters.First().Type.FullName}' does not have a {nameof(DisplayAttribute)}");
             var displayName = displayAttribute.GetName();
             return displayName;

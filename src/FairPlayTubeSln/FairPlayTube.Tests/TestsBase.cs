@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Http;
 using FairPlayTube.ClientServices;
 using System.Threading;
+using FairPlayTube.Common.CustomExceptions;
 
 namespace FairPlayTube.Tests
 {
@@ -150,7 +151,7 @@ namespace FairPlayTube.Tests
             else
             {
                 var error = await response.Content.ReadAsStringAsync();
-                throw new Exception(error);
+                throw new CustomValidationException(error);
             }
         }
 

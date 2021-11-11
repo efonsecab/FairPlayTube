@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Common.Interfaces;
+﻿using FairPlayTube.Common.CustomExceptions;
+using FairPlayTube.Common.Interfaces;
 using FairPlayTube.Common.Localization;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
@@ -30,17 +31,17 @@ namespace FairPlayTube.Services
         public async Task AddVideoJobAsync(VideoJobModel videoJobModel, CancellationToken cancellationToken)
         {
             if (videoJobModel.Budget <= 0)
-                throw new Exception(Localizer[BudgetMustbeGreaterThan0TextKey]);
+                throw new CustomValidationException(Localizer[BudgetMustbeGreaterThan0TextKey]);
             var userObjectId = this.CurrentUserProvider.GetObjectId();
             var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
                 .Include(p => p.ApplicationUser)
                 .FirstOrDefaultAsync(p => p.VideoId == videoJobModel.VideoId, cancellationToken: cancellationToken);
             if (videoEntity == null)
-                throw new Exception($"{String.Format(Localizer[VideoWithIdDoesNotExistsTextKey], videoJobModel.VideoId)}");
+                throw new CustomValidationException($"{String.Format(Localizer[VideoWithIdDoesNotExistsTextKey], videoJobModel.VideoId)}");
             var userEntity = videoEntity.ApplicationUser;
             var fundsToDeduct = videoJobModel.Budget + (videoJobModel.Budget * Common.Global.Constants.Commissions.VideoJobComission);
             if (fundsToDeduct > userEntity.AvailableFunds)
-                throw new Exception(String.Format(Localizer[NotEnoughFundsTextKey], fundsToDeduct, userEntity.AvailableFunds));
+                throw new CustomValidationException(String.Format(Localizer[NotEnoughFundsTextKey], fundsToDeduct, userEntity.AvailableFunds));
             VideoJob videoJobEntity = new()
             {
                 Budget = videoJobModel.Budget,

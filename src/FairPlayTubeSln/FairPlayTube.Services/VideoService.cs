@@ -1,4 +1,5 @@
 ﻿using FairPlayTube.Common.Configuration;
+using FairPlayTube.Common.CustomExceptions;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
@@ -70,7 +71,7 @@ namespace FairPlayTube.Services
                                         .SingleOrDefaultAsync(p => p.VideoId == videoId, cancellationToken: cancellationToken);
 
             if (videoEntity == null)
-                throw new Exception($"Unable to find the video with id {videoId}");
+                throw new CustomValidationException($"Unable to find the video with id {videoId}");
 
             if (videoEntity.VideoIndexStatusId != (short)Common.Global.Enums.VideoIndexStatus.Processed)
                 throw new InvalidOperationException($"Video with id {videoId} cannot be deleted because it has not been indexed yet");
@@ -249,7 +250,7 @@ namespace FairPlayTube.Services
                 p.BuyerApplicationUser.AzureAdB2cobjectId.ToString() == azureAdB2CObjectId)
                 .SingleOrDefaultAsync(cancellationToken: cancellationToken);
             if (videoAccessEntity != null)
-                throw new Exception("User has already bought access to the specified video");
+                throw new CustomValidationException("User has already bought access to the specified video");
             var userEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
                 .SingleAsync(p => p.AzureAdB2cobjectId.ToString() == azureAdB2CObjectId, cancellationToken: cancellationToken);
             var videoInfoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
@@ -261,7 +262,7 @@ namespace FairPlayTube.Services
             if (userAvailableFunds < totalPrice)
             {
                 string message = $"User {azureAdB2CObjectId} cannot buy access to video: {videoId}. Total Price: {totalPrice}. Available Funds: {userAvailableFunds}";
-                throw new Exception(message);
+                throw new CustomValidationException(message);
             }
             await this.FairplaytubeDatabaseContext.VideoAccessTransaction.AddAsync(new VideoAccessTransaction()
             {
@@ -362,7 +363,7 @@ namespace FairPlayTube.Services
             {
                 fileExtension = Path.GetExtension(uploadVideoModel.SourceUrl);
                 if (String.IsNullOrWhiteSpace(fileExtension))
-                    throw new Exception("Please make sure the source file has a valid extension like .mp4");
+                    throw new CustomValidationException("Please make sure the source file has a valid extension like .mp4");
             }
             var existentVideoName = await this.FairplaytubeDatabaseContext.VideoInfo
                 .SingleOrDefaultAsync(p =>
@@ -370,7 +371,7 @@ namespace FairPlayTube.Services
             p.Location == this.AzureVideoIndexerConfiguration.Location &&
             p.Name == uploadVideoModel.Name, cancellationToken: cancellationToken);
             if (existentVideoName != null)
-                throw new Exception($"Unable to use the Name: {uploadVideoModel.Name}. Please use another name and try again");
+                throw new CustomValidationException($"Unable to use the Name: {uploadVideoModel.Name}. Please use another name and try again");
 
             if (uploadVideoModel.UseSourceUrl)
             {
@@ -495,7 +496,7 @@ namespace FairPlayTube.Services
             var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
                 .SingleOrDefaultAsync(p => p.VideoId == videoId);
             if (videoEntity == null)
-                throw new Exception($"Unable to find video with Id: {videoId}");
+                throw new CustomValidationException($"Unable to find video with Id: {videoId}");
             videoEntity.Price = model.Price;
             await this.FairplaytubeDatabaseContext.SaveChangesAsync();
         }
@@ -518,7 +519,7 @@ namespace FairPlayTube.Services
             var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
                 .Include(p => p.ApplicationUser).SingleOrDefaultAsync(p => p.VideoId == videoId, cancellationToken: cancellationToken);
             if (videoEntity == null)
-                throw new Exception($"Video: {videoId} does not exit");
+                throw new CustomValidationException($"Video: {videoId} does not exit");
             var videoThumbnailBase64 = await this.AzureVideoIndexerService
                 .GetVideoThumbnailAsync(videoId, thumbnailId, cancellationToken);
             string relativePath =

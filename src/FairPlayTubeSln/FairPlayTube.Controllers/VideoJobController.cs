@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FairPlayTube.Common.CustomExceptions;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.Video;
@@ -59,7 +60,7 @@ namespace FairPlayTube.Controllers
         {
             var userObjectId = this.CurrentUserProvider.GetObjectId();
             if (!await this.VideoService.IsVideoOwnerAsync(videoJobModel.VideoId, userObjectId, cancellationToken))
-                throw new Exception("You are not an owner of this video");
+                throw new CustomValidationException("You are not an owner of this video");
             await this.VideoJobService.AddVideoJobAsync(videoJobModel, cancellationToken: cancellationToken);
         }
 

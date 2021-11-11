@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Common.Interfaces;
+﻿using FairPlayTube.Common.CustomExceptions;
+using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.Invites;
@@ -30,12 +31,12 @@ namespace FairPlayTube.Services
             var followerUserEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
                 .SingleOrDefaultAsync(p => p.AzureAdB2cobjectId.ToString() == followerUserObjectId, cancellationToken: cancellationToken);
             if (followerUserEntity is null)
-                throw new Exception($"User {followerUserObjectId} does not exist");
+                throw new CustomValidationException($"User {followerUserObjectId} does not exist");
 
             var followedUserEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
                 .SingleOrDefaultAsync(p => p.AzureAdB2cobjectId.ToString() == followedUserObjectId, cancellationToken: cancellationToken);
             if (followedUserEntity is null)
-                throw new Exception($"User {followedUserObjectId} does not exist");
+                throw new CustomValidationException($"User {followedUserObjectId} does not exist");
 
             await this.FairplaytubeDatabaseContext.UserFollower.AddAsync(new DataAccess.Models.UserFollower() 
             {
@@ -50,7 +51,7 @@ namespace FairPlayTube.Services
             var userInvitationEntity = await this.FairplaytubeDatabaseContext.UserInvitation
                 .Where(p => p.InvitedUserEmail == inviteUserModel.ToEmailAddress).SingleOrDefaultAsync(cancellationToken: cancellationToken);
             if (userInvitationEntity is not null)
-                throw new Exception($"An invitation already exists for user: {inviteUserModel.ToEmailAddress}");
+                throw new CustomValidationException($"An invitation already exists for user: {inviteUserModel.ToEmailAddress}");
             var currentUserObjectId = this.CurrentUserProvider.GetObjectId();
             var currentUserEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
                 .Where(p => p.AzureAdB2cobjectId.ToString() == currentUserObjectId).SingleAsync(cancellationToken: cancellationToken);

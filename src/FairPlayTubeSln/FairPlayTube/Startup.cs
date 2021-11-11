@@ -1,4 +1,5 @@
 using FairPlayTube.Common.Configuration;
+using FairPlayTube.Common.CustomExceptions;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.CustomLocalization.EF;
 using FairPlayTube.CustomProviders;
@@ -403,28 +404,41 @@ namespace FairPlayTube
                     var exceptionHandlerPathFeature =
                     context.Features.Get<IExceptionHandlerPathFeature>();
                     var error = exceptionHandlerPathFeature.Error;
+                    long? errorId = default;
                     if (error != null)
                     {
                         try
                         {
                             FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
                             this.CreateFairPlayTubeDbContext(context.RequestServices);
-                            await fairplaytubeDatabaseContext.ErrorLog.AddAsync(new ErrorLog()
+                            ErrorLog errorLog = new ErrorLog()
                             {
                                 FullException = error.ToString(),
                                 StackTrace = error.StackTrace,
                                 Message = error.Message
-                            });
+                            };
+                            await fairplaytubeDatabaseContext.ErrorLog.AddAsync(errorLog);
                             await fairplaytubeDatabaseContext.SaveChangesAsync();
+                            errorId = errorLog.ErrorLogId;
                         }
                         catch (Exception)
                         {
                             throw;
                         }
-                        ProblemHttpResponse problemHttpResponse = new()
+                        ProblemHttpResponse problemHttpResponse = new();
+                        if (error is CustomValidationException)
                         {
-                            Detail = error.Message,
-                        };
+                            problemHttpResponse.Detail = error.Message;
+                        }
+                        else
+                        {
+                            string userVisibleError = "An error ocurred.";
+                            if (errorId.HasValue)
+                            {
+                                userVisibleError += $" Error code: {errorId}";
+                            }
+                            problemHttpResponse.Detail = userVisibleError;
+                        }
                         await context.Response.WriteAsJsonAsync<ProblemHttpResponse>(problemHttpResponse);
                     }
                 });

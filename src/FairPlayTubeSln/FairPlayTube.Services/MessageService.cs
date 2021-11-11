@@ -1,4 +1,5 @@
-﻿using FairPlayTube.DataAccess.Data;
+﻿using FairPlayTube.Common.CustomExceptions;
+using FairPlayTube.DataAccess.Data;
 using FairPlayTube.Models.UserMessage;
 using FairPlayTube.Notifications.Hubs;
 using Microsoft.AspNetCore.SignalR;
@@ -39,7 +40,7 @@ namespace FairPlayTube.Services
                 .Where(u => u.ApplicationUserId == model.ToApplicationUserId)
                 .SingleOrDefaultAsync(cancellationToken);
             if (receiver == null)
-                throw new Exception($"Specified user {model.ToApplicationUserId} does not exist");
+                throw new CustomValidationException($"Specified user {model.ToApplicationUserId} does not exist");
 
             await this.FairplaytubeDatabaseContext.UserMessage.AddAsync(
                 new DataAccess.Models.UserMessage()

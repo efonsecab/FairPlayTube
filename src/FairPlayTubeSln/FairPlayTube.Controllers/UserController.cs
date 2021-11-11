@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Common.Global;
+﻿using FairPlayTube.Common.CustomExceptions;
+using FairPlayTube.Common.Global;
 using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Data;
@@ -151,7 +152,7 @@ namespace FairPlayTube.Controllers
             var followedUser = await this.FairplaytubeDatabaseContext.ApplicationUser
                 .SingleOrDefaultAsync(p => p.ApplicationUserId == followedApplicationUserId, cancellationToken: cancellationToken);
             if (followedUser == null)
-                throw new Exception($"Invalid {nameof(followedApplicationUserId)}");
+                throw new CustomValidationException($"Invalid {nameof(followedApplicationUserId)}");
             await this.UserService.AddUserFollowerAsync(followerUserObjectId: userAdB2CObjectId,
                 followedUserObjectId: followedUser.AzureAdB2cobjectId.ToString(), cancellationToken);
             return Ok();
@@ -194,13 +195,13 @@ namespace FairPlayTube.Controllers
                     .SingleAsync();
                 if (userEntity.EmailAddress.ToLower() != userInvitation.InvitedUserEmail.ToLower())
                 {
-                    throw new Exception("Account email does not match invite code email");
+                    throw new CustomValidationException("Account email does not match invite code email");
                 }
                 userEntity.ApplicationUserStatusId = 2;
                 await this.FairplaytubeDatabaseContext.SaveChangesAsync();
                 return Ok();
             }
-            throw new Exception("Invalid Invite Code");
+            throw new CustomValidationException("Invalid Invite Code");
         }
     }
 }

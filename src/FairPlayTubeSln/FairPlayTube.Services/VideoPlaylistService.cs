@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using FairPlayTube.DataAccess.Models;
+using FairPlayTube.Common.CustomExceptions;
 
 namespace FairPlayTube.Services
 {
@@ -30,7 +31,7 @@ namespace FairPlayTube.Services
                 .AnyAsync(p => p.OwnerApplicationUser.AzureAdB2cobjectId.ToString() == userObjectId &&
                 p.PlaylistName == videoPlaylistModel.PlaylistName, cancellationToken:cancellationToken);
             if (isDuplicated)
-                throw new Exception($"User already has a playlist named '{videoPlaylistModel.PlaylistName}'");
+                throw new CustomValidationException($"User already has a playlist named '{videoPlaylistModel.PlaylistName}'");
             var userEntity = await this.FairplaytubeDatabaseContext.ApplicationUser.Where(p => p.AzureAdB2cobjectId.ToString() ==
             userObjectId).SingleAsync(cancellationToken: cancellationToken);
             await this.FairplaytubeDatabaseContext.VideoPlaylist.AddAsync(new DataAccess.Models.VideoPlaylist() 
@@ -48,10 +49,10 @@ namespace FairPlayTube.Services
                 .Include(p=>p.OwnerApplicationUser)
                 .SingleOrDefaultAsync(p => p.VideoPlaylistId == videoPlaylistId, cancellationToken: cancellationToken);
             if (videoplaylistEntity == null)
-                throw new Exception($"Unable to find videoplaylist with id: {videoPlaylistId}");
+                throw new CustomValidationException($"Unable to find videoplaylist with id: {videoPlaylistId}");
             var userobjectId = this.CurrentUserProvider.GetObjectId();
             if (userobjectId != videoplaylistEntity.OwnerApplicationUser.AzureAdB2cobjectId.ToString())
-                throw new Exception("Access denied. User does not own the specified videoplaylist");
+                throw new CustomValidationException("Access denied. User does not own the specified videoplaylist");
             this.FairplaytubeDatabaseContext.VideoPlaylist.Remove(videoplaylistEntity);
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
         }
@@ -67,7 +68,7 @@ namespace FairPlayTube.Services
                 videoPlaylistItemModel.VideoPlaylistId, cancellationToken: cancellationToken);
             var userobjectId = this.CurrentUserProvider.GetObjectId();
             if (userobjectId != videoplaylistEntity.OwnerApplicationUser.AzureAdB2cobjectId.ToString())
-                throw new Exception("Access denied. User does not own the specified videoplaylist");
+                throw new CustomValidationException("Access denied. User does not own the specified videoplaylist");
             var videoPlayListItemEntity = new VideoPlaylistItem()
             {
                 VideoPlaylistId = videoPlaylistItemModel.VideoPlaylistId,

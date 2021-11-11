@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Common.Global;
+﻿using FairPlayTube.Common.CustomExceptions;
+using FairPlayTube.Common.Global;
 using FairPlayTube.Models.CustomHttpResponse;
 using FairPlayTube.Models.UserProfile;
 using System;
@@ -26,9 +27,9 @@ namespace FairPlayTube.ClientServices
             {
                 ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
                 if (problemHttpResponse != null)
-                    throw new Exception(problemHttpResponse.Detail);
+                    throw new CustomValidationException(problemHttpResponse.Detail);
                 else
-                    throw new Exception(response.ReasonPhrase);
+                    throw new CustomValidationException(response.ReasonPhrase);
             }
         }
 
@@ -48,9 +49,9 @@ namespace FairPlayTube.ClientServices
             {
                 ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
                 if (problemHttpResponse != null)
-                    throw new Exception(problemHttpResponse.Detail);
+                    throw new CustomValidationException(problemHttpResponse.Detail);
                 else
-                    throw new Exception(response.ReasonPhrase);
+                    throw new CustomValidationException(response.ReasonPhrase);
             }
         }
 

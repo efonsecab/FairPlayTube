@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Common.Interfaces;
+﻿using FairPlayTube.Common.CustomExceptions;
+using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.Payouts;
@@ -41,7 +42,7 @@ namespace FairPlayTube.Services
                 .Include(p => p.VideoJobEscrow)
                 .SingleAsync(p => p.VideoJobId == videoJobId, cancellationToken);
             if (user.ApplicationUserId != videoJob.VideoInfo.ApplicationUserId)
-                throw new Exception("Access denied. User did not create the job");
+                throw new CustomValidationException("Access denied. User did not create the job");
             var acceptedApplication = await this.FairplaytubeDatabaseContext
                 .VideoJobApplication.Include(p => p.ApplicantApplicationUser)
                 .Where(p => p.VideoJobApplicationStatusId == (short)Common.Global.Enums.VideoJobApplicationStatus.Selected)

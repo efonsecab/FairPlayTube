@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Common.Interfaces;
+﻿using FairPlayTube.Common.CustomExceptions;
+using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.Video;
@@ -36,12 +37,12 @@ namespace FairPlayTube.Services
             var videoCommentEntity = await this.FairplaytubeDatabaseContext.VideoComment
                 .Where(p => p.VideoCommentId == videoCommentId).SingleOrDefaultAsync(cancellationToken: cancellationToken);
             if (videoCommentEntity == null)
-                throw new Exception($"Video comment id: {videoCommentId} does not exit");
+                throw new CustomValidationException($"Video comment id: {videoCommentId} does not exit");
             var videoCommentAnalysisEntity = await this.FairplaytubeDatabaseContext
                 .VideoCommentAnalysis.Where(p => p.VideoCommentId == videoCommentId)
                 .SingleOrDefaultAsync(cancellationToken: cancellationToken);
             if (videoCommentAnalysisEntity != null)
-                throw new Exception($"Video comment id: {videoCommentId} has already been analyzed");
+                throw new CustomValidationException($"Video comment id: {videoCommentId} has already been analyzed");
             var detectedLanguage = await this.TextAnalysisService.DetectLanguageAsync(videoCommentEntity.Comment, cancellationToken);
             var keyPhrases = await this.TextAnalysisService.GetKeyPhrasesAsync(videoCommentEntity.Comment, detectedLanguage, cancellationToken);
             var sentiment = await this.TextAnalysisService.GetSentimentAsync(videoCommentEntity.Comment, detectedLanguage, cancellationToken);
@@ -70,7 +71,7 @@ namespace FairPlayTube.Services
             var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
                 .SingleOrDefaultAsync(p => p.VideoId == createVideoCommentModel.VideoId, cancellationToken: cancellationToken);
             if (videoEntity is null)
-                throw new Exception($"Unable to find {nameof(createVideoCommentModel.VideoId)}: {createVideoCommentModel.VideoId}");
+                throw new CustomValidationException($"Unable to find {nameof(createVideoCommentModel.VideoId)}: {createVideoCommentModel.VideoId}");
             var commentedUserObjectId = this.CurrentUserProvider.GetObjectId();
             var commentedApplicationUser = await this.FairplaytubeDatabaseContext.ApplicationUser
                 .SingleAsync(p => p.AzureAdB2cobjectId.ToString() == commentedUserObjectId, cancellationToken: cancellationToken);

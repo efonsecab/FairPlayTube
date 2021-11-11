@@ -1,4 +1,5 @@
-﻿using PTI.Microservices.Library.AzureTextAnalytics.Models.DetectLanguage;
+﻿using FairPlayTube.Common.CustomExceptions;
+using PTI.Microservices.Library.AzureTextAnalytics.Models.DetectLanguage;
 using PTI.Microservices.Library.Models.AzureTextAnalyticsService.GetKeyPhrases;
 using PTI.Microservices.Library.Models.AzureTextAnalyticsService.GetSentiment;
 using PTI.Microservices.Library.Services;
@@ -36,7 +37,7 @@ namespace FairPlayTube.Services
             if (response.errors?.Length > 0)
             {
                 string allErrorsText = String.Join("*", response.errors.Select(p => p.error.message));
-                throw new Exception($"Unable to detect language. Details: {allErrorsText}");
+                throw new CustomValidationException($"Unable to detect language. Details: {allErrorsText}");
             }
             return response.documents.First().detectedLanguage.iso6391Name;
         }
@@ -62,7 +63,7 @@ namespace FairPlayTube.Services
                 return response.documents.First().sentiment;
             }
             else
-            throw new Exception($"Unable to retrieve sentiment for text: '{textLanguage}' on language: {textLanguage}");
+            throw new CustomValidationException($"Unable to retrieve sentiment for text: '{textLanguage}' on language: {textLanguage}");
         }
 
         public async Task<List<string>> GetKeyPhrasesAsync(string text, string textLanguage, CancellationToken cancellationToken)
