@@ -65,6 +65,11 @@
         {
             public const string Videos = "/Users/{UserId:long}/YouTube/Videos";
         }
+
+        public class AdminPagesRoutes
+        {
+            public const string Errors = "/Admin/Errors";
+        }
         public class UserPagesRoutes
         {
             public const string AddVideoJob = "/Users/Videos/{VideoId}/AddVideoJob";

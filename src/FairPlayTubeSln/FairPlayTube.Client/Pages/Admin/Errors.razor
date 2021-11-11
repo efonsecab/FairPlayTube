@@ -1,0 +1,16 @@
+﻿<h3>Errors</h3>
+
+@if (this.ErrorComponent != null)
+{
+    foreach (var singleException in ErrorComponent.GetExceptionsList())
+    {
+        <div class="row">
+            <div class="col">
+                Message: @singleException.Message
+            </div>
+            <div class="col">
+                StackTrace: @singleException.StackTrace
+            </div>
+        </div>
+    }
+}

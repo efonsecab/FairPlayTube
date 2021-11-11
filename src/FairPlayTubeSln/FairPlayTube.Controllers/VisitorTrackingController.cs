@@ -5,6 +5,8 @@ using FairPlayTube.Models.VisitorTracking;
 using FairPlayTube.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 

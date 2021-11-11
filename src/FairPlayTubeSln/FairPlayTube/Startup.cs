@@ -411,7 +411,7 @@ namespace FairPlayTube
                         {
                             FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
                             this.CreateFairPlayTubeDbContext(context.RequestServices);
-                            ErrorLog errorLog = new ErrorLog()
+                            ErrorLog errorLog = new()
                             {
                                 FullException = error.ToString(),
                                 StackTrace = error.StackTrace,

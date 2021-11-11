@@ -27,10 +27,9 @@ namespace FairPlayTube.Controllers
         /// <summary>
         /// Initializes <see cref="SearchController"/>
         /// </summary>
-        /// <param name="fairplaytubeDatabaseContext"></param>
         /// <param name="searchService"></param>
         /// <param name="mapper"></param>
-        public SearchController(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
+        public SearchController(
             SearchService searchService, IMapper mapper)
         {
             this.SearchService = searchService;

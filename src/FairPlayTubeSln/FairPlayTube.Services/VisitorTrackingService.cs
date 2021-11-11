@@ -85,6 +85,7 @@ namespace FairPlayTube.Services
                 }
                 catch (Exception)
                 {
+                    throw;
                 }
             }
             return null;

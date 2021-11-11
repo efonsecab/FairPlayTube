@@ -23,13 +23,10 @@ namespace FairPlayTube.DataAccess.Models
         public string Country { get; set; }
         public DateTimeOffset VisitDateTime { get; set; }
         [Required]
-        [StringLength(250)]
         public string UserAgent { get; set; }
         [Required]
-        [StringLength(250)]
         public string Host { get; set; }
         [Required]
-        [StringLength(250)]
         public string VisitedUrl { get; set; }
         public long? VideoInfoId { get; set; }
         public Guid? SessionId { get; set; }

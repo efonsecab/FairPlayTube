@@ -10,6 +10,7 @@ using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -29,8 +30,6 @@ namespace FairPlayTube.Client.Shared
         private IStringLocalizer<MainLayout> Localizer { get; set; }
         [Inject]
         private VisitorTrackingClientService VisitorTrackingClientService { get; set; }
-        [Inject]
-        private ToastifyService ToastifyService { get; set; }
         private bool IsLoading { get; set; }
         private bool ShowFooter { get; set; } = true;
         private Timer VisitsTimer { get; set; }
@@ -40,9 +39,9 @@ namespace FairPlayTube.Client.Shared
             try
             {
                 IsLoading = true;
+                await LocalizationClientService.LoadData();
                 await TrackVisit(createNewSession: true);
                 this.NavigationManager.LocationChanged += NavigationManager_LocationChanged;
-                await LocalizationClientService.LoadData();
             }
             catch (Exception ex)
             {

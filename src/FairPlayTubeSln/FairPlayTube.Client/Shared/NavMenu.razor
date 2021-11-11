@@ -20,6 +20,13 @@
                 <i class="bi bi-person-workspace"></i>
             </NavLink>
         </li>
+        <AuthorizeView Roles="@Common.Global.Constants.Roles.Admin">
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="@Common.Global.Constants.AdminPagesRoutes.Errors" data-bs-toggle="tooltip" data-bs-placement="top" title="Errors">
+                    <i class="bi bi-x-circle-fill"></i>
+                </NavLink>
+            </li>
+        </AuthorizeView>
         <AuthorizeView Roles="@Common.Global.Constants.Roles.User">
             <Authorized>
                 <li class="nav-item px-3">
@@ -116,9 +123,9 @@
 
 
     #region Resource Keys
-    [ResourceKey(defaultValue:"Home")]
+    [ResourceKey(defaultValue: "Home")]
     public const string HomeTextKey = "HomeText";
-    [ResourceKey(defaultValue:"Upload Video")]
+    [ResourceKey(defaultValue: "Upload Video")]
     public const string UploadVideoTextKey = "UploadVideoText";
     [ResourceKey(defaultValue: "My Videos Queue")]
     public const string MyVideosQueueTextKey = "MyVideosQueueText";
@@ -128,15 +135,15 @@
     public const string InviteUserTextKey = "InviteUserText";
     [ResourceKey(defaultValue: "Persons In Videos")]
     public const string PersonsInVideosTextKey = "PersonsInVideosText";
-    [ResourceKey(defaultValue:"Users")]
+    [ResourceKey(defaultValue: "Users")]
     public const string UsersTextKey = "UsersText";
-    [ResourceKey(defaultValue:"My Funds")]
+    [ResourceKey(defaultValue: "My Funds")]
     public const string MyFundsTextKey = "MyFundsText";
     [ResourceKey(defaultValue: "Monetization Profile")]
     public const string MonetizationProfileTextKey = "MonetizationProfileText";
-    [ResourceKey(defaultValue:"Search")]
+    [ResourceKey(defaultValue: "Search")]
     public const string SearchTextKey = "SearchText";
-    [ResourceKey(defaultValue:"Visits")]
+    [ResourceKey(defaultValue: "Visits")]
     public const string VisitsTextKey = "VisitsText";
     [ResourceKey(defaultValue: "Known Issues")]
     public const string KnownIssuesTextKey = "KnownIssuesText";
