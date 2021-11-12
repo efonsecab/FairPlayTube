@@ -1,6 +1,7 @@
 ﻿using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.Models.UserProfile;
 using System;
+using System.Globalization;
 
 namespace FairPlayTube.Models.Video
 {
@@ -41,12 +42,12 @@ namespace FairPlayTube.Models.Video
         /// Url to use to render the Azure Video Indexer Player Widget
         /// </summary>
         public string PublicPlayerUrl => $"https://www.videoindexer.ai/embed/player/{AccountId}/{VideoId}" +
-                $"?&locale=en&location={Location}";//&autoplay=false";
+                $"?locale={CultureInfo.CurrentUICulture.TwoLetterISOLanguageName}&location={Location}";//&autoplay=false";
         /// <summary>
         /// Url to use to render the Azure Video Indexer Insights Widget
         /// </summary>
         public string PublicInsightsUrl => $"https://www.videoindexer.ai/embed/insights/{AccountId}/{VideoId}" +
-            $"/?&locale=en&location={Location}";
+            $"?locale={CultureInfo.CurrentUICulture.TwoLetterISOLanguageName}&location={Location}&language={CultureInfo.CurrentUICulture.Name}";
         /// <summary>
         /// Access Token required to be able to edit Azure Video Indexer Videos Insights
         /// </summary>
