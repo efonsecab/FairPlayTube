@@ -32,7 +32,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification(ex.Message);
+                ToastifyService.DisplayErrorNotification(ex.Message);
             }
             finally
             {

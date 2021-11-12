@@ -16,12 +16,16 @@ namespace FairPlayTube.Models.VideoJobApplications
         /// <summary>
         /// Video job id
         /// </summary>
-        public long VideoJobId { get; set; }
+        [Required(ErrorMessageResourceName = nameof(CreateVideoJobApplicationLocalizer.VideoJobIdRequired),
+            ErrorMessageResourceType = typeof(CreateVideoJobApplicationLocalizer))]
+        public long? VideoJobId { get; set; }
         /// <summary>
         /// Applicant's cover letter
         /// </summary>
         [Required(ErrorMessageResourceName =nameof(CreateVideoJobApplicationLocalizer.ApplicantCoverLetterRequired),
             ErrorMessageResourceType =typeof(CreateVideoJobApplicationLocalizer))]
+        [Display(Name =nameof(CreateVideoJobApplicationLocalizer.ApplicantCoverLetterDisplayName),
+            ResourceType =typeof(CreateVideoJobApplicationLocalizer))]
         public string ApplicantCoverLetter { get; set; }
     }
 }

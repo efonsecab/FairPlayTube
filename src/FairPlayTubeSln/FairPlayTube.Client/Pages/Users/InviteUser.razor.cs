@@ -31,11 +31,11 @@ namespace FairPlayTube.Client.Pages.Users
             {
                 IsLoading = true;
                 await this.UserClientService.InviteUserAsync(this.InviteUserModel);
-                await this.ToastifyService.DisplaySuccessNotification($"Invite sent to: {this.InviteUserModel.ToEmailAddress}");
+                this.ToastifyService.DisplaySuccessNotification($"Invite sent to: {this.InviteUserModel.ToEmailAddress}");
             }
             catch (Exception ex)
             {
-                await this.ToastifyService.DisplayErrorNotification(ex.Message);
+                this.ToastifyService.DisplayErrorNotification(ex.Message);
             }
             finally
             {

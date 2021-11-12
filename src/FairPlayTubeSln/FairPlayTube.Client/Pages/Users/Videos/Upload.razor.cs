@@ -90,13 +90,13 @@ namespace FairPlayTube.Client.Pages.Users.Videos
                 this.IsSubmitting = true;
                 this.IsLoading = true;
                 await this.VideoClientService.UploadVideoAsync(this.UploadVideoModel);
-                await this.ToastifyService.DisplaySuccessNotification($"Your video has been uploaded. " +
+                this.ToastifyService.DisplaySuccessNotification($"Your video has been uploaded. " +
                     $"It will take some minutes for it to finish being processed");
                 this.UploadVideoModel = new UploadVideoModel();
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification(ex.Message);
+                ToastifyService.DisplayErrorNotification(ex.Message);
             }
             finally
             {

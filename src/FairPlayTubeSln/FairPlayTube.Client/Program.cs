@@ -1,3 +1,4 @@
+using Blazored.Toast;
 using FairPlayTube.Client.CustomClaims;
 using FairPlayTube.Client.CustomLocalization.Api;
 using FairPlayTube.Client.CustomProviders;
@@ -8,6 +9,7 @@ using FairPlayTube.Common.Interfaces;
 using FairPlayTube.Components.FacebookButtons;
 using FairPlayTube.Components.GoogleAdsense;
 using FairPlayTube.Models.Validations.Video;
+using FairPlayTube.Models.Validations.VideoJobApplications;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +31,7 @@ namespace FairPlayTube.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
+            builder.Services.AddBlazoredToast();
             builder.Services.AddSingleton<IStringLocalizerFactory, ApiLocalizerFactory>();
             builder.Services.AddSingleton<IStringLocalizer, ApiLocalizer>();
             builder.Services.AddLocalization();
@@ -91,6 +94,7 @@ namespace FairPlayTube.Client
             builder.Services.AddTransient<UserYouTubeChannelClientService>();
             builder.Services.AddTransient<VideoPlaylistClientService>();
             builder.Services.AddTransient<VideoJobClientService>();
+            builder.Services.AddTransient<VideoJobApplicationClientService>();
 
             var host = builder.Build();
             ConfigureModelsLocalizers(host.Services);
@@ -107,6 +111,9 @@ namespace FairPlayTube.Client
             VideoJobModelLocalizer.Localizer =
                 localizerFactory.Create(typeof(VideoJobModelLocalizer)) 
                 as IStringLocalizer<VideoJobModelLocalizer>;
+            CreateVideoJobApplicationLocalizer.Localizer =
+                localizerFactory.Create(typeof(CreateVideoJobApplicationLocalizer))
+                as IStringLocalizer<CreateVideoJobApplicationLocalizer>;
         }
     }
 

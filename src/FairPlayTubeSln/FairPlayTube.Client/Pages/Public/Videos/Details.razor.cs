@@ -67,7 +67,7 @@ namespace FairPlayTube.Client.Pages.Public.Videos
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification(ex.Message);
+                ToastifyService.DisplayErrorNotification(ex.Message);
             }
             finally
             {
@@ -91,7 +91,7 @@ namespace FairPlayTube.Client.Pages.Public.Videos
             }
             catch (Exception ex)
             {
-                await this.ToastifyService.DisplayErrorNotification(ex.Message);
+                this.ToastifyService.DisplayErrorNotification(ex.Message);
             }
             finally
             {

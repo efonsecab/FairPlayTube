@@ -80,7 +80,7 @@ namespace FairPlayTube.Client.Pages
             }
             catch (Exception ex)
             {
-                await this.ToastifyService.DisplayErrorNotification(ex.Message);
+                this.ToastifyService.DisplayErrorNotification(ex.Message);
             }
             finally
             {
@@ -105,7 +105,7 @@ namespace FairPlayTube.Client.Pages
             }
             catch (Exception ex)
             {
-                await this.ToastifyService.DisplayErrorNotification(ex.Message);
+                this.ToastifyService.DisplayErrorNotification(ex.Message);
             }
         }
 
@@ -114,13 +114,13 @@ namespace FairPlayTube.Client.Pages
             try
             {
                 await VideoClientService.BuyVideoAccessAsync(videoInfoModel.VideoId);
-                await ToastifyService.DisplaySuccessNotification("Video Access successfully bought");
+                ToastifyService.DisplaySuccessNotification("Video Access successfully bought");
                 await LoadData();
                 StateHasChanged();
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification(ex.Message);
+                ToastifyService.DisplayErrorNotification(ex.Message);
             }
         }
 

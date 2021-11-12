@@ -69,7 +69,7 @@ namespace FairPlayTube.Client.CustomComponents.Upload
                         }
                         catch (Exception ex)
                         {
-                            await ToastifyService.DisplayErrorNotification(
+                            ToastifyService.DisplayErrorNotification(
                                 $"{Localizer[SpecifySmallerFileTextKey]}. Max: " +
                                 $"{Common.Global.Constants.UploadLimits.MaxBytesAllowed / 1024 / 1024} MB");
                             Logger.LogInformation(
@@ -94,7 +94,7 @@ namespace FairPlayTube.Client.CustomComponents.Upload
                     var response = await authorizedHttpClient.PostAsync("api/Filesave/PostFile", content);
                     if (!response.IsSuccessStatusCode)
                     {
-                        await ToastifyService.DisplayErrorNotification(Localizer[UnableToUploadTextKey]);
+                        ToastifyService.DisplayErrorNotification(Localizer[UnableToUploadTextKey]);
                     }
                     else
                     {

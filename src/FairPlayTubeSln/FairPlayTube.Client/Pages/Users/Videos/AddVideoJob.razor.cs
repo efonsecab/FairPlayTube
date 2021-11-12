@@ -41,7 +41,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification(ex.Message);
+                ToastifyService.DisplayErrorNotification(ex.Message);
             }
             finally
             {
@@ -55,12 +55,12 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             {
                 IsLoading = true;
                 await VideoJobClientService.AddVideoJobAsync(this.VideoJobModel);
-                await ToastifyService.DisplaySuccessNotification(Localizer[VideoJobCreatedTextKey]);
+                ToastifyService.DisplaySuccessNotification(Localizer[VideoJobCreatedTextKey]);
                 NavigationManager.NavigateTo(Common.Global.Constants.UserPagesRoutes.MyVideos);
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification(ex.Message);
+                ToastifyService.DisplayErrorNotification(ex.Message);
             }
             finally
             {

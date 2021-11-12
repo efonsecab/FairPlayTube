@@ -1,7 +1,10 @@
 ﻿@using Models.Video
+@using FairPlayTube.Models.VideoJobApplications
+
 <h3>@Localizer[VideosJobsTitleTextKey]</h3>
 
 <Loading IsLoading="IsLoading"></Loading>
+
 @if (this.AllVideosJobs != null)
 {
     <div class="container">
@@ -12,24 +15,24 @@
                     <Card>
                         <CardHeader>
                             @singleJob.Title
-                            <button type="button" class="btn btn-info rounded-circle" disabled 
-                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                    title="@Localizer[ApplyToVideoJobTextKey]">
+                            <button type="button" class="btn btn-info rounded-circle"
+                            @onclick="@( async () => await OnApplyToVideoJobClickedAsync(singleJob))"
+                            data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="@Localizer[ApplyToVideoJobTextKey]">
                                 <i class="bi bi-hand-index-thumb"></i>
                             </button>
                         </CardHeader>
                         <CardBody>
                             @singleJob.Description
                             <FairPlayTube.Components.Videos.Video AllowDelete="false"
-                                                                  AllowDownload="false"
-                                                                  ShowAddVideoJobButton="false"
-                                                                  ShowDetailsLink="false"
-                                                                  ShowDisplayAd="false"
-                                                                  ShowTwitterShareButton="false"
-                                                                  ShowYouTubeVideosLink="false"
-                                                                  AllowEdit="false"
-                                                                  VideoModel="@singleJob.VideoInfo"
-                                                                  ></FairPlayTube.Components.Videos.Video>
+                                                          AllowDownload="false"
+                                                          ShowAddVideoJobButton="false"
+                                                          ShowDetailsLink="false"
+                                                          ShowDisplayAd="false"
+                                                          ShowTwitterShareButton="false"
+                                                          ShowYouTubeVideosLink="false"
+                                                          AllowEdit="false"
+                                                          VideoModel="@singleJob.VideoInfo"></FairPlayTube.Components.Videos.Video>
                         </CardBody>
                         <CardFooter>
                             @( DisplayHelper.DisplayFor<VideoJobModel>(p => p.Budget) ): @singleJob.Budget
@@ -39,4 +42,30 @@
             }
         </div>
     </div>
+
+    @if (this.ShowApplyToVideoJobModal)
+    {
+        <Modal CloseButtonText="Cancel" OkButtonText="@Localizer[SubmitTextKey]"
+       OnCloseButtonClicked="CancelVideoJobApplication"
+       OnOkButtonClicked="ApplyToVideoJob">
+            <Title>
+                @this.SelectdVideoJob.Title
+            </Title>
+            <Content>
+                <Loading IsLoading="IsLoading"></Loading>
+                <EditForm Model="CreateVideoJobApplicationModel" @ref="VideoJobApplicationEditForm">
+                    <div class="m-3">
+                        <DataAnnotationsValidator></DataAnnotationsValidator>
+                        <ValidationSummary></ValidationSummary>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">@(DisplayHelper.DisplayFor<CreateVideoJobApplicationModel>(p=>p.ApplicantCoverLetter))</label>
+                        <InputTextArea class="form-form-control"
+                               rows="4" cols="50"
+                               @bind-Value="@CreateVideoJobApplicationModel.ApplicantCoverLetter"></InputTextArea>
+                    </div>
+                </EditForm>
+            </Content>
+        </Modal>
+    }
 }

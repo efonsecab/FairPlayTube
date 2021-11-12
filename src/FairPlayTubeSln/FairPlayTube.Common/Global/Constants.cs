@@ -134,6 +134,11 @@
             {
                 public const string GetAllResources = "api/Localization/GetAllResources";
             }
+
+            public class VideoJobApplicationController
+            {
+                public const string AddVideoJobApplication = "api/VideoJobApplication/AddVideoJobApplication";
+            }
             public class VideoController
             {
                 public const string GetPublicProcessedVideos = "api/Video/GetPublicProcessedVideos";

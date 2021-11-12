@@ -44,12 +44,12 @@ namespace FairPlayTube.Client.CustomComponents.Paypal
             try
             {
                 await this.UserProfileClientService.AddFunds(data.orderID);
-                await ToastifyService.DisplaySuccessNotification($"Fundas have been added to your {Common.Global.Constants.Titles.AppTitle} Wallter");
+                ToastifyService.DisplaySuccessNotification($"Fundas have been added to your {Common.Global.Constants.Titles.AppTitle} Wallter");
                 await OnFundsAdded.InvokeAsync();
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification(ex.Message);
+                ToastifyService.DisplayErrorNotification(ex.Message);
             }
         }
 

@@ -31,11 +31,11 @@ namespace FairPlayTube.Client.Pages.Users.VideoPlaylists
             {
                 IsLoading = true;
                 await this.VideoPlaylistClientService.CreateVideoPlaylist(this.Model);
-                await ToastifyService.DisplaySuccessNotification(Localizer[NewPlaylistCreatedTextKey]);
+                ToastifyService.DisplaySuccessNotification(Localizer[NewPlaylistCreatedTextKey]);
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification(ex.Message);
+                ToastifyService.DisplayErrorNotification(ex.Message);
             }
             finally
             {
