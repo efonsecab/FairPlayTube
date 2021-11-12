@@ -40,7 +40,7 @@ namespace FairPlayTube.Client.Pages.Users.Profile
             }
             catch (Exception ex)
             {
-                await this.ToastifyService.DisplayErrorNotification(ex.Message);
+                this.ToastifyService.DisplayErrorNotification(ex.Message);
             }
             finally
             {
@@ -64,11 +64,11 @@ namespace FairPlayTube.Client.Pages.Users.Profile
             {
                 IsLoading = true;
                 await this.UserProfileClientService.SaveMonetizationAsync(this.GlobalMonetizationModel);
-                await this.ToastifyService.DisplaySuccessNotification("Monetization has been saved");
+                this.ToastifyService.DisplaySuccessNotification("Monetization has been saved");
             }
             catch (Exception ex)
             {
-                await this.ToastifyService.DisplayErrorNotification(ex.Message);
+                this.ToastifyService.DisplayErrorNotification(ex.Message);
             }
             finally
             {

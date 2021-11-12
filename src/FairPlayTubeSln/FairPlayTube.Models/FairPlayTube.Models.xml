@@ -1034,9 +1034,29 @@
             Retrieves the applicant cover letter required localized message
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer.VideoJobIdRequired">
+            <summary>
+            Retrieves video job id required localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer.ApplicantCoverLetterDisplayName">
+            <summary>
+            Retrieves applicant cover letter localized display name
+            </summary>
+        </member>
         <member name="F:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer.ApplicantCoverLetterRequiredTextKey">
             <summary>
             Resource key for application cover letter required
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer.VideoJobIdRequiredTextKey">
+            <summary>
+            Resource key for video job is required
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.Validations.VideoJobApplications.CreateVideoJobApplicationLocalizer.ApplicantCoverLetterDisplayNameTextKey">
+            <summary>
+            Resource key for applicant cover letter display name
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.Validations.Video.UploadVideoModelLocalizer">
@@ -1538,6 +1558,11 @@
         <member name="T:FairPlayTube.Models.Video.VideoJobModel">
             <summary>
             Represents a Job associated to a video
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Video.VideoJobModel.VideoJobId">
+            <summary>
+            Video Job Id
             </summary>
         </member>
         <member name="P:FairPlayTube.Models.Video.VideoJobModel.VideoId">

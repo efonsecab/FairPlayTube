@@ -10,6 +10,10 @@ namespace FairPlayTube.Models.Video
     public class VideoJobModel
     {
         /// <summary>
+        /// Video Job Id
+        /// </summary>
+        public long VideoJobId { get; set; }
+        /// <summary>
         /// Video Id
         /// </summary>
         [Required]

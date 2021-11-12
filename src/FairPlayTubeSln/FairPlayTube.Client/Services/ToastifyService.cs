@@ -1,33 +1,36 @@
-﻿using Microsoft.JSInterop;
+﻿using Blazored.Toast.Services;
+using Microsoft.JSInterop;
 using System.Threading.Tasks;
 
 namespace FairPlayTube.Client.Services
 {
     public class ToastifyService
     {
-        private IJSRuntime JSRuntime { get; }
+        private IToastService ToastService { get; }
 
-        public ToastifyService(IJSRuntime jSRuntime)
+        public ToastifyService(IToastService toastService)
         {
-            this.JSRuntime = jSRuntime;
+            this.ToastService = toastService;
         }
 
-        public async Task DisplaySuccessNotification(string text, int duration = 3000, bool newWindow = true,
-            bool close = true, string gravity = "top", string position = "right",
-            string backgroundColor = "linear-gradient(to right, #2193b0, #6dd5ed);",
-            bool stopOnFocus = true)
+        public void DisplaySuccessNotification(string message, string title=null)
         {
-            await JSRuntime.InvokeVoidAsync("DisplaySuccessNotification", text, duration, newWindow,
-                close, gravity, position, backgroundColor, stopOnFocus);
+            ToastService.ShowSuccess(message, title);
         }
 
-        public async Task DisplayErrorNotification(string text, int duration = 0, bool newWindow = true,
-            bool close = true, string gravity = "top", string position = "right",
-            string backgroundColor = "#ff5959",
-            bool stopOnFocus = true)
+        public void DisplayErrorNotification(string message, string title=null)
         {
-            await JSRuntime.InvokeVoidAsync("DisplayErrorNotification", text, duration, newWindow,
-                close, gravity, position, backgroundColor, stopOnFocus);
+            ToastService.ShowError(message, title);
+        }
+
+        public void DisplayInformationNotification(string message, string title=null)
+        {
+            ToastService.ShowInfo(message, title);
+        }
+
+        public void DisplayWarningNotification(string message, string title=null)
+        {
+            ToastService.ShowWarning(message, title);
         }
     }
 }

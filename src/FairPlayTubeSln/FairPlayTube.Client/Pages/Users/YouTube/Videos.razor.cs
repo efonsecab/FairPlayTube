@@ -42,7 +42,7 @@ namespace FairPlayTube.Client.Pages.Users.YouTube
             }
             catch (Exception ex)
             {
-                await ToastifyService.DisplayErrorNotification(ex.Message);
+                ToastifyService.DisplayErrorNotification(ex.Message);
             }
         }
 
@@ -60,7 +60,7 @@ namespace FairPlayTube.Client.Pages.Users.YouTube
             }
             catch (Exception ex)
             {
-                await this.ToastifyService.DisplayErrorNotification(ex.Message);
+                this.ToastifyService.DisplayErrorNotification(ex.Message);
             }
         }
 

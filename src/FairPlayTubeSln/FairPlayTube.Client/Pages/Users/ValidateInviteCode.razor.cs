@@ -29,13 +29,11 @@ namespace FairPlayTube.Client.Pages.Users
             {
                 var parsedInvitedCode = Guid.Parse(InviteCode);
                 await this.UserClientService.ValidateInviteCodeAsync(parsedInvitedCode);
-                await this.ToastifyService
-                    .DisplaySuccessNotification(Localizer[ValidationSuccessTextKey],
-                    duration:0);
+                this.ToastifyService.DisplaySuccessNotification(Localizer[ValidationSuccessTextKey]);
             }
             catch (Exception ex)
             {
-                await this.ToastifyService.DisplayErrorNotification(ex.Message);
+                this.ToastifyService.DisplayErrorNotification(ex.Message);
             }
         }
 

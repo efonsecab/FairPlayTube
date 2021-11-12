@@ -31,7 +31,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             }
             catch (Exception ex)
             {
-                await this.ToastifyService.DisplayErrorNotification(ex.Message);
+                this.ToastifyService.DisplayErrorNotification(ex.Message);
             }
             finally
             {
@@ -46,11 +46,11 @@ namespace FairPlayTube.Client.Pages.Users.Videos
                 IsLoading = true;
                 await this.VideoClientService.DeleteVideoAsync(videoModel.VideoId);
                 this.AllVideos = await this.VideoClientService.GetMyProcessedVideos();
-                await this.ToastifyService.DisplaySuccessNotification("Your video has been deleted");
+                this.ToastifyService.DisplaySuccessNotification("Your video has been deleted");
             }
             catch (Exception ex)
             {
-                await this.ToastifyService.DisplayErrorNotification(ex.Message);
+                this.ToastifyService.DisplayErrorNotification(ex.Message);
             }
             finally
             {

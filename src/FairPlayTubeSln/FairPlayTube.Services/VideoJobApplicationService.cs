@@ -47,7 +47,7 @@ namespace FairPlayTube.Services
             {
                 ApplicantApplicationUserId = userEntity.ApplicationUserId,
                 ApplicantCoverLetter = createVideoJobApplicationModel.ApplicantCoverLetter,
-                VideoJobId = createVideoJobApplicationModel.VideoJobId,
+                VideoJobId = createVideoJobApplicationModel.VideoJobId.Value,
                 VideoJobApplicationStatusId = (short)Common.Global.Enums.VideoJobApplicationStatus.New
             };
             await FairplaytubeDatabaseContext.VideoJobApplication.AddAsync(videoJobApplicationEntity, cancellationToken);
