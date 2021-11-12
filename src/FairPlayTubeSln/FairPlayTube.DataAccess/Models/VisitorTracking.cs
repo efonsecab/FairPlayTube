@@ -30,7 +30,7 @@ namespace FairPlayTube.DataAccess.Models
         public string VisitedUrl { get; set; }
         public long? VideoInfoId { get; set; }
         public Guid? SessionId { get; set; }
-        public TimeSpan? TimeElapsed { get; set; }
+        public DateTimeOffset? LastTrackedDateTime { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("VisitorTracking")]

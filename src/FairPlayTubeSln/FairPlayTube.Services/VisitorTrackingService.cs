@@ -97,9 +97,7 @@ namespace FairPlayTube.Services
                 .SingleOrDefaultAsync(p => p.VisitorTrackingId == visitorTrackingId, cancellationToken);
             if (entity != null)
             {
-                TimeSpan newTimeElapsed = TimeSpan.Zero;
-                newTimeElapsed = DateTimeOffset.UtcNow.Subtract(entity.VisitDateTime);
-                entity.TimeElapsed = newTimeElapsed;
+                entity.LastTrackedDateTime = DateTimeOffset.UtcNow;
                 await FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
             }
             return entity;

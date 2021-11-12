@@ -11,7 +11,7 @@
     CONSTRAINT [FK_VisitorTracking_ApplicationUser] FOREIGN KEY ([ApplicationUserId]) REFERENCES [ApplicationUser]([ApplicationUserId]), 
     [VideoInfoId] BIGINT NULL, 
     [SessionId] UNIQUEIDENTIFIER NULL, 
-    [TimeElapsed] TIME NULL, 
+    [LastTrackedDateTime] DATETIMEOFFSET NULL, 
     CONSTRAINT [FK_VisitorTracking_VideoInfo] FOREIGN KEY ([VideoInfoId]) REFERENCES [VideoInfo]([VideoInfoId])
 )
 

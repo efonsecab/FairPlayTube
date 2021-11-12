@@ -217,4 +217,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="VideoJobEscrowId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="67115d8d-e7c1-421e-9c45-c1a00ec52987" ChangeDateTime="11/12/2021 17:26:10">
+    <Property Name="ElementName" Value="[dbo].[VisitorTracking].[TimeElapsed]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VisitorTracking]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LatestTime" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2717f4d8-f4a1-4e45-821d-2871e24263c7" ChangeDateTime="11/12/2021 17:26:24">
+    <Property Name="ElementName" Value="[dbo].[VisitorTracking].[LatestTime]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VisitorTracking]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LastTrackingDateTime" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2d1a2660-1df6-417a-87db-d717f8adab01" ChangeDateTime="11/12/2021 17:27:08">
+    <Property Name="ElementName" Value="[dbo].[VisitorTracking].[LastTrackingDateTime]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VisitorTracking]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LastTrackedDateTime" />
+  </Operation>
 </Operations>
