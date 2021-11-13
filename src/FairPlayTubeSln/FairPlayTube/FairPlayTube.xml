@@ -224,12 +224,13 @@
             </summary>
             <param name="services"></param>
         </member>
-        <member name="M:FairPlayTube.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="M:FairPlayTube.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,System.IServiceProvider)">
             <summary>
             Configure the Application Behavior and pipleline execution
             </summary>
             <param name="app"></param>
             <param name="env"></param>
+            <param name="sp"></param>
         </member>
         <member name="T:FairPlayTube.Swagger.Filters.SecurityRequirementsOperationFilter">
             <summary>

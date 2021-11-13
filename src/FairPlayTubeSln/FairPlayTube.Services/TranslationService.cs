@@ -23,7 +23,7 @@ namespace FairPlayTube.Services
             this.Logger = logger;
         }
         public async Task<TranslateResponseLanguageInforomation[]> TranslateAsync(TranslateRequestTextItem[] model,
-            AzureTranslatorLanguage sourceLanguage, AzureTranslatorLanguage destLanguage,
+            string sourceLanguage, string destLanguage,
             CancellationToken cancellationToken)
         {
             List<TranslateResponseLanguageInforomation> result = new();

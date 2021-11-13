@@ -353,16 +353,16 @@ namespace FairPlayTube
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        /// <param name="sp"></param>
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, 
+            IServiceProvider sp)
         {
-            var supportedCultures = new List<CultureInfo>
-            {
-                new CultureInfo("en-US"),
-                new CultureInfo("es-CR")
-            };
+            var dbContext = sp.GetRequiredService<FairplaytubeDatabaseContext>();
+
+            var supportedCultures = dbContext.Culture.Select(p => new CultureInfo(p.Name)).ToList();
             var options = new RequestLocalizationOptions
             {
-                DefaultRequestCulture = new RequestCulture("en-US"),
+                DefaultRequestCulture = new RequestCulture(supportedCultures.First().Name),
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures
             };
