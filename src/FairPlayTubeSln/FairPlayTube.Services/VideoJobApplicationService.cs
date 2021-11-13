@@ -4,6 +4,8 @@ using FairPlayTube.Common.Localization;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.VideoJobApplications;
+using FairPlayTube.Notifications.Hubs;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
@@ -21,14 +23,17 @@ namespace FairPlayTube.Services
 
         private ICurrentUserProvider CurrentUserProvider { get; }
         private IStringLocalizer<VideoJobApplicationService> Localizer { get; }
+        private IHubContext<NotificationHub, INotificationHub> HubContext { get; }
 
         public VideoJobApplicationService(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
-            ICurrentUserProvider currentUserProvider, 
-            IStringLocalizer<VideoJobApplicationService> localizer)
+            ICurrentUserProvider currentUserProvider,
+            IStringLocalizer<VideoJobApplicationService> localizer,
+            IHubContext<NotificationHub, INotificationHub> hubContext)
         {
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
             this.CurrentUserProvider = currentUserProvider;
             this.Localizer = localizer;
+            this.HubContext = hubContext;
         }
 
         public async Task AddVideoJobApplicationAsync(CreateVideoJobApplicationModel createVideoJobApplicationModel, CancellationToken cancellationToken)
@@ -39,7 +44,7 @@ namespace FairPlayTube.Services
             var videoJobApplicationEntity = await FairplaytubeDatabaseContext.VideoJobApplication
                 .Include(p => p.ApplicantApplicationUser)
                 .SingleOrDefaultAsync(p => p.VideoJobId == createVideoJobApplicationModel.VideoJobId &&
-                p.ApplicantApplicationUser.AzureAdB2cobjectId.ToString() == userObjectId, 
+                p.ApplicantApplicationUser.AzureAdB2cobjectId.ToString() == userObjectId,
                 cancellationToken: cancellationToken);
             if (videoJobApplicationEntity is not null)
                 throw new CustomValidationException(Localizer[UserApplicationAlreadyExistsTextKey]);
@@ -52,11 +57,26 @@ namespace FairPlayTube.Services
             };
             await FairplaytubeDatabaseContext.VideoJobApplication.AddAsync(videoJobApplicationEntity, cancellationToken);
             await FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
+            var videoJobEntity =
+                await FairplaytubeDatabaseContext.VideoJob
+                .Include(p => p.VideoInfo)
+                .ThenInclude(p => p.ApplicationUser)
+                .SingleAsync(p => p.VideoJobId == createVideoJobApplicationModel.VideoJobId);
+            string message = String.Format(Localizer[UserHasAppliedToJobTextKey],
+                videoJobEntity.VideoInfo.ApplicationUser.FullName, videoJobEntity.Title);
+            await HubContext.Clients.User(videoJobEntity.VideoInfo
+                .ApplicationUser.AzureAdB2cobjectId.ToString())
+                .ReceiveMessage(new Models.Notifications.NotificationModel()
+                {
+                    Message = message
+                });
         }
 
         #region Resource Keys
         [ResourceKey(defaultValue: "User already has an application for the specified video job")]
         public const string UserApplicationAlreadyExistsTextKey = "UserApplicationAlreadyExistsTextKey";
+        [ResourceKey(defaultValue: "{0} has applied to your job titled: {1}")]
+        public const string UserHasAppliedToJobTextKey = "UserHasAppliedToJobText";
         #endregion Resource Keys
     }
 }

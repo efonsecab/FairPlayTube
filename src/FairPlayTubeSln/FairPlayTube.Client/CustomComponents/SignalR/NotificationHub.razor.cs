@@ -37,7 +37,7 @@ namespace FairPlayTube.Client.CustomComponents.SignalR
                 HubConnection.On<NotificationModel>(Common.Global.Constants.Hubs.ReceiveMessage, (model) =>
                 {
                     ReceivedNotifications.Add(model);
-                    ToastifyService.DisplaySuccessNotification(model.Message);
+                    ToastifyService.DisplayInformationNotification(model.Message);
                     StateHasChanged();
                 });
 
