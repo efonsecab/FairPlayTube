@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FairPlayTube.Models.VideoJobApplications.Localizers;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +28,8 @@ namespace FairPlayTube.Models.VideoJobApplications
         /// <summary>
         /// Applicant Cover Letter
         /// </summary>
+        [Display(Name = nameof(VideoJobApplicationLocalizer.ApplicantCoverLetterDisplayName),
+            ResourceType = typeof(VideoJobApplicationLocalizer))]
         public string ApplicantCoverLetter { get; set; }
         /// <summary>
         /// Video Job Application Status Id
@@ -38,6 +42,20 @@ namespace FairPlayTube.Models.VideoJobApplications
         /// <summary>
         /// Full name of user who created the application
         /// </summary>
+        [Display(Name = nameof(VideoJobApplicationLocalizer.ApplicantNameDisplayName),
+            ResourceType = typeof(VideoJobApplicationLocalizer))]
         public string RowCreationUser { get; set; }
+        /// <summary>
+        /// Title of the Video Job
+        /// </summary>
+        [Display(Name = nameof(VideoJobApplicationLocalizer.VideoJobTitleDisplayName),
+            ResourceType = typeof(VideoJobApplicationLocalizer))]
+        public string VideoJobTitle { get; set; }
+        /// <summary>
+        /// Description of the Video Job
+        /// </summary>
+        [Display(Name = nameof(VideoJobApplicationLocalizer.VideoJobDescriptionDisplayName),
+            ResourceType = typeof(VideoJobApplicationLocalizer))]
+        public string VideoJobDescription { get; set; }
     }
 }

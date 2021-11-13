@@ -10,6 +10,7 @@ using FairPlayTube.Components.FacebookButtons;
 using FairPlayTube.Components.GoogleAdsense;
 using FairPlayTube.Models.Validations.Video;
 using FairPlayTube.Models.Validations.VideoJobApplications;
+using FairPlayTube.Models.VideoJobApplications.Localizers;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -114,6 +115,9 @@ namespace FairPlayTube.Client
             CreateVideoJobApplicationLocalizer.Localizer =
                 localizerFactory.Create(typeof(CreateVideoJobApplicationLocalizer))
                 as IStringLocalizer<CreateVideoJobApplicationLocalizer>;
+            VideoJobApplicationLocalizer.Localizer =
+                localizerFactory.Create(typeof(VideoJobApplicationLocalizer))
+                as IStringLocalizer<VideoJobApplicationLocalizer>;
         }
     }
 

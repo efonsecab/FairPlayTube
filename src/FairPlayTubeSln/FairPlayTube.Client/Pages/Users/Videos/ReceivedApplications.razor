@@ -1,0 +1,50 @@
+﻿@using FairPlayTube.Models.VideoJobApplications
+<h3>@Localizer[ReceivedApplicationsTextKey]</h3>
+
+<Loading IsLoading="IsLoading"></Loading>
+
+@if (this.VideoJobApplications != null)
+{
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+            @foreach (var singleVideoJobApplication in this.VideoJobApplications)
+            {
+                <div class="col">
+                    <Card>
+                        <CardHeader>
+                            <strong>
+                                @(DisplayHelper.DisplayFor<VideoJobApplicationModel>(p=>p.RowCreationUser)):
+                            </strong>
+                            @singleVideoJobApplication.RowCreationUser
+                        </CardHeader>
+                        <CardBody>
+                            <div class="mb-3">
+                                <strong>
+                                    @(DisplayHelper.DisplayFor<VideoJobApplicationModel>(p=>p.ApplicantCoverLetter)):
+                                </strong>
+                                <textarea rows="4" cols="50" readonly="readonly" style="width:100%;">
+                                    @singleVideoJobApplication.ApplicantCoverLetter
+                                                                                    </textarea>
+                            </div>
+                            <div class="mb-3">
+                                <strong>
+                                    @(DisplayHelper.DisplayFor<VideoJobApplicationModel>(p=>p.VideoJobTitle)):
+                                </strong>
+                                @singleVideoJobApplication.VideoJobTitle
+                            </div>
+                            <div class="mb-3">
+                                <strong>
+                                    @(DisplayHelper.DisplayFor<VideoJobApplicationModel>(p=>p.VideoJobDescription)):
+                                </strong>
+                                @singleVideoJobApplication.VideoJobDescription
+                            </div>
+                        </CardBody>
+                        <CardFooter>
+                            @singleVideoJobApplication.RowCreationDateTime.ToLocalTime()
+                        </CardFooter>
+                    </Card>
+                </div>
+            }
+        </div>
+    </div>
+}
