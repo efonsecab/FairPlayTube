@@ -15,8 +15,6 @@ namespace FairPlayTube.Client.Pages.Users.YouTube
     [Route(Common.Global.Constants.UserYouTubePagesRoutes.Videos)]
     public partial class Videos
     {
-        private YouTubeVideoModel[] ChannelVideos;
-
         [Parameter]
         public long UserId { get; set; }
         [Inject]
@@ -27,6 +25,8 @@ namespace FairPlayTube.Client.Pages.Users.YouTube
         private IStringLocalizer<Videos> Localizer { get; set; }
         private UserYouTubeChannelModel[] UserYouTubeChannels { get; set; }
         private string SelectedChannelId { get; set; }
+        private YouTubeVideoModel[] ChannelVideos;
+        private int ItemPos { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
