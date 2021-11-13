@@ -65,6 +65,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:FairPlayTube.Controllers.LocalizationController.GetSupportedCultures(System.Threading.CancellationToken)">
+            <summary>
+            Retrieve the list of all supported cultures
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.OpenGraphController">
             <summary>
             Handles all of the Open Graph routes

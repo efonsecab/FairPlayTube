@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
@@ -24,6 +25,13 @@ namespace FairPlayTube.ClientServices
             var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
             this.AllResources = await anonymousHttpClient.GetFromJsonAsync<ResourceModel[]>(
                 $"{ApiRoutes.LocalizationController.GetAllResources}");
+        }
+
+        public async Task<CultureModel[]> GetSupportedCulturesAsync()
+        {
+            var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
+            return await anonymousHttpClient.GetFromJsonAsync<CultureModel[]>(
+                $"{ApiRoutes.LocalizationController.GetSupportedCultures}");
         }
 
         public IEnumerable<LocalizedString> GetAllStrings()

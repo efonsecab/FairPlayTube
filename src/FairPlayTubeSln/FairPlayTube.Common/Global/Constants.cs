@@ -134,6 +134,7 @@
             public class LocalizationController
             {
                 public const string GetAllResources = "api/Localization/GetAllResources";
+                public const string GetSupportedCultures = "api/Localization/GetSupportedCultures";
             }
 
             public class VideoJobApplicationController

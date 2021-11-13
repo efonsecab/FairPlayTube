@@ -1,4 +1,7 @@
-﻿using FairPlayTube.Common.Localization;
+﻿using FairPlayTube.Client.Services;
+using FairPlayTube.ClientServices;
+using FairPlayTube.Common.Localization;
+using FairPlayTube.Models.Localization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
@@ -19,12 +22,25 @@ namespace FairPlayTube.Client.Shared
         public IJSRuntime JSRuntime { get; set; }
         [Inject]
         private IStringLocalizer<CultureSelector> Localizer { get; set; }
+        [Inject]
+        private LocalizationClientService LocalizationClientService { get; set; }
+        [Inject]
+        private ToastifyService ToastifyService { get; set; }
+        private CultureModel[] CultureModels { get; set; }
+        private CultureInfo[] SupportedCultures { get; set; }
 
-        readonly CultureInfo[] cultures = new[]
+        protected override async Task OnInitializedAsync()
         {
-            new CultureInfo("en-US"),
-            new CultureInfo("es-CR")
-        };
+            try
+            {
+                this.CultureModels = await this.LocalizationClientService.GetSupportedCulturesAsync();
+                this.SupportedCultures = CultureModels.Select(p => CultureInfo.GetCultureInfo(p.Name)).ToArray();
+            }
+            catch (Exception ex)
+            {
+                ToastifyService.DisplayErrorNotification(ex.Message);
+            }
+        }
 
         CultureInfo Culture
         {
@@ -41,19 +57,13 @@ namespace FairPlayTube.Client.Shared
             }
         }
 
-        public static string GetDisplayName(CultureInfo culture)
+        public string GetDisplayName(CultureInfo culture)
         {
-            string result = culture.Name switch
-            {
-                "en-US" => "English",
-                "es-CR" => "Spanish",
-                _ => throw new CultureNotFoundException($"Culture '{culture.Name}' not found")
-            };
-            return result;
+            return CultureModels.Single(p => p.Name == culture.Name).DisplayName;
         }
 
         #region Resource Keys
-        [ResourceKey(defaultValue:"Language")]
+        [ResourceKey(defaultValue: "Language")]
         public const string LanguageTextKey = "LanguageText";
         #endregion Resource Keys
     }

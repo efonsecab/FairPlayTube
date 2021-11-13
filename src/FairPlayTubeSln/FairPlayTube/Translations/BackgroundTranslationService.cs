@@ -131,27 +131,41 @@ namespace FairPlayTube.Translations
                 {
                     Text = p.Value
                 }).ToArray();
-            var spanishTranslations = await
-                translationService.TranslateAsync(translateRequestItems,
-                AzureTranslatorLanguage.English,
-                AzureTranslatorLanguage.Spanish, stoppingToken);
 
-            for (int iPos = 0; iPos < spanishTranslations.Length; iPos++)
+            var additionalSupportedCultures = await fairplaytubeDatabaseContext.Culture
+                .Where(p => p.Name != "en-US").ToListAsync();
+            foreach (var singleAdditionalCulture in additionalSupportedCultures)
             {
-                var singleEnglishUSKey = allEnglishUSKeys[iPos];
-                var translatedValue = spanishTranslations[iPos].translations.First().text;
-
-                Resource resource = new()
+                var cultureTranslations = await
+                    translationService.TranslateAsync(translateRequestItems,
+                    "en",
+                    singleAdditionalCulture.Name, stoppingToken);
+                var cultureEntity = await fairplaytubeDatabaseContext
+                    .Culture.SingleAsync(p => p.Name == singleAdditionalCulture.Name);
+                for (int iPos = 0; iPos < cultureTranslations.Length; iPos++)
                 {
-                    Key = singleEnglishUSKey.Key,
-                    Type = singleEnglishUSKey.Type,
-                    Value = translatedValue,
-                    CultureId = 2
-                };
-                await fairplaytubeDatabaseContext.Resource.AddAsync(resource, stoppingToken);
+                    var singleEnglishUSKey = allEnglishUSKeys[iPos];
+                    var translatedValue = cultureTranslations[iPos].translations.First().text;
+                    Resource resourceEntity = await fairplaytubeDatabaseContext.Resource
+                        .SingleOrDefaultAsync(p => p.Key == singleEnglishUSKey.Key &&
+                        p.Type == singleEnglishUSKey.Type && 
+                        p.CultureId == cultureEntity.CultureId);
+
+                    if (resourceEntity is null)
+                    {
+                        resourceEntity = new()
+                        {
+                            Key = singleEnglishUSKey.Key,
+                            Type = singleEnglishUSKey.Type,
+                            Value = translatedValue,
+                            CultureId = cultureEntity.CultureId
+                        };
+                        await fairplaytubeDatabaseContext.Resource.AddAsync(resourceEntity, stoppingToken);
+                    }
+                }
+                if (fairplaytubeDatabaseContext.ChangeTracker.HasChanges())
+                    await fairplaytubeDatabaseContext.SaveChangesAsync(stoppingToken);
             }
-            if (fairplaytubeDatabaseContext.ChangeTracker.HasChanges())
-                await fairplaytubeDatabaseContext.SaveChangesAsync(stoppingToken);
         }
     }
 }

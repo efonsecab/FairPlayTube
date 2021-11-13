@@ -79,6 +79,21 @@
             Custom message for the invitation
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Localization.CultureModel">
+            <summary>
+            Holds the data for a supported culture
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Localization.CultureModel.Name">
+            <summary>
+            Short name for the culture
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Localization.CultureModel.DisplayName">
+            <summary>
+            Display name for the culture
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Localization.ResourceModel">
             <summary>
             Represents the culture
