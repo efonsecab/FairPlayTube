@@ -523,6 +523,8 @@ namespace FairPlayTube
         private static void ConfigureInMemoryDatabase(FairplaytubeDatabaseContext fairplaytubeDatabaseContext)
         {
             fairplaytubeDatabaseContext.Database.EnsureCreated();
+            SeedDefaultCultures(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
+                cultureName: "en-US", cultureId: 1);
             SeedDefaultRoles(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
                 roleId: 1, roleName: Common.Global.Constants.Roles.User);
             SeedDefaultRoles(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
@@ -541,6 +543,23 @@ namespace FairPlayTube
                 visibility: Common.Global.Enums.VideoVisibility.Public);
             SeedDefaultVideoVisibility(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
                 visibility: Common.Global.Enums.VideoVisibility.Private);
+        }
+
+        private static void SeedDefaultCultures(FairplaytubeDatabaseContext fairplaytubeDatabaseContext, 
+            string cultureName, int cultureId)
+        {
+            var cultureEntity = fairplaytubeDatabaseContext.Culture
+                           .SingleOrDefault(p => p.Name == cultureName);
+            if (cultureEntity == null)
+            {
+                cultureEntity = new Culture()
+                {
+                    CultureId = cultureId,
+                    Name=cultureName
+                };
+                fairplaytubeDatabaseContext.Culture.Add(cultureEntity);
+                fairplaytubeDatabaseContext.SaveChanges();
+            }
         }
 
         private static void SeedDefaultVideoVisibility(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,

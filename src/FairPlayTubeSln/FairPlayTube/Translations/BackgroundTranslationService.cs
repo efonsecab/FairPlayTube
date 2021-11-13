@@ -47,7 +47,6 @@ namespace FairPlayTube.Translations
         /// <returns></returns>
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await Task.Yield();
             try
             {
                 await Process(stoppingToken);
