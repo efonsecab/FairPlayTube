@@ -1290,6 +1290,46 @@
             Applicant's cover letter
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.VideoJobApplications.VideoJobApplicationModel">
+            <summary>
+            Holds the data related to a video job application
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.VideoJobApplicationModel.VideoJobApplicationId">
+            <summary>
+            Video Job Application Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.VideoJobApplicationModel.VideoJobId">
+            <summary>
+            Video Job Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.VideoJobApplicationModel.ApplicantApplicationUserId">
+            <summary>
+            Applicant Application User Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.VideoJobApplicationModel.ApplicantCoverLetter">
+            <summary>
+            Applicant Cover Letter
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.VideoJobApplicationModel.VideoJobApplicationStatusId">
+            <summary>
+            Video Job Application Status Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.VideoJobApplicationModel.RowCreationDateTime">
+            <summary>
+            UTC DateTime when the application was received
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.VideoJobApplicationModel.RowCreationUser">
+            <summary>
+            Full name of user who created the application
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Video.DownloadVideoModel">
             <summary>
             Holds the bytes that composed the video with the given VideoId

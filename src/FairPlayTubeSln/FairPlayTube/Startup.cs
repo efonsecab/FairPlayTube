@@ -534,6 +534,9 @@ namespace FairPlayTube
                 videoIndexStatus: Common.Global.Enums.VideoIndexStatus.Processing);
             SeedDefaultVideoIndexStatuses(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
                 videoIndexStatus: Common.Global.Enums.VideoIndexStatus.Processed);
+            SeedDefaultVideoIndexStatuses(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
+                videoIndexStatus: Common.Global.Enums.VideoIndexStatus.Deleted);
+
             SeedDefaultVideoVisibility(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,
                 visibility: Common.Global.Enums.VideoVisibility.Public);
             SeedDefaultVideoVisibility(fairplaytubeDatabaseContext: fairplaytubeDatabaseContext,

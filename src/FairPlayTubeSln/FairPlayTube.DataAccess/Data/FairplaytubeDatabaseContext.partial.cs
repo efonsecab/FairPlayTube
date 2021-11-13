@@ -22,13 +22,17 @@ namespace FairPlayTube.DataAccess.Data
 
         public override int SaveChanges()
         {
-            ValidateAndSetDefaultsAsync().RunSynchronously();
+            var task = ValidateAndSetDefaultsAsync();
+            task.ConfigureAwait(false);
+            task.Wait();
             return base.SaveChanges();
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            ValidateAndSetDefaultsAsync().RunSynchronously();
+            var task = ValidateAndSetDefaultsAsync();
+            task.ConfigureAwait(false);
+            task.Wait();
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 

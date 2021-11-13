@@ -31,6 +31,33 @@ namespace FairPlayTube.Tests.Controllers
             };
         }
 
+        [TestInitialize]
+        public async Task TestInitialize()
+        {
+            await CleanTestData();
+        }
+
+        [TestCleanup]
+        public async Task TestCleanup()
+        {
+            await CleanTestData();
+        }
+
+        private static async Task CleanTestData()
+        {
+            var dbContext = TestsBase.CreateDbContext();
+            foreach (var singleJob in dbContext.VideoJob)
+            {
+                dbContext.VideoJob.Remove(singleJob);
+            }
+            await dbContext.SaveChangesAsync();
+            foreach (var singleVideo in dbContext.VideoInfo)
+            {
+                dbContext.VideoInfo.Remove(singleVideo);
+            }
+            await dbContext.SaveChangesAsync();
+        }
+
         [TestMethod()]
         public async Task AddVideoJobTest()
         {

@@ -69,7 +69,7 @@ namespace FairPlayTube.ClientServices
             }
         }
 
-        public async Task AddUserFollowerAsync(Guid followedApplicationUserId)
+        public async Task AddUserFollowerAsync(long followedApplicationUserId)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient

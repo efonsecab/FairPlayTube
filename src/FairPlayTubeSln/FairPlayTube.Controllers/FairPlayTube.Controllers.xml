@@ -470,16 +470,24 @@
             
             </summary>
         </member>
-        <member name="M:FairPlayTube.Controllers.VideoJobApplicationController.#ctor(FairPlayTube.Services.VideoJobApplicationService)">
+        <member name="M:FairPlayTube.Controllers.VideoJobApplicationController.#ctor(FairPlayTube.Services.VideoJobApplicationService,AutoMapper.IMapper)">
             <summary>
             Initializes <see cref="T:FairPlayTube.Controllers.VideoJobApplicationController"/>
             </summary>
             <param name="videoJobApplicationService"></param>
+            <param name="mapper"></param>
         </member>
         <member name="M:FairPlayTube.Controllers.VideoJobApplicationController.AddVideoJobApplication(FairPlayTube.Models.VideoJobApplications.CreateVideoJobApplicationModel,System.Threading.CancellationToken)">
             <summary>
             Adda a new Video Job Application
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.VideoJobApplicationController.GetNewReceivedVideoJobApplications(System.Threading.CancellationToken)">
+            <summary>
+            Retrieves all received video job applications for the logged in user
+            </summary>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="T:FairPlayTube.Controllers.VideoJobController">

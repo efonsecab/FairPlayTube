@@ -88,16 +88,17 @@ namespace FairPlayTube.Controllers.Tests
         {
             var followedApplicationUserId = Guid.NewGuid();
             var dbContext = TestsBase.CreateDbContext();
-            await dbContext.ApplicationUser.AddAsync(new ApplicationUser()
+            ApplicationUser applicationUserEntity = new()
             {
                 AzureAdB2cobjectId = followedApplicationUserId,
                 EmailAddress = "test@test.test",
                 FullName = "AUTOMATED TEST USER"
-            });
+            };
+            await dbContext.ApplicationUser.AddAsync(applicationUserEntity);
             await dbContext.SaveChangesAsync();
             await base.SignIn(Role.User);
             UserClientService userClientService = base.CreateUserClientService();
-            await userClientService.AddUserFollowerAsync(followedApplicationUserId: followedApplicationUserId);
+            await userClientService.AddUserFollowerAsync(followedApplicationUserId: applicationUserEntity.ApplicationUserId);
             var followerEntity = await dbContext.UserFollower
                 .SingleOrDefaultAsync(p => p.FollowedApplicationUser.AzureAdB2cobjectId == followedApplicationUserId);
             Assert.IsNotNull(followerEntity);

@@ -61,7 +61,7 @@ namespace FairPlayTube.Services
                 await FairplaytubeDatabaseContext.VideoJob
                 .Include(p => p.VideoInfo)
                 .ThenInclude(p => p.ApplicationUser)
-                .SingleAsync(p => p.VideoJobId == createVideoJobApplicationModel.VideoJobId);
+                .SingleAsync(p => p.VideoJobId == createVideoJobApplicationModel.VideoJobId, cancellationToken: cancellationToken);
             string message = String.Format(Localizer[UserHasAppliedToJobTextKey],
                 videoJobEntity.VideoInfo.ApplicationUser.FullName, videoJobEntity.Title);
             await HubContext.Clients.User(videoJobEntity.VideoInfo
@@ -70,6 +70,17 @@ namespace FairPlayTube.Services
                 {
                     Message = message
                 });
+        }
+
+        public IQueryable<VideoJobApplication> GetNewReceivedVideoJobApplications()
+        {
+            var currentUserObjectId = this.CurrentUserProvider.GetObjectId();
+            var receivedApplications = FairplaytubeDatabaseContext.VideoJobApplication
+                .Include(p => p.VideoJob)
+                .ThenInclude(p => p.VideoInfo)
+                .ThenInclude(p => p.ApplicationUser)
+                .Where(p=>p.VideoJob.VideoInfo.ApplicationUser.AzureAdB2cobjectId.ToString() == currentUserObjectId);
+            return receivedApplications;
         }
 
         #region Resource Keys

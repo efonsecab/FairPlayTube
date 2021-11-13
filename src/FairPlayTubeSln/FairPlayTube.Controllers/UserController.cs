@@ -130,7 +130,7 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
-        [FeatureGate(FeatureType.PaidFeature)]
+        //[FeatureGate(FeatureType.PaidFeature)]
         public async Task SendMessage(UserMessageModel model, CancellationToken cancellationToken)
         {
             var senderObjectId = this.CurrentUserProvider.GetObjectId();

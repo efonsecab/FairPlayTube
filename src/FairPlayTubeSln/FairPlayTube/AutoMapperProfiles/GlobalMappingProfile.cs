@@ -5,6 +5,7 @@ using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.UserYouTubeChannel;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Models.VideoComment;
+using FairPlayTube.Models.VideoJobApplications;
 using FairPlayTube.Models.VisitorTracking;
 using PTI.Microservices.Library.YouTube.Models.GetChannelLatestVideos;
 using System.Linq;
@@ -31,40 +32,44 @@ namespace FairPlayTube.AutoMapperProfiles
                 //SampleFaceState = person.SampleFaceState,
                 SampleFaceUrl = person.SampleFaceUrl
             });
-            this.CreateMap<VideoInfo, VideoInfoModel>().AfterMap(afterFunction: (source, dest) =>
-            {
-                if (source.ApplicationUser != null)
+            this.CreateMap<VideoInfo, VideoInfoModel>()
+                .ForMember(p=>p.VideoIndexStatus, m => 
                 {
-                    dest.Publisher = source.ApplicationUser.FullName;
-                    if (source.ApplicationUser.UserExternalMonetization != null
-                    && source.ApplicationUser.UserExternalMonetization.Count > 0)
+                    m.Ignore();
+                })
+                .AfterMap(afterFunction: (source, dest) =>
+                {
+                    if (source.ApplicationUser != null)
                     {
-                        dest.UserGlobalMonetization = new Models.UserProfile.GlobalMonetizationModel()
+                        dest.Publisher = source.ApplicationUser.FullName;
+                        if (source.ApplicationUser.UserExternalMonetization != null
+                        && source.ApplicationUser.UserExternalMonetization.Count > 0)
                         {
-                            MonetizationItems = source.ApplicationUser.UserExternalMonetization
-                            .Select(p => new Models.UserProfile.MonetizationItem()
+                            dest.UserGlobalMonetization = new Models.UserProfile.GlobalMonetizationModel()
                             {
-                                MonetizationUrl = p.MonetizationUrl
-                            }).ToList()
-                        };
+                                MonetizationItems = source.ApplicationUser.UserExternalMonetization
+                                .Select(p => new Models.UserProfile.MonetizationItem()
+                                {
+                                    MonetizationUrl = p.MonetizationUrl
+                                }).ToList()
+                            };
 
+                        }
+                        if (source.ApplicationUser.UserYouTubeChannel != null)
+                        {
+                            dest.YouTubeChannels = source.ApplicationUser.UserYouTubeChannel.Count;
+                        }
+                        if (source.VideoJob != null)
+                        {
+                            dest.AvailableJobs = source.VideoJob.Count;
+                            dest.CombinedBudget = source.VideoJob.Sum(p => p.Budget);
+                        }
                     }
-                    if (source.ApplicationUser.UserYouTubeChannel != null)
+                    if (source.VisitorTracking != null)
                     {
-                        dest.YouTubeChannels = source.ApplicationUser.UserYouTubeChannel.Count;
+                        dest.VisitsCount = source.VisitorTracking.Count;
                     }
-                    if (source.VideoJob != null)
-                    {
-                        dest.AvailableJobs = source.VideoJob.Count;
-                        dest.CombinedBudget = source.VideoJob.Sum(p => p.Budget);
-                    }
-                }
-                if (source.VisitorTracking != null)
-                {
-                    dest.VisitsCount = source.VisitorTracking.Count;
-                }
-                dest.VideoIndexStatus = (Common.Global.Enums.VideoIndexStatus)source.VideoIndexStatusId;
-            });
+                });
             this.CreateMap<VideoComment, VideoCommentModel>().AfterMap((source, dest) =>
             {
                 if (source.ApplicationUser != null && source.ApplicationUser.UserFollowerFollowedApplicationUser != null)
@@ -84,7 +89,7 @@ namespace FairPlayTube.AutoMapperProfiles
 
             this.CreateMap<UserYouTubeChannel, UserYouTubeChannelModel>();
             this.CreateMap<Item, YouTubeVideoModel>();
-            this.CreateMap<Resource, ResourceModel>().AfterMap((source, dest)=>
+            this.CreateMap<Resource, ResourceModel>().AfterMap((source, dest) =>
             {
                 if (source.Culture != null)
                 {
@@ -92,6 +97,7 @@ namespace FairPlayTube.AutoMapperProfiles
                 }
             });
             this.CreateMap<VisitorTracking, VisitorTrackingModel>();
+            this.CreateMap<VideoJobApplication, VideoJobApplicationModel>();
         }
     }
 }

@@ -138,6 +138,8 @@
             public class VideoJobApplicationController
             {
                 public const string AddVideoJobApplication = "api/VideoJobApplication/AddVideoJobApplication";
+
+                public const string GetNewReceivedVideoJobApplications = "api/VideoJobApplication/GetNewReceivedVideoJobApplications";
             }
             public class VideoController
             {
@@ -161,7 +163,7 @@
                 public const string GetMyRole = "api/User/GetMyRole";
                 public const string ListUsers = "api/User/ListUsers";
                 public const string InviteUser = "api/User/InviteUser";
-                public const string AddUserFollower = "API/uSER/AddUserFollower";
+                public const string AddUserFollower = "api/User/AddUserFollower";
                 public const string SendMessage = "api/User/SendMessage";
                 public const string GetMyUserStatus = "api/User/GetMyUserStatus";
                 public const string ValidateUserInviteCode = "api/User/ValidateUserInviteCode";
