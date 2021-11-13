@@ -97,7 +97,15 @@ namespace FairPlayTube.AutoMapperProfiles
                 }
             });
             this.CreateMap<VisitorTracking, VisitorTrackingModel>();
-            this.CreateMap<VideoJobApplication, VideoJobApplicationModel>();
+            this.CreateMap<VideoJobApplication, VideoJobApplicationModel>()
+                .AfterMap(afterFunction: (source, dest) => 
+                {
+                    if (source.VideoJob is not null)
+                    {
+                        dest.VideoJobTitle = source.VideoJob.Title;
+                        dest.VideoJobDescription = source.VideoJob.Description;
+                    }
+                });
         }
     }
 }

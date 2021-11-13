@@ -85,6 +85,7 @@
             public const string ValidateInviteCode = "/Users/ValidateInviteCode";
             public const string InviteUser = "/Users/InviteUser";
             public const string MyPlaylists = "/Users/VideoPlaylists/MyPlaylists";
+            public const string ReceivedApplications = "/Users/Videos/ReceivedApplications";
         }
 
         public class RootPagesRoutes

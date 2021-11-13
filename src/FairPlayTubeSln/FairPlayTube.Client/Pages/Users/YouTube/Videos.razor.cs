@@ -28,7 +28,7 @@ namespace FairPlayTube.Client.Pages.Users.YouTube
         private string SelectedChannelId { get; set; }
         private YouTubeVideoModel[] ChannelVideos;
         private int ItemPos { get; set; }
-        private string SelectedLanguage => CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        private static string SelectedLanguage => CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 
         protected override async Task OnInitializedAsync()
         {

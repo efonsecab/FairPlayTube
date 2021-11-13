@@ -1290,6 +1290,56 @@
             Applicant's cover letter
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.VideoJobApplications.Localizers.VideoJobApplicationLocalizer">
+            <summary>
+            Holds the logic required to retrieve the localized values for <see cref="T:FairPlayTube.Models.VideoJobApplications.VideoJobApplicationModel"/>
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.Localizers.VideoJobApplicationLocalizer.Localizer">
+            <summary>
+            Typed localizer to retrieve the localized messages
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.Localizers.VideoJobApplicationLocalizer.ApplicantNameDisplayName">
+            <summary>
+            Retrieves the Applicant Name locazlied message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.Localizers.VideoJobApplicationLocalizer.ApplicantCoverLetterDisplayName">
+            <summary>
+            Retrieves the applicant's cover letter localized Display Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.Localizers.VideoJobApplicationLocalizer.VideoJobTitleDisplayName">
+            <summary>
+            Retrieves the job title localized Display Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.Localizers.VideoJobApplicationLocalizer.VideoJobDescriptionDisplayName">
+            <summary>
+            Retrieves the job description localized Display Name
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.VideoJobApplications.Localizers.VideoJobApplicationLocalizer.ApplicantNameDisplayNameTextKey">
+            <summary>
+            Resource key for the Applicant Name Display Name
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.VideoJobApplications.Localizers.VideoJobApplicationLocalizer.ApplicantCoverLetterDisplayNameTextKey">
+            <summary>
+            Resource key for the Applicant's Cover Letter Display Name
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.VideoJobApplications.Localizers.VideoJobApplicationLocalizer.VideoJobTitleDisplayNameTextKey">
+            <summary>
+            Resource key for Video Job Title Display Name
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.VideoJobApplications.Localizers.VideoJobApplicationLocalizer.VideoJobDescriptionDisplayNameTextKey">
+            <summary>
+            Resource key for Video Job Description Display Name
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.VideoJobApplications.VideoJobApplicationModel">
             <summary>
             Holds the data related to a video job application
@@ -1328,6 +1378,16 @@
         <member name="P:FairPlayTube.Models.VideoJobApplications.VideoJobApplicationModel.RowCreationUser">
             <summary>
             Full name of user who created the application
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.VideoJobApplicationModel.VideoJobTitle">
+            <summary>
+            Title of the Video Job
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.VideoJobApplications.VideoJobApplicationModel.VideoJobDescription">
+            <summary>
+            Description of the Video Job
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.Video.DownloadVideoModel">
