@@ -5,22 +5,30 @@
 
 <Loading IsLoading="IsLoading"></Loading>
 
-@if (this.AllVideosJobs != null)
+@if (this.AvailableVideosJobs != null)
 {
     <div class="container">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-            @foreach (var singleJob in this.AllVideosJobs)
+            @foreach (var singleJob in this.AvailableVideosJobs)
             {
                 <div class="col">
                     <Card>
                         <CardHeader>
                             @singleJob.Title
-                            <button type="button" class="btn btn-info rounded-circle"
+                            @if (this.MyVideoJobsApplications != null &&
+                           this.MyVideoJobsApplications.Any(p => p.VideoJobId == singleJob.VideoJobId))
+                            {
+                                <i class="bi bi-check-circle-fill"></i>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-info rounded-circle"
                             @onclick="@( async () => await OnApplyToVideoJobClickedAsync(singleJob))"
                             data-bs-toggle="tooltip" data-bs-placement="top"
                             title="@Localizer[ApplyToVideoJobTextKey]">
-                                <i class="bi bi-hand-index-thumb"></i>
-                            </button>
+                                    <i class="bi bi-hand-index-thumb"></i>
+                                </button>
+                            }
                         </CardHeader>
                         <CardBody>
                             @singleJob.Description

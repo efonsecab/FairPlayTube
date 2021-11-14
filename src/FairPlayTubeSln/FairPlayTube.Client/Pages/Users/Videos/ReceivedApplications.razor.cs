@@ -40,9 +40,32 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             }
         }
 
+        private async Task OnReceivedApplicationSelected(VideoJobApplicationModel videoJobApplicationModel)
+        {
+            try
+            {
+                IsLoading = true;
+                await this.VideoJobApplicationClientService
+                    .ApproveVideoJobApplicationAsync(videoJobApplicationModel.VideoJobApplicationId);
+                this.VideoJobApplications = await this.VideoJobApplicationClientService
+                        .GetNewReceivedVideoJobApplicationsAsync();
+                ToastifyService.DisplaySuccessNotification(Localizer[ApplicationApprovedTextKey]);
+            }
+            catch (Exception ex)
+            {
+                ToastifyService.DisplayErrorNotification(ex.Message);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
         #region Resource Keys
         [ResourceKey(defaultValue:"Received Applications")]
         public const string ReceivedApplicationsTextKey = "ReceivedApplicationsText";
+        [ResourceKey(defaultValue: "Application has been approved")]
+        public const string ApplicationApprovedTextKey = "ApplicationApprovedText";
         #endregion Resource Keys
     }
 }

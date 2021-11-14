@@ -40,5 +40,29 @@ namespace FairPlayTube.ClientServices
                 Common.Global.Constants.ApiRoutes.VideoJobApplicationController.GetNewReceivedVideoJobApplications);
             return result;
         }
+
+        public async Task ApproveVideoJobApplicationAsync(long videoJobApplicationId)
+        {
+            var authoriedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var response = await authoriedHttpClient.PostAsync(
+                $"{Common.Global.Constants.ApiRoutes.VideoJobApplicationController.ApproveVideoJobApplication}" +
+                $"?videoJobApplicationId={videoJobApplicationId}", null);
+            if (!response.IsSuccessStatusCode)
+            {
+                ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
+                if (problemHttpResponse != null)
+                    throw new CustomValidationException(problemHttpResponse.Detail);
+                else
+                    throw new CustomValidationException(response.ReasonPhrase);
+            }
+        }
+
+        public async Task<VideoJobApplicationModel[]> GetMyVideoJobsApplicationsAsync()
+        {
+            var authoriedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var result = await authoriedHttpClient.GetFromJsonAsync<VideoJobApplicationModel[]>(
+                Common.Global.Constants.ApiRoutes.VideoJobApplicationController.GetMyVideoJobsApplications);
+            return result;
+        }
     }
 }

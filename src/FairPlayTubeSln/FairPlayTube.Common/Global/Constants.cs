@@ -101,7 +101,7 @@
             {
                 public const string AddVideoJob = "api/VideoJob/AddVideoJob";
 
-                public const string GetVideosJobs = "api/VideoJob/GetVideosJobs";
+                public const string GetAvailableVideosJobs = "api/VideoJob/GetAvailableVideosJobs";
             }
             public class VideoCommentController
             {
@@ -142,6 +142,8 @@
                 public const string AddVideoJobApplication = "api/VideoJobApplication/AddVideoJobApplication";
 
                 public const string GetNewReceivedVideoJobApplications = "api/VideoJobApplication/GetNewReceivedVideoJobApplications";
+                public const string ApproveVideoJobApplication = "api/VideoJobApplication/ApproveVideoJobApplication";
+                public const string GetMyVideoJobsApplications = "api/VideoJobApplication/GetMyVideoJobsApplications";
             }
             public class VideoController
             {

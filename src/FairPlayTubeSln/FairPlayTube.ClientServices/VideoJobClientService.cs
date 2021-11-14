@@ -33,11 +33,11 @@ namespace FairPlayTube.ClientServices
             }
         }
 
-        public async Task<VideoJobModel[]> GetVideosJobsAsync()
+        public async Task<VideoJobModel[]> GetAvailableVideosJobsAsync()
         {
             var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
             var result = await anonymousHttpClient.GetFromJsonAsync<VideoJobModel[]>(
-                ApiRoutes.VideoJobController.GetVideosJobs);
+                ApiRoutes.VideoJobController.GetAvailableVideosJobs);
             return result;
         }
     }

@@ -28,19 +28,20 @@ namespace FairPlayTube.Client.Pages.Public.Videos
         [Inject]
         private VideoJobApplicationClientService VideoJobApplicationClientService { get; set; }
         private bool IsLoading { get; set; }
-        private VideoJobModel[] AllVideosJobs { get; set; }
+        private VideoJobModel[] AvailableVideosJobs { get; set; }
         private CreateVideoJobApplicationModel CreateVideoJobApplicationModel { get; set; } =
             new CreateVideoJobApplicationModel();
         private bool ShowApplyToVideoJobModal { get; set; } = false;
         private VideoJobModel SelectdVideoJob { get; set; }
         private EditForm VideoJobApplicationEditForm { get; set; }
+        private VideoJobApplicationModel[] MyVideoJobsApplications { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
                 IsLoading = true;
-                this.AllVideosJobs = await this.VideoJobClientService.GetVideosJobsAsync();
+                await LoadJobs();
             }
             catch (Exception ex)
             {
@@ -49,6 +50,17 @@ namespace FairPlayTube.Client.Pages.Public.Videos
             finally
             {
                 IsLoading = false;
+            }
+        }
+
+        private async Task LoadJobs()
+        {
+            this.AvailableVideosJobs = await this.VideoJobClientService.GetAvailableVideosJobsAsync();
+            var state = await AuthenticationStateTask;
+            if (state is not null && state.User.Identity.IsAuthenticated)
+            {
+                this.MyVideoJobsApplications =
+                    await this.VideoJobApplicationClientService.GetMyVideoJobsApplicationsAsync();
             }
         }
 
@@ -90,6 +102,7 @@ namespace FairPlayTube.Client.Pages.Public.Videos
                     await this.VideoJobApplicationClientService
                         .AddVideoJobApplicationAsync(this.CreateVideoJobApplicationModel);
                     CleanVideoJobApplication();
+                    await LoadJobs();
                     ToastifyService.DisplaySuccessNotification(Localizer[VideoJobApplicationSentTextKey]);
                 }
                 catch (Exception ex)

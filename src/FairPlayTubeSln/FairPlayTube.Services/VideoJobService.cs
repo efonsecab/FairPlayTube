@@ -59,9 +59,11 @@ namespace FairPlayTube.Services
         }
 
 
-        public IQueryable<VideoJob> GetVideosJobs()
+        public IQueryable<VideoJob> GetAvailableVideosJobs()
         {
-            return this.FairplaytubeDatabaseContext.VideoJob.Include(p => p.VideoInfo);
+            return this.FairplaytubeDatabaseContext.VideoJob.Include(p => p.VideoInfo)
+                .Include(p => p.VideoJobApplication)
+                .Where(p => p.VideoJobApplication.Any(p => p.VideoJobApplicationStatusId != 1) == false);
         }
 
         public IQueryable<VideoJob> GetVideoJobs(string videoId)

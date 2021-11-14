@@ -16,6 +16,13 @@
                                 @(DisplayHelper.DisplayFor<VideoJobApplicationModel>(p=>p.RowCreationUser)):
                             </strong>
                             @singleVideoJobApplication.RowCreationUser
+                            <button type="button" class="btn btn-info rounded-circle"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Select"
+                            @onclick="@( async () => await OnReceivedApplicationSelected(singleVideoJobApplication))">
+                                <i class="bi bi-check2-circle"></i>
+                            </button>
                         </CardHeader>
                         <CardBody>
                             <div class="mb-3">
@@ -24,7 +31,7 @@
                                 </strong>
                                 <textarea rows="4" cols="50" readonly="readonly" style="width:100%;">
                                     @singleVideoJobApplication.ApplicantCoverLetter
-                                                                                    </textarea>
+                                                                                            </textarea>
                             </div>
                             <div class="mb-3">
                                 <strong>
