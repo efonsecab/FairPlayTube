@@ -202,7 +202,7 @@ namespace FairPlayTube.Controllers.Tests
         {
             await base.SignIn(Role.User);
             var dbContext = TestsBase.CreateDbContext();
-            await dbContext.Person.AddAsync(new Person()
+            Person testPersonEntity = new()
             {
                 Id = Guid.NewGuid().ToString(),
                 Name = "Test Name",
@@ -211,11 +211,17 @@ namespace FairPlayTube.Controllers.Tests
                 SampleFaceState = "ok",
                 SampleFaceUrl = "http://wwww.test.local",
                 SampleFaceSourceType = "video"
-            });
+            };
+            await dbContext.Person.AddAsync(testPersonEntity);
             await dbContext.SaveChangesAsync();
             VideoClientService videoClientService = base.CreateVideoClientService();
             var result = await videoClientService.GetPersonsAsync();
-            Assert.AreEqual(1, result.Length);
+            /*
+             * There could be more than 1 since Background Service might have already retrieve 
+             * persons from Azure Video Indexer API
+             */
+            var insertedPerson = result.SingleOrDefault(p => p.SampleFaceId == testPersonEntity.SampleFaceId);
+            Assert.IsNotNull(insertedPerson);
         }
 
         [TestMethod()]
