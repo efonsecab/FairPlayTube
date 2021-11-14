@@ -1,7 +1,9 @@
-﻿using FairPlayTube.Models.Payouts;
+﻿using FairPlayTube.Common.Global.Enums;
+using FairPlayTube.Models.Payouts;
 using FairPlayTube.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.FeatureManagement.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,7 @@ namespace FairPlayTube.Controllers
         /// </summary>
         [HttpPost("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        [FeatureGate(FeatureType.VideoJobPayout)]
         public async Task<IActionResult> SendVideoJobPayment(long videoJobId, CancellationToken cancellationToken)
         {
             await this.PayoutService.SendVideoJobPaymentAsync(videoJobId, cancellationToken);

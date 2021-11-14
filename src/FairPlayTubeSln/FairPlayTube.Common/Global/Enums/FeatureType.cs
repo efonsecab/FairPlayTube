@@ -8,6 +8,7 @@ namespace FairPlayTube.Common.Global.Enums
 {
     public enum FeatureType
     {
-        PaidFeature
+        PaidFeature,
+        VideoJobPayout
     }
 }
