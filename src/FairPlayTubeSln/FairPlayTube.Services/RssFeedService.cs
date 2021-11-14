@@ -22,7 +22,7 @@ namespace FairPlayTube.Services
             this.VideoService = videoService;
         }
 
-        public async Task<string> GetPublicProcessedVideosRss(string host)
+        public async Task<string> GetPublicProcessedVideosRssAsync(string host)
         {
             var videos = await this.VideoService.GetPublicProcessedVideos()
                 .ToListAsync();

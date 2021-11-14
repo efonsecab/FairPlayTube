@@ -42,7 +42,7 @@ namespace FairPlayTube.Controllers
         [HttpPost("[action]")]
         public async Task<VisitorTrackingModel> TrackAnonymousClientInformation(VisitorTrackingModel visitorTrackingModel)
         {
-            var response = await this.VisitorTrackingService.TrackVisit(visitorTrackingModel);
+            var response = await this.VisitorTrackingService.TrackVisitAsync(visitorTrackingModel);
             if (response != null)
             {
                 visitorTrackingModel = this.Mapper.Map<VisitorTracking, VisitorTrackingModel>(response);
@@ -64,7 +64,7 @@ namespace FairPlayTube.Controllers
         {
             var userObjectId = currentUserProvider.GetObjectId();
             visitorTrackingModel.UserAzureAdB2cObjectId = userObjectId;
-            var response = await this.VisitorTrackingService.TrackVisit(visitorTrackingModel);
+            var response = await this.VisitorTrackingService.TrackVisitAsync(visitorTrackingModel);
             if (response != null)
             {
                 visitorTrackingModel = this.Mapper.Map<VisitorTracking, VisitorTrackingModel>(response);

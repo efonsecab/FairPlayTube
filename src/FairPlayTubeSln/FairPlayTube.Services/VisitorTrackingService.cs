@@ -26,7 +26,7 @@ namespace FairPlayTube.Services
             this.IpStackService = ipStackService;
         }
 
-        public async Task<VisitorTracking> TrackVisit(VisitorTrackingModel visitorTrackingModel)
+        public async Task<VisitorTracking> TrackVisitAsync(VisitorTrackingModel visitorTrackingModel)
         {
             try
             {

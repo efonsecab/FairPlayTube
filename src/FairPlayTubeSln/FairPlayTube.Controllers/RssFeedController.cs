@@ -36,7 +36,7 @@ namespace FairPlayTube.Controllers
         {
             string host = Request.Scheme + "://" + Request.Host;
             string contentType = "application/xml";
-            var feedXml = await this.RssFeedService.GetPublicProcessedVideosRss(host);
+            var feedXml = await this.RssFeedService.GetPublicProcessedVideosRssAsync(host);
             return Content(feedXml, contentType);
         }
     }

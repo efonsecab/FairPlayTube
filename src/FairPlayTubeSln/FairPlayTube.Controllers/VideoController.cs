@@ -96,7 +96,7 @@ namespace FairPlayTube.Controllers
         public async Task<string[]> GetBoughtVideosIds(CancellationToken cancellationToken)
         {
             var userObjectId = this.CurrentUserProvider.GetObjectId();
-            var result = await this.VideoService.GetBoughtVideosIds(userObjectId, cancellationToken);
+            var result = await this.VideoService.GetBoughtVideosIdsAsync(userObjectId, cancellationToken);
             return result;
         }
 
@@ -217,7 +217,7 @@ namespace FairPlayTube.Controllers
 
             if (!await this.VideoService.IsVideoOwnerAsync(videoId, userObjectId, cancellationToken))
                 throw new CustomValidationException($"User {userObjectId} is not allowed to modify Video: {videoId}");
-            await this.VideoService.UpdateVideo(videoId, model);
+            await this.VideoService.UpdateVideoAsync(videoId, model);
             return Ok();
         }
 
@@ -231,7 +231,7 @@ namespace FairPlayTube.Controllers
         [AllowAnonymous]
         public async Task<VideoInfoModel> GetVideo(string videoId, CancellationToken cancellationToken)
         {
-            return await this.VideoService.GetVideoAsync(videoId).Select(
+            return await this.VideoService.GetVideo(videoId).Select(
                 p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p))
                 .SingleOrDefaultAsync(cancellationToken: cancellationToken);
         }
@@ -279,7 +279,7 @@ namespace FairPlayTube.Controllers
             if (processingVideos != null && processingVideos.Length > 0)
             {
                 var processingVideosIds = processingVideos.Select(p => p.VideoId).ToArray();
-                var processingVideosStatuses = await VideoService.GetVideoIndexerStatus(processingVideosIds, cancellationToken);
+                var processingVideosStatuses = await VideoService.GetVideoIndexerStatusAsync(processingVideosIds, cancellationToken);
                 result.AddRange(processingVideosStatuses.results.Select(p => new VideoStatusModel()
                 {
                     Name = p.name,
@@ -336,7 +336,7 @@ namespace FairPlayTube.Controllers
                 .IsVideosOwnerAsync(videosIds: allVideoIds, azureAdB2cobjectId: userObjectId, cancellationToken: cancellationToken);
             if (!isVideosOwner)
                 throw new CustomValidationException("Access denied. User does not own all of the specified videos");
-            var result = await this.VideoService.CreateCustomRenderingProject(projectModel, cancellationToken);
+            var result = await this.VideoService.CreateCustomRenderingProjectAsync(projectModel, cancellationToken);
             return result;
         }
 

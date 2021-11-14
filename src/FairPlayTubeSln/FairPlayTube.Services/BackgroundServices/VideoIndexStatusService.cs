@@ -41,7 +41,7 @@ namespace FairPlayTube.Services.BackgroundServices
                 //Check https://stackoverflow.com/questions/48368634/how-should-i-inject-a-dbcontext-instance-into-an-ihostedservice
                 try
                 {
-                    await CheckProcessingVideos(videoService, fairplaytubeDatabaseContext, stoppingToken);
+                    await CheckProcessingVideosAsync(videoService, fairplaytubeDatabaseContext, stoppingToken);
                     var pendingIndexingVideos = fairplaytubeDatabaseContext.VideoInfo.Where(p => p.VideoIndexStatusId ==
                     (short)Common.Global.Enums.VideoIndexStatus.Pending)
                         .OrderBy(p => p.VideoInfoId)
@@ -128,7 +128,7 @@ namespace FairPlayTube.Services.BackgroundServices
             }
         }
 
-        private async Task CheckProcessingVideos(VideoService videoService, FairplaytubeDatabaseContext fairplaytubeDatabaseContext, CancellationToken stoppingToken)
+        private async Task CheckProcessingVideosAsync(VideoService videoService, FairplaytubeDatabaseContext fairplaytubeDatabaseContext, CancellationToken stoppingToken)
         {
             this.Logger?.LogInformation("Checking processing videos");
             var processingInDB = await videoService.GetDatabaseProcessingVideosIdsAsync(stoppingToken);
@@ -138,7 +138,7 @@ namespace FairPlayTube.Services.BackgroundServices
             {
 
                 this.Logger?.LogInformation("Retrieving videos status in Azure Video Indexer");
-                var videosIndex = await videoService.GetVideoIndexerStatus(processingInDB, stoppingToken);
+                var videosIndex = await videoService.GetVideoIndexerStatusAsync(processingInDB, stoppingToken);
                 if (videosIndex.results.Length > 0)
                 {
                     var indexCompleteVideos = videosIndex.results.Where(p =>
@@ -150,7 +150,7 @@ namespace FairPlayTube.Services.BackgroundServices
                         var videosCompleted = fairplaytubeDatabaseContext.VideoInfo.Where(video => indexCompleteVideosIds.Contains(video.VideoId));
 
                         foreach (var video in videosCompleted)
-                            await videoService.MarkVideoAsProcessed(video, stoppingToken);
+                            await videoService.MarkVideoAsProcessedAsync(video, stoppingToken);
                     }
                 }
             }

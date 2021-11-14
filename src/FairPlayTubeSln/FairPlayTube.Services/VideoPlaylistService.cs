@@ -57,7 +57,7 @@ namespace FairPlayTube.Services
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
         }
 
-        public async Task<VideoPlaylistItem> AddVideoToPlaylist(VideoPlaylistItemModel videoPlaylistItemModel, 
+        public async Task<VideoPlaylistItem> AddVideoToPlaylistAsync(VideoPlaylistItemModel videoPlaylistItemModel, 
             CancellationToken cancellationToken)
         {
             var videoEntity = await FairplaytubeDatabaseContext.VideoInfo

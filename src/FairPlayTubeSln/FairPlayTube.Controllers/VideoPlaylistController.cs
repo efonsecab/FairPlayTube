@@ -67,7 +67,7 @@ namespace FairPlayTube.Controllers
         public async Task<IActionResult> AddVideoToPlaylist(VideoPlaylistItemModel videoPlaylistItemModel,
             CancellationToken cancellationToken)
         {
-            _ = await VideoPlaylistService.AddVideoToPlaylist(videoPlaylistItemModel, cancellationToken);
+            _ = await VideoPlaylistService.AddVideoToPlaylistAsync(videoPlaylistItemModel, cancellationToken);
             return Ok();
         }
 

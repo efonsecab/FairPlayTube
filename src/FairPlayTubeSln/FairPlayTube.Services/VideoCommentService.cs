@@ -67,7 +67,7 @@ namespace FairPlayTube.Services
 
         public async Task AddVideoCommentAsync(CreateVideoCommentModel createVideoCommentModel, CancellationToken cancellationToken)
         {
-            await this.ContentModerationService.CheckMessageModeration(createVideoCommentModel.Comment);
+            await this.ContentModerationService.CheckMessageModerationAsync(createVideoCommentModel.Comment);
             var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
                 .SingleOrDefaultAsync(p => p.VideoId == createVideoCommentModel.VideoId, cancellationToken: cancellationToken);
             if (videoEntity is null)

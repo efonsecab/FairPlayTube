@@ -55,9 +55,9 @@ namespace FairPlayTube.Services
         }
 
 
-        public async Task MarkVideoAsProcessed(VideoInfo videoInfo, CancellationToken cancellationToken)
+        public async Task MarkVideoAsProcessedAsync(VideoInfo videoInfo, CancellationToken cancellationToken)
         {
-            var videoIndex = await GetVideoIndexerStatus(videoInfo.VideoId, cancellationToken);
+            var videoIndex = await GetVideoIndexerStatusAsync(videoInfo.VideoId, cancellationToken);
             await SaveIndexedVideoKeywordsAsync(videoInfo.VideoId, cancellationToken);
             await SaveVideoThumbnailAsync(videoInfo.VideoId, videoIndex.videos.First().thumbnailId, cancellationToken);
             await UpdateVideoIndexStatusAsync(Common.Global.Enums.VideoIndexStatus.Processed, cancellationToken: cancellationToken, videoInfo.VideoId);
@@ -137,13 +137,13 @@ namespace FairPlayTube.Services
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
             foreach (var singleVideoEntity in query)
             {
-                await NotifyVideoOwner(singleVideoEntity);
-                await NotifyFollowers(singleVideoEntity);
+                await NotifyVideoOwnerAsync(singleVideoEntity);
+                await NotifyFollowersAsync(singleVideoEntity);
             }
             return true;
         }
 
-        private async Task NotifyFollowers(VideoInfo singleVideoEntity)
+        private async Task NotifyFollowersAsync(VideoInfo singleVideoEntity)
         {
             var followers = this.FairplaytubeDatabaseContext
                                 .UserFollower.Include(p => p.FollowerApplicationUser)
@@ -162,7 +162,7 @@ namespace FairPlayTube.Services
             }
         }
 
-        private async Task NotifyVideoOwner(VideoInfo singleVideoEntity)
+        private async Task NotifyVideoOwnerAsync(VideoInfo singleVideoEntity)
         {
             await this.HubContext.Clients.User(singleVideoEntity.ApplicationUser.AzureAdB2cobjectId.ToString())
                                 .ReceiveMessage(new Models.Notifications.NotificationModel()
@@ -276,13 +276,13 @@ namespace FairPlayTube.Services
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<SearchVideosResponse> GetVideoIndexerStatus(string[] videoIds,
+        public async Task<SearchVideosResponse> GetVideoIndexerStatusAsync(string[] videoIds,
             CancellationToken cancellationToken)
         {
             return await this.AzureVideoIndexerService.SearchVideosByIdsAsync(videoIds, cancellationToken);
         }
 
-        public async Task<GetVideoIndexResponse> GetVideoIndexerStatus(string videoId,
+        public async Task<GetVideoIndexResponse> GetVideoIndexerStatusAsync(string videoId,
             CancellationToken cancellationToken)
         {
             return await this.AzureVideoIndexerService.GetVideoIndexAsync(videoId, cancellationToken);
@@ -302,7 +302,7 @@ namespace FairPlayTube.Services
                 .OrderByDescending(p => p.VideoInfoId);
         }
 
-        public IQueryable<VideoInfo> GetVideoAsync(string videoId)
+        public IQueryable<VideoInfo> GetVideo(string videoId)
         {
             return this.FairplaytubeDatabaseContext.VideoInfo
                 .Include(p => p.VideoJob).Include(p => p.ApplicationUser)
@@ -312,7 +312,7 @@ namespace FairPlayTube.Services
                 .Where(p => p.VideoId == videoId);
         }
 
-        public async Task<string[]> GetBoughtVideosIds(string userObjectId, CancellationToken cancellationToken)
+        public async Task<string[]> GetBoughtVideosIdsAsync(string userObjectId, CancellationToken cancellationToken)
         {
             var boughtVideos = this.FairplaytubeDatabaseContext.VideoAccessTransaction
                 .Include(p => p.VideoInfo).Include(p => p.BuyerApplicationUser)
@@ -491,7 +491,7 @@ namespace FairPlayTube.Services
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken: cancellationToken);
         }
 
-        public async Task UpdateVideo(string videoId, UpdateVideoModel model)
+        public async Task UpdateVideoAsync(string videoId, UpdateVideoModel model)
         {
             var videoEntity = await this.FairplaytubeDatabaseContext.VideoInfo
                 .SingleOrDefaultAsync(p => p.VideoId == videoId);
@@ -561,7 +561,7 @@ namespace FairPlayTube.Services
         {
             return await this.FairplaytubeDatabaseContext.Person.ToListAsync(cancellationToken);
         }
-        public async Task<ProjectModel> CreateCustomRenderingProject(ProjectModel projectModel, CancellationToken cancellationToken)
+        public async Task<ProjectModel> CreateCustomRenderingProjectAsync(ProjectModel projectModel, CancellationToken cancellationToken)
         {
             CreateProjectRequest createProjectRequestModel = new()
             {

@@ -31,7 +31,7 @@ namespace FairPlayTube.Services
 
         public async Task SendMessageAsync(UserMessageModel model, string senderObjectId, CancellationToken cancellationToken)
         {
-            await this.ContentModerationService.CheckMessageModeration(messageText: model.Message);
+            await this.ContentModerationService.CheckMessageModerationAsync(messageText: model.Message);
             var sender = await this.FairplaytubeDatabaseContext.ApplicationUser
                             .Where(u => u.AzureAdB2cobjectId.ToString() == senderObjectId)
                             .SingleAsync(cancellationToken);

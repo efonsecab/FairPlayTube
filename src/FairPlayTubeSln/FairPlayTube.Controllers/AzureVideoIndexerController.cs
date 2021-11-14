@@ -50,7 +50,7 @@ namespace FairPlayTube.Controllers
                 if (videoInfoEntity != null)
                 {
                     await this.VideoService.AddVideoIndexTransactionsAsync(new string[] { videoInfoEntity.VideoId }, cancellationToken);
-                    await this.VideoService.MarkVideoAsProcessed(videoInfoEntity, cancellationToken);
+                    await this.VideoService.MarkVideoAsProcessedAsync(videoInfoEntity, cancellationToken);
                 }
             }
         }

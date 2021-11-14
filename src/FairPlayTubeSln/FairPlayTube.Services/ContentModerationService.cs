@@ -16,7 +16,7 @@ namespace FairPlayTube.Services
         {
             this.AzureContentModeratorService = azureContentModeratorService;
         }
-        public async Task CheckMessageModeration(string messageText)
+        public async Task CheckMessageModerationAsync(string messageText)
         {
             var result = await this.AzureContentModeratorService.AnalyzeTextAsync(messageText,
                 AzureContentModeratorService.TextType.PlainText);

@@ -12,7 +12,7 @@ namespace FairPlayTube.Services
             this.SmtpConfiguration = smtpconfiguration;
         }
 
-        public async Task SendEmail(string toEmailAddress, string subject, string body,
+        public async Task SendEmailAsync(string toEmailAddress, string subject, string body,
             bool isBodyHtml)
         {
             MailMessage msg = new();
