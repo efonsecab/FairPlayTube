@@ -15,12 +15,20 @@
                     <Card>
                         <CardHeader>
                             @singleJob.Title
-                            <button type="button" class="btn btn-info rounded-circle"
+                            @if (this.MyVideoJobsApplications != null &&
+                           this.MyVideoJobsApplications.Any(p => p.VideoJobId == singleJob.VideoJobId))
+                            {
+                                <i class="bi bi-check-circle-fill"></i>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-info rounded-circle"
                             @onclick="@( async () => await OnApplyToVideoJobClickedAsync(singleJob))"
                             data-bs-toggle="tooltip" data-bs-placement="top"
                             title="@Localizer[ApplyToVideoJobTextKey]">
-                                <i class="bi bi-hand-index-thumb"></i>
-                            </button>
+                                    <i class="bi bi-hand-index-thumb"></i>
+                                </button>
+                            }
                         </CardHeader>
                         <CardBody>
                             @singleJob.Description

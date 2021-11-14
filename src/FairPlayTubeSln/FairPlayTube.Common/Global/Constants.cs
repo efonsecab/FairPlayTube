@@ -143,6 +143,7 @@
 
                 public const string GetNewReceivedVideoJobApplications = "api/VideoJobApplication/GetNewReceivedVideoJobApplications";
                 public const string ApproveVideoJobApplication = "api/VideoJobApplication/ApproveVideoJobApplication";
+                public const string GetMyVideoJobsApplications = "api/VideoJobApplication/GetMyVideoJobsApplications";
             }
             public class VideoController
             {

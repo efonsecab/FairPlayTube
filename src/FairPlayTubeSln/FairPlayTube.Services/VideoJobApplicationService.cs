@@ -41,16 +41,26 @@ namespace FairPlayTube.Services
 
         public async Task AddVideoJobApplicationAsync(CreateVideoJobApplicationModel createVideoJobApplicationModel, CancellationToken cancellationToken)
         {
-            var userObjectId = CurrentUserProvider.GetObjectId();
+            var loggedInUserAzureObjectId = CurrentUserProvider.GetObjectId();
             var userEntity = FairplaytubeDatabaseContext.ApplicationUser
-                .Single(p => p.AzureAdB2cobjectId.ToString() == userObjectId);
+                .Single(p => p.AzureAdB2cobjectId.ToString() == loggedInUserAzureObjectId);
             var videoJobApplicationEntity = await FairplaytubeDatabaseContext.VideoJobApplication
                 .Include(p => p.ApplicantApplicationUser)
+                .Include(p => p.VideoJob)
+                .ThenInclude(p => p.VideoInfo)
+                .ThenInclude(p => p.ApplicationUser)
                 .SingleOrDefaultAsync(p => p.VideoJobId == createVideoJobApplicationModel.VideoJobId &&
-                p.ApplicantApplicationUser.AzureAdB2cobjectId.ToString() == userObjectId,
+                p.ApplicantApplicationUser.AzureAdB2cobjectId.ToString() == loggedInUserAzureObjectId,
                 cancellationToken: cancellationToken);
             if (videoJobApplicationEntity is not null)
                 throw new CustomValidationException(Localizer[UserApplicationAlreadyExistsTextKey]);
+            var videoJobEntity = await FairplaytubeDatabaseContext.VideoJob
+                .Include(p=>p.VideoInfo).ThenInclude(p=>p.ApplicationUser)
+                .SingleAsync(p => p.VideoJobId == createVideoJobApplicationModel.VideoJobId, 
+                cancellationToken: cancellationToken);
+            if (videoJobEntity.VideoInfo.ApplicationUser
+                .AzureAdB2cobjectId.ToString() == loggedInUserAzureObjectId)
+                throw new CustomValidationException(Localizer[CannotApplyToOwnedVideosJobsTextKey]);
             videoJobApplicationEntity = new VideoJobApplication()
             {
                 ApplicantApplicationUserId = userEntity.ApplicationUserId,
@@ -60,11 +70,6 @@ namespace FairPlayTube.Services
             };
             await FairplaytubeDatabaseContext.VideoJobApplication.AddAsync(videoJobApplicationEntity, cancellationToken);
             await FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
-            var videoJobEntity =
-                await FairplaytubeDatabaseContext.VideoJob
-                .Include(p => p.VideoInfo)
-                .ThenInclude(p => p.ApplicationUser)
-                .SingleAsync(p => p.VideoJobId == createVideoJobApplicationModel.VideoJobId, cancellationToken: cancellationToken);
             string message = String.Format(Localizer[UserHasAppliedToJobTextKey],
                 videoJobEntity.VideoInfo.ApplicationUser.FullName, videoJobEntity.Title);
             await HubContext.Clients.User(videoJobEntity.VideoInfo
@@ -82,7 +87,7 @@ namespace FairPlayTube.Services
                 .Include(p => p.VideoJob).ThenInclude(p => p.VideoInfo)
                 .ThenInclude(p => p.ApplicationUser)
                 .Where(p => p.VideoJobApplicationId == videoJobApplicationId)
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
             if (videoJobApplication is null)
                 throw new CustomValidationException(Localizer[VideoJobApplicationNotFoundTextKey]);
             if (loggedInUserAzureObjectId != videoJobApplication.VideoJob
@@ -91,14 +96,17 @@ namespace FairPlayTube.Services
             var hasApprovedApplication = await FairplaytubeDatabaseContext.VideoJobApplication
                 .AnyAsync(p => p.VideoJobApplicationId == videoJobApplicationId &&
                 p.VideoJobApplicationStatusId ==
-                (short)Common.Global.Enums.VideoJobApplicationStatus.Selected);
+                (short)Common.Global.Enums.VideoJobApplicationStatus.Selected, 
+                cancellationToken: cancellationToken);
             if (hasApprovedApplication)
                 throw new CustomValidationException(Localizer[ApprovedApplicationsExistTextKey]);
             videoJobApplication.VideoJobApplicationStatusId =
                 (short)Common.Global.Enums.VideoJobApplicationStatus.Selected;
             await FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
             var applicantUserEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
-                .SingleAsync(p => p.ApplicationUserId == videoJobApplication.ApplicantApplicationUserId);
+                .SingleAsync(p => p.ApplicationUserId == 
+                videoJobApplication.ApplicantApplicationUserId, 
+                cancellationToken: cancellationToken);
             string message = String.Format(Localizer[ApprovedApplicationUserNotificationTextKey],
                     videoJobApplication.VideoJob.Title,
                     videoJobApplication.VideoJob.VideoInfo.Name);
@@ -127,6 +135,16 @@ namespace FairPlayTube.Services
             return receivedApplications;
         }
 
+        public IQueryable<VideoJobApplication> GetMyVideoJobsApplications()
+        {
+            var currentUserObjectId = this.CurrentUserProvider.GetObjectId();
+            var sentApplications = FairplaytubeDatabaseContext.VideoJobApplication
+                .Include(p=>p.ApplicantApplicationUser)
+                .Where(p => p.ApplicantApplicationUser.AzureAdB2cobjectId.ToString() == currentUserObjectId);
+            return sentApplications;
+        }
+
+
         #region Resource Keys
         [ResourceKey(defaultValue: "User already has an application for the specified video job")]
         public const string UserApplicationAlreadyExistsTextKey = "UserApplicationAlreadyExistsTextKey";
@@ -143,6 +161,8 @@ namespace FairPlayTube.Services
         public const string ApprovedApplicationUserNotificationTextKey = "ApprovedApplicationUserNotificationText";
         [ResourceKey(defaultValue: "Your video job application has been approved")]
         public const string ApprovedApplicationEmailSubjectTextKey = "ApprovedApplicationEmailSubjectText";
+        [ResourceKey(defaultValue: "Cannot apply to owned videos jobs")]
+        public const string CannotApplyToOwnedVideosJobsTextKey = "CannotApplyToOwnedVideosJobsText";
         #endregion Resource Keys
     }
 }

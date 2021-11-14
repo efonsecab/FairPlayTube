@@ -56,5 +56,13 @@ namespace FairPlayTube.ClientServices
                     throw new CustomValidationException(response.ReasonPhrase);
             }
         }
+
+        public async Task<VideoJobApplicationModel[]> GetMyVideoJobsApplicationsAsync()
+        {
+            var authoriedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var result = await authoriedHttpClient.GetFromJsonAsync<VideoJobApplicationModel[]>(
+                Common.Global.Constants.ApiRoutes.VideoJobApplicationController.GetMyVideoJobsApplications);
+            return result;
+        }
     }
 }

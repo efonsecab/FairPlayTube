@@ -69,6 +69,22 @@ namespace FairPlayTube.Controllers
         }
 
         /// <summary>
+        /// Retrieves all video job applications sent by the logged in user
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task<VideoJobApplicationModel[]> GetMyVideoJobsApplications(
+            CancellationToken cancellationToken)
+        {
+            var result = await this.VideoJobApplicationService.GetMyVideoJobsApplications()
+                .Select(p => this.Mapper.Map<VideoJobApplication, VideoJobApplicationModel>(p))
+                .ToArrayAsync(cancellationToken);
+            return result;
+        }
+
+        /// <summary>
         /// Approves a video job application with the given Id
         /// </summary>
         /// <param name="videoJobApplicationId"></param>

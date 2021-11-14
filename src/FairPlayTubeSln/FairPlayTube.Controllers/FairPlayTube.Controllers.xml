@@ -497,6 +497,13 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:FairPlayTube.Controllers.VideoJobApplicationController.GetMyVideoJobsApplications(System.Threading.CancellationToken)">
+            <summary>
+            Retrieves all video job applications sent by the logged in user
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="M:FairPlayTube.Controllers.VideoJobApplicationController.ApproveVideoJobApplication(System.Int64,System.Threading.CancellationToken)">
             <summary>
             Approves a video job application with the given Id
