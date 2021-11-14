@@ -65,6 +65,10 @@ namespace FairPlayTube.Client.Shared
         #region Resource Keys
         [ResourceKey(defaultValue: "Language")]
         public const string LanguageTextKey = "LanguageText";
+        [ResourceKey(defaultValue:"Disclaimer: Translations are automatically generated " +
+            "using Microsoft Azure Translator. As with any automated " +
+            "translation technology the text may not be perfect.")]
+        public const string TranslationsDisclaimerTextKey = "TranslationsDisclaimerText";
         #endregion Resource Keys
     }
 }
