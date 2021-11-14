@@ -41,8 +41,6 @@ namespace FairPlayTube.Services
                     this.Logger?.LogError(exception: ex, message: ex.Message);
                 }
             }
-            //var result = await this.AzureTranslatorService.TranslateMultipleItemsAsync(model,
-            //    sourceLanguage, destLanguage, cancellationToken);
             return result.ToArray();
         }
     }
