@@ -71,9 +71,9 @@ namespace FairPlayTube.Controllers
         /// <returns></returns>
         [HttpGet("[action]")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetVideosJobs(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAvailableVideosJobs(CancellationToken cancellationToken)
         {
-            var result = await this.VideoJobService.GetVideosJobs()
+            var result = await this.VideoJobService.GetAvailableVideosJobs()
                 .OrderByDescending(p => p.RowCreationDateTime)
                 .Select(p => this.Mapper.Map<VideoJob, VideoJobModel>(p))
                 .ToArrayAsync(cancellationToken: cancellationToken);

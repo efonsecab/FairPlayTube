@@ -28,7 +28,7 @@ namespace FairPlayTube.Client.Pages.Public.Videos
         [Inject]
         private VideoJobApplicationClientService VideoJobApplicationClientService { get; set; }
         private bool IsLoading { get; set; }
-        private VideoJobModel[] AllVideosJobs { get; set; }
+        private VideoJobModel[] AvailableVideosJobs { get; set; }
         private CreateVideoJobApplicationModel CreateVideoJobApplicationModel { get; set; } =
             new CreateVideoJobApplicationModel();
         private bool ShowApplyToVideoJobModal { get; set; } = false;
@@ -40,7 +40,7 @@ namespace FairPlayTube.Client.Pages.Public.Videos
             try
             {
                 IsLoading = true;
-                this.AllVideosJobs = await this.VideoJobClientService.GetVideosJobsAsync();
+                this.AvailableVideosJobs = await this.VideoJobClientService.GetAvailableVideosJobsAsync();
             }
             catch (Exception ex)
             {

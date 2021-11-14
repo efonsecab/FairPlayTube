@@ -24,16 +24,19 @@ namespace FairPlayTube.Services
         private ICurrentUserProvider CurrentUserProvider { get; }
         private IStringLocalizer<VideoJobApplicationService> Localizer { get; }
         private IHubContext<NotificationHub, INotificationHub> HubContext { get; }
+        private EmailService EmailService { get; set; }
 
         public VideoJobApplicationService(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             ICurrentUserProvider currentUserProvider,
             IStringLocalizer<VideoJobApplicationService> localizer,
-            IHubContext<NotificationHub, INotificationHub> hubContext)
+            IHubContext<NotificationHub, INotificationHub> hubContext,
+            EmailService emailService)
         {
-            this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
-            this.CurrentUserProvider = currentUserProvider;
-            this.Localizer = localizer;
-            this.HubContext = hubContext;
+            FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
+            CurrentUserProvider = currentUserProvider;
+            Localizer = localizer;
+            HubContext = hubContext;
+            EmailService = emailService;
         }
 
         public async Task AddVideoJobApplicationAsync(CreateVideoJobApplicationModel createVideoJobApplicationModel, CancellationToken cancellationToken)
@@ -72,6 +75,45 @@ namespace FairPlayTube.Services
                 });
         }
 
+        public async Task ApproveVideoJobApplicationAsync(long videoJobApplicationId, CancellationToken cancellationToken)
+        {
+            var loggedInUserAzureObjectId = this.CurrentUserProvider.GetObjectId();
+            var videoJobApplication = await this.FairplaytubeDatabaseContext.VideoJobApplication
+                .Include(p => p.VideoJob).ThenInclude(p => p.VideoInfo)
+                .ThenInclude(p => p.ApplicationUser)
+                .Where(p => p.VideoJobApplicationId == videoJobApplicationId)
+                .SingleOrDefaultAsync();
+            if (videoJobApplication is null)
+                throw new CustomValidationException(Localizer[VideoJobApplicationNotFoundTextKey]);
+            if (loggedInUserAzureObjectId != videoJobApplication.VideoJob
+                .VideoInfo.ApplicationUser.AzureAdB2cobjectId.ToString())
+                throw new CustomValidationException(Localizer[NotVideoOwnerTextKey]);
+            var hasApprovedApplication = await FairplaytubeDatabaseContext.VideoJobApplication
+                .AnyAsync(p => p.VideoJobApplicationId == videoJobApplicationId &&
+                p.VideoJobApplicationStatusId ==
+                (short)Common.Global.Enums.VideoJobApplicationStatus.Selected);
+            if (hasApprovedApplication)
+                throw new CustomValidationException(Localizer[ApprovedApplicationsExistTextKey]);
+            videoJobApplication.VideoJobApplicationStatusId =
+                (short)Common.Global.Enums.VideoJobApplicationStatus.Selected;
+            await FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
+            var applicantUserEntity = await this.FairplaytubeDatabaseContext.ApplicationUser
+                .SingleAsync(p => p.ApplicationUserId == videoJobApplication.ApplicantApplicationUserId);
+            string message = String.Format(Localizer[ApprovedApplicationUserNotificationTextKey],
+                    videoJobApplication.VideoJob.Title,
+                    videoJobApplication.VideoJob.VideoInfo.Name);
+            await HubContext.Clients.User(applicantUserEntity.AzureAdB2cobjectId.ToString())
+                .ReceiveMessage(new Models.Notifications.NotificationModel()
+                {
+                    Message = message,
+                });
+            await EmailService.SendEmailAsync(toEmailAddress:
+                applicantUserEntity.EmailAddress,
+                subject: Localizer[ApprovedApplicationEmailSubjectTextKey],
+                body: message,
+                isBodyHtml: true);
+        }
+
         public IQueryable<VideoJobApplication> GetNewReceivedVideoJobApplications()
         {
             var currentUserObjectId = this.CurrentUserProvider.GetObjectId();
@@ -79,7 +121,9 @@ namespace FairPlayTube.Services
                 .Include(p => p.VideoJob)
                 .ThenInclude(p => p.VideoInfo)
                 .ThenInclude(p => p.ApplicationUser)
-                .Where(p=>p.VideoJob.VideoInfo.ApplicationUser.AzureAdB2cobjectId.ToString() == currentUserObjectId);
+                .Where(p => p.VideoJob.VideoInfo.ApplicationUser.AzureAdB2cobjectId.ToString() == currentUserObjectId
+                && p.VideoJobApplicationStatusId ==
+                (short)Common.Global.Enums.VideoJobApplicationStatus.New);
             return receivedApplications;
         }
 
@@ -88,6 +132,17 @@ namespace FairPlayTube.Services
         public const string UserApplicationAlreadyExistsTextKey = "UserApplicationAlreadyExistsTextKey";
         [ResourceKey(defaultValue: "{0} has applied to your job titled: {1}")]
         public const string UserHasAppliedToJobTextKey = "UserHasAppliedToJobText";
+        [ResourceKey(defaultValue: "Video Job Application was not found")]
+        public const string VideoJobApplicationNotFoundTextKey = "VideoJobApplicationNotFoundText";
+        [ResourceKey(defaultValue: "Only the video owner can approve received applications")]
+        public const string NotVideoOwnerTextKey = "NotVideoOwnerText";
+        [ResourceKey(defaultValue: "Job already has an approved application")]
+        public const string ApprovedApplicationsExistTextKey = "ApprovedApplicationsExistTextKey";
+        [ResourceKey(defaultValue: "Your application has been approved. " +
+                    "Title: {0}. Video: {1}")]
+        public const string ApprovedApplicationUserNotificationTextKey = "ApprovedApplicationUserNotificationText";
+        [ResourceKey(defaultValue: "Your video job application has been approved")]
+        public const string ApprovedApplicationEmailSubjectTextKey = "ApprovedApplicationEmailSubjectText";
         #endregion Resource Keys
     }
 }

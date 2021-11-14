@@ -67,5 +67,21 @@ namespace FairPlayTube.Controllers
                 .ToArrayAsync(cancellationToken);
             return receivedApplications;
         }
+
+        /// <summary>
+        /// Approves a video job application with the given Id
+        /// </summary>
+        /// <param name="videoJobApplicationId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        public async Task<IActionResult> ApproveVideoJobApplication(long videoJobApplicationId,
+            CancellationToken cancellationToken)
+        {
+            await this.VideoJobApplicationService.ApproveVideoJobApplicationAsync(videoJobApplicationId,
+                cancellationToken);
+            return Ok();
+        }
     }
 }
