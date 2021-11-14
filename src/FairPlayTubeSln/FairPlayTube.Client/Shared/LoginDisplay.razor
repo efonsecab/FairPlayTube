@@ -5,17 +5,41 @@
 
 <AuthorizeView>
     <Authorized>
-        @Localizer[HelloTextKey], @context.User.Identity.Name!
-        <button class="btn btn-info rounded-circle" @onclick="BeginLogout">
-            <i class="bi bi-person-circle"></i>
-            @Localizer[LogoutTextKey]
-        </button>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-circle"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                    <label class="form-label">
+                        <strong>
+                            @context.User.Identity.Name
+                        </strong>
+                    </label>
+                </li>
+                <li>
+                    <button class="btn btn-info form-control" @onclick="BeginLogout">
+                        <i class="bi bi-person-circle"></i>
+                        @Localizer[LogoutTextKey]
+                    </button>
+                </li>
+            </ul>
+        </div>
     </Authorized>
     <NotAuthorized>
-        <button class="btn btn-info rounded-circle" @onclick="Login">
-            <i class="bi bi-person-circle"></i>
-            @Localizer[SignInTextKey]/@Localizer[SignUpTextKey]
-        </button>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-circle"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                    <button class="btn btn-info form-control" @onclick="Login">
+                        <i class="bi bi-person-circle"></i>
+                        @Localizer[SignInTextKey]/@Localizer[SignUpTextKey]
+                    </button>
+                </li>
+            </ul>
+        </div>
     </NotAuthorized>
 </AuthorizeView>
 
@@ -36,9 +60,7 @@
     }
 
     #region Resource Keys
-    [ResourceKey(defaultValue: "Hello")]
-    public const string HelloTextKey = "HelloText";
-    [ResourceKey(defaultValue:"Sign In")]
+    [ResourceKey(defaultValue: "Sign In")]
     public const string SignInTextKey = "SignInText";
     [ResourceKey(defaultValue: "Sign Up")]
     public const string SignUpTextKey = "SignUpText";
