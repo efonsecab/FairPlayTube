@@ -40,7 +40,7 @@ namespace FairPlayTube.Client.Pages.Public.Videos
             try
             {
                 IsLoading = true;
-                this.AllVideosJobs = await this.VideoJobClientService.GetVideosJobs();
+                this.AllVideosJobs = await this.VideoJobClientService.GetVideosJobsAsync();
             }
             catch (Exception ex)
             {
@@ -88,7 +88,7 @@ namespace FairPlayTube.Client.Pages.Public.Videos
                 {
                     IsLoading = true;
                     await this.VideoJobApplicationClientService
-                        .AddVideoJobApplication(this.CreateVideoJobApplicationModel);
+                        .AddVideoJobApplicationAsync(this.CreateVideoJobApplicationModel);
                     CleanVideoJobApplication();
                     ToastifyService.DisplaySuccessNotification(Localizer[VideoJobApplicationSentTextKey]);
                 }

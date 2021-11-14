@@ -26,7 +26,7 @@ namespace FairPlayTube.ClientServices
                 $"?applicationUserId={applicationUserId}");
         }
 
-        public async Task<YouTubeVideoModel[]> GetYouTubeChannelLatestVideos(string channelId)
+        public async Task<YouTubeVideoModel[]> GetYouTubeChannelLatestVideosAsync(string channelId)
         {
             var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
             return await anonymousHttpClient.GetFromJsonAsync<YouTubeVideoModel[]>(

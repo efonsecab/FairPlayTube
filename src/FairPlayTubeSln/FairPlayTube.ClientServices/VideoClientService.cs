@@ -27,7 +27,7 @@ namespace FairPlayTube.ClientServices
                 ApiRoutes.VideoController.GetPublicProcessedVideos);
         }
 
-        public async Task<List<VideoStatusModel>> GetMyPendingVideosQueue()
+        public async Task<List<VideoStatusModel>> GetMyPendingVideosQueueAsync()
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             return await authorizedHttpClient.GetFromJsonAsync<List<VideoStatusModel>>(
@@ -42,7 +42,7 @@ namespace FairPlayTube.ClientServices
                 $"?keyword={HttpUtility.UrlEncode(Keyword)}");
         }
 
-        public async Task<VideoInfoModel[]> GetMyProcessedVideos()
+        public async Task<VideoInfoModel[]> GetMyProcessedVideosAsync()
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             return await authorizedHttpClient.GetFromJsonAsync<VideoInfoModel[]>(
@@ -64,7 +64,7 @@ namespace FairPlayTube.ClientServices
             }
         }
 
-        public async Task<string> GetVideoEditAccessToken(string videoId)
+        public async Task<string> GetVideoEditAccessTokenAsync(string videoId)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             return await authorizedHttpClient.GetStringAsync($"{ApiRoutes.VideoController.GetVideoEditAccessToken}" +
@@ -78,7 +78,7 @@ namespace FairPlayTube.ClientServices
                 (ApiRoutes.VideoController.ListAllKeywords);
         }
 
-        public async Task UpdateMyVideo(string videoId, UpdateVideoModel updateVideoModel)
+        public async Task UpdateMyVideoAsync(string videoId, UpdateVideoModel updateVideoModel)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient.PutAsJsonAsync($"{ApiRoutes.VideoController.UpdateMyVideo}" +
@@ -139,7 +139,7 @@ namespace FairPlayTube.ClientServices
             }
         }
 
-        public async Task<DownloadVideoModel> DownloadVideo(string videoId)
+        public async Task<DownloadVideoModel> DownloadVideoAsync(string videoId)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var result = await authorizedHttpClient.GetFromJsonAsync<DownloadVideoModel>(

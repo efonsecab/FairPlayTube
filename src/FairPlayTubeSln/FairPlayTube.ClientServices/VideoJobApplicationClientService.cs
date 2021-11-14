@@ -17,7 +17,7 @@ namespace FairPlayTube.ClientServices
             this.HttpClientService = httpClientService;
         }
 
-        public async Task AddVideoJobApplication(CreateVideoJobApplicationModel createVideoJobApplicationModel)
+        public async Task AddVideoJobApplicationAsync(CreateVideoJobApplicationModel createVideoJobApplicationModel)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient
@@ -33,7 +33,7 @@ namespace FairPlayTube.ClientServices
             }
         }
 
-        public async Task<VideoJobApplicationModel[]> GetNewReceivedVideoJobApplications()
+        public async Task<VideoJobApplicationModel[]> GetNewReceivedVideoJobApplicationsAsync()
         {
             var authoriedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var result = await authoriedHttpClient.GetFromJsonAsync<VideoJobApplicationModel[]>(

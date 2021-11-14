@@ -40,7 +40,7 @@ namespace FairPlayTube.Client.Shared
             try
             {
                 IsLoading = true;
-                await LocalizationClientService.LoadData();
+                await LocalizationClientService.LoadDataAsync();
                 await TrackVisit(createNewSession: true);
                 this.NavigationManager.LocationChanged += NavigationManager_LocationChanged;
             }
@@ -68,12 +68,12 @@ namespace FairPlayTube.Client.Shared
             {
                 var userObjectId = state.User.Claims.GetAzureAdB2CUserObjectId();
                 visitorTrackingModel.UserAzureAdB2cObjectId = userObjectId;
-                await this.VisitorTrackingClientService.TrackAuthenticatedVisit(visitorTrackingModel,
+                await this.VisitorTrackingClientService.TrackAuthenticatedVisitAsync(visitorTrackingModel,
                     createNewSession);
             }
             else
             {
-                await this.VisitorTrackingClientService.TrackAnonymousVisit(visitorTrackingModel,
+                await this.VisitorTrackingClientService.TrackAnonymousVisitAsync(visitorTrackingModel,
                     createNewSession);
             }
 
@@ -87,7 +87,7 @@ namespace FairPlayTube.Client.Shared
 
         private async void VisitsTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            await VisitorTrackingClientService.UpdateVisitTimeElapsed();
+            await VisitorTrackingClientService.UpdateVisitTimeElapsedAsync();
         }
 
         private async void NavigationManager_LocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)

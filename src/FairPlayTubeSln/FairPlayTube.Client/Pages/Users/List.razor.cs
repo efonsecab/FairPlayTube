@@ -35,7 +35,7 @@ namespace FairPlayTube.Client.Pages.Users
             try
             {
                 IsLoading = true;
-                this.AllUsers = await this.UserClientService.ListUsers();
+                this.AllUsers = await this.UserClientService.ListUsersAsync();
             }
             catch (Exception ex)
             {

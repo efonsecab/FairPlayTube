@@ -47,7 +47,7 @@ namespace FairPlayTube.ClientServices
             return result;
         }
 
-        public async Task<UserModel[]> ListUsers()
+        public async Task<UserModel[]> ListUsersAsync()
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             return await authorizedHttpClient.GetFromJsonAsync<UserModel[]>(

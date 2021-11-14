@@ -29,7 +29,7 @@ namespace FairPlayTube.Client.CustomProviders
         /// <returns></returns>
         public async Task<string> GetVideoEditAccessToken(string videoId)
         {
-            return await this.VideoClientService.GetVideoEditAccessToken(videoId);
+            return await this.VideoClientService.GetVideoEditAccessTokenAsync(videoId);
         }
     }
 }

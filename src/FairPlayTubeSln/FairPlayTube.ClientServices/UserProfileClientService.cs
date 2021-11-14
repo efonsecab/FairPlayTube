@@ -33,14 +33,14 @@ namespace FairPlayTube.ClientServices
             }
         }
 
-        public async Task<GlobalMonetizationModel> GetMyMonetizationInfo()
+        public async Task<GlobalMonetizationModel> GetMyMonetizationInfoAsync()
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             return await authorizedHttpClient.GetFromJsonAsync<GlobalMonetizationModel>(
                 Constants.ApiRoutes.UserProfileController.GetMyMonetizationInfo);
         }
 
-        public async Task AddFunds(string paypalOrderId)
+        public async Task AddFundsAsync(string paypalOrderId)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             string requestUrl = $"{Constants.ApiRoutes.UserProfileController.AddFunds}?orderId={paypalOrderId}";
@@ -55,7 +55,7 @@ namespace FairPlayTube.ClientServices
             }
         }
 
-        public async Task<decimal> GetMyFunds()
+        public async Task<decimal> GetMyFundsAsync()
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             string requestUrl = $"{Constants.ApiRoutes.UserProfileController.GetMyFunds}";

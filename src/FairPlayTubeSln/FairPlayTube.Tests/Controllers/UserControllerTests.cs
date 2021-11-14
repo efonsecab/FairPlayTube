@@ -55,7 +55,7 @@ namespace FairPlayTube.Controllers.Tests
         {
             await base.SignIn(Role.User);
             UserClientService userClientService = base.CreateUserClientService();
-            var result = await userClientService.ListUsers();
+            var result = await userClientService.ListUsersAsync();
             Assert.IsNotNull(result);
         }
 

@@ -62,7 +62,7 @@ namespace FairPlayTube.Controllers.Tests
             var dbContext = TestsBase.CreateDbContext();
             VideoPlaylistModel testVideoPlaylist = CreateTestVideoPlaylist();
             VideoPlaylistClientService videoPlaylistClientService = base.CreateVideoPlaylistClientService();
-            await videoPlaylistClientService.CreateVideoPlaylist(testVideoPlaylist);
+            await videoPlaylistClientService.CreateVideoPlaylistAsync(testVideoPlaylist);
             var entity = await dbContext.VideoPlaylist
                 .Include(p => p.OwnerApplicationUser)
                 .Where(p => p.PlaylistName == testVideoPlaylist.PlaylistName &&
@@ -79,7 +79,7 @@ namespace FairPlayTube.Controllers.Tests
             var dbContext = TestsBase.CreateDbContext();
             VideoPlaylistModel testVideoPlaylist = CreateTestVideoPlaylist();
             VideoPlaylistClientService videoPlaylistClientService = base.CreateVideoPlaylistClientService();
-            await videoPlaylistClientService.CreateVideoPlaylist(testVideoPlaylist);
+            await videoPlaylistClientService.CreateVideoPlaylistAsync(testVideoPlaylist);
             var entity = await dbContext.VideoPlaylist
                 .Include(p => p.OwnerApplicationUser)
                 .Where(p => p.PlaylistName == testVideoPlaylist.PlaylistName &&
@@ -87,7 +87,7 @@ namespace FairPlayTube.Controllers.Tests
                 .AsNoTracking().SingleOrDefaultAsync();
 
             Assert.IsNotNull(entity);
-            await videoPlaylistClientService.DeleteVideoPlaylist(entity!.VideoPlaylistId);
+            await videoPlaylistClientService.DeleteVideoPlaylistAsync(entity!.VideoPlaylistId);
             entity = await dbContext.VideoPlaylist
                 .Include(p => p.OwnerApplicationUser)
                 .Where(p => p.PlaylistName == testVideoPlaylist.PlaylistName &&
@@ -133,7 +133,7 @@ namespace FairPlayTube.Controllers.Tests
                 Order = 1
             };
             VideoPlaylistClientService videoPlaylistClientService = base.CreateVideoPlaylistClientService();
-            await videoPlaylistClientService.AddVideoToPlaylist(videoPlaylistItemModel);
+            await videoPlaylistClientService.AddVideoToPlaylistAsync(videoPlaylistItemModel);
             var result = await dbContext.VideoPlaylistItem.SingleOrDefaultAsync(p=>p.VideoInfoId == testVideoEntity.VideoInfoId);
             Assert.IsNotNull(result);
         }

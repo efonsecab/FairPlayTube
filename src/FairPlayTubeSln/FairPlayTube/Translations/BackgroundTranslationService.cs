@@ -132,7 +132,7 @@ namespace FairPlayTube.Translations
                 }).ToArray();
 
             var additionalSupportedCultures = await fairplaytubeDatabaseContext.Culture
-                .Where(p => p.Name != "en-US").ToListAsync();
+                .Where(p => p.Name != "en-US").ToListAsync(cancellationToken: stoppingToken);
             foreach (var singleAdditionalCulture in additionalSupportedCultures)
             {
                 var cultureTranslations = await
@@ -140,7 +140,7 @@ namespace FairPlayTube.Translations
                     "en",
                     singleAdditionalCulture.Name, stoppingToken);
                 var cultureEntity = await fairplaytubeDatabaseContext
-                    .Culture.SingleAsync(p => p.Name == singleAdditionalCulture.Name);
+                    .Culture.SingleAsync(p => p.Name == singleAdditionalCulture.Name, cancellationToken: stoppingToken);
                 for (int iPos = 0; iPos < cultureTranslations.Length; iPos++)
                 {
                     var singleEnglishUSKey = allEnglishUSKeys[iPos];
@@ -148,7 +148,7 @@ namespace FairPlayTube.Translations
                     Resource resourceEntity = await fairplaytubeDatabaseContext.Resource
                         .SingleOrDefaultAsync(p => p.Key == singleEnglishUSKey.Key &&
                         p.Type == singleEnglishUSKey.Type && 
-                        p.CultureId == cultureEntity.CultureId);
+                        p.CultureId == cultureEntity.CultureId, cancellationToken: stoppingToken);
 
                     if (resourceEntity is null)
                     {

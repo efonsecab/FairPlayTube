@@ -28,7 +28,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             {
                 IsLoading = true;
                 this.VideoJobApplications = await this.VideoJobApplicationClientService
-                    .GetNewReceivedVideoJobApplications();
+                    .GetNewReceivedVideoJobApplicationsAsync();
             }
             catch (Exception ex)
             {

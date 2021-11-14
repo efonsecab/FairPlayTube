@@ -29,7 +29,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             try
             {
                 IsLoading = true;
-                this.MyPendingVideosQueue = await VideoClientService.GetMyPendingVideosQueue();
+                this.MyPendingVideosQueue = await VideoClientService.GetMyPendingVideosQueueAsync();
             }
             catch (Exception ex)
             {

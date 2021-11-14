@@ -58,7 +58,7 @@ namespace FairPlayTube.Client.Pages.Users.YouTube
         {
             try
             {
-                this.ChannelVideos = await this.UserYouTubeChannelClientService.GetYouTubeChannelLatestVideos(SelectedChannelId);
+                this.ChannelVideos = await this.UserYouTubeChannelClientService.GetYouTubeChannelLatestVideosAsync(SelectedChannelId);
             }
             catch (Exception ex)
             {

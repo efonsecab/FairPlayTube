@@ -20,7 +20,7 @@ namespace FairPlayTube.ClientServices
             this.HttpClientService = httpClientService;
         }
 
-        public async Task CreateVideoPlaylist(VideoPlaylistModel videoPlaylistModel)
+        public async Task CreateVideoPlaylistAsync(VideoPlaylistModel videoPlaylistModel)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient.PostAsJsonAsync(ApiRoutes.VideoPlaylistController.CreateVideoPlaylist,
@@ -35,7 +35,7 @@ namespace FairPlayTube.ClientServices
             }
         }
 
-        public async Task DeleteVideoPlaylist(long videoPlaylistId)
+        public async Task DeleteVideoPlaylistAsync(long videoPlaylistId)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient.DeleteAsync(
@@ -50,7 +50,7 @@ namespace FairPlayTube.ClientServices
             }
         }
 
-        public async Task AddVideoToPlaylist(VideoPlaylistItemModel videoPlaylistItemModel)
+        public async Task AddVideoToPlaylistAsync(VideoPlaylistItemModel videoPlaylistItemModel)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient

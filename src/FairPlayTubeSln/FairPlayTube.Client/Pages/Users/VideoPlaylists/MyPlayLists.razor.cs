@@ -30,7 +30,7 @@ namespace FairPlayTube.Client.Pages.Users.VideoPlaylists
             try
             {
                 IsLoading = true;
-                await this.VideoPlaylistClientService.CreateVideoPlaylist(this.Model);
+                await this.VideoPlaylistClientService.CreateVideoPlaylistAsync(this.Model);
                 ToastifyService.DisplaySuccessNotification(Localizer[NewPlaylistCreatedTextKey]);
             }
             catch (Exception ex)

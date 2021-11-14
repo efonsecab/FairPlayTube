@@ -39,7 +39,7 @@ namespace FairPlayTube.Client.Pages.Users.Profile
             try
             {
                 IsLoading = true;
-                this.AvailableFunds = await this.UserProfileClientService.GetMyFunds();
+                this.AvailableFunds = await this.UserProfileClientService.GetMyFundsAsync();
             }
             catch (Exception ex)
             {

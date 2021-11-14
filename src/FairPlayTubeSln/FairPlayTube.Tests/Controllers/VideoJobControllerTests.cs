@@ -108,7 +108,7 @@ namespace FairPlayTube.Tests.Controllers
             };
             await videoJobClientService.AddVideoJobAsync(videoJobModel);
 
-            var allVideoJobs = await videoJobClientService.GetVideosJobs();
+            var allVideoJobs = await videoJobClientService.GetVideosJobsAsync();
             Assert.AreEqual(expected:1, allVideoJobs.Length);
         }
     }

@@ -81,7 +81,7 @@ namespace FairPlayTube.Controllers.Tests
             testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
             await dbContext.VideoInfo.AddAsync(testVideoEntity);
             await dbContext.SaveChangesAsync();
-            var result = await videoClientService.GetMyProcessedVideos();
+            var result = await videoClientService.GetMyProcessedVideosAsync();
             Assert.AreEqual(1, result!.Length, "Invalid count of owned videos for test user");
         }
 
@@ -187,7 +187,7 @@ namespace FairPlayTube.Controllers.Tests
             testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
             await dbContext.VideoInfo.AddAsync(testVideoEntity);
             await dbContext.SaveChangesAsync();
-            var result = await videoClientService.GetMyPendingVideosQueue();
+            var result = await videoClientService.GetMyPendingVideosQueueAsync();
             Assert.AreEqual(1, result.Count);
         }
 

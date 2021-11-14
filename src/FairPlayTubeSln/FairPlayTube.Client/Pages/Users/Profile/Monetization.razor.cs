@@ -36,7 +36,7 @@ namespace FairPlayTube.Client.Pages.Users.Profile
             try
             {
                 IsLoading = true;
-                this.GlobalMonetizationModel = await this.UserProfileClientService.GetMyMonetizationInfo();
+                this.GlobalMonetizationModel = await this.UserProfileClientService.GetMyMonetizationInfoAsync();
             }
             catch (Exception ex)
             {

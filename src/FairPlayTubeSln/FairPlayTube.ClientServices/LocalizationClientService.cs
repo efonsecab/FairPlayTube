@@ -20,7 +20,7 @@ namespace FairPlayTube.ClientServices
             this.HttpClientService = httpClientService;
         }
 
-        public async Task LoadData()
+        public async Task LoadDataAsync()
         {
             var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
             this.AllResources = await anonymousHttpClient.GetFromJsonAsync<ResourceModel[]>(

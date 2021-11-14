@@ -32,7 +32,7 @@ namespace FairPlayTube.Client.CustomComponents.Videos
             try
             {
                 IsSubmitting = true;
-                await this.VideoClientService.UpdateMyVideo(this.VideoInfoModel.VideoId, this.UpdateVideoModel);
+                await this.VideoClientService.UpdateMyVideoAsync(this.VideoInfoModel.VideoId, this.UpdateVideoModel);
                 this.ToastifyService.DisplaySuccessNotification("Video has been updated");
             }
             catch (Exception ex)

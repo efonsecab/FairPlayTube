@@ -56,7 +56,7 @@ namespace FairPlayTube.Client.Pages.Public.Videos
                     var state = await AuthenticationStateTask;
                     if (state is not null && state.User is not null && state.User.Identity.IsAuthenticated)
                     {
-                        var myVideos = await VideoClientService.GetMyProcessedVideos();
+                        var myVideos = await VideoClientService.GetMyProcessedVideosAsync();
                         if (myVideos.Any(p => p.VideoId == this.VideoId))
                         {
                             //Logged in user is current video's owner

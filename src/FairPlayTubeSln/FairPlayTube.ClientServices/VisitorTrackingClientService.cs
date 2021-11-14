@@ -18,7 +18,7 @@ namespace FairPlayTube.ClientServices
             this.HttpClientService = httpClientService;
         }
 
-        public async Task TrackAnonymousVisit(VisitorTrackingModel visitorTrackingModel,
+        public async Task TrackAnonymousVisitAsync(VisitorTrackingModel visitorTrackingModel,
             bool createNewSession)
         {
             if (createNewSession)
@@ -50,7 +50,7 @@ namespace FairPlayTube.ClientServices
             }
         }
 
-        public async Task TrackAuthenticatedVisit(VisitorTrackingModel visitorTrackingModel,
+        public async Task TrackAuthenticatedVisitAsync(VisitorTrackingModel visitorTrackingModel,
             bool createNewSession)
         {
             if (createNewSession)
@@ -73,7 +73,7 @@ namespace FairPlayTube.ClientServices
             }
         }
 
-        public async Task UpdateVisitTimeElapsed()
+        public async Task UpdateVisitTimeElapsedAsync()
         {
             var anonymousHttpClient = HttpClientService.CreateAnonymousClient();
             var response = await anonymousHttpClient.PutAsync(
