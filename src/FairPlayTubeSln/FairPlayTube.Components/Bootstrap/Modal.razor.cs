@@ -21,5 +21,7 @@ namespace FairPlayTube.Components.Bootstrap
         public EventCallback OnOkButtonClicked { get;set; }
         [Parameter]
         public string OkButtonText { get; set; }
+        [Parameter]
+        public bool ShowFooter { get; set; } = true;
     }
 }

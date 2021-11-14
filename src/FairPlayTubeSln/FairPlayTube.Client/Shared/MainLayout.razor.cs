@@ -33,6 +33,7 @@ namespace FairPlayTube.Client.Shared
         private bool IsLoading { get; set; }
         private bool ShowFooter { get; set; } = true;
         private Timer VisitsTimer { get; set; }
+        private bool ShowCultureSelector { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -131,6 +132,16 @@ namespace FairPlayTube.Client.Shared
         public void OnSearchClicked(string searchTerm)
         {
             this.NavigationManager.NavigateTo($"{Constants.RootPagesRoutes.SearchWithSearchTerm.Replace("{SearchTerm}", searchTerm)}");
+        }
+
+        private void OnShowCultureSelectorClicked()
+        {
+            this.ShowCultureSelector = true;
+        }
+
+        private void HideCultureSelector()
+        {
+            this.ShowCultureSelector = false;
         }
 
         #region Resource Keys
