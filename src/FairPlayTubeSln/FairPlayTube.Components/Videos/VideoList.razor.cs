@@ -25,6 +25,9 @@ namespace FairPlayTube.Components.Videos
         public EventCallback<long> OnShowYouTubeLatestVideos { get; set; }
         [Parameter]
         public bool ShowYouTubeVideosLink { get; set; }
+        [Parameter]
+        [EditorRequired]
+        public bool ShowAvailableJobsButton { get; set; }
         private int ItemPos { get; set; } = 0;
    
     }

@@ -22,11 +22,14 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         [Inject]
         private IStringLocalizer<MyVideos> Localizer { get; set; }
         private bool IsLoading { get; set; }
+        private bool ShowAvailableJobsButton { get; set; }
         protected async override Task OnInitializedAsync()
         {
             try
             {
                 IsLoading = true;
+
+                ShowAvailableJobsButton = FeatureClientService.IsFeatureEnabled(Common.Global.Enums.FeatureType.VideoJobSystem);
                 this.AllVideos = await this.VideoClientService.GetMyProcessedVideosAsync();
             }
             catch (Exception ex)

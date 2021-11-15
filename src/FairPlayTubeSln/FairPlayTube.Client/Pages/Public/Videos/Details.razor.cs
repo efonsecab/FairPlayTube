@@ -40,15 +40,17 @@ namespace FairPlayTube.Client.Pages.Public.Videos
         private string VideoThumbnailUrl { get; set; }
         private CreateVideoCommentModel NewCommentModel { get; set; } = new CreateVideoCommentModel();
         private bool ShowAddVideoJobButton { get; set; } = false;
+        private bool ShowAvailableJobsButton { get; set; }
         protected override async Task OnInitializedAsync()
         {
             try
             {
+                IsLoading = true;
+                ShowAvailableJobsButton = FeatureClientService.IsFeatureEnabled(FeatureType.VideoJobSystem);
                 this.NewCommentModel.VideoId = this.VideoId;
                 string baseUrl = this.NavigationManager.BaseUri;
                 var ogThumbnailurl = Constants.ApiRoutes.OpenGraphController.VideoThumbnail.Replace("{videoId}", this.VideoId);
                 this.VideoThumbnailUrl = $"{baseUrl}{ogThumbnailurl}";
-                IsLoading = true;
                 this.VideoModel = await this.VideoClientService.GetVideoAsync(VideoId);
                 await LoadComments();
                 if (AuthenticationStateTask is not null)
