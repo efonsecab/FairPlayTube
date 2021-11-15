@@ -291,7 +291,9 @@ namespace FairPlayTube.Services
         public IQueryable<VideoInfo> GetPublicProcessedVideos()
         {
             return this.FairplaytubeDatabaseContext.VideoInfo
-                .Include(p => p.VideoJob).Include(p => p.ApplicationUser)
+                .Include(p => p.VideoJob)
+                .ThenInclude(p=>p.VideoJobApplication)
+                .Include(p => p.ApplicationUser)
                 .ThenInclude(p => p.UserYouTubeChannel)
                 .Include(p => p.ApplicationUser.UserExternalMonetization)
                 .Include(p => p.VisitorTracking)
