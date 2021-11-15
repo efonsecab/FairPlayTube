@@ -97,6 +97,10 @@
 
         public class ApiRoutes
         {
+            public class FeatureController
+            {
+                public const string GetAllFeatures = "api/Feature/GetAllFeatures";
+            }
             public class VideoJobController
             {
                 public const string AddVideoJob = "api/VideoJob/AddVideoJob";

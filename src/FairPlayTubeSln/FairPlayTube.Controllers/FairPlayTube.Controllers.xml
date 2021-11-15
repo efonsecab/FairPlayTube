@@ -25,6 +25,23 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.FeatureController">
+            <summary>
+            Handles all of the data related to Features
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.FeatureController.#ctor(Microsoft.FeatureManagement.IFeatureManager)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.FeatureController"/>
+            </summary>
+            <param name="featureManager"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.FeatureController.GetAllFeatures">
+            <summary>
+            Retrieves the list of all registered features
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.FilesaveController">
             <summary>
             In charge to saving files

@@ -2,6 +2,7 @@
 using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Global;
+using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Models.VideoComment;
@@ -19,6 +20,8 @@ namespace FairPlayTube.Client.Pages.Public.Videos
     [Route(Common.Global.Constants.PublicVideosPages.Details)]
     public partial class Details
     {
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
         [Parameter]
         public string VideoId { get; set; }
         [Inject]
@@ -31,15 +34,12 @@ namespace FairPlayTube.Client.Pages.Public.Videos
         private NavigationManager NavigationManager { get; set; }
         [Inject]
         private IStringLocalizer<Details> Localizer { get; set; }
-        [CascadingParameter]
-        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
         private VideoInfoModel VideoModel { get; set; }
         private VideoCommentModel[] VideoComments { get; set; }
         private bool IsLoading { get; set; }
         private string VideoThumbnailUrl { get; set; }
         private CreateVideoCommentModel NewCommentModel { get; set; } = new CreateVideoCommentModel();
         private bool ShowAddVideoJobButton { get; set; } = false;
-
         protected override async Task OnInitializedAsync()
         {
             try
@@ -57,7 +57,8 @@ namespace FairPlayTube.Client.Pages.Public.Videos
                     if (state is not null && state.User is not null && state.User.Identity.IsAuthenticated)
                     {
                         var myVideos = await VideoClientService.GetMyProcessedVideosAsync();
-                        if (myVideos.Any(p => p.VideoId == this.VideoId))
+                        if (myVideos.Any(p => p.VideoId == this.VideoId) &&
+                            FeatureClientService.IsFeatureEnabled(FeatureType.VideoJobSystem))
                         {
                             //Logged in user is current video's owner
                             ShowAddVideoJobButton = true;

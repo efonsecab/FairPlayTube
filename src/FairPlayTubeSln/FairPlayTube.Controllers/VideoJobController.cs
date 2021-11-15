@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FairPlayTube.Common.CustomExceptions;
+using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.Video;
@@ -7,6 +8,7 @@ using FairPlayTube.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.FeatureManagement.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +24,7 @@ namespace FairPlayTube.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [FeatureGate(FeatureType.VideoJobSystem)]
     public class VideoJobController : ControllerBase
     {
         private VideoJobService VideoJobService { get; }

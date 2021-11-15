@@ -87,7 +87,6 @@ namespace FairPlayTube.Client
             builder.Services.AddTransient<ToastifyService>();
             builder.Services.AddTransient<VideoClientService>();
             builder.Services.AddTransient<UserProfileClientService>();
-            builder.Services.AddTransient<ToastifyService>();
             builder.Services.AddTransient<VisitorTrackingClientService>();
             builder.Services.AddTransient<UserClientService>();
             builder.Services.AddTransient<SearchClientService>();
@@ -96,6 +95,7 @@ namespace FairPlayTube.Client
             builder.Services.AddTransient<VideoPlaylistClientService>();
             builder.Services.AddTransient<VideoJobClientService>();
             builder.Services.AddTransient<VideoJobApplicationClientService>();
+            builder.Services.AddTransient<FeatureClientService>();
 
             var host = builder.Build();
             ConfigureModelsLocalizers(host.Services);
