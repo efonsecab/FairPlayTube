@@ -8,5 +8,10 @@
 	[Nationality] NVARCHAR(20) NOT NULL,
 	[NationalIdNumber] INT NOT NULL,
 	[NationalIdPhotoUrl] NVARCHAR(200) NOT NULL,
-	[DisplayAlias] NVARCHAR(100)
+	[DisplayAlias] NVARCHAR(100), 
+    [PaypalEmailAddress] NVARCHAR(500) NULL
 )
+
+GO
+
+CREATE UNIQUE INDEX [UI_UserProfile_PaypalEmailAddress] ON [dbo].[UserProfile] ([PaypalEmailAddress])

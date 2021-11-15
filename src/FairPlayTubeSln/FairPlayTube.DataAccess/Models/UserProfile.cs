@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlayTube.DataAccess.Models
 {
+    [Index(nameof(PaypalEmailAddress), Name = "UI_UserProfile_PaypalEmailAddress", IsUnique = true)]
     public partial class UserProfile
     {
         [Key]
@@ -30,6 +31,8 @@ namespace FairPlayTube.DataAccess.Models
         public string NationalIdPhotoUrl { get; set; }
         [StringLength(100)]
         public string DisplayAlias { get; set; }
+        [StringLength(500)]
+        public string PaypalEmailAddress { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
         [InverseProperty("UserProfile")]
