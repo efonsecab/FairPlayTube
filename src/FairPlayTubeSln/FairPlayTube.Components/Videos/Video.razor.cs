@@ -103,8 +103,16 @@ namespace FairPlayTube.Components.Videos
 
         private void ShowVideoPlayer()
         {
-            VideoModel.ShowPlayerWidget = true;
-            StateHasChanged();
+            if (ShowDetailsLink)
+            {
+                ViewDetails();
+
+            }
+            else
+            {
+                VideoModel.ShowPlayerWidget = true;
+                StateHasChanged();
+            }
         }
 
         private void ViewDetails()
@@ -155,9 +163,9 @@ namespace FairPlayTube.Components.Videos
         }
 
         #region Resource Keys
-        [ResourceKey(defaultValue:"Duration")]
+        [ResourceKey(defaultValue: "Duration")]
         public const string VideoDurationTextKey = "VideoDurationText";
-        [ResourceKey(defaultValue:"Description")]
+        [ResourceKey(defaultValue: "Description")]
         public const string VideoDescriptionTitleKey = "VideoDescriptionTitle";
         [ResourceKey(defaultValue: "Insights")]
         public const string InsightsTextKey = "InsightsText";
