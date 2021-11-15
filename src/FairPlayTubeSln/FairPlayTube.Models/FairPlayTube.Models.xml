@@ -39,6 +39,21 @@
             Errors
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Features.FeatureModel">
+            <summary>
+            Holds the data related to a feature
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Features.FeatureModel.Name">
+            <summary>
+            Feature's name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Features.FeatureModel.IsEnabled">
+            <summary>
+            Enabled/Disabled status for the feature
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.FileUpload.UploadResult">
             <summary>
             File upload result

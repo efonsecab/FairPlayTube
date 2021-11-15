@@ -33,7 +33,7 @@
                                 <i class="bi bi-cart-plus-fill"></i>
                             </button>
                         }
-                        @if (VideoModel.AvailableJobs > 0)
+                        @if (VideoModel.AvailableJobs > 0 && ShowAvailableJobsButton)
                         {
                             <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top"
                                     title="@( $"{Localizer[YouCouldEarnTextKey]} ${VideoModel.CombinedBudget.ToString("0.##")} " +
@@ -170,7 +170,7 @@
                                     <i class="bi bi-cart-plus-fill"></i>
                                 </button>
                             }
-                            @if (VideoModel.AvailableJobs > 0)
+                            @if (VideoModel.AvailableJobs > 0 && ShowAvailableJobsButton)
                             {
                                 <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top"
                                         title="@( $"{Localizer[YouCouldEarnTextKey]} ${VideoModel.CombinedBudget.ToString("0.##")} " +

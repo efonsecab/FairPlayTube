@@ -18,6 +18,7 @@ namespace FairPlayTube.Controllers
     /// </summary>
     [Authorize]
     [ApiController]
+    [FeatureGate(FeatureType.VideoJobSystem)]
     public class PayoutController : ControllerBase
     {
         private PayoutService PayoutService { get; }
@@ -34,7 +35,6 @@ namespace FairPlayTube.Controllers
         /// </summary>
         [HttpPost("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
-        [FeatureGate(FeatureType.VideoJobPayout)]
         public async Task<IActionResult> SendVideoJobPayment(long videoJobId, CancellationToken cancellationToken)
         {
             await this.PayoutService.SendVideoJobPaymentAsync(videoJobId, cancellationToken);

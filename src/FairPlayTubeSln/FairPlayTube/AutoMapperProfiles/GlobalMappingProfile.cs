@@ -61,8 +61,11 @@ namespace FairPlayTube.AutoMapperProfiles
                         }
                         if (source.VideoJob != null)
                         {
-                            dest.AvailableJobs = source.VideoJob.Count;
-                            dest.CombinedBudget = source.VideoJob.Sum(p => p.Budget);
+                            var availableJobs = source.VideoJob.Where(p =>
+                            p.VideoJobApplication.Any(p => p.VideoJobApplicationStatusId ==
+                            (short)Common.Global.Enums.VideoJobApplicationStatus.Selected) == false);
+                            dest.AvailableJobs = availableJobs.Count();
+                            dest.CombinedBudget = availableJobs.Sum(p => p.Budget);
                         }
                     }
                     if (source.VisitorTracking != null)

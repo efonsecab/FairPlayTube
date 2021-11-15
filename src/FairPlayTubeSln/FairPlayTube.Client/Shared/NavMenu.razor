@@ -1,4 +1,6 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@using FairPlayTube.ClientServices
+@using FairPlayTube.Models.Features
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">
         FairPlayTube<br />
         <small>Beta</small>
@@ -15,11 +17,14 @@
                 <i class="bi bi-house-door-fill"></i>
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="@Common.Global.Constants.PublicVideosPages.VideosJobs" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[VideosJobsTextKey]">
-                <i class="bi bi-person-workspace"></i>
-            </NavLink>
-        </li>
+        @if ((FeatureClientService.IsFeatureEnabled(FeatureType.VideoJobSystem)))
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="@Common.Global.Constants.PublicVideosPages.VideosJobs" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[VideosJobsTextKey]">
+                    <i class="bi bi-person-workspace"></i>
+                </NavLink>
+            </li>
+        }
         <AuthorizeView Roles="@Common.Global.Constants.Roles.Admin">
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="@Common.Global.Constants.AdminPagesRoutes.Errors" data-bs-toggle="tooltip" data-bs-placement="top" title="Errors">
@@ -34,11 +39,14 @@
                         <i class="bi bi-cloud-upload-fill"></i>
                     </NavLink>
                 </li>
-                <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.ReceivedApplications" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[ReceivedApplicationsTextKey]">
-                        <i class="bi bi-list-task"></i>
-                    </NavLink>
-                </li>
+                @if ((FeatureClientService.IsFeatureEnabled(FeatureType.VideoJobSystem)))
+                {
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.ReceivedApplications" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[ReceivedApplicationsTextKey]">
+                            <i class="bi bi-list-task"></i>
+                        </NavLink>
+                    </li>
+                }
                 <li class="nav-item px-3">
                     <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.MyPlaylists" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[MyPlaylistsTextKey]">
                         <i class="bi bi-list-ol"></i>
@@ -117,15 +125,21 @@
 @code {
     [Inject]
     private IStringLocalizer<NavMenu> Localizer { get; set; }
+    [Inject]
+    private FeatureClientService FeatureClientService { get; set; }
     private bool collapseNavMenu = true;
-
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private FeatureModel[] AllFeatures { get; set; }
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
 
+    protected override async Task OnInitializedAsync()
+    {
+        await FeatureClientService.LoadAllFeaturesAsync();
+    }
 
     #region Resource Keys
     [ResourceKey(defaultValue: "Home")]

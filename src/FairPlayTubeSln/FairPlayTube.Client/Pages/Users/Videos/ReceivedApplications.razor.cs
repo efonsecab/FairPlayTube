@@ -20,12 +20,19 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         private ToastifyService ToastifyService { get; set; }
         [Inject]
         private IStringLocalizer<ReceivedApplications> Localizer { get; set; }
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
         private VideoJobApplicationModel[] VideoJobApplications { get; set; }
         private bool IsLoading { get; set; }
         protected override async Task OnInitializedAsync()
         {
             try
             {
+                if (!FeatureClientService.IsFeatureEnabled(Common.Global.Enums.FeatureType.VideoJobSystem))
+                {
+                    NavigationManager.NavigateTo("/");
+                    return;
+                }
                 IsLoading = true;
                 this.VideoJobApplications = await this.VideoJobApplicationClientService
                     .GetNewReceivedVideoJobApplicationsAsync();

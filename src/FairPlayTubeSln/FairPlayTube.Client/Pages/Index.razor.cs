@@ -34,6 +34,7 @@ namespace FairPlayTube.Client.Pages
         [Inject]
         private IJSRuntime JSRuntime { get; set; }
         private bool IsLoading { get; set; }
+        private bool ShowAvailableJobsButton { get; set; }
         private bool AllowDownload { get; set; } = false;
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -53,6 +54,7 @@ namespace FairPlayTube.Client.Pages
             try
             {
                 IsLoading = true;
+                ShowAvailableJobsButton = FeatureClientService.IsFeatureEnabled(Common.Global.Enums.FeatureType.VideoJobSystem);
                 var state = await this.AuthenticationStateTask;
                 //if (state.User.Identity.IsAuthenticated)
                 //{
