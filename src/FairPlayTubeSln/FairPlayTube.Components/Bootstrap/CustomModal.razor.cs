@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FairPlayTube.Components.Bootstrap
 {
-    public partial class Modal
+    public partial class CustomModal
     {
         [Parameter]
         public RenderFragment Title { get; set; }

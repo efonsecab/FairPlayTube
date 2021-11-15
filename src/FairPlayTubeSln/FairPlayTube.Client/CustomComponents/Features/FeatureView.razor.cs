@@ -10,6 +10,7 @@ namespace FairPlayTube.Client.CustomComponents.Features
         [Parameter]
         public RenderFragment FeatureDisabled { get; set; }
         [Parameter]
+        [EditorRequired]
         public FeatureType FeatureType { get; set; }
     }
 }

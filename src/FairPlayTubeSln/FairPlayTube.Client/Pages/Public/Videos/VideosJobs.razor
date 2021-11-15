@@ -1,7 +1,7 @@
 ﻿@using Models.Video
 @using FairPlayTube.Models.VideoJobApplications
 
-<FeatureView>
+<FeatureView FeatureType="FeatureType.VideoJobSystem">
     <FeatureEnabled>
         <h3>@Localizer[VideosJobsTitleTextKey]</h3>
 
@@ -43,9 +43,7 @@
                                                                   ShowYouTubeVideosLink="false"
                                                                   AllowEdit="false"
                                                                   VideoModel="@singleJob.VideoInfo"
-                                                                  ShowAvailableJobsButton="false"
-                                                                  ></FairPlayTube.Components.Videos.Video
-                                                                  >
+                                                                  ShowAvailableJobsButton="false"></FairPlayTube.Components.Videos.Video>
                                 </CardBody>
                                 <CardFooter>
                                     @( DisplayHelper.DisplayFor<VideoJobModel>(p => p.Budget) ): @singleJob.Budget
@@ -60,9 +58,9 @@
             @if (this.ShowApplyToVideoJobModal)
             {
 
-                <Modal CloseButtonText="Cancel" OkButtonText="@Localizer[SubmitTextKey]"
-               OnCloseButtonClicked="CancelVideoJobApplication"
-               OnOkButtonClicked="ApplyToVideoJob">
+                <CustomModal CloseButtonText="Cancel" OkButtonText="@Localizer[SubmitTextKey]"
+                     OnCloseButtonClicked="CancelVideoJobApplication"
+                     OnOkButtonClicked="ApplyToVideoJob">
                     <Title>
                         @this.SelectdVideoJob.Title
                     </Title>
@@ -81,7 +79,7 @@
                             </div>
                         </EditForm>
                     </Content>
-                </Modal>
+                </CustomModal>
             }
         }
 

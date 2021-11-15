@@ -95,11 +95,11 @@
         </div>
         @if (ShowCultureSelector)
         {
-            <Modal OnCloseButtonClicked="HideCultureSelector" ShowFooter="false">
+            <CustomModal OnCloseButtonClicked="HideCultureSelector" ShowFooter="false">
                 <Content>
                     <CultureSelector></CultureSelector>
                 </Content>
-            </Modal>
+            </CustomModal>
 
         }
         <BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.TopRight"
