@@ -27,6 +27,8 @@ namespace FairPlayTube.Client.Pages.Public.Videos
         private IStringLocalizer<VideosJobs> Localizer { get; set; }
         [Inject]
         private VideoJobApplicationClientService VideoJobApplicationClientService { get; set; }
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
         private bool IsLoading { get; set; }
         private VideoJobModel[] AvailableVideosJobs { get; set; }
         private CreateVideoJobApplicationModel CreateVideoJobApplicationModel { get; set; } =
@@ -38,6 +40,11 @@ namespace FairPlayTube.Client.Pages.Public.Videos
 
         protected override async Task OnInitializedAsync()
         {
+            if (!FeatureClientService.IsFeatureEnabled(Common.Global.Enums.FeatureType.VideoJobSystem))
+            {
+                NavigationManager.NavigateTo("/");
+                return;
+            }
             try
             {
                 IsLoading = true;

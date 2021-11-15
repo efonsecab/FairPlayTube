@@ -35,6 +35,11 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         {
             try
             {
+                if (!FeatureClientService.IsFeatureEnabled(Common.Global.Enums.FeatureType.VideoJobSystem))
+                {
+                    NavigationManager.NavigateTo("/");
+                    return;
+                }
                 this.VideoJobModel.VideoId = VideoId;
                 IsLoading = true;
                 this.VideoModel = await VideoClientService.GetVideoAsync(VideoId);
