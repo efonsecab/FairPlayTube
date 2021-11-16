@@ -86,6 +86,7 @@
             public const string InviteUser = "/Users/InviteUser";
             public const string MyPlaylists = "/Users/VideoPlaylists/MyPlaylists";
             public const string ReceivedApplications = "/Users/Videos/ReceivedApplications";
+            public const string MyProfile = "/Users/Profile/MyProfile";
         }
 
         public class RootPagesRoutes

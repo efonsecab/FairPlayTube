@@ -1,0 +1,73 @@
+﻿@using FairPlayTube.Models.UserProfile
+<h3>@Localizer[MyProfileTitleTextKey]</h3>
+
+<Loading IsLoading="IsLoading"></Loading>
+
+<div class="container">
+    <EditForm Model="UpdateUserProfileModel" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+        <div class="mb-3">
+            <label class="form-label">
+                <strong>
+                    @(DisplayHelper.DisplayFor<UpdateUserProfileModel>(p=>p.About))
+                </strong>
+            </label>
+            <InputTextArea class="form-control" @bind-Value="UpdateUserProfileModel.About"
+                           rows="4" cols="50"
+                           maxlength="@(DisplayHelper.MaxLengthFor<UpdateUserProfileModel>(p=>p.About))"></InputTextArea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">
+                <strong>
+                    @(DisplayHelper.DisplayFor<UpdateUserProfileModel>(p=>p.Topics))
+                </strong>
+            </label>
+            <InputTextArea class="form-control" @bind-Value="UpdateUserProfileModel.Topics"
+                           rows="4" cols="50"
+                           maxlength="@(DisplayHelper.MaxLengthFor<UpdateUserProfileModel>(p=>p.Topics))"></InputTextArea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">
+                <strong>
+                    @(DisplayHelper.DisplayFor<UpdateUserProfileModel>(p=>p.DisplayAlias))
+                </strong>
+            </label>
+            <InputText class="form-control" @bind-Value="UpdateUserProfileModel.DisplayAlias"
+                       maxlength="@(DisplayHelper.MaxLengthFor<UpdateUserProfileModel>(p=>p.DisplayAlias))"></InputText>
+        </div>
+        <div class="mb-3">
+            <label class="form-form-label">
+                <strong>
+
+                    @(DisplayHelper.DisplayFor<UpdateUserProfileModel>(p=>p.PaypalEmailAddress))
+                </strong>
+            </label>
+            <InputText class="form-control" @bind-Value="@UpdateUserProfileModel.PaypalEmailAddress"
+                       maxlength="@(DisplayHelper.MaxLengthFor<UpdateUserProfileModel>(p=>p.PaypalEmailAddress))"></InputText>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">
+                <strong>
+                    @(DisplayHelper.DisplayFor<UpdateUserProfileModel>(p=>p.NationalIdNumber))
+                </strong>
+            </label>
+            <InputText class="form-control" @bind-Value="UpdateUserProfileModel.NationalIdNumber"
+                       maxlength="@(DisplayHelper.MaxLengthFor<UpdateUserProfileModel>(p=>p.NationalIdNumber))"></InputText>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">
+                <strong>
+                    @(DisplayHelper.DisplayFor<UpdateUserProfileModel>(p=>p.Nationality))
+                </strong>
+            </label>
+            <InputText class="form-control" @bind-Value="UpdateUserProfileModel.Nationality"
+                       maxlength="@(DisplayHelper.MaxLengthFor<UpdateUserProfileModel>(p=>p.Nationality))"></InputText>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary" type="submit" disabled>
+                @Localizer[SubmitTextKey]
+            </button>
+        </div>
+    </EditForm>
+</div>

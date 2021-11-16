@@ -18,6 +18,12 @@
                     </label>
                 </li>
                 <li>
+                    <button class="btn btn-info form-control" @onclick="NavigateToProfileEdit">
+                        <i class="bi bi-person-bounding-box"></i>
+                        @Localizer[ProfileTextKey]
+                    </button>
+                </li>
+                <li>
                     <button class="btn btn-info form-control" @onclick="BeginLogout">
                         <i class="bi bi-person-circle"></i>
                         @Localizer[LogoutTextKey]
@@ -59,6 +65,11 @@
         this.NavigationManager.NavigateTo("authentication/login");
     }
 
+    private void NavigateToProfileEdit()
+    {
+        this.NavigationManager.NavigateTo(Common.Global.Constants.UserPagesRoutes.MyProfile);
+    }
+
     #region Resource Keys
     [ResourceKey(defaultValue: "Sign In")]
     public const string SignInTextKey = "SignInText";
@@ -66,5 +77,7 @@
     public const string SignUpTextKey = "SignUpText";
     [ResourceKey(defaultValue: "Logout")]
     public const string LogoutTextKey = "LogoutText";
+    [ResourceKey(defaultValue: "Profile")]
+    public const string ProfileTextKey = "ProfileText";
     #endregion Resource Keys
 }
