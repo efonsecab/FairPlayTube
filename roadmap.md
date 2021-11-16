@@ -1,15 +1,15 @@
 # FairPlayTube Roadmap
 
 * August 2021
-  * [ ] Video Jobs Board System
-  * [ ] Video Comments System
+  * [x] Video Jobs Board System 
+  * [x] Video Comments System
 * September 2021
-  * [ ] Messaging System
-  * [ ] Video Rating System
+  * [x] Messaging System
+  * [ ] Video Rating System (Delayed)
 * November 2021
   * **Release 1.0**
 * December 2021
-  * [ ] .NET 6 version branch
+  * [x] .NET 6 version branch (Fully migrated)
 * January 2022
    * [ ] Improvement Feedback System
    * [ ] Points System
