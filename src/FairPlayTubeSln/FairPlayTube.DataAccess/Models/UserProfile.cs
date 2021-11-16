@@ -17,16 +17,15 @@ namespace FairPlayTube.DataAccess.Models
         public long ApplicationUserId { get; set; }
         public long UserVerificationStatusId { get; set; }
         [Required]
-        [StringLength(100)]
+        [StringLength(1000)]
         public string About { get; set; }
         [Required]
-        [StringLength(100)]
+        [StringLength(1000)]
         public string Topics { get; set; }
-        [Required]
         [StringLength(20)]
         public string Nationality { get; set; }
-        public int NationalIdNumber { get; set; }
-        [Required]
+        [StringLength(50)]
+        public string NationalIdNumber { get; set; }
         [StringLength(200)]
         public string NationalIdPhotoUrl { get; set; }
         [StringLength(100)]

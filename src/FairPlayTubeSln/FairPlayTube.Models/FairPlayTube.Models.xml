@@ -844,6 +844,206 @@
             Url of the Monetization Item
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer">
+            <summary>
+            Holds the logic required to retrieve the localized values for <see cref="T:FairPlayTube.Models.UserProfile.UpdateUserProfileModel"/>
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.Localizer">
+            <summary>
+            Types localized to retrieve the loccalized messages
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.AboutDisplayName">
+            <summary>
+            Retrieves the localized display name for About field
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.AliasDisplayName">
+            <summary>
+            Retrieves the localized display name for Alias field
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.AliasTooLong">
+            <summary>
+            Retrieves the Alias too long localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.PaypalEmailAddressDisplayName">
+            <summary>
+            Retrieves the localized display name for Paypal Email Address field
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.NationalIdNumberDisplayName">
+            <summary>
+            Retrieves the localized display name for National Id field
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.PaypalEmailAddressFormatError">
+            <summary>
+            Retrieves the localized error message for invalid email address format in Paypal Email Address field
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.AboutRequired">
+            <summary>
+            Retrieves about required localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.AboutTooLong">
+            <summary>
+            Retrieves about too long localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.TopicsRequired">
+            <summary>
+            Retrieves Topics required localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.TopicsTooLong">
+            <summary>
+            Retrieves the Topics too long localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.TopicsDisplayName">
+            <summary>
+            Retrieves the localized display name for Topics field
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.NationalityRequired">
+            <summary>
+            Retrieves the nationality required localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.NationalityTooLong">
+            <summary>
+            Retrieves the nationality too long localized message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.NationalityDisplayName">
+            <summary>
+            Retrieves the localized display name for Nationality field
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.NationalIdTooLong">
+            <summary>
+            Retrieives the National Id too long localized message
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.AboutDisplayNameTextKey">
+            <summary>
+            Resource key for About Display Name
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.AliasDisplayNameTextKey">
+            <summary>
+            Resource key for Alias Display Name
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.AliasTooLongTextKey">
+            <summary>
+            Resource key for Alias too long
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.PaypalEmailAddressDisplayNameTextKey">
+            <summary>
+            Resource key for Paypal Email Address Display Name
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.NationalIdNumberDisplayNameTextKey">
+            <summary>
+            Resource key for National Id NumberDisplay Name
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.PaypalEmailAddressFormatErrorTextKey">
+            <summary>
+            Resource key for invalid format in Paypal Email Address
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.AboutRequiredTextKey">
+            <summary>
+            Resource key for About required
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.AboutTooLongTextKey">
+            <summary>
+            Resource key for About too long
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.TopicsRequiredTextKey">
+            <summary>
+            Resource key for Topics required
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.TopicsTooLongTextKey">
+            <summary>
+            Resource keky for Topics too long
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.TopicsDisplayNameTextKey">
+            <summary>
+            Resource key for Topics Display Name
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.NationalityRequiredTextKey">
+            <summary>
+            Resource key for Nationalitiy required
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.NationalityTooLongTextKey">
+            <summary>
+            Resoure key for Nationality too long
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.NationalityDisplayNameTextKey">
+            <summary>
+            Resource key for Nationality dsplay name
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.NationalIdTooLongTextKey">
+            <summary>
+            Resource keky for National Id too long
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.UserProfile.UpdateUserProfileModel">
+            <summary>
+            Holds the data related to a user's profile
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.UpdateUserProfileModel.About">
+            <summary>
+            Information about the user
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.UpdateUserProfileModel.Topics">
+            <summary>
+            Topics the user likes
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.UpdateUserProfileModel.Nationality">
+            <summary>
+            User's nationality
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.UpdateUserProfileModel.NationalIdNumber">
+            <summary>
+            User's National Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.UpdateUserProfileModel.NationalIdPhotoUrl">
+            <summary>
+            User's National Id Photo
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.UpdateUserProfileModel.DisplayAlias">
+            <summary>
+            Alias the user want to be displayed as within the system
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserProfile.UpdateUserProfileModel.PaypalEmailAddress">
+            <summary>
+            User paypal email address, used for payouts
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.UserProfile.UserModel">
             <summary>
             Represents the User entry
