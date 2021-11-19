@@ -98,6 +98,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[UserRequest]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[UserRequestType]",
          "ObjectType": 0
       },

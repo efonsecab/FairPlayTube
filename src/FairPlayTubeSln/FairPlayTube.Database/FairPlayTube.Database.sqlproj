@@ -104,6 +104,7 @@
     <Build Include="dbo\Tables\VideoJobApplicationStatus.sql" />
     <Build Include="dbo\Tables\VideoJobEscrow.sql" />
     <Build Include="dbo\Tables\UserRequestType.sql" />
+    <Build Include="dbo\Tables\UserRequest.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

@@ -40,6 +40,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<UserInvitation> UserInvitation { get; set; }
         public virtual DbSet<UserMessage> UserMessage { get; set; }
         public virtual DbSet<UserProfile> UserProfile { get; set; }
+        public virtual DbSet<UserRequest> UserRequest { get; set; }
         public virtual DbSet<UserRequestType> UserRequestType { get; set; }
         public virtual DbSet<UserVerificationStatus> UserVerificationStatus { get; set; }
         public virtual DbSet<UserVideoRating> UserVideoRating { get; set; }
@@ -243,6 +244,15 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.UserVerificationStatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserProfile_VerificationStatus");
+            });
+
+            modelBuilder.Entity<UserRequest>(entity =>
+            {
+                entity.HasOne(d => d.UserRequestType)
+                    .WithMany(p => p.UserRequest)
+                    .HasForeignKey(d => d.UserRequestTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserRequest_UserRequestType");
             });
 
             modelBuilder.Entity<UserRequestType>(entity =>
