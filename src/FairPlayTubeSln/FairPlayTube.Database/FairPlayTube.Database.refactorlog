@@ -238,4 +238,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="LastTrackedDateTime" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="f0f280b0-237f-4e10-9780-60807ec9e86c" ChangeDateTime="11/19/2021 20:11:41">
+    <Property Name="ElementName" Value="[dbo].[UserRequestType].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserRequestType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserRequestTypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="670aa7a4-e761-4540-8662-8b644598d871" ChangeDateTime="11/19/2021 20:13:02">
+    <Property Name="ElementName" Value="[dbo].[UserRequestType].[RequestType]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserRequestType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Name" />
+  </Operation>
 </Operations>
