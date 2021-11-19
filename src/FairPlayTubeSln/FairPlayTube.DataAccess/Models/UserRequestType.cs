@@ -12,10 +12,18 @@ namespace FairPlayTube.DataAccess.Models
     [Index(nameof(Name), Name = "UI_UserRequestType_Name", IsUnique = true)]
     public partial class UserRequestType
     {
+        public UserRequestType()
+        {
+            UserRequest = new HashSet<UserRequest>();
+        }
+
         [Key]
         public short UserRequestTypeId { get; set; }
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
+
+        [InverseProperty("UserRequestType")]
+        public virtual ICollection<UserRequest> UserRequest { get; set; }
     }
 }
