@@ -9,6 +9,7 @@ using FairPlayTube.Common.Interfaces;
 using FairPlayTube.Components.FacebookButtons;
 using FairPlayTube.Components.GoogleAdsense;
 using FairPlayTube.Models.UserProfile.Localizers;
+using FairPlayTube.Models.UsersRequests.Localizers;
 using FairPlayTube.Models.Validations.Video;
 using FairPlayTube.Models.Validations.VideoJobApplications;
 using FairPlayTube.Models.VideoJobApplications.Localizers;
@@ -122,6 +123,9 @@ namespace FairPlayTube.Client
             UpdateUserProfileModelLocalizer.Localizer = 
                 localizerFactory.Create(typeof(UpdateUserProfileModelLocalizer))
                 as IStringLocalizer<UpdateUserProfileModelLocalizer>;
+            CreateUserRequestModelLocalizer.Localizer =
+                localizerFactory.Create(typeof(CreateUserRequestModelLocalizer))
+                as StringLocalizer<CreateUserRequestModelLocalizer>;
         }
     }
 

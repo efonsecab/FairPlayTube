@@ -17,6 +17,9 @@ namespace FairPlayTube.DataAccess.Models
         [Required]
         [StringLength(1000)]
         public string Description { get; set; }
+        [Required]
+        [StringLength(150)]
+        public string EmailAddress { get; set; }
         public long? ApplicationUserId { get; set; }
         public DateTimeOffset RowCreationDateTime { get; set; }
         [Required]

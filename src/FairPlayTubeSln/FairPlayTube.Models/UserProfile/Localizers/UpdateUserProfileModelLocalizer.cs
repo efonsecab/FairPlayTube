@@ -14,7 +14,7 @@ namespace FairPlayTube.Models.UserProfile.Localizers
     public class UpdateUserProfileModelLocalizer
     {
         /// <summary>
-        /// Types localized to retrieve the loccalized messages
+        /// Typed localizer to retrieve the localized messages
         /// </summary>
         public static IStringLocalizer<UpdateUserProfileModelLocalizer> Localizer { get; set; }
         /// <summary>
