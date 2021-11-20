@@ -11,6 +11,7 @@ using FairPlayTube.Notifications.Hubs;
 using FairPlayTube.Services;
 using FairPlayTube.Services.BackgroundServices;
 using FairPlayTube.Services.Configuration;
+using FairPlayTube.SharedConfiguration;
 using FairPlayTube.Swagger.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -287,6 +288,7 @@ namespace FairPlayTube
             services.AddTransient<TranslationService>();
             services.AddTransient<PayoutService>();
             services.AddTransient<VideoJobApplicationService>();
+            services.AddTransient<UserRequestService>();
         }
 
         private void ConfigureAzureContentModerator(IServiceCollection services)

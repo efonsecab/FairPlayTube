@@ -53,6 +53,7 @@
 		<ProjectReference Include="..\FairPlayTube.Common\FairPlayTube.Common.csproj" />
 		<ProjectReference Include="..\FairPlayTube.Components\FairPlayTube.Components.csproj" />
 		<ProjectReference Include="..\FairPlayTube.Models\FairPlayTube.Models.csproj" />
+		<ProjectReference Include="..\FairPlayTube.SharedConfiguration\FairPlayTube.SharedConfiguration.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

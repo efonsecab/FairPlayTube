@@ -35,11 +35,13 @@ namespace FairPlayTube.Services
             UserRequest userRequestEntity = new()
             {
                 Description = createUserRequestModel.Description,
-                UserRequestTypeId = (short)createUserRequestModel.UserRequestType
+                UserRequestTypeId = (short)createUserRequestModel.UserRequestType,
+                EmailAddress = createUserRequestModel.EmailAddress,
             };
             await FairplaytubeDatabaseContext.UserRequest.AddAsync(userRequestEntity, cancellationToken);
             await FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
         }
+
         public async Task AddAuthenticatedUserRequestAsync(CreateUserRequestModel createUserRequestModel,
             CancellationToken cancellationToken)
         {
@@ -53,6 +55,7 @@ namespace FairPlayTube.Services
             {
                 Description = createUserRequestModel.Description,
                 UserRequestTypeId = (short)createUserRequestModel.UserRequestType,
+                EmailAddress = createUserRequestModel.EmailAddress,
                 ApplicationUserId = userEntity.ApplicationUserId
             };
             await FairplaytubeDatabaseContext.UserRequest.AddAsync(userRequestEntity, cancellationToken);
