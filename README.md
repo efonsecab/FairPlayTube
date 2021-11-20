@@ -3,6 +3,7 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 <!-- CUSTOM-BADGES:START-->
+![](https://vistr.dev/badge?repo=efonsecab.FairPlayTube)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/efonsecab/FairPlayTube?style=flat-square)
 ![GitHub followers](https://img.shields.io/github/followers/efonsecab?style=flat-square)
 ![GitHub forks](https://img.shields.io/github/forks/efonsecab/FairPlayTube?style=flat-square)
