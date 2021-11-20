@@ -99,6 +99,7 @@ namespace FairPlayTube.Client
             builder.Services.AddTransient<VideoJobClientService>();
             builder.Services.AddTransient<VideoJobApplicationClientService>();
             builder.Services.AddTransient<FeatureClientService>();
+            builder.Services.AddTransient<UserRequestClientService>();
 
             var host = builder.Build();
             ModelsLocalizationSetup.ConfigureModelsLocalizers(host.Services);

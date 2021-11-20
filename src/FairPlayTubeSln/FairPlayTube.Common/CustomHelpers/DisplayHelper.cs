@@ -46,5 +46,33 @@ namespace FairPlayTube.Common.CustomHelpers
             var displayName = displayAttribute.GetName();
             return displayName;
         }
+
+        public static string DisplayForEnum<TModel>(Expression<Func<TModel, object>> expression)
+        {
+            try
+            {
+                ConstantExpression memberExpression = null;
+                memberExpression = expression.Body.NodeType switch
+                {
+                    //Check https://stackoverflow.com/questions/3049825/given-a-member-access-lambda-expression-convert-it-to-a-specific-string-represe
+                    ExpressionType.Convert or ExpressionType.ConvertChecked => ((expression.Body is UnaryExpression ue) ? ue.Operand : null) as ConstantExpression,
+                    _ => expression.Body as ConstantExpression,
+                };
+
+                var enumType = typeof(TModel);
+                var memberInfo = enumType.GetMember(memberExpression.Value.ToString())
+                    .Single();
+                DisplayAttribute displayAttribute = memberInfo.GetCustomAttribute<DisplayAttribute>();
+                if (displayAttribute is null)
+                    throw new CustomValidationException($"Enum value '{memberExpression.Value.ToString()}' of type " +
+                        $"'{expression.Parameters.First().Type.FullName}' does not have a {nameof(DisplayAttribute)}");
+                var displayName = displayAttribute.GetName();
+                return displayName;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

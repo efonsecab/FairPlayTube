@@ -17,16 +17,21 @@ namespace FairPlayTube.Models.UsersRequests
         /// <summary>
         /// Indicates the type of request
         /// </summary>
+        [Display(
+            Name = nameof(CreateUserRequestModelLocalizer.UserRequestTypeDisplayName),
+            ResourceType = typeof(CreateUserRequestModelLocalizer))]
         public UserRequestType UserRequestType { get; set; }
         /// <summary>
         /// The details for the request
         /// </summary>
         [Required(
-            ErrorMessageResourceName =nameof(CreateUserRequestModelLocalizer.DescriptionRequired),
-            ErrorMessageResourceType =typeof(CreateUserRequestModelLocalizer))]
+            ErrorMessageResourceName = nameof(CreateUserRequestModelLocalizer.DescriptionRequired),
+            ErrorMessageResourceType = typeof(CreateUserRequestModelLocalizer))]
         [StringLength(1000,
             ErrorMessageResourceName = nameof(CreateUserRequestModelLocalizer.DescriptionTooLong),
             ErrorMessageResourceType = typeof(CreateUserRequestModelLocalizer))]
+        [Display(Name = nameof(CreateUserRequestModelLocalizer.DescriptionDisplayName),
+            ResourceType = typeof(CreateUserRequestModelLocalizer))]
         public string Description { get; set; }
         /// <summary>
         /// User Email Address
@@ -38,8 +43,11 @@ namespace FairPlayTube.Models.UsersRequests
             ErrorMessageResourceName = nameof(CreateUserRequestModelLocalizer.EmailAddressTooLong),
             ErrorMessageResourceType = typeof(CreateUserRequestModelLocalizer))]
         [EmailAddress(
-            ErrorMessageResourceName =nameof(CreateUserRequestModelLocalizer.EmailAddressFormat),
-            ErrorMessageResourceType =typeof(CreateUserRequestModelLocalizer))]
+            ErrorMessageResourceName = nameof(CreateUserRequestModelLocalizer.EmailAddressFormat),
+            ErrorMessageResourceType = typeof(CreateUserRequestModelLocalizer))]
+        [Display(
+            Name =nameof(CreateUserRequestModelLocalizer.EmailAddressDisplayName),
+            ResourceType = typeof(CreateUserRequestModelLocalizer))]
         public string EmailAddress { get; set; }
     }
 }

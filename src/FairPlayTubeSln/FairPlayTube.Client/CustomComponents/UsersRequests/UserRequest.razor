@@ -1,0 +1,57 @@
+﻿@using FairPlayTube.Models.UsersRequests
+
+<a class="btn btn-outline-primary" style="margin:0;" @onclick="OnUserRequestIconClicked">
+    <i class="bi bi-lightbulb-fill"></i>
+</a>
+
+@if (ShowModal)
+{
+    <CustomModal OnCloseButtonClicked="@( ()=> this.ShowModal=false)" ShowFooter="false">
+        <Content>
+            <Loading IsLoading="IsLoading"></Loading>
+            <EditForm Model="CreateUserRequestModel" OnValidSubmit="OnValidSubmit">
+                <DataAnnotationsValidator></DataAnnotationsValidator>
+                <ValidationSummary></ValidationSummary>
+                <div class="mb-3">
+                    <label class="form-label">
+                        <strong>
+                            @(DisplayHelper.DisplayFor<CreateUserRequestModel>(p=>p.UserRequestType))
+                        </strong>
+                    </label>
+                    <InputRadioGroup class="form-check" @bind-Value="CreateUserRequestModel.UserRequestType">
+                        <InputRadio class="form-check-input" Value="UserRequestType.ContentRequest"></InputRadio>
+                        <label class="form-check-label">
+                            @(DisplayHelper.DisplayForEnum<UserRequestType>(p=>UserRequestType.ContentRequest))
+                        </label>
+                        <InputRadio class="form-check-input" Value="UserRequestType.FeatureRequest"></InputRadio>
+                        <label class="form-check-label">
+                            @(DisplayHelper.DisplayForEnum<UserRequestType>(p=>UserRequestType.FeatureRequest))
+                        </label>
+                    </InputRadioGroup>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">
+                        <strong>
+                            @(DisplayHelper.DisplayFor<CreateUserRequestModel>(p=>p.Description))
+                        </strong>
+                    </label>
+                    <InputTextArea class="form-control" @bind-Value="CreateUserRequestModel.Description"
+                               rows="4" cols="50"
+                               maxlength="@(DisplayHelper.MaxLengthFor<CreateUserRequestModel>(p=>p.Description))"></InputTextArea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-form-label">
+                        <strong>
+                            @(DisplayHelper.DisplayFor<CreateUserRequestModel>(p=>p.EmailAddress))
+                        </strong>
+                    </label>
+                    <InputText class="form-control" @bind-Value="@CreateUserRequestModel.EmailAddress"
+                           maxlength="@(DisplayHelper.MaxLengthFor<CreateUserRequestModel>(p=>p.EmailAddress))"></InputText>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">@Localizer[SubmitTextKey]</button>
+                </div>
+            </EditForm>
+        </Content>
+    </CustomModal>
+}

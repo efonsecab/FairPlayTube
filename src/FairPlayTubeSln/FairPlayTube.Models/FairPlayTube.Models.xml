@@ -1139,6 +1139,21 @@
             Retrieves the email address format localized value
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.UserRequestTypeDisplayName">
+            <summary>
+            Retrieves the User Request Type Display Name localized value
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.DescriptionDisplayName">
+            <summary>
+            Retrieves the Description localized display name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.EmailAddressDisplayName">
+            <summary>
+            Retrieves the Email Address localized display name
+            </summary>
+        </member>
         <member name="F:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.DescriptionRequiredTextKey">
             <summary>
             Resource keys for description required
@@ -1162,6 +1177,21 @@
         <member name="F:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.EmailAddressFormatTextKey">
             <summary>
             Resource key for email address format
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.UserRequestTypeDisplayNameTextKey">
+            <summary>
+            Resource key for user request type
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.DescriptionDisplayNameTextKey">
+            <summary>
+            Resource key for description display name
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.EmailAddressDisplayNameTextKey">
+            <summary>
+            Resource key for email address display name
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.UserYouTubeChannel.UserYouTubeChannelModel">
