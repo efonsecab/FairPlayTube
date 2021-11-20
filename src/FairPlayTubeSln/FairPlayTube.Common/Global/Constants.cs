@@ -98,6 +98,10 @@
 
         public class ApiRoutes
         {
+            public class UserRequestController
+            {
+                public const string AddAnonymousUserRequest = "api/UserRequest/AddAnonymousUserRequest";
+            }
             public class FeatureController
             {
                 public const string GetAllFeatures = "api/Feature/GetAllFeatures";

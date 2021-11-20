@@ -37,6 +37,18 @@ namespace FairPlayTube.Models.UsersRequests.Localizers
         /// Retrieves the email address format localized value
         /// </summary>
         public static string EmailAddressFormat => Localizer[EmailAddressFormatTextKey];
+        /// <summary>
+        /// Retrieves the User Request Type Display Name localized value
+        /// </summary>
+        public static string UserRequestTypeDisplayName => Localizer[UserRequestTypeDisplayNameTextKey];
+        /// <summary>
+        /// Retrieves the Description localized display name
+        /// </summary>
+        public static string DescriptionDisplayName => Localizer[DescriptionDisplayNameTextKey];
+        /// <summary>
+        /// Retrieves the Email Address localized display name
+        /// </summary>
+        public static string EmailAddressDisplayName => Localizer[EmailAddressDisplayNameTextKey];
         #region Resource Keys
         /// <summary>
         /// Resource keys for description required
@@ -63,6 +75,21 @@ namespace FairPlayTube.Models.UsersRequests.Localizers
         /// </summary>
         [ResourceKey(defaultValue:"{0} must have a valid email format")]
         public const string EmailAddressFormatTextKey = "EmailAddressFormatText";
+        /// <summary>
+        /// Resource key for user request type
+        /// </summary>
+        [ResourceKey(defaultValue:"Request Type")]
+        public const string UserRequestTypeDisplayNameTextKey = "UserRequestTypeDisplayNameText";
+        /// <summary>
+        /// Resource key for description display name
+        /// </summary>
+        [ResourceKey(defaultValue:"Description")]
+        public const string DescriptionDisplayNameTextKey = "DescriptionDisplayNameText";
+        /// <summary>
+        /// Resource key for email address display name
+        /// </summary>
+        [ResourceKey(defaultValue:"Email Address")]
+        public const string EmailAddressDisplayNameTextKey = "EmailAddressDisplayNameText";
         #endregion Resource Keys
     }
 }
