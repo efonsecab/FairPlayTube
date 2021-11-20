@@ -144,6 +144,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:FairPlayTube.CustomProviders.CurrentUserProvider.IsLoggedIn">
+            <summary>
+            Verifies if users is Logged In
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.GatedFeatures.FeatureFilters.PaidFeatureFilter">
             <summary>
             

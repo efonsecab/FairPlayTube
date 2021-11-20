@@ -1084,6 +1084,21 @@
             Available Funds for the user
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.UsersRequests.CreateUserRequestModel">
+            <summary>
+            Holds the data to create a user request
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UsersRequests.CreateUserRequestModel.UserRequestType">
+            <summary>
+            Indicates the type of request
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UsersRequests.CreateUserRequestModel.Description">
+            <summary>
+            The details for the request
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.UserYouTubeChannel.UserYouTubeChannelModel">
             <summary>
             Holds the data related to a users YouTube channels

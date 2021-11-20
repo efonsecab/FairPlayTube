@@ -47,5 +47,15 @@ namespace FairPlayTube.CustomProviders
             var user = this.HttpContextAccessor.HttpContext.User;
             return user.Claims.Single(p => p.Type == Common.Global.Constants.Claims.ObjectIdentifier).Value;
         }
+
+        /// <summary>
+        /// Verifies if users is Logged In
+        /// </summary>
+        /// <returns></returns>
+        public bool IsLoggedIn()
+        {
+            return (this.HttpContextAccessor.HttpContext.User != null &&
+                this.HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated);
+        }
     }
 }
