@@ -441,6 +441,7 @@ namespace FairPlayTube
                             }
                             problemHttpResponse.Detail = userVisibleError;
                         }
+                        problemHttpResponse.Status = (int)System.Net.HttpStatusCode.BadRequest;
                         await context.Response.WriteAsJsonAsync<ProblemHttpResponse>(problemHttpResponse);
                     }
                 });
