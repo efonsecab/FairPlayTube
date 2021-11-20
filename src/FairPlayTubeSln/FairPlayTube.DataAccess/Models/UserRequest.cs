@@ -17,6 +17,7 @@ namespace FairPlayTube.DataAccess.Models
         [Required]
         [StringLength(1000)]
         public string Description { get; set; }
+        public long? ApplicationUserId { get; set; }
         public DateTimeOffset RowCreationDateTime { get; set; }
         [Required]
         [StringLength(256)]
@@ -29,6 +30,9 @@ namespace FairPlayTube.DataAccess.Models
         [StringLength(100)]
         public string OriginatorIpaddress { get; set; }
 
+        [ForeignKey(nameof(ApplicationUserId))]
+        [InverseProperty("UserRequest")]
+        public virtual ApplicationUser ApplicationUser { get; set; }
         [ForeignKey(nameof(UserRequestTypeId))]
         [InverseProperty("UserRequest")]
         public virtual UserRequestType UserRequestType { get; set; }

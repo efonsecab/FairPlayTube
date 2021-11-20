@@ -248,6 +248,11 @@ namespace FairPlayTube.DataAccess.Data
 
             modelBuilder.Entity<UserRequest>(entity =>
             {
+                entity.HasOne(d => d.ApplicationUser)
+                    .WithMany(p => p.UserRequest)
+                    .HasForeignKey(d => d.ApplicationUserId)
+                    .HasConstraintName("FK_UserRequest_ApplicationUser");
+
                 entity.HasOne(d => d.UserRequestType)
                     .WithMany(p => p.UserRequest)
                     .HasForeignKey(d => d.UserRequestTypeId)

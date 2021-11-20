@@ -4,5 +4,6 @@
     {
         string GetUsername();
         string GetObjectId();
+        bool IsLoggedIn();
     }
 }
