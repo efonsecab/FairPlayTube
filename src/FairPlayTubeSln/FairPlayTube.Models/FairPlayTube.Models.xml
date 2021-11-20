@@ -851,7 +851,7 @@
         </member>
         <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.Localizer">
             <summary>
-            Types localized to retrieve the loccalized messages
+            Typed localizer to retrieve the localized messages
             </summary>
         </member>
         <member name="P:FairPlayTube.Models.UserProfile.Localizers.UpdateUserProfileModelLocalizer.AboutDisplayName">
@@ -1097,6 +1097,71 @@
         <member name="P:FairPlayTube.Models.UsersRequests.CreateUserRequestModel.Description">
             <summary>
             The details for the request
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UsersRequests.CreateUserRequestModel.EmailAddress">
+            <summary>
+            User Email Address
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer">
+            <summary>
+            Holds the logic required to retrieve the localized values for <see cref="T:FairPlayTube.Models.UsersRequests.CreateUserRequestModel"/>
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.Localizer">
+            <summary>
+            Typed localizer to retrieve the localized messages
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.DescriptionRequired">
+            <summary>
+            Retrieves the description required localized value
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.DescriptionTooLong">
+            <summary>
+            Retrieves the description too long localized value
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.EmailAddressRequired">
+            <summary>
+            Retrieves the email address required localized value
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.EmailAddressTooLong">
+            <summary>
+            Retrieves the email address too long localized value
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.EmailAddressFormat">
+            <summary>
+            Retrieves the email address format localized value
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.DescriptionRequiredTextKey">
+            <summary>
+            Resource keys for description required
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.DescriptionTooLongTextKey">
+            <summary>
+            Resource key for description too long
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.EmailAddressRequiredTextKey">
+            <summary>
+            Resource key for email address required
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.EmailAddressTooLongTextKey">
+            <summary>
+            Resource key for email address too long
+            </summary>
+        </member>
+        <member name="F:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.EmailAddressFormatTextKey">
+            <summary>
+            Resource key for email address format
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.UserYouTubeChannel.UserYouTubeChannelModel">

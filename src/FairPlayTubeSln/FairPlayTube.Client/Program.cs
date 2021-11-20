@@ -9,9 +9,11 @@ using FairPlayTube.Common.Interfaces;
 using FairPlayTube.Components.FacebookButtons;
 using FairPlayTube.Components.GoogleAdsense;
 using FairPlayTube.Models.UserProfile.Localizers;
+using FairPlayTube.Models.UsersRequests.Localizers;
 using FairPlayTube.Models.Validations.Video;
 using FairPlayTube.Models.Validations.VideoJobApplications;
 using FairPlayTube.Models.VideoJobApplications.Localizers;
+using FairPlayTube.SharedConfiguration;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -99,29 +101,9 @@ namespace FairPlayTube.Client
             builder.Services.AddTransient<FeatureClientService>();
 
             var host = builder.Build();
-            ConfigureModelsLocalizers(host.Services);
+            ModelsLocalizationSetup.ConfigureModelsLocalizers(host.Services);
             await host.SetDefaultCulture();
             await host.RunAsync();
-        }
-
-        public static void ConfigureModelsLocalizers(IServiceProvider services)
-        {
-            var localizerFactory = services.GetRequiredService<IStringLocalizerFactory>();
-            UploadVideoModelLocalizer.Localizer =
-                localizerFactory.Create(typeof(UploadVideoModelLocalizer))
-                as IStringLocalizer<UploadVideoModelLocalizer>;
-            VideoJobModelLocalizer.Localizer =
-                localizerFactory.Create(typeof(VideoJobModelLocalizer)) 
-                as IStringLocalizer<VideoJobModelLocalizer>;
-            CreateVideoJobApplicationLocalizer.Localizer =
-                localizerFactory.Create(typeof(CreateVideoJobApplicationLocalizer))
-                as IStringLocalizer<CreateVideoJobApplicationLocalizer>;
-            VideoJobApplicationLocalizer.Localizer =
-                localizerFactory.Create(typeof(VideoJobApplicationLocalizer))
-                as IStringLocalizer<VideoJobApplicationLocalizer>;
-            UpdateUserProfileModelLocalizer.Localizer = 
-                localizerFactory.Create(typeof(UpdateUserProfileModelLocalizer))
-                as IStringLocalizer<UpdateUserProfileModelLocalizer>;
         }
     }
 

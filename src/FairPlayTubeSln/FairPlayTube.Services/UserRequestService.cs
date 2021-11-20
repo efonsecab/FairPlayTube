@@ -29,32 +29,41 @@ namespace FairPlayTube.Services
             CurrentUserProvider = currentUserProvider;
         }
 
-        public async Task AddUserRequestAsync(CreateUserRequestModel createUserRequestModel,
+        public async Task AddAnonymousUserRequestAsync(CreateUserRequestModel createUserRequestModel,
             CancellationToken cancellationToken)
         {
-            long? applicationUserId = null;
-            if (this.CurrentUserProvider.IsLoggedIn())
-            {
-                var userObjectId = this.CurrentUserProvider.GetObjectId();
-                var userEntity = await this.FairplaytubeDatabaseContext
-                    .ApplicationUser.SingleAsync(p => p.AzureAdB2cobjectId.ToString() == userObjectId,
-                    cancellationToken);
-                if (userEntity is null)
-                    throw new CustomValidationException(Localizer[UserNotFoundTextKey]);
-                applicationUserId = userEntity.ApplicationUserId;
-            }
             UserRequest userRequestEntity = new()
             {
                 Description = createUserRequestModel.Description,
                 UserRequestTypeId = (short)createUserRequestModel.UserRequestType,
-                ApplicationUserId = applicationUserId
+                EmailAddress = createUserRequestModel.EmailAddress,
+            };
+            await FairplaytubeDatabaseContext.UserRequest.AddAsync(userRequestEntity, cancellationToken);
+            await FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task AddAuthenticatedUserRequestAsync(CreateUserRequestModel createUserRequestModel,
+            CancellationToken cancellationToken)
+        {
+            var userObjectId = this.CurrentUserProvider.GetObjectId();
+            var userEntity = await this.FairplaytubeDatabaseContext
+                .ApplicationUser.SingleAsync(p => p.AzureAdB2cobjectId.ToString() == userObjectId,
+                cancellationToken);
+            if (userEntity is null)
+                throw new CustomValidationException(Localizer[UserNotFoundTextKey]);
+            UserRequest userRequestEntity = new()
+            {
+                Description = createUserRequestModel.Description,
+                UserRequestTypeId = (short)createUserRequestModel.UserRequestType,
+                EmailAddress = createUserRequestModel.EmailAddress,
+                ApplicationUserId = userEntity.ApplicationUserId
             };
             await FairplaytubeDatabaseContext.UserRequest.AddAsync(userRequestEntity, cancellationToken);
             await FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
         }
 
         #region Resource Keys
-        [ResourceKey(defaultValue:"User not found")]
+        [ResourceKey(defaultValue: "User not found")]
         private const string UserNotFoundTextKey = "UserNotFoundText";
         #endregion Resource Keys
     }

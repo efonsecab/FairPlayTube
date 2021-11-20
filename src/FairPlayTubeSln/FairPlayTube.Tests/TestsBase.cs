@@ -18,6 +18,7 @@ using Microsoft.Extensions.Http;
 using FairPlayTube.ClientServices;
 using System.Threading;
 using FairPlayTube.Common.CustomExceptions;
+using FairPlayTube.SharedConfiguration;
 
 namespace FairPlayTube.Tests
 {
@@ -67,7 +68,7 @@ namespace FairPlayTube.Tests
                 .UseConfiguration(configuration)
                 .UseStartup<Startup>();
             Server = new TestServer(builder);
-            Client.Program.ConfigureModelsLocalizers(Server.Services);
+            ModelsLocalizationSetup.ConfigureModelsLocalizers(Server.Services);
             Configuration = Server.Services.GetRequiredService<IConfiguration>();
             this.Mapper = Server.Services.GetRequiredService<IMapper>();
             DataStorageConfiguration = Server.Services.GetRequiredService<DataStorageConfiguration>();

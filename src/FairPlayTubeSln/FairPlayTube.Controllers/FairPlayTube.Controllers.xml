@@ -285,6 +285,33 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.UserRequestController">
+            <summary>
+            Handles all of the data regarding User Requests
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserRequestController.#ctor(FairPlayTube.Services.UserRequestService)">
+            <summary>
+            Instantiates <see cref="T:FairPlayTube.Controllers.UserRequestController"/>
+            </summary>
+            <param name="userRequestService"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserRequestController.AddAnonymousUserRequestAsync(FairPlayTube.Models.UsersRequests.CreateUserRequestModel,System.Threading.CancellationToken)">
+            <summary>
+            Adds information for User Requests from non-logged in users
+            </summary>
+            <param name="createUserRequestModel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserRequestController.AddAuthenticatedUserRequestAsync(FairPlayTube.Models.UsersRequests.CreateUserRequestModel,System.Threading.CancellationToken)">
+            <summary>
+            Adds information for User Requests from non-logged in users
+            </summary>
+            <param name="createUserRequestModel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.UserYouTubeChannelController">
             <summary>
             Handles all of the dat regarding users YouTube channels
