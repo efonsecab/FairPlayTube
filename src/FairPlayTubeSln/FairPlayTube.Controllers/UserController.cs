@@ -118,9 +118,12 @@ namespace FairPlayTube.Controllers
             completeBody.AppendLine($"Once you are on the website you can create your account using the Sign up link." +
                 $"Your invite code is: {userInvitation.InviteCode}");
             completeBody.AppendLine(link);
-            await this.EmailService.SendEmailAsync(inviteUserModel.ToEmailAddress, $"{userName} is inviting you to " +
+            await this.EmailService.SendEmailAsync(
+                toEmailAddress: inviteUserModel.ToEmailAddress,
+                subject: $"{userName} is inviting you to " +
                 $"FairPlayTube: The Next Generation Of Video Sharing Portals.",
-                completeBody.ToString(), true);
+                body: completeBody.ToString(), isBodyHtml: true,
+                cancellationToken: cancellationToken);
         }
 
         /// <summary>

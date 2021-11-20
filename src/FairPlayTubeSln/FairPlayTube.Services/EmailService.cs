@@ -1,5 +1,6 @@
 ﻿using FairPlayTube.Services.Configuration;
 using System.Net.Mail;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FairPlayTube.Services
@@ -13,7 +14,7 @@ namespace FairPlayTube.Services
         }
 
         public async Task SendEmailAsync(string toEmailAddress, string subject, string body,
-            bool isBodyHtml)
+            bool isBodyHtml, CancellationToken cancellationToken)
         {
             MailMessage msg = new();
             msg.To.Add(new MailAddress(toEmailAddress));
@@ -30,7 +31,7 @@ namespace FairPlayTube.Services
             client.Host = this.SmtpConfiguration.Server;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.EnableSsl = true;
-            await client.SendMailAsync(msg).ConfigureAwait(continueOnCapturedContext: true);
+            await client.SendMailAsync(msg, cancellationToken).ConfigureAwait(continueOnCapturedContext: true);
         }
     }
 }

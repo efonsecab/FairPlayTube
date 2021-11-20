@@ -119,7 +119,7 @@ namespace FairPlayTube.Services
                 applicantUserEntity.EmailAddress,
                 subject: Localizer[ApprovedApplicationEmailSubjectTextKey],
                 body: message,
-                isBodyHtml: true);
+                isBodyHtml: true, cancellationToken:cancellationToken);
         }
 
         public IQueryable<VideoJobApplication> GetNewReceivedVideoJobApplications()
