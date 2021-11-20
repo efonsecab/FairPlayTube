@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Models.UserProfile.Localizers;
+﻿using FairPlayTube.Common.Global.Enums.Localizers;
+using FairPlayTube.Models.UserProfile.Localizers;
 using FairPlayTube.Models.UsersRequests.Localizers;
 using FairPlayTube.Models.Validations.Video;
 using FairPlayTube.Models.Validations.VideoJobApplications;
@@ -31,6 +32,9 @@ namespace FairPlayTube.SharedConfiguration
             CreateUserRequestModelLocalizer.Localizer =
                 localizerFactory.Create(typeof(CreateUserRequestModelLocalizer))
                 as IStringLocalizer<CreateUserRequestModelLocalizer>;
+            UserRequestTypeLocalizer.Localizer =
+                localizerFactory.Create(typeof(UserRequestTypeLocalizer))
+                as IStringLocalizer<UserRequestTypeLocalizer>;
         }
     }
 }

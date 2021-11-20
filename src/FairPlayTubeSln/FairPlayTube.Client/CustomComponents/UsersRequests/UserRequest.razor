@@ -18,11 +18,14 @@
                             @(DisplayHelper.DisplayFor<CreateUserRequestModel>(p=>p.UserRequestType))
                         </strong>
                     </label>
+                </div>
+                <div class="mb-3">
                     <InputRadioGroup class="form-check" @bind-Value="CreateUserRequestModel.UserRequestType">
                         <InputRadio class="form-check-input" Value="UserRequestType.ContentRequest"></InputRadio>
                         <label class="form-check-label">
                             @(DisplayHelper.DisplayForEnum<UserRequestType>(p=>UserRequestType.ContentRequest))
                         </label>
+                        <br>
                         <InputRadio class="form-check-input" Value="UserRequestType.FeatureRequest"></InputRadio>
                         <label class="form-check-label">
                             @(DisplayHelper.DisplayForEnum<UserRequestType>(p=>UserRequestType.FeatureRequest))

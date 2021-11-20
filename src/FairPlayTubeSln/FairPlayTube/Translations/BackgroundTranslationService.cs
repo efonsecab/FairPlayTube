@@ -76,11 +76,15 @@ namespace FairPlayTube.Translations
             var servicesAssembly = typeof(FairPlayTube.Services.TranslationService).Assembly;
             var servicesTypes = servicesAssembly.GetTypes();
 
+            var commonAssembly = typeof(FairPlayTube.Common.Global.Constants).Assembly;
+            var commonTypes = commonAssembly.GetTypes();
+
             List<Type> typesToCheck = new();
             typesToCheck.AddRange(clientAppTypes);
             typesToCheck.AddRange(componentsTypes);
             typesToCheck.AddRange(modelsTypes);
             typesToCheck.AddRange(servicesTypes);
+            typesToCheck.AddRange(commonTypes);
 
             foreach (var singleTypeToCheck in typesToCheck)
             {
