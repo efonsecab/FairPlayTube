@@ -42,7 +42,7 @@ namespace FairPlayTube.Models.Video
         /// Url to use to render the Azure Video Indexer Player Widget
         /// </summary>
         public string PublicPlayerUrl => $"https://www.videoindexer.ai/embed/player/{AccountId}/{VideoId}" +
-                $"?locale={CultureInfo.CurrentUICulture.TwoLetterISOLanguageName}&location={Location}";//&autoplay=false";
+                $"?locale={CultureInfo.CurrentUICulture.TwoLetterISOLanguageName}&location={Location}&autoplay=false";
         /// <summary>
         /// Url to use to render the Azure Video Indexer Insights Widget
         /// </summary>
