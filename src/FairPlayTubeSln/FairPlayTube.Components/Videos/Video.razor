@@ -1,4 +1,5 @@
-﻿@if (this.VideoModel != null)
+﻿@using FairPlayTube.Common.Helpers
+@if (this.VideoModel != null)
 {
     <article>
         @if (!ShowDisplayAd)
@@ -132,7 +133,7 @@
                         <li><strong>@Localizer[NameTextKey]: </strong>@VideoModel.Name</li>
                         <li><strong>@Localizer[PublisherTextKey]: </strong>@VideoModel.Publisher</li>
                         <li><strong>@Localizer[PriceTextKey]: </strong>@( $"{Constants.CurrencySymbols.Dollars}{VideoModel.PriceAfterCommission}")</li>
-                        <li><strong>@Localizer[DetailsTextKey]:</strong>@VideoModel.Description</li>
+                        <li><strong>@Localizer[DetailsTextKey]: </strong>@((MarkupString)HtmlHelper.FormatHtmlText(VideoModel.Description))</li>
                     </ul>
                 </CardFooter>
             </FairPlayTube.Components.Bootstrap.Card>
@@ -267,7 +268,7 @@
                             <li><strong>@Localizer[NameTextKey]: </strong>@VideoModel.Name</li>
                             <li><strong>@Localizer[PublisherTextKey]: </strong>@VideoModel.Publisher</li>
                             <li><strong>@Localizer[PriceTextKey]: </strong>@( $"{Constants.CurrencySymbols.Dollars}{VideoModel.PriceAfterCommission}")</li>
-                            <li><strong>@Localizer[DetailsTextKey]:</strong>@VideoModel.Description</li>
+                            <li><strong>@Localizer[DetailsTextKey]: </strong>@((MarkupString)HtmlHelper.FormatHtmlText(VideoModel.Description))</li>
                         </ul>
                     </CardFooter>
                 </FairPlayTube.Components.Bootstrap.Card>
@@ -389,7 +390,7 @@ this.VideoModel.UserGlobalMonetization.MonetizationItems.Count > 0)
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="row-cols-2">@VideoModel.Description</div>
+                        <div class="row-cols-2">@((MarkupString)HtmlHelper.FormatHtmlText(VideoModel.Description))</div>
                     </div>
                 </div>
                 <div class="modal-footer">

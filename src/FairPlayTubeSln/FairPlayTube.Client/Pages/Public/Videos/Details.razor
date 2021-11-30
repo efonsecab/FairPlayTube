@@ -1,4 +1,5 @@
-﻿<Meta property="og:url" content="@this.NavigationManager.Uri" />
+﻿@using FairPlayTube.Common.Helpers
+<Meta property="og:url" content="@this.NavigationManager.Uri" />
 <Meta property="og:type" content="website" />
 <Meta property="og:image" content="@VideoThumbnailUrl" />
 <Meta property="og:video" content="@this.NavigationManager.Uri" />
@@ -27,14 +28,13 @@
                 </h1>
             </div>
             <FairPlayTube.Components.Videos.Video AllowEdit="false"
-                                                  VideoModel="this.VideoModel"
-                                                  ShowDetailsLink="false"
-                                                  ShowTwitterShareButton="true" ShowDisplayAd="true"
-                                                  ShowYouTubeVideosLink="@(VideoModel.YouTubeChannels > 0)"
-                                                  OnShowYouTubeLatestVideos="OnShowYouTubeLatestVideos"
-                                                  ShowAddVideoJobButton="ShowAddVideoJobButton"
-                                                  ShowAvailableJobsButton="ShowAvailableJobsButton"
-                                                  ></FairPlayTube.Components.Videos.Video>
+                                              VideoModel="this.VideoModel"
+                                              ShowDetailsLink="false"
+                                              ShowTwitterShareButton="true" ShowDisplayAd="true"
+                                              ShowYouTubeVideosLink="@(VideoModel.YouTubeChannels > 0)"
+                                              OnShowYouTubeLatestVideos="OnShowYouTubeLatestVideos"
+                                              ShowAddVideoJobButton="ShowAddVideoJobButton"
+                                              ShowAvailableJobsButton="ShowAvailableJobsButton"></FairPlayTube.Components.Videos.Video>
 
             <AuthorizeView>
                 <Authorized Context="authContext">
@@ -67,7 +67,7 @@
                                         <strong>@singleComment.RowCreationUser</strong> - @singleComment.RowCreationDateTime - @singleComment.ApplicationUserFollowersCount Follower(s)
                                     </CardHeader>
                                     <CardBody>
-                                        @GetFormattedComment(singleComment)
+                                        @((MarkupString)HtmlHelper.FormatHtmlText(singleComment.Comment))
                                     </CardBody>
                                 </Card>
                             </div>
