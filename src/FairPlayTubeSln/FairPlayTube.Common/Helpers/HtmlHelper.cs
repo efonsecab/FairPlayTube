@@ -11,6 +11,8 @@ namespace FairPlayTube.Common.Helpers
     {
         public static string FormatHtmlText(string originalText)
         {
+            if (String.IsNullOrWhiteSpace(originalText))
+                return originalText;
             //based on sample here: https://stackoverflow.com/questions/10576686/c-sharp-regex-pattern-to-extract-urls-from-given-string-not-full-html-urls-but
             var linkParser = new Regex(@"\b(?:https?://|www\.)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             string replacedText = originalText;
