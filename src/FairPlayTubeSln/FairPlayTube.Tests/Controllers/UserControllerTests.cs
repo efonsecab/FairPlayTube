@@ -41,11 +41,11 @@ namespace FairPlayTube.Controllers.Tests
         }
 
         [TestMethod()]
-        public async Task GetMyRoleTest()
+        public async Task GetMyRolesTest()
         {
             await base.SignIn(Role.User);
             UserClientService userClientService = base.CreateUserClientService();
-            var result = await userClientService.GetMyRoleAsync();
+            var result = await userClientService.GetMyRolesAsync();
             Assert.IsNotNull(result);
             Assert.AreEqual(result, Role.User.ToString());
         }

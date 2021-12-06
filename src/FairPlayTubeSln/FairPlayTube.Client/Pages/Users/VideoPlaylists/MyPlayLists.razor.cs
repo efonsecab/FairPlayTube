@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace FairPlayTube.Client.Pages.Users.VideoPlaylists
 {
     [Route(Common.Global.Constants.UserPagesRoutes.MyPlaylists)]
-    [Authorize(Roles = Common.Global.Constants.Roles.User)]
+    [Authorize(Roles = Common.Global.Constants.Roles.Creator)]
     public partial class MyPlayLists
     {
         [Inject]

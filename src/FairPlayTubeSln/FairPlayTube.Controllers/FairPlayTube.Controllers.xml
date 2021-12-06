@@ -191,7 +191,7 @@
             <param name="messageService"></param>
             <param name="userService"></param>
         </member>
-        <member name="M:FairPlayTube.Controllers.UserController.GetMyRole(System.Threading.CancellationToken)">
+        <member name="M:FairPlayTube.Controllers.UserController.GetMyRoles(System.Threading.CancellationToken)">
             <summary>
             Gets the name of the role assigned to the Logged In User
             </summary>

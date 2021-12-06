@@ -102,28 +102,6 @@ namespace FairPlayTube.Client.Shared
             }
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            try
-            {
-                if (!this.NavigationManager.Uri.EndsWith(Common.Global.Constants.UserPagesRoutes.ValidateInviteCode) &&
-                                this.AuthenticationStateTask != null)
-                {
-                    var state = await AuthenticationStateTask;
-                    if (state != null && state.User != null && state.User.Identity.IsAuthenticated)
-                    {
-                        var userStatus = state.User.Claims.Where(p => p.Type == "UserStatus").Single();
-                        if (userStatus.Value != "Approved")
-                            NavigationManager.NavigateTo(Common.Global.Constants.UserPagesRoutes.ValidateInviteCode);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Error.ProcessError(ex);
-            }
-        }
-
         private void CloseFooter()
         {
             this.ShowFooter = false;

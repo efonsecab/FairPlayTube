@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace FairPlayTube.Client.Pages.Users.Videos
 {
     [Route(Common.Global.Constants.UserPagesRoutes.AddVideoJob)]
-    [Authorize(Roles = Common.Global.Constants.Roles.User)]
+    [Authorize(Roles = Common.Global.Constants.Roles.Creator)]
     public partial class AddVideoJob
     {
 

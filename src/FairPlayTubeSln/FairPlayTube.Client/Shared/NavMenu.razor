@@ -32,9 +32,9 @@
                 </NavLink>
             </li>
         </AuthorizeView>
-        <AuthorizeView Roles="@Common.Global.Constants.Roles.User">
+        <AuthorizeView Roles="@Common.Global.Constants.Roles.Creator">
             <Authorized>
-                <li class="nav-item px-3">
+<li class="nav-item px-3">
                     <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.UploadVideo" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[UploadVideoTextKey]">
                         <i class="bi bi-cloud-upload-fill"></i>
                     </NavLink>
@@ -67,6 +67,10 @@
                         <i class="bi bi-envelope-fill"></i>
                     </NavLink>
                 </li>
+            </Authorized>
+        </AuthorizeView>
+        <AuthorizeView Roles="@Common.Global.Constants.Roles.User">
+            <Authorized>
                 <li class="nav-item px-3">
                     <NavLink class="nav-link" href="@Common.Global.Constants.RootPagesRoutes.Persons" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[PersonsInVideosTextKey]">
                         <i class="bi bi-person-circle"></i>

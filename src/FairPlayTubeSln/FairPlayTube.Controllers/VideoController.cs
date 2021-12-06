@@ -121,7 +121,7 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
-        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        [Authorize(Roles = Common.Global.Constants.Roles.Creator)]
         [DisableRequestSizeLimit]
         [RequestSizeLimit(1073741824)] //1GB
         public async Task<IActionResult> UploadVideo(UploadVideoModel uploadVideoModel, CancellationToken cancellationToken)
@@ -142,7 +142,7 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
-        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        [Authorize(Roles = $"{Common.Global.Constants.Roles.User},{Common.Global.Constants.Roles.Creator}")]
         public async Task<VideoInfoModel[]> GetMyProcessedVideos(CancellationToken cancellationToken)
         {
             var azureAdB2cobjectId = this.CurrentUserProvider.GetObjectId();
@@ -209,7 +209,7 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut("[action]")]
-        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        [Authorize(Roles = Common.Global.Constants.Roles.Creator)]
         public async Task<IActionResult> UpdateMyVideo(string videoId, UpdateVideoModel model,
             CancellationToken cancellationToken)
         {
@@ -256,7 +256,7 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
-        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        [Authorize(Roles = Common.Global.Constants.Roles.Creator)]
         public async Task<List<VideoStatusModel>> GetMyPendingVideosQueue(CancellationToken cancellationToken)
         {
             List<VideoStatusModel> result = new();

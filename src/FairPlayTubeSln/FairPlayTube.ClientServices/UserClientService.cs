@@ -40,10 +40,10 @@ namespace FairPlayTube.ClientServices
             }
         }
 
-        public async Task<string> GetMyRoleAsync()
+        public async Task<string[]> GetMyRolesAsync()
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
-            var result = await authorizedHttpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyRole);
+            var result = await authorizedHttpClient.GetFromJsonAsync<string[]>(Constants.ApiRoutes.UserController.GetMyRoles);
             return result;
         }
 

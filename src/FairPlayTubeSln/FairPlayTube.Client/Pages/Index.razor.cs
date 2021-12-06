@@ -5,6 +5,7 @@ using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Global;
 using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.Video;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Localization;
@@ -18,6 +19,7 @@ namespace FairPlayTube.Client.Pages
     [Route("/")]
     [Route(Constants.RootPagesRoutes.SearchWithSearchTerm)]
     [Route(Constants.RootPagesRoutes.SearchEmpty)]
+    [Authorize(Roles = Common.Global.Constants.Roles.User)]
     public partial class Index
     {
         [Inject]

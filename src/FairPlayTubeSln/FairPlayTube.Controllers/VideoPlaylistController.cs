@@ -37,6 +37,7 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.Creator)]
         public async Task<IActionResult> CreateVideoPlaylist(VideoPlaylistModel videoPlaylistModel, CancellationToken cancellationToken)
         {
             await this.VideoPlaylistService.CreateVideoPlaylisyAsync(videoPlaylistModel, cancellationToken);
@@ -51,6 +52,7 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpDelete("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.Creator)]
         public async Task<IActionResult> DeleteVideoPlaylist(long videoPlaylistId, CancellationToken cancellationToken)
         {
             await this.VideoPlaylistService.DeleteVideoPlaylistAsync(videoPlaylistId, cancellationToken);
@@ -64,6 +66,7 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
+        [Authorize(Roles = Common.Global.Constants.Roles.Creator)]
         public async Task<IActionResult> AddVideoToPlaylist(VideoPlaylistItemModel videoPlaylistItemModel,
             CancellationToken cancellationToken)
         {

@@ -59,6 +59,7 @@ namespace FairPlayTube.Controllers
         /// <returns></returns>
         [HttpPost("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        [Authorize(Roles = Common.Global.Constants.Roles.Creator)]
         public async Task AddVideoJob(VideoJobModel videoJobModel, CancellationToken cancellationToken)
         {
             var userObjectId = this.CurrentUserProvider.GetObjectId();

@@ -100,7 +100,7 @@ namespace FairPlayTube.Tests
         protected async Task<HttpClient> SignIn(Role role)
         {
             var authorizedHttpClient = await CreateAuthorizedClientAsync(role);
-            _ = await authorizedHttpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyRole);
+            _ = await authorizedHttpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyRoles);
             return authorizedHttpClient;
         }
 

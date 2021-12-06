@@ -3,6 +3,7 @@ using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Models.VideoJobApplications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 namespace FairPlayTube.Client.Pages.Public.Videos
 {
     [Route(Common.Global.Constants.PublicVideosPages.VideosJobs)]
+    [Authorize(Roles = Common.Global.Constants.Roles.User)]
     public partial class VideosJobs
     {
         [CascadingParameter]

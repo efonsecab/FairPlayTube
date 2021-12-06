@@ -11,11 +11,13 @@ namespace FairPlayTube.Client.CustomClaims
     public class CustomAccountClaimsPrincipalFactory : AccountClaimsPrincipalFactory<CustomRemoteUserAccount>
     {
         private HttpClientService HttpClientService { get; }
+        private UserClientService UserClientService { get; }
 
         public CustomAccountClaimsPrincipalFactory(IAccessTokenProviderAccessor accessor,
-            HttpClientService httpClientService) : base(accessor)
+            HttpClientService httpClientService, UserClientService userClientService) : base(accessor)
         {
             this.HttpClientService = httpClientService;
+            this.UserClientService = userClientService;
         }
 
         public async override ValueTask<ClaimsPrincipal> CreateUserAsync(CustomRemoteUserAccount account,
@@ -27,11 +29,14 @@ namespace FairPlayTube.Client.CustomClaims
                 ClaimsIdentity claimsIdentity = userClaimsPrincipal.Identity as ClaimsIdentity;
                 _ = claimsIdentity.Claims.GetAzureAdB2CUserObjectId();
                 var httpClient = this.HttpClientService.CreateAuthorizedClient();
-                var userRole = await httpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyRole);
-                if (!string.IsNullOrWhiteSpace(userRole))
-                    claimsIdentity.AddClaim(new Claim("Role", userRole));
+                var userRoles = await UserClientService.GetMyRolesAsync();
+                if (userRoles != null)
+                    foreach (var singleRole in userRoles)
+                    {
+                        claimsIdentity.AddClaim(new Claim("Role", singleRole));
+                    }
                 var userStatus = await httpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyUserStatus);
-                if (!string.IsNullOrWhiteSpace(userRole))
+                if (!string.IsNullOrWhiteSpace(userStatus))
                     claimsIdentity.AddClaim(new Claim("UserStatus", userStatus));
             }
             return userClaimsPrincipal;

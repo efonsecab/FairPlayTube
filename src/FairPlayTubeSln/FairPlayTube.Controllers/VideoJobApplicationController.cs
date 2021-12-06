@@ -60,7 +60,7 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
-        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        [Authorize(Roles = Common.Global.Constants.Roles.Creator)]
         public async Task<VideoJobApplicationModel[]> GetNewReceivedVideoJobApplications(
             CancellationToken cancellationToken)
         {
@@ -94,7 +94,7 @@ namespace FairPlayTube.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
-        [Authorize(Roles = Common.Global.Constants.Roles.User)]
+        [Authorize(Roles = Common.Global.Constants.Roles.Creator)]
         public async Task<IActionResult> ApproveVideoJobApplication(long videoJobApplicationId,
             CancellationToken cancellationToken)
         {

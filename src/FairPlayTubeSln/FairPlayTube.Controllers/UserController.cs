@@ -61,15 +61,15 @@ namespace FairPlayTube.Controllers
         /// <returns></returns>
         [HttpGet("[action]")]
         [Authorize]
-        public async Task<string> GetMyRole(CancellationToken cancellationToken)
+        public async Task<string[]> GetMyRoles(CancellationToken cancellationToken)
         {
             var userAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
-            var role = await this.FairplaytubeDatabaseContext.ApplicationUserRole
+            var roles = await this.FairplaytubeDatabaseContext.ApplicationUserRole
                 .Include(p => p.ApplicationUser)
                 .Include(p => p.ApplicationRole)
                 .Where(p => p.ApplicationUser.AzureAdB2cobjectId.ToString() == userAdB2CObjectId)
-                .Select(p => p.ApplicationRole.Name).SingleOrDefaultAsync(cancellationToken: cancellationToken);
-            return role;
+                .Select(p => p.ApplicationRole.Name).ToArrayAsync(cancellationToken: cancellationToken);
+            return roles;
         }
 
         /// <summary>
