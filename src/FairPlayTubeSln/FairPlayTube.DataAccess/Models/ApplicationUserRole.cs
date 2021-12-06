@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairPlayTube.DataAccess.Models
 {
-    [Index(nameof(ApplicationUserId), Name = "UI_ApplicationUserRole_ApplicationUserId", IsUnique = true)]
+    [Index(nameof(ApplicationUserId), nameof(ApplicationRoleId), Name = "UI_ApplicationUserRole", IsUnique = true)]
     public partial class ApplicationUserRole
     {
         [Key]

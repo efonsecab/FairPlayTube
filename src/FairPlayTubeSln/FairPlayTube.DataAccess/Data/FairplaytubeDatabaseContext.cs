@@ -102,8 +102,8 @@ namespace FairPlayTube.DataAccess.Data
                     .HasConstraintName("FK_ApplicationUserRole_ApplicationRole");
 
                 entity.HasOne(d => d.ApplicationUser)
-                    .WithOne(p => p.ApplicationUserRole)
-                    .HasForeignKey<ApplicationUserRole>(d => d.ApplicationUserId)
+                    .WithMany(p => p.ApplicationUserRole)
+                    .HasForeignKey(d => d.ApplicationUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ApplicationUserRole_ApplicationUser");
             });

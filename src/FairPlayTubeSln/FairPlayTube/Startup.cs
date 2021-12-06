@@ -43,6 +43,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FairPlayTube
@@ -148,7 +149,10 @@ namespace FairPlayTube
                     var emailAddress = claimsIdentity.FindFirst(Common.Global.Constants.Claims.Emails).Value;
                     if (user != null && user.ApplicationUserRole != null)
                     {
-                        claimsIdentity.AddClaim(new Claim("Role", user.ApplicationUserRole.ApplicationRole.Name));
+                        foreach (var singleRole in user.ApplicationUserRole)
+                        {
+                            claimsIdentity.AddClaim(new Claim("Role", singleRole.ApplicationRole.Name));
+                        }
                         user.FullName = fullName;
                         user.EmailAddress = emailAddress;
                         user.LastLogIn = DateTimeOffset.UtcNow;
@@ -174,7 +178,24 @@ namespace FairPlayTube
                                 ApplicationRoleId = userRole.ApplicationRoleId
                             });
                             await fairplaytubeDatabaseContext.SaveChangesAsync();
-                            claimsIdentity.AddClaim(new Claim("Role", user.ApplicationUserRole.ApplicationRole.Name));
+                            foreach (var singleRole in user.ApplicationUserRole)
+                            {
+                                claimsIdentity.AddClaim(new Claim("Role", singleRole.ApplicationRole.Name));
+                            }
+                            var adminUsers = await fairplaytubeDatabaseContext.ApplicationUser
+                            .Include(p => p.ApplicationUserRole).ThenInclude(p => p.ApplicationRole)
+                            .Where(p => p.ApplicationUserRole.Any(aur => aur.ApplicationRole.Name ==
+                              Common.Global.Constants.Roles.Admin))
+                            .ToListAsync();
+                            var emailService = context.HttpContext.RequestServices
+                            .GetRequiredService<EmailService>();
+                            foreach (var singleAdminUser in adminUsers)
+                            {
+                                await emailService.SendEmailAsync(toEmailAddress:
+                                    singleAdminUser.EmailAddress, subject: "FairPlayTube - New User",
+                                    body: $"A new user has been created at: {context.Request.Host}",
+                                    isBodyHtml: true, cancellationToken: CancellationToken.None);
+                            }
                         }
                     }
                 };
@@ -356,7 +377,7 @@ namespace FairPlayTube
         /// <param name="app"></param>
         /// <param name="env"></param>
         /// <param name="sp"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, 
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
             IServiceProvider sp)
         {
             var dbContext = sp.GetRequiredService<FairplaytubeDatabaseContext>();
@@ -548,7 +569,7 @@ namespace FairPlayTube
                 visibility: Common.Global.Enums.VideoVisibility.Private);
         }
 
-        private static void SeedDefaultCultures(FairplaytubeDatabaseContext fairplaytubeDatabaseContext, 
+        private static void SeedDefaultCultures(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             string cultureName, int cultureId)
         {
             var cultureEntity = fairplaytubeDatabaseContext.Culture
@@ -558,7 +579,7 @@ namespace FairPlayTube
                 cultureEntity = new Culture()
                 {
                     CultureId = cultureId,
-                    Name=cultureName
+                    Name = cultureName
                 };
                 fairplaytubeDatabaseContext.Culture.Add(cultureEntity);
                 fairplaytubeDatabaseContext.SaveChanges();

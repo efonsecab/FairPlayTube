@@ -17,6 +17,16 @@ IF NOT EXISTS (SELECT * FROM [dbo].[ApplicationRole] AR WHERE [AR].[Name] = @ROL
 BEGIN 
     INSERT INTO [dbo].[ApplicationRole]([ApplicationRoleId],[Name],[Description]) VALUES(1, @ROLE_USER, 'Normal Users')
 END
+SET @ROLE_USER = 'Creator'
+IF NOT EXISTS (SELECT * FROM [dbo].[ApplicationRole] AR WHERE [AR].[Name] = @ROLE_USER)
+BEGIN 
+    INSERT INTO [dbo].[ApplicationRole]([ApplicationRoleId],[Name],[Description]) VALUES(2, @ROLE_USER, 'Creator Users')
+END
+SET @ROLE_USER = 'Admin'
+IF NOT EXISTS (SELECT * FROM [dbo].[ApplicationRole] AR WHERE [AR].[Name] = @ROLE_USER)
+BEGIN 
+    INSERT INTO [dbo].[ApplicationRole]([ApplicationRoleId],[Name],[Description]) VALUES(3, @ROLE_USER, 'Admin Users')
+END
 SET IDENTITY_INSERT [dbo].[ApplicationRole] OFF
 --START OF DEFAULT APPLICATION ROLES
 

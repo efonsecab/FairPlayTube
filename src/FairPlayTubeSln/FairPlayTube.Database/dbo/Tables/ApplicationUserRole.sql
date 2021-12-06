@@ -9,4 +9,5 @@
 
 GO
 
-CREATE UNIQUE INDEX [UI_ApplicationUserRole_ApplicationUserId] ON [dbo].[ApplicationUserRole] ([ApplicationUserId])
+
+CREATE UNIQUE INDEX [UI_ApplicationUserRole] ON [dbo].[ApplicationUserRole] ([ApplicationUserId], [ApplicationRoleId])
