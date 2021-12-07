@@ -193,7 +193,10 @@ namespace FairPlayTube
                             {
                                 await emailService.SendEmailAsync(toEmailAddress:
                                     singleAdminUser.EmailAddress, subject: "FairPlayTube - New User",
-                                    body: $"A new user has been created at: {context.Request.Host}",
+                                    body: 
+                                    $"<p>A new user has been created at: {context.Request.Host}</p>" +
+                                    $"<p>Name: {user.FullName}</p>" +
+                                    $"<p>Email: {user.EmailAddress}</p>",
                                     isBodyHtml: true, cancellationToken: CancellationToken.None);
                             }
                         }

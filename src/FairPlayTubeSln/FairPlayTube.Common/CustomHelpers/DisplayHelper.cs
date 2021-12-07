@@ -64,7 +64,7 @@ namespace FairPlayTube.Common.CustomHelpers
                     .Single();
                 DisplayAttribute displayAttribute = memberInfo.GetCustomAttribute<DisplayAttribute>();
                 if (displayAttribute is null)
-                    throw new CustomValidationException($"Enum value '{memberExpression.Value.ToString()}' of type " +
+                    throw new CustomValidationException($"Enum value '{memberExpression.Value}' of type " +
                         $"'{expression.Parameters.First().Type.FullName}' does not have a {nameof(DisplayAttribute)}");
                 var displayName = displayAttribute.GetName();
                 return displayName;

@@ -19,7 +19,7 @@ namespace FairPlayTube.Client.CustomComponents.UsersRequests
         private ToastifyService ToastifyService { get; set; }
         private bool IsLoading { get; set; }
         private bool ShowModal { get; set; }
-        private CreateUserRequestModel CreateUserRequestModel = new()
+        private readonly CreateUserRequestModel CreateUserRequestModel = new()
         {
             UserRequestType = Common.Global.Enums.UserRequestType.ContentRequest
         };
