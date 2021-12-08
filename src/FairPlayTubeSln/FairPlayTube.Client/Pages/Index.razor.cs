@@ -19,7 +19,6 @@ namespace FairPlayTube.Client.Pages
     [Route("/")]
     [Route(Constants.RootPagesRoutes.SearchWithSearchTerm)]
     [Route(Constants.RootPagesRoutes.SearchEmpty)]
-    [Authorize(Roles = Common.Global.Constants.Roles.User)]
     public partial class Index
     {
         [Inject]
