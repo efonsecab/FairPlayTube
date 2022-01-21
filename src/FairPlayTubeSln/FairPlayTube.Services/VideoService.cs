@@ -154,12 +154,16 @@ namespace FairPlayTube.Services
         private async Task NotifyAllUsersAsync(VideoInfo singleVideoEntity,
             CancellationToken cancellationToken)
         {
+            var videoOwnerUser = await
+                this.FairplaytubeDatabaseContext.ApplicationUser
+                .SingleAsync(p => p.ApplicationUserId == singleVideoEntity.ApplicationUserId,
+                cancellationToken: cancellationToken);
             var allUsers = this.FairplaytubeDatabaseContext.ApplicationUser;
             if (allUsers.Any())
             {
+                string message = $"User {videoOwnerUser.FullName} has upload a new video on FairPlayTube. Title: {singleVideoEntity.Name}";
                 foreach (var singleUser in allUsers)
                 {
-                    string message = $"User {singleUser.FullName} has upload a new video on FairPlayTube. Title: {singleVideoEntity.Name}";
                     await this.HubContext.Clients.User(singleUser.AzureAdB2cobjectId.ToString())
                         .ReceiveMessage(new Models.Notifications.NotificationModel()
                         {
@@ -172,6 +176,16 @@ namespace FairPlayTube.Services
                         string baseUrl = Configuration["VideoIndexerCallbackUrl"];
                         var videoDetailsUrl = $"{baseUrl}/Public/Videos/Details/{singleVideoEntity.VideoId}";
                         StringBuilder emailMessage = new StringBuilder();
+
+                        emailMessage.AppendLine("<p>");
+                        emailMessage.AppendLine($"Hello {singleUser.FullName}. " +
+                            $"You are receiving this email because you are a FairPlayTube user.");
+                        emailMessage.AppendLine("</p>");
+
+                        emailMessage.AppendLine("<p>");
+                        emailMessage.AppendLine($"We have some information for you.");
+                        emailMessage.AppendLine("</p>");
+
                         emailMessage.AppendLine("<p>");
                         emailMessage.AppendLine(message);
                         emailMessage.AppendLine("</p>");
