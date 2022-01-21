@@ -8,6 +8,7 @@ using FairPlayTube.Models.Video;
 using FairPlayTube.Notifications.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PTI.Microservices.Library.AzureVideoIndexer.Models.CreateProject;
 using PTI.Microservices.Library.Configuration;
 using PTI.Microservices.Library.Interceptors;
@@ -19,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static PTI.Microservices.Library.Services.AzureVideoIndexerService;
@@ -35,14 +37,17 @@ namespace FairPlayTube.Services
         private AzureVideoIndexerConfiguration AzureVideoIndexerConfiguration { get; }
         private CustomHttpClient CustomHttpClient { get; }
         private IHubContext<NotificationHub, INotificationHub> HubContext { get; }
+        private EmailService EmailService { get; set; }
+        private IConfiguration Configuration { get; set; }
 
         public VideoService(AzureVideoIndexerService azureVideoIndexerService, AzureBlobStorageService azureBlobStorageService,
             DataStorageConfiguration dataStorageConfiguration, ICurrentUserProvider currentUserProvider,
             FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             AzureVideoIndexerConfiguration azureVideoIndexerConfiguration,
             CustomHttpClient customHttpClient,
-            IHubContext<NotificationHub, INotificationHub> hubContext
-            )
+            IHubContext<NotificationHub, INotificationHub> hubContext,
+            EmailService emailService,
+            IConfiguration configuration)
         {
             this.AzureVideoIndexerService = azureVideoIndexerService;
             this.AzureBlobStorageService = azureBlobStorageService;
@@ -52,6 +57,8 @@ namespace FairPlayTube.Services
             this.AzureVideoIndexerConfiguration = azureVideoIndexerConfiguration;
             this.CustomHttpClient = customHttpClient;
             this.HubContext = hubContext;
+            this.EmailService = emailService;
+            this.Configuration = configuration;
         }
 
 
@@ -138,9 +145,54 @@ namespace FairPlayTube.Services
             foreach (var singleVideoEntity in query)
             {
                 await NotifyVideoOwnerAsync(singleVideoEntity);
-                await NotifyFollowersAsync(singleVideoEntity);
+                //await NotifyFollowersAsync(singleVideoEntity);
+                await NotifyAllUsersAsync(singleVideoEntity, cancellationToken);
             }
             return true;
+        }
+
+        private async Task NotifyAllUsersAsync(VideoInfo singleVideoEntity,
+            CancellationToken cancellationToken)
+        {
+            var allUsers = this.FairplaytubeDatabaseContext.ApplicationUser;
+            if (allUsers.Any())
+            {
+                foreach (var singleUser in allUsers)
+                {
+                    string message = $"User {singleUser.FullName} has upload a new video on FairPlayTube. Title: {singleVideoEntity.Name}";
+                    await this.HubContext.Clients.User(singleUser.AzureAdB2cobjectId.ToString())
+                        .ReceiveMessage(new Models.Notifications.NotificationModel()
+                        {
+                            Message = message,
+                            VideoId = singleVideoEntity.VideoId
+                        });
+
+                    try
+                    {
+                        string baseUrl = Configuration["VideoIndexerCallbackUrl"];
+                        var videoDetailsUrl = $"{baseUrl}/Public/Videos/Details/{singleVideoEntity.VideoId}";
+                        StringBuilder emailMessage = new StringBuilder();
+                        emailMessage.AppendLine("<p>");
+                        emailMessage.AppendLine(message);
+                        emailMessage.AppendLine("</p>");
+
+                        emailMessage.AppendLine("<p>");
+                        emailMessage.AppendLine($"<a href=\"{videoDetailsUrl}\">{singleVideoEntity.Name}</a>");
+                        emailMessage.AppendLine("</p>");
+                        await this.EmailService.SendEmailAsync(
+                            toEmailAddress: singleUser.EmailAddress,
+                            subject:
+                            "FairPlayTube has a new video you may be interested in",
+                            body: emailMessage.ToString(), isBodyHtml: true,
+                            cancellationToken: cancellationToken
+                            );
+                    }
+                    catch (Exception)
+                    {
+                        //capture the exception so the rest of the flow continues execution
+                    }
+                }
+            }
         }
 
         private async Task NotifyFollowersAsync(VideoInfo singleVideoEntity)
@@ -292,7 +344,7 @@ namespace FairPlayTube.Services
         {
             return this.FairplaytubeDatabaseContext.VideoInfo
                 .Include(p => p.VideoJob)
-                .ThenInclude(p=>p.VideoJobApplication)
+                .ThenInclude(p => p.VideoJobApplication)
                 .Include(p => p.ApplicationUser)
                 .ThenInclude(p => p.UserYouTubeChannel)
                 .Include(p => p.ApplicationUser.UserExternalMonetization)
