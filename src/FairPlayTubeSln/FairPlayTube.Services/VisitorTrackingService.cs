@@ -4,6 +4,7 @@ using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.VisitorTracking;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using PTI.Microservices.Library.IpData.Services;
 using PTI.Microservices.Library.Services;
 using System;
 using System.Linq;
@@ -17,13 +18,16 @@ namespace FairPlayTube.Services
         private IHttpContextAccessor HttpContextAccessor { get; }
         private FairplaytubeDatabaseContext FairplaytubeDatabaseContext { get; }
         private IpStackService IpStackService { get; }
+        private IpDataService IpDataService { get; }
 
         public VisitorTrackingService(IHttpContextAccessor httpContextAccessor,
-            FairplaytubeDatabaseContext fairplaytubeDatabaseContext, IpStackService ipStackService)
+            FairplaytubeDatabaseContext fairplaytubeDatabaseContext, 
+            IpStackService ipStackService, IpDataService ipDataService)
         {
             this.HttpContextAccessor = httpContextAccessor;
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
             this.IpStackService = ipStackService;
+            this.IpDataService = ipDataService;
         }
 
         public async Task<VisitorTracking> TrackVisitAsync(VisitorTrackingModel visitorTrackingModel)
@@ -38,7 +42,8 @@ namespace FairPlayTube.Services
                     remoteIpAddress = ipAddresses.First();
                 }
                 var parsedIpAddress = System.Net.IPAddress.Parse(remoteIpAddress);
-                var ipGeoLocationInfo = await IpStackService.GetIpGeoLocationInfoAsync(ipAddress: parsedIpAddress);
+                var ipGeoLocationInfo = await IpDataService.GetIpGeoLocationInfoAsync(ipAddress: parsedIpAddress);
+                //var ipGeoLocationInfo = await IpStackService.GetIpGeoLocationInfoAsync(ipAddress: parsedIpAddress);
                 string country = ipGeoLocationInfo.country_name;
                 var host = httpContext.Request.Host.Value;
                 var userAgent = httpContext.Request.Headers["User-Agent"].First();

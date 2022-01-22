@@ -34,6 +34,8 @@ using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using PTI.Microservices.Library.Configuration;
 using PTI.Microservices.Library.Interceptors;
+using PTI.Microservices.Library.IpData.Configuration;
+using PTI.Microservices.Library.IpData.Services;
 using PTI.Microservices.Library.Services;
 using System;
 using System.Collections.Generic;
@@ -105,6 +107,7 @@ namespace FairPlayTube
             ConfigureAzureBlobStorage(services);
             ConfigureDataStorage(services);
             ConfigurePayPal(services);
+            ConfigureIpDataService(services);
             ConfigureIpStackService(services);
             ConfigureYouTube(services);
             ConfigureAzureTranslator(services);
@@ -322,6 +325,15 @@ namespace FairPlayTube
                             .Get<AzureContentModeratorConfiguration>();
             services.AddSingleton(azureContentModeratorConfiguration);
             services.AddTransient<AzureContentModeratorService>();
+        }
+
+        private void ConfigureIpDataService(IServiceCollection services)
+        {
+            IpDataConfiguration ipDataConfiguration =
+                            Configuration.GetSection(nameof(IpDataConfiguration))
+                            .Get<IpDataConfiguration>();
+            services.AddSingleton(ipDataConfiguration);
+            services.AddTransient<IpDataService>();
         }
 
         private void ConfigureIpStackService(IServiceCollection services)
