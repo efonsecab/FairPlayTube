@@ -168,6 +168,12 @@ namespace FairPlayTube.Tests
             return userClientService;
         }
 
+        protected UserMessageClientService CreateUserMessageClientService()
+        {
+            UserMessageClientService userMessageClientService = new(CreateHttpClientService());
+            return userMessageClientService;
+        }
+
         protected VideoClientService CreateVideoClientService()
         {
             VideoClientService videoClientService = new(CreateHttpClientService());

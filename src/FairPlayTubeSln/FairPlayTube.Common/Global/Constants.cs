@@ -155,6 +155,11 @@
                 public const string ApproveVideoJobApplication = "api/VideoJobApplication/ApproveVideoJobApplication";
                 public const string GetMyVideoJobsApplications = "api/VideoJobApplication/GetMyVideoJobsApplications";
             }
+
+            public class UserMessagecontroller
+            {
+                public const string GetMyConversationsUsers = "api/UserMessage/GetMyConversationsUsers";
+            }
             public class VideoController
             {
                 public const string GetPublicProcessedVideos = "api/Video/GetPublicProcessedVideos";
