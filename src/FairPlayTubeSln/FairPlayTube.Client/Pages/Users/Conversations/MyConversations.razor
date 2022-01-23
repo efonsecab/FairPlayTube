@@ -6,9 +6,9 @@
 @if (this.AllMyConversationsUsers != null)
 {
     <div class="container">
-        <div class="row">
+        <div class="row" style="max-height:250px;">
             <div class="col">
-                <div class="list-group">
+                <div class="list-group" style="max-height:250px; overflow:auto;">
                     @foreach (var singleUser in this.AllMyConversationsUsers)
                     {
                         <button type="button" class="list-group-item list-group-item-action @(singleUser == this.AllMyConversationsUsers.First()?"active":string.Empty)" aria-current="true">
@@ -17,14 +17,14 @@
                     }
                 </div>
             </div>
-            <div class="col">
+            <div class="col" style="max-height: 250px; overflow:auto;">
                 @if (this.AllMyConversationsWithSelectedUser != null)
                 {
                     @foreach (var singleConversation in this.AllMyConversationsWithSelectedUser)
                     {
                         <div class="row">
                             <div class="col">
-                                <Card>
+                                <Card Width="100%">
                                     <CardHeader>
                                         <strong>
                                             @singleConversation.FromApplicationUserFullName
@@ -42,7 +42,21 @@
                     }
                 }
             </div>
-
+        </div>
+        <div class="row">
+            <div class="col">
+                <EditForm Model="MessageToSend" OnValidSubmit="SendMessageAsync">
+                    <div class="mb-3">
+                        <DataAnnotationsValidator></DataAnnotationsValidator>
+                    <ValidationSummary></ValidationSummary>
+                    </div>
+                    <div class="mb-3">
+                        <InputText class="form-control" @bind-Value="MessageToSend.Message">
+                        </InputText>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </div>
+                </EditForm>
+            </div>
         </div>
     </div>
 }

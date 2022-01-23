@@ -23,9 +23,12 @@ namespace FairPlayTube.Client.Pages.Users.Conversations
         private IStringLocalizer<MyConversations> Localizer { get; set; }
         [Inject]
         private ToastifyService ToastifyService { get; set; }
+        [Inject]
+        private UserClientService UserClientService { get; set; }
         private bool IsLoading { get; set; } = false;
         public ConversationsUserModel SelectedUser { get; private set; }
         private UserMessageModel[] AllMyConversationsWithSelectedUser { get; set; }
+        private UserMessageModel MessageToSend { get; set; } = new UserMessageModel();
 
         protected override async Task OnInitializedAsync()
         {
@@ -41,7 +44,28 @@ namespace FairPlayTube.Client.Pages.Users.Conversations
                     this.AllMyConversationsWithSelectedUser = await
                         this.UserMessageClientService
                         .GetMyConversationsWithUserAsync(this.SelectedUser.ApplicationUserId);
+                    this.MessageToSend.ToApplicationUserId = this.SelectedUser.ApplicationUserId;
                 }
+            }
+            catch (Exception ex)
+            {
+                ToastifyService.DisplayErrorNotification(ex.Message);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        private async Task SendMessageAsync()
+        {
+            try
+            {
+                IsLoading = true;
+                await this.UserClientService.SendMessageAsync(this.MessageToSend);
+                this.AllMyConversationsWithSelectedUser = await
+                                        this.UserMessageClientService
+                                        .GetMyConversationsWithUserAsync(this.SelectedUser.ApplicationUserId);
             }
             catch (Exception ex)
             {
