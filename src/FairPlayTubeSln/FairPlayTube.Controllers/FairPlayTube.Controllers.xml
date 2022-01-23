@@ -242,6 +242,26 @@
             <param name="userInviteCode"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.UserMessageController">
+            <summary>
+            Handles all of the data regarding a User Message
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserMessageController.#ctor(FairPlayTube.Services.UserMessageService,AutoMapper.IMapper)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.UserMessageController"/>
+            </summary>
+            <param name="userMessageService"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserMessageController.GetMyConversationsWithUser(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            Retrieves all of the receved messaged from the specified user
+            </summary>
+            <param name="otherUserApplicationUserId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.UserProfileController">
             <summary>
             Handles all the data regarind a USer's Profile

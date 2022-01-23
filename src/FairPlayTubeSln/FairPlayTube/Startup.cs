@@ -316,6 +316,7 @@ namespace FairPlayTube
             services.AddTransient<PayoutService>();
             services.AddTransient<VideoJobApplicationService>();
             services.AddTransient<UserRequestService>();
+            services.AddTransient<UserMessageService>();
         }
 
         private void ConfigureAzureContentModerator(IServiceCollection services)

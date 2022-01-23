@@ -7,5 +7,6 @@
 	[SourceApplication] NVARCHAR(250) NOT NULL,
 	[OriginatorIpaddress] NVARCHAR(100) NOT NULL,
 	[RowCreationDateTime] DATETIMEOFFSET NOT NULL,
-	[RowCreationUser] NVARCHAR(256) NOT NULL
+	[RowCreationUser] NVARCHAR(256) NOT NULL, 
+    [ReadByDestinatary] BIT NOT NULL DEFAULT 0
 )

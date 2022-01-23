@@ -824,6 +824,16 @@
             Message to be sent
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.UserMessage.UserMessageModel.RowCreationDateTime">
+            <summary>
+            UTC DateTime the message was created
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserMessage.UserMessageModel.ReadByDestinatary">
+            <summary>
+            Indicated if the message has been read by the destinatary
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.UserProfile.GlobalMonetizationModel">
             <summary>
             Represents the External Monetization Information

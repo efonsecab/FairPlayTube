@@ -2,6 +2,7 @@
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.Localization;
 using FairPlayTube.Models.Persons;
+using FairPlayTube.Models.UserMessage;
 using FairPlayTube.Models.UserYouTubeChannel;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Models.VideoComment;
@@ -109,6 +110,7 @@ namespace FairPlayTube.AutoMapperProfiles
                         dest.VideoJobDescription = source.VideoJob.Description;
                     }
                 });
+            this.CreateMap<UserMessage, UserMessageModel>();
         }
     }
 }

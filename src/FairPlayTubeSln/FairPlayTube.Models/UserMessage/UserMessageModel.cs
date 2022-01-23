@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FairPlayTube.Models.UserMessage
 {
@@ -16,5 +17,13 @@ namespace FairPlayTube.Models.UserMessage
         /// </summary>
         [Required]
         public string Message { get; set; }
+        /// <summary>
+        /// UTC DateTime the message was created
+        /// </summary>
+        public DateTimeOffset? RowCreationDateTime { get; set; }
+        /// <summary>
+        /// Indicated if the message has been read by the destinatary
+        /// </summary>
+        public bool ReadByDestinatary { get; set; }
     }
 }
