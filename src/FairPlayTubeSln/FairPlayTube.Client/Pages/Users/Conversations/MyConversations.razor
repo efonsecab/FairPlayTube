@@ -1,0 +1,48 @@
+﻿<h3>@Localizer[MyConversationsTitleKey]</h3>
+
+<Loading IsLoading="IsLoading"></Loading>
+
+
+@if (this.AllMyConversationsUsers != null)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="list-group">
+                    @foreach (var singleUser in this.AllMyConversationsUsers)
+                    {
+                        <button type="button" class="list-group-item list-group-item-action @(singleUser == this.AllMyConversationsUsers.First()?"active":string.Empty)" aria-current="true">
+                            @singleUser.FullName
+                        </button>
+                    }
+                </div>
+            </div>
+            <div class="col">
+                @if (this.AllMyConversationsWithSelectedUser != null)
+                {
+                    @foreach (var singleConversation in this.AllMyConversationsWithSelectedUser)
+                    {
+                        <div class="row">
+                            <div class="col">
+                                <Card>
+                                    <CardHeader>
+                                        <strong>
+                                            @singleConversation.FromApplicationUserFullName
+                                        </strong>
+                                    </CardHeader>
+                                    <CardBody>
+                                        @singleConversation.Message
+                                    </CardBody>
+                                    <CardFooter>
+                                        @singleConversation.RowCreationDateTime
+                                    </CardFooter>
+                                </Card>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+}

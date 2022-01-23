@@ -73,6 +73,7 @@
         }
         public class UserPagesRoutes
         {
+            public const string MyConversations = "/Users/Conversations/MyConversations";
             public const string AddVideoJob = "/Users/Videos/{VideoId}/AddVideoJob";
             public const string UploadVideo = "/Users/Videos/Upload";
             public const string MyVideos = "/Users/Videos/MyVideos";
@@ -158,6 +159,7 @@
 
             public class UserMessagecontroller
             {
+                public const string GetMyConversationsWithUser = "api/UserMessage/GetMyConversationsWithUser";
                 public const string GetMyConversationsUsers = "api/UserMessage/GetMyConversationsUsers";
             }
             public class VideoController

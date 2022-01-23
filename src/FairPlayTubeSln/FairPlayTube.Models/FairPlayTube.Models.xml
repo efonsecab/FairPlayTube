@@ -819,6 +819,16 @@
             ApplicationUserId of the user to whom the message is sent
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.UserMessage.UserMessageModel.ToApplicationUserFullName">
+            <summary>
+            Full Name of the To Application User
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserMessage.UserMessageModel.FromApplicationUserFullName">
+            <summary>
+            Full Name of the From Application User
+            </summary>
+        </member>
         <member name="P:FairPlayTube.Models.UserMessage.UserMessageModel.Message">
             <summary>
             Message to be sent
@@ -1202,6 +1212,21 @@
         <member name="F:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.EmailAddressDisplayNameTextKey">
             <summary>
             Resource key for email address display name
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Users.ConversationsUserModel">
+            <summary>
+            Holds the data regarding an ApplicationUser
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Users.ConversationsUserModel.ApplicationUserId">
+            <summary>
+            If of an application user
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Users.ConversationsUserModel.FullName">
+            <summary>
+            User's Full Name
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.UserYouTubeChannel.UserYouTubeChannelModel">

@@ -3,6 +3,7 @@ using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.Localization;
 using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.UserMessage;
+using FairPlayTube.Models.Users;
 using FairPlayTube.Models.UserYouTubeChannel;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Models.VideoComment;
@@ -110,7 +111,17 @@ namespace FairPlayTube.AutoMapperProfiles
                         dest.VideoJobDescription = source.VideoJob.Description;
                     }
                 });
-            this.CreateMap<UserMessage, UserMessageModel>();
+            this.CreateMap<UserMessage, UserMessageModel>()
+                .AfterMap(afterFunction: (source, dest) => 
+                {
+                    if (source.FromApplicationUser is not null)
+                        dest.FromApplicationUserFullName = 
+                        source.FromApplicationUser.FullName;
+                    if (source.ToApplicationUser is not null)
+                        dest.ToApplicationUserFullName = source.ToApplicationUser.FullName;
+                });
+            this.CreateMap<ApplicationUser, ConversationsUserModel>();
+
         }
     }
 }

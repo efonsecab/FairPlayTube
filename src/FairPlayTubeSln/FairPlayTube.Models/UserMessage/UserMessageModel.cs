@@ -13,6 +13,14 @@ namespace FairPlayTube.Models.UserMessage
         /// </summary>
         public long ToApplicationUserId { get; set; }
         /// <summary>
+        /// Full Name of the To Application User
+        /// </summary>
+        public string ToApplicationUserFullName { get; set; }
+        /// <summary>
+        /// Full Name of the From Application User
+        /// </summary>
+        public string FromApplicationUserFullName { get; set; }
+        /// <summary>
         /// Message to be sent
         /// </summary>
         [Required]

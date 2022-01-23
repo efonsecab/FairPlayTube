@@ -72,6 +72,14 @@
         <AuthorizeView Roles="@Common.Global.Constants.Roles.User">
             <Authorized>
                 <li class="nav-item px-3">
+                    <NavLink class="nav-link" 
+                    href="@Common.Global.Constants.UserPagesRoutes.MyConversations" 
+                    data-bs-toggle="tooltip" data-bs-placement="top" 
+                    title="@Localizer[MyConversationsTextKey]">
+                        <i class="bi bi-chat-text-fill"></i>
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
                     <NavLink class="nav-link" href="@Common.Global.Constants.RootPagesRoutes.Persons" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[PersonsInVideosTextKey]">
                         <i class="bi bi-person-circle"></i>
                     </NavLink>
@@ -176,5 +184,7 @@
     public const string VideosJobsTextKey = "VideosJobsText";
     [ResourceKey("Received Job Applications")]
     public const string ReceivedApplicationsTextKey = "ReceivedApplicationsText";
+    [ResourceKey(defaultValue: "My Conversations")]
+    public const string MyConversationsTextKey = "MyConversationsText";
     #endregion Resource Keys
 }

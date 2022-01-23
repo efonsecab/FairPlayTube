@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FairPlayTube.DataAccess.Models;
 using FairPlayTube.Models.UserMessage;
+using FairPlayTube.Models.Users;
 using FairPlayTube.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -44,11 +45,12 @@ namespace FairPlayTube.Controllers
         /// <returns></returns>
         [HttpGet("[action]")]
         [Authorize]
-        public async Task<long[]> GetMyConversationsUsers(CancellationToken cancellationToken)
+        public async Task<ConversationsUserModel[]> GetMyConversationsUsers(CancellationToken cancellationToken)
         {
             var users = await this.UserMessageService.GetMyConversationsUsersAsync(cancellationToken);
-            var userIds = users.Select(p => p.ApplicationUserId).ToArray();
-            return userIds;
+            var result = users.Select(p => 
+            this.Mapper.Map<ApplicationUser, ConversationsUserModel>(p)).ToArray();
+            return result;
         }
 
         /// <summary>

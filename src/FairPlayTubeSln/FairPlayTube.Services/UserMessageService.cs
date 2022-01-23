@@ -57,6 +57,7 @@ namespace FairPlayTube.Services
                 this.CurrentUserProvider.GetObjectId(), cancellationToken: cancellationToken);
             return FairplaytubeDatabaseContext.UserMessage
                 .Include(p => p.ToApplicationUser)
+                .Include(p=>p.FromApplicationUser)
                 .Where(p =>
                 (p.FromApplicationUserId == currentUser.ApplicationUserId &&
                 p.ToApplicationUserId == otherUserApplicationUserId)

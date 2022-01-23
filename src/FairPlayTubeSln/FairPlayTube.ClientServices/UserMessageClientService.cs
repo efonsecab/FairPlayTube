@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FairPlayTube.Models.UserMessage;
+using FairPlayTube.Models.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
@@ -17,11 +19,22 @@ namespace FairPlayTube.ClientServices
             this.HttpClientService = httpClientService;
         }
 
-        public async Task<long[]> GetMyConversationsUsersAsync()
+        public async Task<ConversationsUserModel[]> GetMyConversationsUsersAsync()
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
-            return await authorizedHttpClient.GetFromJsonAsync<long[]>(
+            return await authorizedHttpClient
+                .GetFromJsonAsync<ConversationsUserModel[]>(
                 ApiRoutes.UserMessagecontroller.GetMyConversationsUsers);
+        }
+
+        public async Task<UserMessageModel[]> GetMyConversationsWithUserAsync(
+            long otherUserApplicationUserId)
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            return await authorizedHttpClient
+                .GetFromJsonAsync<UserMessageModel[]>(
+                $"{ApiRoutes.UserMessagecontroller.GetMyConversationsWithUser}" +
+                $"?otherUserApplicationUserId={otherUserApplicationUserId}");
         }
     }
 }
