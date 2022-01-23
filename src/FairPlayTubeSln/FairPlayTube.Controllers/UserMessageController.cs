@@ -38,6 +38,20 @@ namespace FairPlayTube.Controllers
         }
 
         /// <summary>
+        /// Get all of the users the autheticated user has had conversations with
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        [Authorize]
+        public async Task<long[]> GetMyConversationsUsers(CancellationToken cancellationToken)
+        {
+            var users = await this.UserMessageService.GetMyConversationsUsersAsync(cancellationToken);
+            var userIds = users.Select(p => p.ApplicationUserId).ToArray();
+            return userIds;
+        }
+
+        /// <summary>
         /// Retrieves all of the receved messaged from the specified user
         /// </summary>
         /// <param name="otherUserApplicationUserId"></param>

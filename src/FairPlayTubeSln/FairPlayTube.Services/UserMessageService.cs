@@ -24,23 +24,47 @@ namespace FairPlayTube.Services
             this.CurrentUserProvider = currentUserProvider;
         }
 
+        public async Task<List<ApplicationUser>> GetMyConversationsUsersAsync(
+            CancellationToken cancellationToken)
+        {
+            var currentUser = await
+                            FairplaytubeDatabaseContext.ApplicationUser
+                            .SingleAsync(p => p.AzureAdB2cobjectId.ToString() ==
+                            this.CurrentUserProvider.GetObjectId(), cancellationToken: cancellationToken);
+            var receivedMessagesUsers = await FairplaytubeDatabaseContext.UserMessage
+                .Include(p => p.FromApplicationUser)
+                .Where(p => p.ToApplicationUserId == currentUser.ApplicationUserId)
+                .Select(p => p.FromApplicationUser)
+                .Distinct().ToListAsync();
+            var sentMessagesUsers = await FairplaytubeDatabaseContext.UserMessage
+                .Include(p => p.ToApplicationUser)
+                .Where(p => p.FromApplicationUserId == currentUser.ApplicationUserId)
+                .Select(p=>p.ToApplicationUser)
+                .Distinct().ToListAsync();
+            var result = receivedMessagesUsers
+                .Union(sentMessagesUsers)
+                .Distinct()
+                .ToList();
+            return result;
+        }
+
         public async Task<IQueryable<UserMessage>> GetMyReceivedMessagesFromUserAsync(
             long otherUserApplicationUserId, CancellationToken cancellationToken)
         {
-            var currentUser = await 
+            var currentUser = await
                 FairplaytubeDatabaseContext.ApplicationUser
-                .SingleAsync(p=>p.AzureAdB2cobjectId.ToString() == 
+                .SingleAsync(p => p.AzureAdB2cobjectId.ToString() ==
                 this.CurrentUserProvider.GetObjectId(), cancellationToken: cancellationToken);
             return FairplaytubeDatabaseContext.UserMessage
                 .Include(p => p.ToApplicationUser)
-                .Where(p=>
+                .Where(p =>
                 (p.FromApplicationUserId == currentUser.ApplicationUserId &&
-                p.ToApplicationUserId == otherUserApplicationUserId) 
+                p.ToApplicationUserId == otherUserApplicationUserId)
                 ||
                 (p.FromApplicationUserId == otherUserApplicationUserId &&
                 p.ToApplicationUserId == currentUser.ApplicationUserId)
                 )
-                .OrderByDescending(p=>p.RowCreationDateTime);
+                .OrderByDescending(p => p.RowCreationDateTime);
         }
     }
 }

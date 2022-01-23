@@ -254,6 +254,13 @@
             <param name="userMessageService"></param>
             <param name="mapper"></param>
         </member>
+        <member name="M:FairPlayTube.Controllers.UserMessageController.GetMyConversationsUsers(System.Threading.CancellationToken)">
+            <summary>
+            Get all of the users the autheticated user has had conversations with
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="M:FairPlayTube.Controllers.UserMessageController.GetMyConversationsWithUser(System.Int64,System.Threading.CancellationToken)">
             <summary>
             Retrieves all of the receved messaged from the specified user
