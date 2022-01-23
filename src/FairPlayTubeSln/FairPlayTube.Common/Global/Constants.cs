@@ -36,6 +36,7 @@
         {
             public const string AzureAppConfigConnectionString = "AzureAppConfigConnectionString";
             public const string DefaultConnectionString = "Default";
+            public const string VideoIndexerCallbackUrl = "VideoIndexerCallbackUrl";
         }
         public class Titles
         {
