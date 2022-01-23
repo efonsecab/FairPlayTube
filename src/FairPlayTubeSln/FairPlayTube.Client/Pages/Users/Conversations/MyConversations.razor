@@ -11,7 +11,9 @@
                 <div class="list-group" style="max-height:250px; overflow:auto;">
                     @foreach (var singleUser in this.AllMyConversationsUsers)
                     {
-                        <button type="button" class="list-group-item list-group-item-action @(singleUser == this.AllMyConversationsUsers.First()?"active":string.Empty)" aria-current="true">
+                        <button type="button" onclick="@( async () => await SelectUserAsync(singleUser))" 
+                        class="list-group-item list-group-item-action @(singleUser == this.SelectedUser?"active":string.Empty)" 
+                        aria-current="true">
                             @singleUser.FullName
                         </button>
                     }

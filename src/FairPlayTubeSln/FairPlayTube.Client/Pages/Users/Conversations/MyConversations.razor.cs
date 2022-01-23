@@ -62,10 +62,11 @@ namespace FairPlayTube.Client.Pages.Users.Conversations
             try
             {
                 IsLoading = true;
+
+                this.MessageToSend.ToApplicationUserId=this.SelectedUser.ApplicationUserId;
                 await this.UserClientService.SendMessageAsync(this.MessageToSend);
-                this.AllMyConversationsWithSelectedUser = await
-                                        this.UserMessageClientService
-                                        .GetMyConversationsWithUserAsync(this.SelectedUser.ApplicationUserId);
+                await LoadMyConversationsWithSelectedUser();
+                this.MessageToSend.Message = String.Empty;
             }
             catch (Exception ex)
             {
@@ -75,6 +76,20 @@ namespace FairPlayTube.Client.Pages.Users.Conversations
             {
                 IsLoading = false;
             }
+        }
+
+        private async Task LoadMyConversationsWithSelectedUser()
+        {
+            this.AllMyConversationsWithSelectedUser = await
+                                                    this.UserMessageClientService
+                                                    .GetMyConversationsWithUserAsync(this.SelectedUser.ApplicationUserId);
+        }
+
+        private async Task SelectUserAsync(ConversationsUserModel conversationsUserModel)
+        {
+            this.SelectedUser = conversationsUserModel;
+            await LoadMyConversationsWithSelectedUser();
+            StateHasChanged();
         }
 
         #region Resources Keys
