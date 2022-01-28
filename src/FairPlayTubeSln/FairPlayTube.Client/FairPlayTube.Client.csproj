@@ -33,14 +33,14 @@
 	<ItemGroup>
 		<PackageReference Include="Blazored.Toast" Version="3.2.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web.Extensions" Version="5.0.0-preview9.20513.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Authentication.WebAssembly.Msal" Version="6.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Authentication.WebAssembly.Msal" Version="6.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="6.0.0" />
-		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.4.4">
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="6.0.1" />
+		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.5.3">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
