@@ -16,7 +16,7 @@ namespace FairPlayTube.Models.Video
         /// </summary>
         [Required(ErrorMessageResourceName = nameof(UploadVideoModelLocalizer.VideoNameRequired),
             ErrorMessageResourceType = typeof(UploadVideoModelLocalizer))]
-        [StringLength(50, ErrorMessageResourceName = nameof(UploadVideoModelLocalizer.NameTooLong),
+        [StringLength(35, ErrorMessageResourceName = nameof(UploadVideoModelLocalizer.NameTooLong),
             ErrorMessageResourceType = typeof(UploadVideoModelLocalizer))]
         [RegularExpression(Constants.RegularExpressions.AllowedFileNameFormat,
             ErrorMessageResourceName = nameof(UploadVideoModelLocalizer.InvalidNameFormat),

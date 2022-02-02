@@ -8,7 +8,9 @@
     <ValidationSummary></ValidationSummary>
     <div class="mb-3">
         <label class="form-label">@Localizer[NameTextKey]</label>
-        <InputText class="form-control" @bind-Value="UploadVideoModel.Name"></InputText>
+        <label class="form-label">( @VideoNameRemainingCharacterCount characters remaining )</label>
+        <input type="text" class="form-control" @bind="UploadVideoModel.Name" 
+        @bind:event="oninput" maxlength="@VideoNameMaxLength"></input>
     </div>
     <div class="mb-3">
         <label class="form-label">@Localizer[UseUrlTextKey]?</label>

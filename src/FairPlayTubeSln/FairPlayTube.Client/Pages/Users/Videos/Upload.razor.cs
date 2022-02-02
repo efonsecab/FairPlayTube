@@ -1,5 +1,6 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Common.CustomHelpers;
 using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.FileUpload;
@@ -30,6 +31,9 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         private bool IsSubmitting { get; set; } = false;
 
         private Language[] AvailableLanguages { get; set; }
+        public int VideoNameMaxLength { get; set; }
+        public int VideoNameRemainingCharacterCount => VideoNameMaxLength - this.UploadVideoModel?.Name?.Length ?? 0;
+
         private class Language
         {
             public string Name { get; set; }
@@ -82,6 +86,8 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             languageList.Insert(0, new Language() { Name = "Auto Detect Single Language", Value = "auto" });
             AvailableLanguages = languageList.ToArray();
             this.UploadVideoModel.Language = languageList.First().Value;
+            this.VideoNameMaxLength = Convert.ToInt32(
+                DisplayHelper.MaxLengthFor<UploadVideoModel>(p => p.Name));
         }
         private async Task OnValidSubmit()
         {
