@@ -7,6 +7,11 @@ using System.Text;
 
 namespace FairPlayTube.Generators.ClientServices
 {
+    /// <summary>
+    /// Currently this is a draft, the purpose is to automatically generate the 
+    /// client services at compile time.
+    /// Code based on: https://andrewlock.net/creating-a-source-generator-part-1-creating-an-incremental-source-generator/
+    /// </summary>
     [Generator]
     public class ClientServicesGenerator : IIncrementalGenerator
     {
