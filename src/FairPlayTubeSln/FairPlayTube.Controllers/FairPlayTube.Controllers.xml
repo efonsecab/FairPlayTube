@@ -25,6 +25,11 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.CustomAttributes.GenerateClientAttribute">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Controllers.FeatureController">
             <summary>
             Handles all of the data related to Features

@@ -6,6 +6,8 @@
 		<UserSecretsId>82bf58f6-6b2c-44c4-800b-b2be4ae13d2e</UserSecretsId>
 		<Configurations>Release;Debug</Configurations>
 		<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+		<CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -43,6 +45,11 @@
 		<ProjectReference Include="..\FairPlayTube.Models\FairPlayTube.Models.csproj" />
 		<ProjectReference Include="..\FairPlayTube.Notifications\FairPlayTube.Notifications.csproj" />
 		<ProjectReference Include="..\FairPlayTube.Services\FairPlayTube.Services.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\FairPlayTube.Generators.ClientServices\FairPlayTube.Generators.ClientServices.csproj"
+						  OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
 	</ItemGroup>
 
 	<ItemGroup>

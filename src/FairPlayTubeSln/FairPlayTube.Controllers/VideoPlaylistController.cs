@@ -1,4 +1,5 @@
-﻿using FairPlayTube.Models.Video;
+﻿using FairPlayTube.Controllers.CustomAttributes;
+using FairPlayTube.Models.Video;
 using FairPlayTube.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace FairPlayTube.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [GenerateClient]
     public class VideoPlaylistController: ControllerBase
     {
         private VideoPlaylistService VideoPlaylistService { get; set; }
