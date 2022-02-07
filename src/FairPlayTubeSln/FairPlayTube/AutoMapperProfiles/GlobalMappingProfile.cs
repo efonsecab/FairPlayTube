@@ -10,6 +10,7 @@ using FairPlayTube.Models.VideoComment;
 using FairPlayTube.Models.VideoJobApplications;
 using FairPlayTube.Models.VisitorTracking;
 using PTI.Microservices.Library.YouTube.Models.GetChannelLatestVideos;
+using System;
 using System.Linq;
 
 namespace FairPlayTube.AutoMapperProfiles
@@ -74,6 +75,8 @@ namespace FairPlayTube.AutoMapperProfiles
                     {
                         dest.VisitsCount = source.VisitorTracking.Count;
                     }
+                    dest.VideoIndexStatus = 
+                    (Common.Global.Enums.VideoIndexStatus)source.VideoIndexStatusId;
                 });
             this.CreateMap<VideoComment, VideoCommentModel>().AfterMap((source, dest) =>
             {
