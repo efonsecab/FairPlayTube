@@ -78,7 +78,9 @@ namespace FairPlayTube.Services
             var host = Configuration[Constants.ConfigurationKeysNames.VideoIndexerCallbackUrl];
             string conversationsLink =
                 $"{host}{Constants.UserPagesRoutes.MyConversations}";
-            htmlMessage.AppendLine($"Check your messages here: " +
+            htmlMessage.AppendLine($"This is an automated message. " +
+                $"Please do not reply to this email. ");
+            htmlMessage.AppendLine($"To reply the user who sent you a message go here: " +
                 $"<a href=\"{conversationsLink}\">My Conversations</a>");
             htmlMessage.AppendLine("</p>");
             await EmailService.SendEmailAsync(toEmailAddress: receiver.EmailAddress,
