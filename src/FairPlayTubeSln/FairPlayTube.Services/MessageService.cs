@@ -27,7 +27,7 @@ namespace FairPlayTube.Services
 
         public MessageService(FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
             IHubContext<NotificationHub, INotificationHub> hubContext,
-            ContentModerationService contentModerationService, 
+            ContentModerationService contentModerationService,
             EmailService emailService, IConfiguration configuration)
         {
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
@@ -39,10 +39,20 @@ namespace FairPlayTube.Services
 
         public async Task SendMessageAsync(UserMessageModel model, string senderObjectId, CancellationToken cancellationToken)
         {
-            await this.ContentModerationService.CheckMessageModerationAsync(messageText: model.Message);
             var sender = await this.FairplaytubeDatabaseContext.ApplicationUser
                             .Where(u => u.AzureAdB2cobjectId.ToString() == senderObjectId)
                             .SingleAsync(cancellationToken);
+            var lastMonthDate = DateTimeOffset.UtcNow.AddMonths(-1);
+            var totalMessagesSentLast30Days =
+                await this.FairplaytubeDatabaseContext.UserMessage
+                .Where(p => p.FromApplicationUserId == sender.ApplicationUserId &&
+                p.RowCreationDateTime >= lastMonthDate)
+                .CountAsync(cancellationToken: cancellationToken);
+            if (totalMessagesSentLast30Days > Constants.ActionsLimits.MaxMonthlySentMessages)
+                throw new CustomValidationException($"Monthly messages limit reached. " +
+                    $"You cannot send more than {Constants.ActionsLimits.MaxMonthlySentMessages} per month. " +
+                    $"You have sent: {totalMessagesSentLast30Days}");
+            await this.ContentModerationService.CheckMessageModerationAsync(messageText: model.Message);
 
             var receiver = await this.FairplaytubeDatabaseContext.ApplicationUser
                 .Where(u => u.ApplicationUserId == model.ToApplicationUserId)

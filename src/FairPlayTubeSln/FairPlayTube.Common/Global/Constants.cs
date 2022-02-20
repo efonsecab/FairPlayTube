@@ -2,6 +2,10 @@
 {
     public class Constants
     {
+        public class ActionsLimits
+        {
+            public const int MaxMonthlySentMessages = 5;
+        }
         public class RegularExpressions
         {
             public const string AllowedFileNameFormat = "^[a-zA-Z0-9 ]+$";
