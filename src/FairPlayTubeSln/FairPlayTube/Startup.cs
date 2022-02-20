@@ -397,16 +397,7 @@ namespace FairPlayTube
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
             IServiceProvider sp)
         {
-            var dbContext = sp.GetRequiredService<FairplaytubeDatabaseContext>();
-
-            var supportedCultures = dbContext.Culture.Select(p => new CultureInfo(p.Name)).ToList();
-            var options = new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture(supportedCultures.First().Name),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            };
-            app.UseRequestLocalization(options);
+            ConfigureRequestLocalization(app, sp);
             app.UseResponseCompression();
             bool useHttpsRedirection = Convert.ToBoolean(Configuration["UseHttpsRedirection"]);
             bool enableSwagger = Convert.ToBoolean(Configuration["EnableSwaggerUI"]);
@@ -436,21 +427,7 @@ namespace FairPlayTube
                     app.UseHsts();
             }
 
-
-            app.UseExceptionHandler(cfg =>
-            {
-                cfg.Run(async context =>
-                {
-                    var exceptionHandlerPathFeature =
-                    context.Features.Get<IExceptionHandlerPathFeature>();
-                    var error = exceptionHandlerPathFeature.Error;
-                    long? errorId = default;
-                    if (error != null)
-                    {
-                        errorId = await LogException(context, error, errorId);
-                    }
-                });
-            });
+            HandleExceptions(app);
             //For MAUI in .NET 6 preview 4 using HTTPs is not working
             if (useHttpsRedirection)
                 app.UseHttpsRedirection();
@@ -471,11 +448,61 @@ namespace FairPlayTube
 
                 await next();
             });
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
+            LogApiRequests(app);
 
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+                endpoints.MapControllers();
+                endpoints.MapHealthChecks("/api/health");
+                endpoints.MapHub<NotificationHub>(Common.Global.Constants.Hubs.NotificationHub);
+                if (env.IsProduction())
+                    endpoints.MapFallbackToFile("index.html");
+                else
+                    endpoints.MapFallbackToFile("index.Development.html");
+            });
+        }
+
+        private static void ConfigureRequestLocalization(IApplicationBuilder app, IServiceProvider sp)
+        {
+            var dbContext = sp.GetRequiredService<FairplaytubeDatabaseContext>();
+
+            var supportedCultures = dbContext.Culture.Select(p => new CultureInfo(p.Name)).ToList();
+            var options = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(supportedCultures.First().Name),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            };
+            app.UseRequestLocalization(options);
+        }
+
+        private void HandleExceptions(IApplicationBuilder app)
+        {
+            app.UseExceptionHandler(cfg =>
+            {
+                cfg.Run(async context =>
+                {
+                    var exceptionHandlerPathFeature =
+                    context.Features.Get<IExceptionHandlerPathFeature>();
+                    var error = exceptionHandlerPathFeature.Error;
+                    long? errorId = default;
+                    if (error != null)
+                    {
+                        errorId = await LogException(context, error, errorId);
+                    }
+                });
+            });
+        }
+
+        private void LogApiRequests(IApplicationBuilder app)
+        {
             app.Use(async (context, next) =>
             {
                 try
@@ -513,18 +540,6 @@ namespace FairPlayTube
                     await LogException(context, ex, default);
                 }
                 await next();
-            });
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-                endpoints.MapControllers();
-                endpoints.MapHealthChecks("/api/health");
-                endpoints.MapHub<NotificationHub>(Common.Global.Constants.Hubs.NotificationHub);
-                if (env.IsProduction())
-                    endpoints.MapFallbackToFile("index.html");
-                else
-                    endpoints.MapFallbackToFile("index.Development.html");
             });
         }
 
