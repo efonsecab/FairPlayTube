@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using FairPlayTube.ClientServices;
+using FairPlayTube.Models.Pagination;
 
 namespace FairPlayTube.Controllers.Tests
 {
@@ -100,8 +101,10 @@ namespace FairPlayTube.Controllers.Tests
             testVideoEntity.ApplicationUserId = userEntity.ApplicationUserId;
             await dbContext.VideoInfo.AddAsync(testVideoEntity);
             await dbContext.SaveChangesAsync();
-            var result = await videoClientService.GetPublicProcessedVideosAsync();
-            Assert.AreEqual(1, result.Length);
+            PageRequestModel pageRequestModel = new() { PageNumber = 1 };
+            var result = await videoClientService
+                .GetPublicProcessedVideosAsync(pageRequestModel);
+            Assert.AreEqual(1, result.TotalItems);
         }
 
         [TestMethod()]

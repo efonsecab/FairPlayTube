@@ -151,10 +151,11 @@
             <param name="searchService"></param>
             <param name="mapper"></param>
         </member>
-        <member name="M:FairPlayTube.Controllers.SearchController.SearchPublicProcessedVideos(System.String,System.Threading.CancellationToken)">
+        <member name="M:FairPlayTube.Controllers.SearchController.SearchPublicProcessedVideos(FairPlayTube.Models.Pagination.PageRequestModel,System.String,System.Threading.CancellationToken)">
             <summary>
             Searches for public processed videos having the given searchTerm
             </summary>
+            <param name="pageRequestModel"></param>
             <param name="searchTerm"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
@@ -420,10 +421,11 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:FairPlayTube.Controllers.VideoController.GetPublicProcessedVideos(System.Threading.CancellationToken)">
+        <member name="M:FairPlayTube.Controllers.VideoController.GetPublicProcessedVideos(FairPlayTube.Models.Pagination.PageRequestModel,System.Threading.CancellationToken)">
             <summary>
             Gets all of the public processed videos
             </summary>
+            <param name="pageRequestModel"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>

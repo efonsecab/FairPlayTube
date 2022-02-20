@@ -2,6 +2,10 @@
 {
     public class Constants
     {
+        public class Paging
+        {
+            public const int DefaultPageSize = 9;
+        }
         public class ActionsLimits
         {
             public const int MaxMonthlySentMessages = 5;

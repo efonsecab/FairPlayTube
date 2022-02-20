@@ -149,6 +149,47 @@
             VideoId sent in the message
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Pagination.PagedItems`1">
+            <summary>
+            Handles the returned paged items
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:FairPlayTube.Models.Pagination.PagedItems`1.PageNumber">
+            <summary>
+            Page Number
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Pagination.PagedItems`1.TotalItems">
+            <summary>
+            Total Items
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Pagination.PagedItems`1.PageSize">
+            <summary>
+            Page Size
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Pagination.PagedItems`1.Items">
+            <summary>
+            Items for page
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Pagination.PagedItems`1.TotalPages">
+            <summary>
+            Total Pages
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.Pagination.PageRequestModel">
+            <summary>
+            Handles the paging page request
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Pagination.PageRequestModel.PageNumber">
+            <summary>
+            Page number beinb requested
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.Payouts.PaypalPayoutBatchItemModel">
             <summary>
             Holds the data for a Paypal Payout Batch Item

@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using FairPlayTube.Common.CustomExceptions;
+using FairPlayTube.Common.Global;
 using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Models;
+using FairPlayTube.Models.Pagination;
 using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Services;
@@ -75,15 +77,30 @@ namespace FairPlayTube.Controllers
         /// <summary>
         /// Gets all of the public processed videos
         /// </summary>
+        /// <param name="pageRequestModel"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
         [AllowAnonymous]
-        public async Task<VideoInfoModel[]> GetPublicProcessedVideos(CancellationToken cancellationToken)
+        public async Task<PagedItems<VideoInfoModel>> GetPublicProcessedVideos([FromQuery] PageRequestModel pageRequestModel,
+            CancellationToken cancellationToken)
         {
-            var result = await this.VideoService.GetPublicProcessedVideos()
-                .Select(p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p)).ToArrayAsync(cancellationToken: cancellationToken);
-            return result;
+            var query = this.VideoService.GetPublicProcessedVideos();
+            var totalItems = query.Count();
+            var itemsToSkip = (pageRequestModel.PageNumber - 1) * Constants.Paging.DefaultPageSize;
+            var items = await query
+                .Skip(itemsToSkip)
+                .Take(Constants.Paging.DefaultPageSize)
+                .Select(p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p))
+                .ToArrayAsync(cancellationToken: cancellationToken);
+            return new PagedItems<VideoInfoModel>()
+            {
+                Items = items,
+                PageNumber = pageRequestModel.PageNumber,
+                PageSize = Constants.Paging.DefaultPageSize,
+                TotalItems = totalItems,
+                TotalPages = (int)Math.Ceiling((decimal)totalItems / Constants.Paging.DefaultPageSize),
+            };
         }
 
         /// <summary>

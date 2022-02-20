@@ -49,9 +49,21 @@
     </div>
 </div>
 
-<FairPlayTube.Components.Videos.VideoList AllVideos="this.AllVideos" OnDownload="OnDownload"
+@if (this.PageVideos != null)
+{
+    <FairPlayTube.Components.Videos.VideoList AllVideos="this.PageVideos.Items" OnDownload="OnDownload"
                                           OnBuyVideoAccess="OnBuyVideoAccess"
                                           AllowDownload="AllowDownload"
                                           OnShowYouTubeLatestVideos="OnShowYouTubeLatestVideos"
-                                          ShowAvailableJobsButton="ShowAvailableJobsButton"
-></FairPlayTube.Components.Videos.VideoList>
+                                          ShowAvailableJobsButton="ShowAvailableJobsButton"></FairPlayTube.Components.Videos.VideoList>
+}
+
+@if (CurrentPageRequest.PageNumber > 1)
+{
+    <button type="button" class="btn btn-primary" @onclick="@( async () => await LoadPreviousPageAsync())">Previous Page</button>
+}
+@if (this.PageVideos != null && this.CurrentPageRequest.PageNumber < PageVideos.TotalPages)
+{
+
+    <button type="button" class="btn btn-primary" @onclick="@( async () => await LoadNextPageAsync())">Next Page</button>
+}

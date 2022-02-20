@@ -4,6 +4,7 @@ using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Global;
 using FairPlayTube.Common.Localization;
+using FairPlayTube.Models.Pagination;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
@@ -24,7 +25,7 @@ namespace FairPlayTube.Client.Pages
         [Inject]
         private IStringLocalizer<Index> Localizer { get; set; }
 
-        private VideoInfoModel[] AllVideos { get; set; }
+        private PagedItems<VideoInfoModel> PageVideos { get; set; }
         [Inject]
         private VideoClientService VideoClientService { get; set; }
         [Inject]
@@ -45,6 +46,10 @@ namespace FairPlayTube.Client.Pages
         public string SearchTerm { get; set; }
         [Inject]
         private NavigationManager NavigationManager { get; set; }
+        private PageRequestModel CurrentPageRequest = new()
+        {
+            PageNumber = 1
+        };
         protected override async Task OnParametersSetAsync()
         {
             await LoadData();
@@ -61,25 +66,27 @@ namespace FairPlayTube.Client.Pages
                 //{
                 //    AllowDownload = true;
                 //}
-                VideoInfoModel[] allVideos = null;
+                PagedItems<VideoInfoModel> pageVideos = null;
                 if (String.IsNullOrWhiteSpace(SearchTerm))
                 {
-                    allVideos = await this.VideoClientService.GetPublicProcessedVideosAsync();
+                    pageVideos = await this.VideoClientService
+                        .GetPublicProcessedVideosAsync(this.CurrentPageRequest);
                 }
                 else
                 {
-                    allVideos = await this.SearchClientService.SearchPublicProcessedVideosAsync(this.SearchTerm);
+                    pageVideos = await this.SearchClientService
+                        .SearchPublicProcessedVideosAsync(this.CurrentPageRequest, this.SearchTerm);
                 }
                 if (state.User.Identity.IsAuthenticated)
                 {
                     this.AllBoughVideosIds = await this.VideoClientService.GetBoughtVideosIdsAsync();
-                    var boughVideos = allVideos.Where(p => this.AllBoughVideosIds.Contains(p.VideoId));
+                    var boughVideos = pageVideos.Items.Where(p => this.AllBoughVideosIds.Contains(p.VideoId));
                     foreach (var singleBoughtVideo in boughVideos)
                     {
                         singleBoughtVideo.IsBought = true;
                     }
                 }
-                this.AllVideos = allVideos;
+                this.PageVideos = pageVideos;
             }
             catch (Exception ex)
             {
@@ -130,6 +137,32 @@ namespace FairPlayTube.Client.Pages
         private void OnShowYouTubeLatestVideos(long applicationUserId)
         {
             NavigationHelper.NavigateToUserYouTubeVideosPage(this.NavigationManager, applicationUserId);
+        }
+
+        private async Task LoadPreviousPageAsync()
+        {
+            try
+            {
+                this.CurrentPageRequest.PageNumber--;
+                await LoadData();
+            }
+            catch
+            {
+                this.CurrentPageRequest.PageNumber++;
+            }
+        }
+
+        private async Task LoadNextPageAsync()
+        {
+            try
+            {
+                this.CurrentPageRequest.PageNumber++;
+                await LoadData();
+            }
+            catch
+            {
+                this.CurrentPageRequest.PageNumber--;
+            }
         }
 
         #region Resource Keys

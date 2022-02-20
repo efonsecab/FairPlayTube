@@ -1,5 +1,6 @@
 ﻿using FairPlayTube.Common.CustomExceptions;
 using FairPlayTube.Models.CustomHttpResponse;
+using FairPlayTube.Models.Pagination;
 using FairPlayTube.Models.Persons;
 using FairPlayTube.Models.Video;
 using System;
@@ -20,11 +21,13 @@ namespace FairPlayTube.ClientServices
             this.HttpClientService = httpClientService;
         }
 
-        public async Task<VideoInfoModel[]> GetPublicProcessedVideosAsync()
+        public async Task<PagedItems<VideoInfoModel>> GetPublicProcessedVideosAsync(
+            PageRequestModel pageRequestModel)
         {
             var anonymousHttpClient = this.HttpClientService.CreateAnonymousClient();
-            return await anonymousHttpClient.GetFromJsonAsync<VideoInfoModel[]>(
-                ApiRoutes.VideoController.GetPublicProcessedVideos);
+            return await anonymousHttpClient.GetFromJsonAsync<PagedItems<VideoInfoModel>>(
+                $"{ApiRoutes.VideoController.GetPublicProcessedVideos}?" +
+                $"{nameof(PageRequestModel.PageNumber)}={pageRequestModel.PageNumber}");
         }
 
         public async Task<List<VideoStatusModel>> GetMyPendingVideosQueueAsync()

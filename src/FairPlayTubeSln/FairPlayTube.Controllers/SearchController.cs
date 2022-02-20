@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using FairPlayTube.Common.Global;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.DataAccess.Models;
+using FairPlayTube.Models.Pagination;
 using FairPlayTube.Models.Video;
 using FairPlayTube.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -39,16 +41,29 @@ namespace FairPlayTube.Controllers
         /// <summary>
         /// Searches for public processed videos having the given searchTerm
         /// </summary>
+        /// <param name="pageRequestModel"></param>
         /// <param name="searchTerm"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
-        public async Task<VideoInfoModel[]> SearchPublicProcessedVideos(string searchTerm, CancellationToken cancellationToken)
+        public async Task<PagedItems<VideoInfoModel>> SearchPublicProcessedVideos(
+            [FromQuery] PageRequestModel pageRequestModel,
+            string searchTerm, CancellationToken cancellationToken)
         {
-            var result = await this.SearchService.SearchPublicProcessedVideos(searchTerm)
+            var query = this.SearchService.SearchPublicProcessedVideos(searchTerm);
+            var totalItems = query.Count();
+            var itemsToSkip = (pageRequestModel.PageNumber - 1) * Constants.Paging.DefaultPageSize;
+            var items = await query
                .Select(p => this.Mapper.Map<VideoInfo, VideoInfoModel>(p))
                .ToArrayAsync(cancellationToken: cancellationToken);
-            return result;
+            return new PagedItems<VideoInfoModel>()
+            {
+                Items = items,
+                TotalItems = totalItems,
+                PageNumber = pageRequestModel.PageNumber,
+                PageSize = Constants.Paging.DefaultPageSize,
+                TotalPages = (int)Math.Ceiling((decimal)totalItems / Constants.Paging.DefaultPageSize),
+            };
         }
     }
 }
