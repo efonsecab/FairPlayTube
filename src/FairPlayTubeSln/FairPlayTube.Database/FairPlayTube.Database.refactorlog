@@ -266,4 +266,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ApplicationUserId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="0038c961-92d7-4e78-9e46-07e259529624" ChangeDateTime="02/20/2022 11:36:38">
+    <Property Name="ElementName" Value="[dbo].[ApplicationUserApiRequest].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ApplicationUserApiRequest]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ApplicationUserApiRequestId" />
+  </Operation>
 </Operations>

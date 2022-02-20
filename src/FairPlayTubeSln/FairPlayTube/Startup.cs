@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -446,40 +447,7 @@ namespace FairPlayTube
                     long? errorId = default;
                     if (error != null)
                     {
-                        try
-                        {
-                            FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
-                            this.CreateFairPlayTubeDbContext(context.RequestServices);
-                            ErrorLog errorLog = new()
-                            {
-                                FullException = error.ToString(),
-                                StackTrace = error.StackTrace,
-                                Message = error.Message
-                            };
-                            await fairplaytubeDatabaseContext.ErrorLog.AddAsync(errorLog);
-                            await fairplaytubeDatabaseContext.SaveChangesAsync();
-                            errorId = errorLog.ErrorLogId;
-                        }
-                        catch (Exception)
-                        {
-                            throw;
-                        }
-                        ProblemHttpResponse problemHttpResponse = new();
-                        if (error is CustomValidationException)
-                        {
-                            problemHttpResponse.Detail = error.Message;
-                        }
-                        else
-                        {
-                            string userVisibleError = "An error ocurred.";
-                            if (errorId.HasValue)
-                            {
-                                userVisibleError += $" Error code: {errorId}";
-                            }
-                            problemHttpResponse.Detail = userVisibleError;
-                        }
-                        problemHttpResponse.Status = (int)System.Net.HttpStatusCode.BadRequest;
-                        await context.Response.WriteAsJsonAsync<ProblemHttpResponse>(problemHttpResponse);
+                        errorId = await LogException(context, error, errorId);
                     }
                 });
             });
@@ -508,6 +476,45 @@ namespace FairPlayTube
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.Use(async (context, next) =>
+            {
+                try
+                {
+                    var requestMethod = context.Request.Method;
+                    var requestPath = context.Request.Path;
+                    var isApi = requestPath.StartsWithSegments("/api");
+                    if (isApi)
+                    {
+                        var isAuthenticated = context.User.Identity.IsAuthenticated;
+                        if (isAuthenticated)
+                        {
+                            var currentUserProvider = context.RequestServices.GetRequiredService<ICurrentUserProvider>();
+                            var userObjectId = currentUserProvider.GetObjectId();
+                            FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
+                            context.RequestServices.GetRequiredService<FairplaytubeDatabaseContext>();
+                            var userEntity = await fairplaytubeDatabaseContext.ApplicationUser
+                            .SingleAsync(p => p.AzureAdB2cobjectId.ToString() == userObjectId);
+                            await fairplaytubeDatabaseContext.ApplicationUserApiRequest
+                            .AddAsync(new ApplicationUserApiRequest()
+                            {
+
+                                ApplicationUserId = userEntity.ApplicationUserId,
+                                Method = requestMethod,
+                                Path = context.Request.GetEncodedUrl()
+                            });
+                            await fairplaytubeDatabaseContext.SaveChangesAsync();
+
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    await LogException(context, ex, default);
+                }
+                await next();
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
@@ -519,6 +526,45 @@ namespace FairPlayTube
                 else
                     endpoints.MapFallbackToFile("index.Development.html");
             });
+        }
+
+        private async Task<long?> LogException(HttpContext context, Exception error, long? errorId)
+        {
+            try
+            {
+                FairplaytubeDatabaseContext fairplaytubeDatabaseContext =
+                this.CreateFairPlayTubeDbContext(context.RequestServices);
+                ErrorLog errorLog = new()
+                {
+                    FullException = error.ToString(),
+                    StackTrace = error.StackTrace,
+                    Message = error.Message
+                };
+                await fairplaytubeDatabaseContext.ErrorLog.AddAsync(errorLog);
+                await fairplaytubeDatabaseContext.SaveChangesAsync();
+                errorId = errorLog.ErrorLogId;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            ProblemHttpResponse problemHttpResponse = new();
+            if (error is CustomValidationException)
+            {
+                problemHttpResponse.Detail = error.Message;
+            }
+            else
+            {
+                string userVisibleError = "An error ocurred.";
+                if (errorId.HasValue)
+                {
+                    userVisibleError += $" Error code: {errorId}";
+                }
+                problemHttpResponse.Detail = userVisibleError;
+            }
+            problemHttpResponse.Status = (int)System.Net.HttpStatusCode.BadRequest;
+            await context.Response.WriteAsJsonAsync<ProblemHttpResponse>(problemHttpResponse);
+            return errorId;
         }
 
         private FairplaytubeDatabaseContext CreateFairPlayTubeDbContext(IServiceCollection services)

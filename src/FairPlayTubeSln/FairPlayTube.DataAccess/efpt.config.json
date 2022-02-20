@@ -22,6 +22,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ApplicationUserApiRequest]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ApplicationUserFeature]",
          "ObjectType": 0
       },
@@ -192,6 +196,7 @@
    "UseDbContextSplitting": false,
    "UseFluentApiOnly": false,
    "UseHandleBars": false,
+   "UseHierarchyId": false,
    "UseInflector": false,
    "UseLegacyPluralizer": false,
    "UseManyToManyEntity": false,

@@ -13,6 +13,7 @@ namespace FairPlayTube.DataAccess.Models
     {
         public ApplicationUser()
         {
+            ApplicationUserApiRequest = new HashSet<ApplicationUserApiRequest>();
             ApplicationUserFeature = new HashSet<ApplicationUserFeature>();
             ApplicationUserRole = new HashSet<ApplicationUserRole>();
             Brand = new HashSet<Brand>();
@@ -55,6 +56,8 @@ namespace FairPlayTube.DataAccess.Models
         public virtual ApplicationUserStatus ApplicationUserStatus { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual UserVideoRating UserVideoRating { get; set; }
+        [InverseProperty("ApplicationUser")]
+        public virtual ICollection<ApplicationUserApiRequest> ApplicationUserApiRequest { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<ApplicationUserFeature> ApplicationUserFeature { get; set; }
         [InverseProperty("ApplicationUser")]

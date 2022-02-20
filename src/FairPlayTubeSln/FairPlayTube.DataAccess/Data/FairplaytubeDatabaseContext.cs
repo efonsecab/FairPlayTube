@@ -21,6 +21,7 @@ namespace FairPlayTube.DataAccess.Data
 
         public virtual DbSet<ApplicationRole> ApplicationRole { get; set; }
         public virtual DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public virtual DbSet<ApplicationUserApiRequest> ApplicationUserApiRequest { get; set; }
         public virtual DbSet<ApplicationUserFeature> ApplicationUserFeature { get; set; }
         public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }
         public virtual DbSet<ApplicationUserStatus> ApplicationUserStatus { get; set; }
@@ -76,6 +77,15 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.ApplicationUserStatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ApplicationUser_ApplicationUserStatus");
+            });
+
+            modelBuilder.Entity<ApplicationUserApiRequest>(entity =>
+            {
+                entity.HasOne(d => d.ApplicationUser)
+                    .WithMany(p => p.ApplicationUserApiRequest)
+                    .HasForeignKey(d => d.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ApplicationUserApiRequest_ApplicationUser");
             });
 
             modelBuilder.Entity<ApplicationUserFeature>(entity =>
