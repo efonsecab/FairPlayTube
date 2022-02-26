@@ -10,7 +10,7 @@
  * Check original source here: https://docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-for-media-docs/video-indexer-embed-widgets
  */
 
-(function () {
+function prepareWidgets() {
     'use strict';
 
     // Jump to specific time from mesage payload
@@ -57,4 +57,4 @@
     // Clear the event if window unloads
     window.onunload = clearMessageEvent;
 
-}());
+}
