@@ -46,7 +46,7 @@ namespace FairPlayTube.Client.Shared
             }
             catch (Exception ex)
             {
-                Error.ProcessError(ex);
+                await Error.ProcessErrorAsync(ex);
             }
             finally
             {
@@ -98,7 +98,7 @@ namespace FairPlayTube.Client.Shared
             }
             catch (Exception ex)
             {
-                Error.ProcessError(ex);
+                await Error.ProcessErrorAsync(ex);
             }
         }
 

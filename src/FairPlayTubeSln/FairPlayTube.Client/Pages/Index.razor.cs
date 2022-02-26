@@ -1,6 +1,7 @@
 ﻿using FairPlayTube.Client.CustomLocalization.Api;
 using FairPlayTube.Client.Navigation;
 using FairPlayTube.Client.Services;
+using FairPlayTube.Client.Shared;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Global;
 using FairPlayTube.Common.Localization;
@@ -40,6 +41,8 @@ namespace FairPlayTube.Client.Pages
         private bool AllowDownload { get; set; } = false;
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+        [CascadingParameter]
+        private Error Error { get; set; }
         public string[] AllBoughVideosIds { get; private set; }
 
         [Parameter]
@@ -50,6 +53,7 @@ namespace FairPlayTube.Client.Pages
         {
             PageNumber = 1
         };
+
         protected override async Task OnParametersSetAsync()
         {
             await LoadData();
@@ -91,6 +95,7 @@ namespace FairPlayTube.Client.Pages
             catch (Exception ex)
             {
                 this.ToastifyService.DisplayErrorNotification(ex.Message);
+                await this.Error.ProcessErrorAsync(ex);
             }
             finally
             {
@@ -116,6 +121,7 @@ namespace FairPlayTube.Client.Pages
             catch (Exception ex)
             {
                 this.ToastifyService.DisplayErrorNotification(ex.Message);
+                await this.Error.ProcessErrorAsync(ex);
             }
         }
 
@@ -131,6 +137,7 @@ namespace FairPlayTube.Client.Pages
             catch (Exception ex)
             {
                 ToastifyService.DisplayErrorNotification(ex.Message);
+                await this.Error.ProcessErrorAsync(ex);
             }
         }
 
@@ -147,9 +154,10 @@ namespace FairPlayTube.Client.Pages
                 await LoadData();
                 await JSRuntime.InvokeVoidAsync("scrollToTop");
             }
-            catch
+            catch (Exception ex)
             {
                 this.CurrentPageRequest.PageNumber++;
+                await this.Error.ProcessErrorAsync(ex);
             }
         }
 
@@ -161,9 +169,10 @@ namespace FairPlayTube.Client.Pages
                 await LoadData();
                 await JSRuntime.InvokeVoidAsync("scrollToTop");
             }
-            catch
+            catch (Exception ex)
             {
                 this.CurrentPageRequest.PageNumber--;
+                await this.Error.ProcessErrorAsync(ex);
             }
         }
 

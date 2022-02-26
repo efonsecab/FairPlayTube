@@ -27,6 +27,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<ApplicationUserStatus> ApplicationUserStatus { get; set; }
         public virtual DbSet<Brand> Brand { get; set; }
         public virtual DbSet<BrandVideo> BrandVideo { get; set; }
+        public virtual DbSet<ClientSideErrorLog> ClientSideErrorLog { get; set; }
         public virtual DbSet<Culture> Culture { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
         public virtual DbSet<GatedFeature> GatedFeature { get; set; }

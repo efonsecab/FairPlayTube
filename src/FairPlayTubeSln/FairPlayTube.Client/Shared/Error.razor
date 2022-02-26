@@ -1,21 +1,7 @@
-﻿@using Microsoft.Extensions.Logging
+﻿@using FairPlayTube.ClientServices
+@using Microsoft.Extensions.Logging
 @inject ILogger<Error> Logger
 
 <CascadingValue Value=this>
     @ChildContent
 </CascadingValue>
-
-@code {
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
-    private static List<Exception> ExceptionsList = new();
-
-    public void ProcessError(Exception ex)
-    {
-        ExceptionsList.Add(ex);
-        Logger.LogError("Error:ProcessError - Type: {Type} Message: {Message}", 
-            ex.GetType(), ex.Message);
-    }
-
-    public List<Exception> GetExceptionsList() => ExceptionsList;
-}

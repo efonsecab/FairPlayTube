@@ -4,6 +4,26 @@
         <name>FairPlayTube.Models</name>
     </assembly>
     <members>
+        <member name="T:FairPlayTube.Models.ClientSideErrorLog.CreateClientSideErrorLogModel">
+            <summary>
+            Holds the data to create a client side error log item
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.ClientSideErrorLog.CreateClientSideErrorLogModel.Message">
+            <summary>
+            Error Message
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.ClientSideErrorLog.CreateClientSideErrorLogModel.StackTrace">
+            <summary>
+            Error Stack Trace
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.ClientSideErrorLog.CreateClientSideErrorLogModel.FullException">
+            <summary>
+            Full Exception
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.CustomHttpResponse.ProblemHttpResponse">
             <summary>
             Represents an Http Problem Response

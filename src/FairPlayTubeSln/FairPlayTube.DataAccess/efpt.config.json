@@ -46,6 +46,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ClientSideErrorLog]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Culture]",
          "ObjectType": 0
       },

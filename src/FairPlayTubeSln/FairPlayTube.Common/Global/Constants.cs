@@ -109,6 +109,10 @@
 
         public class ApiRoutes
         {
+            public class ClientSideErrorLogController
+            {
+                public const string AddClientSideError = "api/ClientSideErrorLog/AddClientSideError";
+            }
             public class UserRequestController
             {
                 public const string AddAnonymousUserRequest = "api/UserRequest/AddAnonymousUserRequest";

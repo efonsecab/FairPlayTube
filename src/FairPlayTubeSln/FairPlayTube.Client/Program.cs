@@ -101,6 +101,7 @@ namespace FairPlayTube.Client
             builder.Services.AddTransient<FeatureClientService>();
             builder.Services.AddTransient<UserRequestClientService>();
             builder.Services.AddTransient<UserMessageClientService>();
+            builder.Services.AddTransient<ClientSideErrorLogClientService>();
 
             var host = builder.Build();
             ModelsLocalizationSetup.ConfigureModelsLocalizers(host.Services);
