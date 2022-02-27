@@ -18,6 +18,7 @@ namespace FairPlayTube.DataAccess.Models
             ApplicationUserRole = new HashSet<ApplicationUserRole>();
             Brand = new HashSet<Brand>();
             PaypalTransaction = new HashSet<PaypalTransaction>();
+            RoleRequest = new HashSet<RoleRequest>();
             UserExternalMonetization = new HashSet<UserExternalMonetization>();
             UserFeedback = new HashSet<UserFeedback>();
             UserFollowerFollowedApplicationUser = new HashSet<UserFollower>();
@@ -66,6 +67,8 @@ namespace FairPlayTube.DataAccess.Models
         public virtual ICollection<Brand> Brand { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<PaypalTransaction> PaypalTransaction { get; set; }
+        [InverseProperty("ApplicationUser")]
+        public virtual ICollection<RoleRequest> RoleRequest { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<UserExternalMonetization> UserExternalMonetization { get; set; }
         [InverseProperty("ApplicationUser")]

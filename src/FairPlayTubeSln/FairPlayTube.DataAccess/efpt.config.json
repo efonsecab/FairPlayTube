@@ -78,6 +78,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[RoleRequest]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[UserExternalMonetization]",
          "ObjectType": 0
       },

@@ -35,6 +35,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<PaypalTransaction> PaypalTransaction { get; set; }
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<Resource> Resource { get; set; }
+        public virtual DbSet<RoleRequest> RoleRequest { get; set; }
         public virtual DbSet<UserExternalMonetization> UserExternalMonetization { get; set; }
         public virtual DbSet<UserFeedback> UserFeedback { get; set; }
         public virtual DbSet<UserFollower> UserFollower { get; set; }
@@ -182,6 +183,15 @@ namespace FairPlayTube.DataAccess.Data
                     .HasForeignKey(d => d.CultureId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Resource_Culture");
+            });
+
+            modelBuilder.Entity<RoleRequest>(entity =>
+            {
+                entity.HasOne(d => d.ApplicationUser)
+                    .WithMany(p => p.RoleRequest)
+                    .HasForeignKey(d => d.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RoleRequest_ApplicationUser");
             });
 
             modelBuilder.Entity<UserExternalMonetization>(entity =>

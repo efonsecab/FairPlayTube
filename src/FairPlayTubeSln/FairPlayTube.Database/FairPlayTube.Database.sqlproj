@@ -106,6 +106,7 @@
     <Build Include="dbo\Tables\UserRequestType.sql" />
     <Build Include="dbo\Tables\UserRequest.sql" />
     <Build Include="dbo\Tables\ApplicationUserApiRequest.sql" />
+    <Build Include="dbo\Tables\RoleRequest.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />
