@@ -1,0 +1,80 @@
+﻿@using FairPlayTube.Common.Helpers
+<Meta property="og:url" content="@this.NavigationManager.Uri" />
+<Meta property="og:type" content="website" />
+<Meta property="og:image" content="@VideoThumbnailUrl" />
+<Meta property="og:video" content="@this.NavigationManager.Uri" />
+<Meta property="og:video:secure_url" content="@this.NavigationManager.Uri" />
+<Meta property="og:video:type" content="video/mp4" />
+<Meta property="og:video:width" content="300" />
+<Meta property="og:video:height" content="300" />
+<Meta property="twitter:image" content="@VideoThumbnailUrl" />
+<Meta name="twitter:card" content="summary_large_image" />
+<Meta name="twitter:site" content="@("@FTube2021")" />
+<Meta name="twitter:creator" content="@("@efonsecabcr")" />
+
+<Loading IsLoading="IsLoading"></Loading>
+
+@if (this.VideoModel != null)
+{
+    <Meta property="og:title" content="@this.VideoModel.Name" />
+    <Meta property="og:description" content="@this.VideoModel.Description" />
+    <Meta property="twitter:description" content="@this.VideoModel.Description" />
+
+    <article>
+        <div class="container">
+            <div class="mb-3">
+                <h1>
+                    @this.VideoModel.Name
+                </h1>
+            </div>
+            <FairPlayTube.Components.Videos.Video AllowEdit="false"
+                                              VideoModel="this.VideoModel"
+                                              ShowDetailsLink="false"
+                                              ShowTwitterShareButton="true" ShowDisplayAd="true"
+                                              ShowYouTubeVideosLink="@(VideoModel.YouTubeChannels > 0)"
+                                              OnShowYouTubeLatestVideos="OnShowYouTubeLatestVideos"
+                                              ShowAddVideoJobButton="ShowAddVideoJobButton"
+                                              ShowAvailableJobsButton="ShowAvailableJobsButton"></FairPlayTube.Components.Videos.Video>
+
+            <AuthorizeView>
+                <Authorized Context="authContext">
+                    <EditForm Model="@NewCommentModel" OnValidSubmit="OnValidCommentSubmit">
+                        <div class="mb-3">
+                            <DataAnnotationsValidator></DataAnnotationsValidator>
+                            <ValidationSummary></ValidationSummary>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">@Localizer[CommentTitleTextKey]</label>
+                            <InputText class="form-control" @bind-Value="@NewCommentModel.Comment"></InputText>
+                        </div>
+                        <button type="submit" class="btn btn-primary">@Localizer[SubmitButtonTextKey]</button>
+                    </EditForm>
+                </Authorized>
+                <NotAuthorized>
+                    @Localizer[OnlyLoggedInCanAddCommentsTextKey]
+                </NotAuthorized>
+            </AuthorizeView>
+            <div class="mb-3">
+                @if (this.VideoComments != null)
+                {
+                    <h2>@Localizer[CommentsTitleTextKey]</h2>
+                    @foreach (var singleComment in this.VideoComments)
+                    {
+                        <div class="row">
+                            <div class="col">
+                                <Card Width="100%">
+                                    <CardHeader>
+                                        <strong>@singleComment.RowCreationUser</strong> - @singleComment.RowCreationDateTime - @singleComment.ApplicationUserFollowersCount Follower(s)
+                                    </CardHeader>
+                                    <CardBody>
+                                        @((MarkupString)HtmlHelper.FormatHtmlText(singleComment.Comment))
+                                    </CardBody>
+                                </Card>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </article>
+}
