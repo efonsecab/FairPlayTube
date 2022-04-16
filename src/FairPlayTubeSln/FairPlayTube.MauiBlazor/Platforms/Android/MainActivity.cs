@@ -1,6 +1,8 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Microsoft.Identity.Client;
 
 namespace FairPlayTube.MauiBlazor
 {
@@ -11,6 +13,12 @@ namespace FairPlayTube.MauiBlazor
         {
             App.ParentWindow = this;
             base.OnCreate(savedInstanceState);
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
         }
     }
 }

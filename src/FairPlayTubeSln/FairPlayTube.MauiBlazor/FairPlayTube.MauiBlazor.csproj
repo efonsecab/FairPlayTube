@@ -14,7 +14,7 @@
 		<ApplicationTitle>FairPlayTube.MauiBlazor</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.fairplaytube.mauiblazor</ApplicationId>
+		<ApplicationId>com.pticostarica.fairplaytube</ApplicationId>
 		<ApplicationId Condition="$(TargetFramework.Contains('-windows'))">96666053-8930-4540-A02E-0DAF19D568D3</ApplicationId>
 
 		<!-- Versions -->

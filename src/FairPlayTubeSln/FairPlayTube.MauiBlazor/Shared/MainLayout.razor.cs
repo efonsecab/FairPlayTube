@@ -43,7 +43,7 @@ namespace FairPlayTube.MauiBlazor.Shared
                 authResult = await B2CConstants.PublicClientApp
                     .AcquireTokenInteractive(B2CConstants.ApiScopesArray)
 #if ANDROID
-                    .WithParentActivityOrWindow(App.ParentWindow)
+                    .WithParentActivityOrWindow(Platform.CurrentActivity)
 #endif
                     .WithAccount(GetAccountByPolicy(accounts, B2CConstants.PolicySignUpSignIn))
                     .WithPrompt(Prompt.SelectAccount)
