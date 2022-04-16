@@ -62,7 +62,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.Translator.Win
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.SharedConfiguration", "FairPlayTube.SharedConfiguration\FairPlayTube.SharedConfiguration.csproj", "{C9F45BF8-B4F2-4C1B-8ACF-4446128A100F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FairPlayTube.MauiBlazor", "FairPlayTube.MauiBlazor\FairPlayTube.MauiBlazor.csproj", "{24668342-A5DE-41EF-A86F-65C3EE322237}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FairPlayTube.MauiBlazor", "FairPlayTube.MauiBlazor\FairPlayTube.MauiBlazor.csproj", "{24668342-A5DE-41EF-A86F-65C3EE322237}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MauiBlazor", "MauiBlazor", "{8A425129-867E-480D-AB9C-43FCC80D0C9C}"
+	ProjectSection(SolutionItems) = preProject
+		SettingsPlaceHolders\MauiBlazor\appsettings.Development.json = SettingsPlaceHolders\MauiBlazor\appsettings.Development.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -151,6 +156,7 @@ Global
 		{493AE485-9E38-4C3B-B520-EB721D50BC28} = {8C1ABB81-F613-45C5-9E8B-306B3D78D40A}
 		{E7149CCF-F826-4795-AC11-30BA9BC86710} = {8C1ABB81-F613-45C5-9E8B-306B3D78D40A}
 		{B8872542-CEA0-4156-8E70-0460F92E8766} = {8C1ABB81-F613-45C5-9E8B-306B3D78D40A}
+		{8A425129-867E-480D-AB9C-43FCC80D0C9C} = {8C1ABB81-F613-45C5-9E8B-306B3D78D40A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2F5128D2-633F-4208-8325-087B6B99BFA8}
