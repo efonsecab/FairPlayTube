@@ -1,17 +1,35 @@
-﻿@inherits LayoutComponentBase
+﻿@using FairPlayTube.MauiBlazor.Features.LogOn
+@inherits LayoutComponentBase
 
 <div class="page">
-	<div class="sidebar">
-		<NavMenu />
-	</div>
+    <div class="sidebar">
+        <NavMenu />
+    </div>
 
-	<main>
-		<div class="top-row px-4">
-			<a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-		</div>
+    <main>
+        <div class="top-row px-4">
+            @if (!UserState.UserContext.IsLoggedOn)
+            {
+                <button class="btn btn-primary" @onclick="@( async () => await OnLoginClicked())">Sign In</button>
+            }
+        </div>
 
-		<article class="content px-4">
-			@Body
-		</article>
-	</main>
+        <article class="content px-4">
+            <ErrorBoundary>
+                <ChildContent>
+                    @if (!UserState.UserContext.IsLoggedOn)
+                    {
+                        <button class="btn btn-primary" @onclick="@( async () => await OnLoginClicked())">Sign In</button>
+                    }
+                    @Body
+                </ChildContent>
+                <ErrorContent>
+                    An error is there: @context.ToString()
+                </ErrorContent>
+            </ErrorBoundary>
+        </article>
+    </main>
 </div>
+<BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.TopRight"
+                        Timeout="20"
+                        IconType="IconType.Material" />

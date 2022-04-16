@@ -1,22 +1,17 @@
-﻿using FairPlayTube.ClientServices.CustomLocalization.Api;
-using FairPlayTube.Client.Navigation;
-using FairPlayTube.Client.Services;
-using FairPlayTube.Client.Shared;
+﻿using Blazored.Toast.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Global;
 using FairPlayTube.Common.Localization;
+using FairPlayTube.MauiBlazor.Navigation;
+using FairPlayTube.MauiBlazor.Shared;
 using FairPlayTube.Models.Pagination;
 using FairPlayTube.Models.Video;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FairPlayTube.Client.Pages
+namespace FairPlayTube.MauiBlazor.Pages
 {
     [Route("/")]
     [Route(Constants.RootPagesRoutes.SearchWithSearchTerm)]
@@ -33,7 +28,7 @@ namespace FairPlayTube.Client.Pages
         private SearchClientService SearchClientService { get; set; }
 
         [Inject]
-        private ToastifyService ToastifyService { get; set; }
+        private IToastService ToastService { get; set; }
         [Inject]
         private IJSRuntime JSRuntime { get; set; }
         private bool IsLoading { get; set; }
@@ -94,7 +89,7 @@ namespace FairPlayTube.Client.Pages
             }
             catch (Exception ex)
             {
-                this.ToastifyService.DisplayErrorNotification(ex.Message);
+                this.ToastService.ShowError(ex.Message);
                 await this.Error.ProcessErrorAsync(ex);
             }
             finally
@@ -120,7 +115,7 @@ namespace FairPlayTube.Client.Pages
             }
             catch (Exception ex)
             {
-                this.ToastifyService.DisplayErrorNotification(ex.Message);
+                this.ToastService.ShowError(ex.Message);
                 await this.Error.ProcessErrorAsync(ex);
             }
         }
@@ -130,13 +125,13 @@ namespace FairPlayTube.Client.Pages
             try
             {
                 await VideoClientService.BuyVideoAccessAsync(videoInfoModel.VideoId);
-                ToastifyService.DisplaySuccessNotification("Video Access successfully bought");
+                ToastService.ShowSuccess("Video Access successfully bought");
                 await LoadData();
                 StateHasChanged();
             }
             catch (Exception ex)
             {
-                ToastifyService.DisplayErrorNotification(ex.Message);
+                ToastService.ShowError(ex.Message);
                 await this.Error.ProcessErrorAsync(ex);
             }
         }

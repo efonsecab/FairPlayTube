@@ -30,10 +30,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon
-			Include="Resources\appicon.svg"
-			ForegroundFile="Resources\appiconfg.svg"
-			Color="#512BD4" />
+		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" BaseSize="128,128" />
@@ -48,5 +45,49 @@
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="appsettings.Development.json" />
+	  <Content Remove="appsettings.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="..\FairPlayTube.Client\wwwroot\css\bootstrap\bootstrap.min.css" Link="wwwroot\css\bootstrap\bootstrap.min.css" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="appsettings.Development.json" />
+	  <EmbeddedResource Include="appsettings.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.4" />
+	  <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.4" />
+	  <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.4" />
+	  <PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.4" />
+	  <PackageReference Include="Microsoft.Identity.Client" Version="4.43.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\FairPlayTube.ClientServices\FairPlayTube.ClientServices.csproj" />
+	  <ProjectReference Include="..\FairPlayTube.Common\FairPlayTube.Common.csproj" />
+	  <ProjectReference Include="..\FairPlayTube.Components\FairPlayTube.Components.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="wwwroot\js\localization\blazor-culture.js">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\css\bootstrap\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\FairPlayTube.Client\wwwroot\css\bootstrap\bootstrap.min.css.map" Link="wwwroot\css\bootstrap\bootstrap.min.css.map" />
+	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings.json" /></VisualStudio></ProjectExtensions>
 
 </Project>

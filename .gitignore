@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 /src/FairPlayTubeSln/FairPlayTube.Client/wwwroot/appsettings.Development.json
 /src/FairPlayTubeSln/FairPlayTube/Properties
+/src/FairPlayTubeSln/FairPlayTube.MauiBlazor/appsettings.Development.json
+/src/FairPlayTubeSln/FairPlayTube.MauiBlazor/appsettings.json

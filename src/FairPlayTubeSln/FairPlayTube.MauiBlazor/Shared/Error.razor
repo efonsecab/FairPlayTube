@@ -1,0 +1,7 @@
+﻿@using FairPlayTube.ClientServices
+@using Microsoft.Extensions.Logging
+@inject ILogger<Error> Logger
+
+<CascadingValue Value=this>
+    @ChildContent
+</CascadingValue>

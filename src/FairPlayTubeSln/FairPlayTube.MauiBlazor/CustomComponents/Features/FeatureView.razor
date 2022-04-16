@@ -1,0 +1,10 @@
+﻿@using FairPlayTube.ClientServices
+@if (FeatureClientService.IsFeatureEnabled(this.FeatureType))
+{
+    @FeatureEnabled
+}
+else
+{
+    @FeatureDisabled
+
+}

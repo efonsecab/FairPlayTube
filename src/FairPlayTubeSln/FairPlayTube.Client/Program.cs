@@ -1,6 +1,6 @@
 using Blazored.Toast;
 using FairPlayTube.Client.CustomClaims;
-using FairPlayTube.Client.CustomLocalization.Api;
+using FairPlayTube.ClientServices.CustomLocalization.Api;
 using FairPlayTube.Client.CustomProviders;
 using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
