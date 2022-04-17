@@ -173,7 +173,8 @@ namespace FairPlayTube
                     {
                         if (user == null)
                         {
-                            var userRole = await fairplaytubeDatabaseContext.ApplicationRole.FirstAsync(p => p.Name == Common.Global.Constants.Roles.User);
+                            var userRole = await fairplaytubeDatabaseContext.ApplicationRole.SingleAsync(p => p.Name == Common.Global.Constants.Roles.User);
+                            var creatorRole = await fairplaytubeDatabaseContext.ApplicationRole.SingleAsync(p => p.Name == Common.Global.Constants.Roles.Creator);
                             user = new ApplicationUser()
                             {
                                 LastLogIn = DateTimeOffset.UtcNow,
@@ -187,6 +188,11 @@ namespace FairPlayTube
                             {
                                 ApplicationUserId = user.ApplicationUserId,
                                 ApplicationRoleId = userRole.ApplicationRoleId
+                            });
+                            await fairplaytubeDatabaseContext.ApplicationUserRole.AddAsync(new ApplicationUserRole()
+                            {
+                                ApplicationUserId = user.ApplicationUserId,
+                                ApplicationRoleId = creatorRole.ApplicationRoleId
                             });
                             await fairplaytubeDatabaseContext.SaveChangesAsync();
                             var freeSubscriptionPlan =
