@@ -40,6 +40,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
 
         private UserSubscriptionStatusModel MySubscriptionStatus { get; set; }
         private bool IsAllowedToUpload = false;
+        private bool HasReachedMaxAllowedWeeklyUploads { get; set; }
         private class Language
         {
             public string Name { get; set; }
@@ -48,8 +49,11 @@ namespace FairPlayTube.Client.Pages.Users.Videos
 
         protected override async Task OnInitializedAsync()
         {
-            await LoadSubscriptionStatusAsync();
-            var languageList = (new List<Language> {
+            try
+            {
+                IsLoading = true;
+                await LoadSubscriptionStatusAsync();
+                var languageList = (new List<Language> {
             new Language() { Name="Chinese (Simplified)", Value="zh-Hans" },
             new Language() { Name="English United Kingdom", Value="en-GB"},
             new Language() { Name="English Australia", Value="en-AU" },
@@ -89,22 +93,46 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             new Language() { Name="Swedish", Value="sv-SE" },
             new Language() { Name="Chinese (Cantonese, Traditional)", Value="zh-HK" }
             }).OrderBy(p => p.Name).ToList();
-            languageList.Insert(0, new Language() { Name = "Auto Detect Mult Language", Value = "multi" });
-            languageList.Insert(0, new Language() { Name = "Auto Detect Single Language", Value = "auto" });
-            AvailableLanguages = languageList.ToArray();
-            this.UploadVideoModel.Language = languageList.First().Value;
-            this.VideoNameMaxLength = Convert.ToInt32(
-                DisplayHelper.MaxLengthFor<UploadVideoModel>(p => p.Name));
+                languageList.Insert(0, new Language() { Name = "Auto Detect Mult Language", Value = "multi" });
+                languageList.Insert(0, new Language() { Name = "Auto Detect Single Language", Value = "auto" });
+                AvailableLanguages = languageList.ToArray();
+                this.UploadVideoModel.Language = languageList.First().Value;
+                this.VideoNameMaxLength = Convert.ToInt32(
+                    DisplayHelper.MaxLengthFor<UploadVideoModel>(p => p.Name));
+            }
+            catch (Exception ex)
+            {
+                ToastifyService.DisplayErrorNotification(ex.Message);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
 
         private async Task LoadSubscriptionStatusAsync()
         {
             this.MySubscriptionStatus = await UserClientService.GetMySubscriptionStatusAsync();
-            if ((this.MySubscriptionStatus != null) &&
-                (this.MySubscriptionStatus.SubscriptionPlanId == (short)SubscriptionPlan.Unlimited ||
-                this.MySubscriptionStatus.UploadedVideosLast7Days < this.MySubscriptionStatus.MaxAllowedWeeklyVideos))
+            if (this.MySubscriptionStatus != null)
             {
-                IsAllowedToUpload = true;
+                if (this.MySubscriptionStatus.SubscriptionPlanId == (short)SubscriptionPlan.Unlimited)
+                {
+                    HasReachedMaxAllowedWeeklyUploads = false;
+                    IsAllowedToUpload = true;
+                }
+                else
+                {
+                    if (this.MySubscriptionStatus.UploadedVideosLast7Days < this.MySubscriptionStatus.MaxAllowedWeeklyVideos)
+                    {
+                        HasReachedMaxAllowedWeeklyUploads = false;
+                        IsAllowedToUpload = true;
+                    }
+                    else
+                    {
+                        HasReachedMaxAllowedWeeklyUploads = true;
+                        IsAllowedToUpload = false;
+                    }
+                }
             }
         }
 

@@ -73,7 +73,7 @@
         </strong>
     </div>
 }
-else
+@if (HasReachedMaxAllowedWeeklyUploads)
 {
     <strong>@Localizer[MaxAllowedWeeklyVideosReachedTextKey]</strong>
 }
