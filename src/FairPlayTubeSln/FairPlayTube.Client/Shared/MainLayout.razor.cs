@@ -87,7 +87,14 @@ namespace FairPlayTube.Client.Shared
 
         private async void VisitsTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            await VisitorTrackingClientService.UpdateVisitTimeElapsedAsync();
+            try
+            {
+                await VisitorTrackingClientService.UpdateVisitTimeElapsedAsync();
+            }
+            catch (Exception ex)
+            {
+                await Error.ProcessErrorAsync(ex);
+            }
         }
 
         private async void NavigationManager_LocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)

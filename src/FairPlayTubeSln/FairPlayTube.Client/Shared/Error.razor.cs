@@ -17,17 +17,25 @@ namespace FairPlayTube.Client.Shared
 
         public async Task ProcessErrorAsync(Exception ex)
         {
-            ExceptionsList.Add(ex);
-            Logger.LogError("Error:ProcessError - Type: {Type} Message: {Message}",
-                ex.GetType(), ex.Message);
-            await this.ClientSideErrorLogClientService.AddClientSideErrorAsync(
-                new Models.ClientSideErrorLog.CreateClientSideErrorLogModel()
-                {
-                    FullException = ex.ToString(),
-                    Message = ex.Message,
-                    StackTrace = ex.StackTrace
-                }
-            );
+            try
+            {
+                ExceptionsList.Add(ex);
+                Logger.LogError("Error:ProcessError - Type: {Type} Message: {Message}",
+                    ex.GetType(), ex.Message);
+                await this.ClientSideErrorLogClientService.AddClientSideErrorAsync(
+                    new Models.ClientSideErrorLog.CreateClientSideErrorLogModel()
+                    {
+                        FullException = ex.ToString(),
+                        Message = ex.Message,
+                        StackTrace = ex.StackTrace
+                    }
+                );
+            }
+            catch 
+            {
+                // If we cannot send the error to the server, there is nothing to do, 
+                // therefore we ignore it
+            }
         }
 
         public List<Exception> GetExceptionsList() => ExceptionsList;
