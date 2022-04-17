@@ -40,6 +40,7 @@ namespace FairPlayTube.Services
         public async Task SendMessageAsync(UserMessageModel model, string senderObjectId, CancellationToken cancellationToken)
         {
             var sender = await this.FairplaytubeDatabaseContext.ApplicationUser
+                .Include(p=>p.ApplicationUserRole).ThenInclude(p=>p.ApplicationRole)
                             .Where(u => u.AzureAdB2cobjectId.ToString() == senderObjectId)
                             .SingleAsync(cancellationToken);
             var lastMonthDate = DateTimeOffset.UtcNow.AddMonths(-1);
@@ -48,7 +49,8 @@ namespace FairPlayTube.Services
                 .Where(p => p.FromApplicationUserId == sender.ApplicationUserId &&
                 p.RowCreationDateTime >= lastMonthDate)
                 .CountAsync(cancellationToken: cancellationToken);
-            if (totalMessagesSentLast30Days > Constants.ActionsLimits.MaxMonthlySentMessages)
+            if (totalMessagesSentLast30Days > Constants.ActionsLimits.MaxMonthlySentMessages &&
+                sender.ApplicationUserRole.Any(p=>p.ApplicationRole.Name == Common.Global.Constants.Roles.Admin)==false)
                 throw new CustomValidationException($"Monthly messages limit reached. " +
                     $"You cannot send more than {Constants.ActionsLimits.MaxMonthlySentMessages} per month. " +
                     $"You have sent: {totalMessagesSentLast30Days}");
