@@ -172,5 +172,11 @@ BEGIN
     INSERT INTO SubscriptionPlan([SubscriptionPlanId],[Name],[Description],[MaxAllowedWeeklyVideos]) 
     VALUES(1,@SUBSCRIPTIONPLANNAME, 'Free Plan', 1)
 END
+SET @SUBSCRIPTIONPLANNAME = 'Unlimited'
+IF NOT EXISTS (SELECT * FROM [dbo].[SubscriptionPlan] WHERE [NAME]= @SUBSCRIPTIONPLANNAME)
+BEGIN
+    INSERT INTO SubscriptionPlan([SubscriptionPlanId],[Name],[Description],[MaxAllowedWeeklyVideos]) 
+    VALUES(99,@SUBSCRIPTIONPLANNAME, 'Unlimited Plan', NULL)
+END
 SET IDENTITY_INSERT [dbo].[SubscriptionPlan] OFF
 --END OF SUBSCRIPTION PLANS
