@@ -4,9 +4,11 @@ using FairPlayTube.Common.CustomHelpers;
 using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.FileUpload;
+using FairPlayTube.Models.UserSubscription;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
 using System;
@@ -23,6 +25,8 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         [Inject]
         private VideoClientService VideoClientService { get; set; }
         [Inject]
+        UserClientService UserClientService { get; set; }
+        [Inject]
         private ToastifyService ToastifyService { get; set; }
         [Inject]
         private IStringLocalizer<Upload> Localizer { get; set; }
@@ -34,14 +38,17 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         public int VideoNameMaxLength { get; set; }
         public int VideoNameRemainingCharacterCount => VideoNameMaxLength - this.UploadVideoModel?.Name?.Length ?? 0;
 
+        private UserSubscriptionStatusModel MySubscriptionStatus { get; set; }
+        private bool IsAllowedToUpload = false;
         private class Language
         {
             public string Name { get; set; }
             public string Value { get; set; }
         }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            await LoadSubscriptionStatusAsync();
             var languageList = (new List<Language> {
             new Language() { Name="Chinese (Simplified)", Value="zh-Hans" },
             new Language() { Name="English United Kingdom", Value="en-GB"},
@@ -89,6 +96,18 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             this.VideoNameMaxLength = Convert.ToInt32(
                 DisplayHelper.MaxLengthFor<UploadVideoModel>(p => p.Name));
         }
+
+        private async Task LoadSubscriptionStatusAsync()
+        {
+            this.MySubscriptionStatus = await UserClientService.GetMySubscriptionStatusAsync();
+            if ((this.MySubscriptionStatus != null) &&
+                (this.MySubscriptionStatus.SubscriptionPlanId == (short)SubscriptionPlan.Unlimited ||
+                this.MySubscriptionStatus.UploadedVideosLast7Days < this.MySubscriptionStatus.MaxAllowedWeeklyVideos))
+            {
+                IsAllowedToUpload = true;
+            }
+        }
+
         private async Task OnValidSubmit()
         {
             try
@@ -98,6 +117,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
                 await this.VideoClientService.UploadVideoAsync(this.UploadVideoModel);
                 this.ToastifyService.DisplaySuccessNotification($"Your video has been uploaded. " +
                     $"It will take some minutes for it to finish being processed");
+                await LoadSubscriptionStatusAsync();
                 this.UploadVideoModel = new UploadVideoModel();
             }
             catch (Exception ex)
@@ -129,15 +149,15 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         }
 
         #region Resource Keys
-        [ResourceKey(defaultValue:"Upload")]
+        [ResourceKey(defaultValue: "Upload")]
         public const string UploadTextKey = "UploadText";
-        [ResourceKey(defaultValue:"Name")]
+        [ResourceKey(defaultValue: "Name")]
         public const string NameTextKey = "NameText";
         [ResourceKey(defaultValue: "Use Url")]
         public const string UseUrlTextKey = "UseUrlText";
         [ResourceKey(defaultValue: "Source Url")]
         public const string SourceUrlTextKey = "SourceUrlText";
-        [ResourceKey(defaultValue:"Video's Language")]
+        [ResourceKey(defaultValue: "Video's Language")]
         public const string VideoLanguageTextKey = "VideoLanguageText";
         [ResourceKey(defaultValue: "Description")]
         public const string DescriptionTextKey = "DescriptionText";
@@ -152,6 +172,8 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         [ResourceKey(defaultValue: "Note: Once uploaded, videos will be visible until they finish processing, it could take up to 10 minutes for small videos. " +
             "The longer the video, the longer the processing time will take")]
         public const string NoteTextKey = "NoteText";
+        [ResourceKey(defaultValue: "Maximum allowed weekly video uploads reached")]
+        public const string MaxAllowedWeeklyVideosReachedTextKey = "MaxAllowedWeeklyVideosReachedText";
         #endregion Resource Keys
     }
 }

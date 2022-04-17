@@ -855,6 +855,31 @@
             System Storage Url for the Sample Face
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.SubscriptionPlan.SubscriptionPlanModel">
+            <summary>
+            Holds the information for a Subscription Plan
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.SubscriptionPlan.SubscriptionPlanModel.SubscriptionPlanId">
+            <summary>
+            Subscription Plan Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.SubscriptionPlan.SubscriptionPlanModel.Name">
+            <summary>
+            Subscription Plan Name
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.SubscriptionPlan.SubscriptionPlanModel.Description">
+            <summary>
+            Subscription Plan Description
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.SubscriptionPlan.SubscriptionPlanModel.MaxAllowedWeeklyVideos">
+            <summary>
+            Max allowed weekly videos
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.UserAudience.UserFollowerModel">
             <summary>
             Represents a follower for a given user
@@ -1273,6 +1298,31 @@
         <member name="F:FairPlayTube.Models.UsersRequests.Localizers.CreateUserRequestModelLocalizer.EmailAddressDisplayNameTextKey">
             <summary>
             Resource key for email address display name
+            </summary>
+        </member>
+        <member name="T:FairPlayTube.Models.UserSubscription.UserSubscriptionStatusModel">
+            <summary>
+            Holds the information for an user subscription status
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserSubscription.UserSubscriptionStatusModel.ApplicationUserId">
+            <summary>
+            Application User Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserSubscription.UserSubscriptionStatusModel.SubscriptionPlanId">
+            <summary>
+            Subscription Plan Id
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserSubscription.UserSubscriptionStatusModel.MaxAllowedWeeklyVideos">
+            <summary>
+            Max Allowed Weekly Videos
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.UserSubscription.UserSubscriptionStatusModel.UploadedVideosLast7Days">
+            <summary>
+            Videos Uploaded in the last 7 days
             </summary>
         </member>
         <member name="T:FairPlayTube.Models.Users.ConversationsUserModel">

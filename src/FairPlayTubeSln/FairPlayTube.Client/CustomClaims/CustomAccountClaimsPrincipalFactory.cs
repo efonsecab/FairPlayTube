@@ -35,6 +35,9 @@ namespace FairPlayTube.Client.CustomClaims
                     {
                         claimsIdentity.AddClaim(new Claim("Role", singleRole));
                     }
+                var subscriptionPlan = await UserClientService.GetMySubscriptionAsync();
+                if (subscriptionPlan != null)
+                    claimsIdentity.AddClaim(new Claim("Subscription", subscriptionPlan.Name));
                 var userStatus = await httpClient.GetStringAsync(Constants.ApiRoutes.UserController.GetMyUserStatus);
                 if (!string.IsNullOrWhiteSpace(userStatus))
                     claimsIdentity.AddClaim(new Claim("UserStatus", userStatus));

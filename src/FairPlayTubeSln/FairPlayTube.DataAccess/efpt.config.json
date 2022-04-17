@@ -38,6 +38,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ApplicationUserSubscriptionPlan]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Brand]",
          "ObjectType": 0
       },
@@ -79,6 +83,10 @@
       },
       {
          "Name": "[dbo].[Resource]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SubscriptionPlan]",
          "ObjectType": 0
       },
       {

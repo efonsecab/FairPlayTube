@@ -4,9 +4,11 @@ using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.DataAccess.Data;
 using FairPlayTube.Models.Invites;
+using FairPlayTube.Models.SubscriptionPlan;
 using FairPlayTube.Models.UserAudience;
 using FairPlayTube.Models.UserMessage;
 using FairPlayTube.Models.UserProfile;
+using FairPlayTube.Models.UserSubscription;
 using FairPlayTube.Notifications.Hubs;
 using FairPlayTube.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -70,6 +72,62 @@ namespace FairPlayTube.Controllers
                 .Where(p => p.ApplicationUser.AzureAdB2cobjectId.ToString() == userAdB2CObjectId)
                 .Select(p => p.ApplicationRole.Name).ToArrayAsync(cancellationToken: cancellationToken);
             return roles;
+        }
+
+        /// <summary>
+        /// Gets the name of the subscription assigned to the Logged In User
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        [Authorize]
+        public async Task<SubscriptionPlanModel> GetMySubscription(CancellationToken cancellationToken)
+        {
+            var userAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
+            var subscriptionPlan = await this.FairplaytubeDatabaseContext
+                .ApplicationUserSubscriptionPlan
+                .Include(p => p.ApplicationUser)
+                .Include(p => p.SubscriptionPlan)
+                .Where(p => p.ApplicationUser.AzureAdB2cobjectId.ToString() == userAdB2CObjectId)
+                .Select(p => new SubscriptionPlanModel()
+                {
+                    Description = p.SubscriptionPlan.Description,
+                    MaxAllowedWeeklyVideos = p.SubscriptionPlan.MaxAllowedWeeklyVideos,
+                    Name = p.SubscriptionPlan.Name,
+                    SubscriptionPlanId = p.SubscriptionPlanId
+                })
+                .SingleAsync(cancellationToken: cancellationToken);
+            return subscriptionPlan;
+        }
+
+        /// <summary>
+        /// Get's the Subscription Status for the Logged In User
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        [Authorize]
+        public async Task<UserSubscriptionStatusModel> GetMySubscriptionStatus(CancellationToken cancellationToken)
+        {
+            var userAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
+            var userEntity = await FairplaytubeDatabaseContext.ApplicationUser
+                .Include(p => p.VideoInfo)
+                .Include(p => p.ApplicationUserSubscriptionPlan).ThenInclude(p => p.SubscriptionPlan)
+                .Where(p => p.AzureAdB2cobjectId.ToString() == userAdB2CObjectId)
+                .SingleAsync(cancellationToken: cancellationToken);
+            var userSubscription = userEntity.ApplicationUserSubscriptionPlan;
+            var uploadedVideosLast7Days =
+                await FairplaytubeDatabaseContext.VideoInfo.Where(p => p.ApplicationUserId ==
+                userEntity.ApplicationUserId && p.RowCreationDateTime >=
+                DateTimeOffset.UtcNow.AddDays(-7))
+                .CountAsync(cancellationToken: cancellationToken);
+            return new UserSubscriptionStatusModel()
+            {
+                ApplicationUserId = userEntity.ApplicationUserId,
+                MaxAllowedWeeklyVideos = userSubscription.SubscriptionPlan.MaxAllowedWeeklyVideos,
+                SubscriptionPlanId = userSubscription.SubscriptionPlanId,
+                UploadedVideosLast7Days = uploadedVideosLast7Days
+            };
         }
 
         /// <summary>

@@ -201,6 +201,8 @@
                 public const string SendMessage = "api/User/SendMessage";
                 public const string GetMyUserStatus = "api/User/GetMyUserStatus";
                 public const string ValidateUserInviteCode = "api/User/ValidateUserInviteCode";
+                public const string GetMySubscription = "api/User/GetMySubscription";
+                public const string GetMySubscriptionStatus = "api/User/GetMySubscriptionStatus";
             }
 
             public class UserProfileController

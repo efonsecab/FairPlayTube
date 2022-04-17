@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FairPlayTube.Common.Global;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
@@ -9,6 +10,11 @@ namespace FairPlayTube.Common.Extensions
         public static string GetAzureAdB2CUserObjectId(this IEnumerable<Claim> claims)
         {
             return claims.SingleOrDefault(p => p.Type == "oid").Value;
+        }
+
+        public static string GetSubscriptionPlanName(this IEnumerable<Claim> claims)
+        {
+            return claims.SingleOrDefault(p => p.Type == "SubscriptionPlan").Value;
         }
 
         public static string[] GetUserEmails(this IEnumerable<Claim> claims)

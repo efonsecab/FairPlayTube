@@ -107,6 +107,8 @@
     <Build Include="dbo\Tables\UserRequest.sql" />
     <Build Include="dbo\Tables\ApplicationUserApiRequest.sql" />
     <Build Include="dbo\Tables\ClientSideErrorLog.sql" />
+    <Build Include="dbo\Tables\SubscriptionPlan.sql" />
+    <Build Include="dbo\Tables\ApplicationUserSubscriptionPlan.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment.sql" />

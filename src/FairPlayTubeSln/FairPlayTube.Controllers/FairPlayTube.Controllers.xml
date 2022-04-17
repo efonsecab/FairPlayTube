@@ -217,6 +217,20 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:FairPlayTube.Controllers.UserController.GetMySubscription(System.Threading.CancellationToken)">
+            <summary>
+            Gets the name of the subscription assigned to the Logged In User
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserController.GetMySubscriptionStatus(System.Threading.CancellationToken)">
+            <summary>
+            Get's the Subscription Status for the Logged In User
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="M:FairPlayTube.Controllers.UserController.ListUsers(System.Threading.CancellationToken)">
             <summary>
             List the users in the system

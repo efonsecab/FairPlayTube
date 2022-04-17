@@ -2,8 +2,10 @@
 using FairPlayTube.Common.Global;
 using FairPlayTube.Models.CustomHttpResponse;
 using FairPlayTube.Models.Invites;
+using FairPlayTube.Models.SubscriptionPlan;
 using FairPlayTube.Models.UserMessage;
 using FairPlayTube.Models.UserProfile;
+using FairPlayTube.Models.UserSubscription;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +46,20 @@ namespace FairPlayTube.ClientServices
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var result = await authorizedHttpClient.GetFromJsonAsync<string[]>(Constants.ApiRoutes.UserController.GetMyRoles);
+            return result;
+        }
+
+        public async Task<SubscriptionPlanModel> GetMySubscriptionAsync()
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var result = await authorizedHttpClient.GetFromJsonAsync<SubscriptionPlanModel>(Constants.ApiRoutes.UserController.GetMySubscription);
+            return result;
+        }
+        public async Task<UserSubscriptionStatusModel> GetMySubscriptionStatusAsync()
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var result = await authorizedHttpClient
+                .GetFromJsonAsync<UserSubscriptionStatusModel>(Constants.ApiRoutes.UserController.GetMySubscriptionStatus);
             return result;
         }
 
