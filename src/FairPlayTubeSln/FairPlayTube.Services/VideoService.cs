@@ -127,6 +127,28 @@ namespace FairPlayTube.Services
                        .Join(videoIds, video => video.VideoId, search => search, (video, _) => video);
         }
 
+        public async Task<bool> HasReachedWeeklyVideoUploadLimitAsync(CancellationToken cancellationToken)
+        {
+            var userAdB2CObjectId = this.CurrentUserProvider.GetObjectId();
+            var userEntity = await FairplaytubeDatabaseContext.ApplicationUser
+                .Include(p => p.VideoInfo)
+                .Include(p => p.ApplicationUserSubscriptionPlan).ThenInclude(p => p.SubscriptionPlan)
+                .Where(p => p.AzureAdB2cobjectId.ToString() == userAdB2CObjectId)
+                .SingleAsync(cancellationToken: cancellationToken);
+            var userSubscription = userEntity.ApplicationUserSubscriptionPlan;
+            if (userSubscription.SubscriptionPlanId == (short)Common.Global.Enums.SubscriptionPlan.Unlimited)
+                return false;
+            var uploadedVideosLast7Days =
+                await FairplaytubeDatabaseContext.VideoInfo.Where(p => p.ApplicationUserId ==
+                userEntity.ApplicationUserId && p.RowCreationDateTime >=
+                DateTimeOffset.UtcNow.AddDays(-7))
+                .CountAsync(cancellationToken: cancellationToken);
+            if (uploadedVideosLast7Days < userSubscription.SubscriptionPlan.MaxAllowedWeeklyVideos)
+                return false;
+            else
+                return true;
+        }
+
         public async Task<bool> UpdateVideoIndexStatusAsync(Common.Global.Enums.VideoIndexStatus videoIndexStatus,
             CancellationToken cancellationToken,
             params string[] videoIds)
