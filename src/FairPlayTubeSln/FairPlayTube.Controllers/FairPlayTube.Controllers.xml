@@ -276,6 +276,13 @@
             <param name="userInviteCode"></param>
             <returns></returns>
         </member>
+        <member name="M:FairPlayTube.Controllers.UserController.GetCreatorsCount(System.Threading.CancellationToken)">
+            <summary>
+            Gets the total count of creators in the system
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.UserMessageController">
             <summary>
             Handles all of the data regarding a User Message

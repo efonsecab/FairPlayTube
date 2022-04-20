@@ -1340,6 +1340,16 @@
             User's Full Name
             </summary>
         </member>
+        <member name="T:FairPlayTube.Models.Users.UsageStatisticsModel">
+            <summary>
+            Handles the data about users statistics
+            </summary>
+        </member>
+        <member name="P:FairPlayTube.Models.Users.UsageStatisticsModel.CreatorsCount">
+            <summary>
+            Total count of creators in the system
+            </summary>
+        </member>
         <member name="T:FairPlayTube.Models.UserYouTubeChannel.UserYouTubeChannelModel">
             <summary>
             Holds the data related to a users YouTube channels

@@ -203,6 +203,7 @@
                 public const string ValidateUserInviteCode = "api/User/ValidateUserInviteCode";
                 public const string GetMySubscription = "api/User/GetMySubscription";
                 public const string GetMySubscriptionStatus = "api/User/GetMySubscriptionStatus";
+                public const string GetCreatorsCount = "api/User/GetCreatorsCount";
             }
 
             public class UserProfileController

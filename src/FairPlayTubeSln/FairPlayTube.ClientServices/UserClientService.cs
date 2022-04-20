@@ -5,6 +5,7 @@ using FairPlayTube.Models.Invites;
 using FairPlayTube.Models.SubscriptionPlan;
 using FairPlayTube.Models.UserMessage;
 using FairPlayTube.Models.UserProfile;
+using FairPlayTube.Models.Users;
 using FairPlayTube.Models.UserSubscription;
 using System;
 using System.Collections.Generic;
@@ -100,13 +101,20 @@ namespace FairPlayTube.ClientServices
                     throw new CustomValidationException(response.ReasonPhrase);
             }
         }
-
         public async Task ValidateInviteCodeAsync(Guid inviteCode)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient.GetAsync(
                 $"{Common.Global.Constants.ApiRoutes.UserController.ValidateUserInviteCode}?userInviteCode={inviteCode}");
             response.EnsureSuccessStatusCode();
+        }
+
+        public async Task<UsageStatisticsModel> GetCreatorsCountAsync()
+        {
+            var anonymousClient = this.HttpClientService.CreateAnonymousClient();
+            var result = await anonymousClient.GetFromJsonAsync<UsageStatisticsModel>(
+                Common.Global.Constants.ApiRoutes.UserController.GetCreatorsCount);
+            return result;
         }
     }
 }

@@ -8,6 +8,7 @@ using FairPlayTube.Models.SubscriptionPlan;
 using FairPlayTube.Models.UserAudience;
 using FairPlayTube.Models.UserMessage;
 using FairPlayTube.Models.UserProfile;
+using FairPlayTube.Models.Users;
 using FairPlayTube.Models.UserSubscription;
 using FairPlayTube.Notifications.Hubs;
 using FairPlayTube.Services;
@@ -263,6 +264,27 @@ namespace FairPlayTube.Controllers
                 return Ok();
             }
             throw new CustomValidationException("Invalid Invite Code");
+        }
+
+
+        /// <summary>
+        /// Gets the total count of creators in the system
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        [AllowAnonymous]
+        public async Task<UsageStatisticsModel> GetCreatorsCount(CancellationToken cancellationToken)
+        {
+            var creatorsCount = await this.FairplaytubeDatabaseContext
+                .ApplicationUser.Include(p => p.ApplicationUserRole).ThenInclude(p => p.ApplicationRole)
+                .Where(p =>
+                p.ApplicationUserRole.Any(p => p.ApplicationRole.Name == Constants.Roles.Creator))
+                .CountAsync(cancellationToken: cancellationToken);
+            return new UsageStatisticsModel()
+            {
+                CreatorsCount = creatorsCount
+            };
         }
     }
 }
