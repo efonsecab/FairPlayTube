@@ -210,6 +210,8 @@ namespace FairPlayTube.Client.Pages
         public const string AboutTextKey = "AboutText";
         [ResourceKey(defaultValue: "Trusted By")]
         public const string TrustedByTextKey = "TrustedByText";
+        [ResourceKey(defaultValue: "Users")]
+        public const string UsersTextKey = "UsersText";
         #endregion Resource Keys
     }
 }
