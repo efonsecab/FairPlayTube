@@ -167,8 +167,11 @@ namespace FairPlayTube.Services
             foreach (var singleVideoEntity in query)
             {
                 await NotifyVideoOwnerAsync(singleVideoEntity);
-                //await NotifyFollowersAsync(singleVideoEntity);
-                await NotifyAllUsersAsync(singleVideoEntity, cancellationToken);
+                if (singleVideoEntity.VideoVisibilityId == (short)Common.Global.Enums.VideoVisibility.Public)
+                {
+                    //await NotifyFollowersAsync(singleVideoEntity);
+                    await NotifyAllUsersAsync(singleVideoEntity, cancellationToken);
+                }
             }
             return true;
         }

@@ -41,6 +41,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         private UserSubscriptionStatusModel MySubscriptionStatus { get; set; }
         private bool IsAllowedToUpload = false;
         private bool HasReachedMaxAllowedWeeklyUploads { get; set; }
+        private VideoUploadWizardStage UploadWizardStage { get; set; } = VideoUploadWizardStage.FileNameAndDescriptionInput;
         private class Language
         {
             public string Name { get; set; }
@@ -142,11 +143,31 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             {
                 this.IsSubmitting = true;
                 this.IsLoading = true;
-                await this.VideoClientService.UploadVideoAsync(this.UploadVideoModel);
-                this.ToastifyService.DisplaySuccessNotification($"Your video has been uploaded. " +
-                    $"It will take some minutes for it to finish being processed");
-                await LoadSubscriptionStatusAsync();
-                this.UploadVideoModel = new UploadVideoModel();
+                switch (this.UploadWizardStage)
+                {
+                    case VideoUploadWizardStage.FileNameAndDescriptionInput:
+                        this.UploadWizardStage = VideoUploadWizardStage.FileSourceMode;
+                        break;
+                    case VideoUploadWizardStage.FileSourceMode:
+                        this.UploadWizardStage = VideoUploadWizardStage.FileSourceInput;
+                        break;
+                    case VideoUploadWizardStage.FileSourceInput:
+                        this.UploadWizardStage = VideoUploadWizardStage.VideoLanguageInput;
+                        break;
+                    case VideoUploadWizardStage.VideoLanguageInput:
+                        this.UploadWizardStage=VideoUploadWizardStage.VideoPriceInput;
+                        break;
+                    case VideoUploadWizardStage.VideoPriceInput:
+                        this.UploadWizardStage = VideoUploadWizardStage.VideoVisibilityInput;
+                        break;
+                    case VideoUploadWizardStage.VideoVisibilityInput:
+                        await this.VideoClientService.UploadVideoAsync(this.UploadVideoModel);
+                        this.ToastifyService.DisplaySuccessNotification($"Your video has been uploaded. " +
+                            $"It will take some minutes for it to finish being processed");
+                        await LoadSubscriptionStatusAsync();
+                        this.UploadVideoModel = new UploadVideoModel();
+                        break;
+                }
             }
             catch (Exception ex)
             {
@@ -203,5 +224,15 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         [ResourceKey(defaultValue: "Maximum allowed weekly video uploads reached")]
         public const string MaxAllowedWeeklyVideosReachedTextKey = "MaxAllowedWeeklyVideosReachedText";
         #endregion Resource Keys
+    }
+
+    public enum VideoUploadWizardStage
+    {
+        FileNameAndDescriptionInput = 0,
+        FileSourceMode = 1,
+        FileSourceInput = 2,
+        VideoLanguageInput=3,
+        VideoPriceInput = 5,
+        VideoVisibilityInput=6
     }
 }

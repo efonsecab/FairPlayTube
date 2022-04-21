@@ -11,59 +11,78 @@
 
     <EditForm Model="@UploadVideoModel" OnValidSubmit="OnValidSubmit">
         <DataAnnotationsValidator></DataAnnotationsValidator>
-        <FairPlayTube.Client.CustomValidators.UploadVideoValidator></FairPlayTube.Client.CustomValidators.UploadVideoValidator>
         <ValidationSummary></ValidationSummary>
-        <div class="mb-3">
-            <label class="form-label">@Localizer[NameTextKey]</label>
-            <label class="form-label">( @VideoNameRemainingCharacterCount characters remaining )</label>
-            <input type="text" class="form-control" @bind="UploadVideoModel.Name"
+        @if (this.UploadWizardStage == VideoUploadWizardStage.FileNameAndDescriptionInput)
+        {
+            <div class="mb-3">
+                <label class="form-label">@Localizer[NameTextKey]</label>
+                <label class="form-label">( @VideoNameRemainingCharacterCount characters remaining )</label>
+                <input type="text" class="form-control" @bind="UploadVideoModel.Name"
                @bind:event="oninput" maxlength="@VideoNameMaxLength"></input>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">@Localizer[UseUrlTextKey]?</label>
-            <InputCheckbox @bind-Value="UploadVideoModel.UseSourceUrl" @onchange="OnFileSourceModeChanged"></InputCheckbox>
-        </div>
-        <div class="mb-3">
-            @if (UploadVideoModel.UseSourceUrl)
-            {
-                <label class="form-label">@Localizer[SourceUrlTextKey]</label>
-                <InputText class="form-control" @bind-Value="UploadVideoModel.SourceUrl"></InputText>
-            }
-            else
-            {
-                <FairPlayTube.Client.CustomComponents.Upload.FileUpload OnFilesUploaded="OnFilesUploaded"></FairPlayTube.Client.CustomComponents.Upload.FileUpload>
-            }
-
-        </div>
-        <div class="mb-3">
-            <label class="form-label">@Localizer[VideoLanguageTextKey]</label>
-            <InputSelect class="form-control" @bind-Value="UploadVideoModel.Language">
-                @foreach (var singleLanguage in AvailableLanguages)
-                {
-                <option value="@singleLanguage.Value">@singleLanguage.Name</option>
-                }
-        </InputSelect>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">@Localizer[DescriptionTextKey]</label>
-        <InputTextArea class="form-control" @bind-Value="UploadVideoModel.Description"
+                <ValidationMessage For="() => UploadVideoModel.Name" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Localizer[DescriptionTextKey]</label>
+                <InputTextArea class="form-control" @bind-Value="UploadVideoModel.Description"
                        rows="4" cols="50" maxlength="500"></InputTextArea>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">@Localizer[PriceTextKey] (@Common.Global.Constants.CurrencySymbols.Dollars) - (@Constants.PriceLimits.MinVideoPrice, @Constants.PriceLimits.MaxVideoPrice)</label>
-        <InputNumber class="form-control" @bind-Value="UploadVideoModel.Price"
-                     ParsingErrorMessage="@Localizer[PriceParsingErrorTextKey]"></InputNumber>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">@Localizer[VisibilityTextKey]</label>
-        <InputSelect class="form-control" @bind-Value="UploadVideoModel.VideoVisibility">
-            @foreach (var singleValue in Enum.GetValues<Common.Global.Enums.VideoVisibility>())
+                <ValidationMessage For="() => UploadVideoModel.Description" />
+            </div>
+        }
+        @if (this.UploadWizardStage == VideoUploadWizardStage.FileSourceMode)
+        {
+            <div class="mb-3">
+                <label class="form-label">@Localizer[UseUrlTextKey]?</label>
+                <InputCheckbox @bind-Value="UploadVideoModel.UseSourceUrl" @onchange="OnFileSourceModeChanged"></InputCheckbox>
+            </div>
+        }
+        @if (this.UploadWizardStage == VideoUploadWizardStage.FileSourceInput)
+        {
+            <div class="mb-3">
+                @if (UploadVideoModel.UseSourceUrl)
                 {
-                <option value="@singleValue">@GetVisibilityName(singleValue)</option>
+                    <label class="form-label">@Localizer[SourceUrlTextKey]</label>
+                    <InputText class="form-control" @bind-Value="UploadVideoModel.SourceUrl"></InputText>
                 }
+                else
+                {
+                    <FairPlayTube.Client.CustomComponents.Upload.FileUpload OnFilesUploaded="OnFilesUploaded"></FairPlayTube.Client.CustomComponents.Upload.FileUpload>
+                }
+                <FairPlayTube.Client.CustomValidators.UploadVideoValidator></FairPlayTube.Client.CustomValidators.UploadVideoValidator>
+            </div>
+        }
+        @if (this.UploadWizardStage == VideoUploadWizardStage.VideoLanguageInput)
+        {
+            <div class="mb-3">
+                <label class="form-label">@Localizer[VideoLanguageTextKey]</label>
+                <InputSelect class="form-control" @bind-Value="UploadVideoModel.Language">
+                    @foreach (var singleLanguage in AvailableLanguages)
+                    {
+                <option value="@singleLanguage.Value">@singleLanguage.Name</option>
+                    }
         </InputSelect>
     </div>
-    @if (!IsSubmitting)
+        }
+        @if (this.UploadWizardStage == VideoUploadWizardStage.VideoPriceInput)
+        {
+            <div class="mb-3">
+                <label class="form-label">@Localizer[PriceTextKey] (@Common.Global.Constants.CurrencySymbols.Dollars) - (@Constants.PriceLimits.MinVideoPrice, @Constants.PriceLimits.MaxVideoPrice)</label>
+                <InputNumber class="form-control" @bind-Value="UploadVideoModel.Price"
+                     ParsingErrorMessage="@Localizer[PriceParsingErrorTextKey]"></InputNumber>
+            </div>
+        }
+        @if (this.UploadWizardStage == VideoUploadWizardStage.VideoVisibilityInput)
+        {
+            <div class="mb-3">
+                <label class="form-label">@Localizer[VisibilityTextKey]</label>
+                <InputSelect class="form-control" @bind-Value="UploadVideoModel.VideoVisibility">
+                    @foreach (var singleValue in Enum.GetValues<Common.Global.Enums.VideoVisibility>())
+                    {
+                <option value="@singleValue">@GetVisibilityName(singleValue)</option>
+                    }
+        </InputSelect>
+    </div>
+        }
+        @if (!IsSubmitting)
         {
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary">@Localizer[SubmitTextKey]</button>
