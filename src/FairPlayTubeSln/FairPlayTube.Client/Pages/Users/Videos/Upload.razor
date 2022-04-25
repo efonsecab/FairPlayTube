@@ -82,7 +82,7 @@
         </InputSelect>
     </div>
         }
-        @if (!IsSubmitting)
+        @if (!IsSubmitting && ShowSubmitButton)
         {
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary">@Localizer[SubmitTextKey]</button>

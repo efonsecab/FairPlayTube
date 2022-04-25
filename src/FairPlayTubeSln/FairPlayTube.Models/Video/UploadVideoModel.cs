@@ -35,7 +35,7 @@ namespace FairPlayTube.Models.Video
         /// Public Url where the source video is located
         /// </summary>
         [Url(ErrorMessageResourceName = nameof(UploadVideoModelLocalizer.InvalidUrlFormat),
-            ErrorMessageResourceType = typeof(UploadVideoModel))]
+            ErrorMessageResourceType = typeof(UploadVideoModelLocalizer))]
         [StringLength(500, ErrorMessageResourceName = nameof(UploadVideoModelLocalizer.UrlTooLong),
             ErrorMessageResourceType = typeof(UploadVideoModelLocalizer))]
         public string SourceUrl { get; set; }

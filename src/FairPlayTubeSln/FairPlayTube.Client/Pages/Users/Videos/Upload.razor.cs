@@ -42,6 +42,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         private bool IsAllowedToUpload = false;
         private bool HasReachedMaxAllowedWeeklyUploads { get; set; }
         private VideoUploadWizardStage UploadWizardStage { get; set; } = VideoUploadWizardStage.FileNameAndDescriptionInput;
+        private bool ShowSubmitButton { get; set; } = true;
         private class Language
         {
             public string Name { get; set; }
@@ -149,9 +150,12 @@ namespace FairPlayTube.Client.Pages.Users.Videos
                         this.UploadWizardStage = VideoUploadWizardStage.FileSourceMode;
                         break;
                     case VideoUploadWizardStage.FileSourceMode:
+                        if (!this.UploadVideoModel.UseSourceUrl)
+                            this.ShowSubmitButton = false;
                         this.UploadWizardStage = VideoUploadWizardStage.FileSourceInput;
                         break;
                     case VideoUploadWizardStage.FileSourceInput:
+                        this.ShowSubmitButton = true;
                         this.UploadWizardStage = VideoUploadWizardStage.VideoLanguageInput;
                         break;
                     case VideoUploadWizardStage.VideoLanguageInput:
@@ -189,6 +193,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         {
             var result = uploadResults.Single();
             this.UploadVideoModel.StoredFileName = result.StoredFileName;
+            this.ShowSubmitButton = true;
         }
 
         private void OnFileSourceModeChanged(ChangeEventArgs e)
