@@ -1,6 +1,7 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.CustomHelpers;
+using FairPlayTube.Common.Global;
 using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.FileUpload;
@@ -30,6 +31,8 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         private ToastifyService ToastifyService { get; set; }
         [Inject]
         private IStringLocalizer<Upload> Localizer { get; set; }
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
         private UploadVideoModel UploadVideoModel = new();
         private bool IsLoading { get; set; } = false;
         private bool IsSubmitting { get; set; } = false;
@@ -168,8 +171,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
                         await this.VideoClientService.UploadVideoAsync(this.UploadVideoModel);
                         this.ToastifyService.DisplaySuccessNotification($"Your video has been uploaded. " +
                             $"It will take some minutes for it to finish being processed");
-                        await LoadSubscriptionStatusAsync();
-                        this.UploadVideoModel = new UploadVideoModel();
+                        this.NavigationManager.NavigateTo(Constants.UserPagesRoutes.MyPendingVideosStatus);
                         break;
                 }
             }
