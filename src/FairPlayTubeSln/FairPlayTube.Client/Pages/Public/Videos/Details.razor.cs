@@ -20,7 +20,6 @@ using System.Threading.Tasks;
 namespace FairPlayTube.Client.Pages.Public.Videos
 {
     [Route(Common.Global.Constants.PublicVideosPages.Details)]
-    [Authorize(Roles = Common.Global.Constants.Roles.User)]
     public partial class Details
     {
         [CascadingParameter]
