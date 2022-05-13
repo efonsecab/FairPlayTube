@@ -1,0 +1,48 @@
+﻿main-page-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+    height: 100vh;
+}
+.main-page-header {
+    display: grid;
+    grid-row: 1/2;
+    grid-column: 1/4;
+    background-image: url('./images/ptilogo.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.nav-bar-section {
+    align-self: center;
+    grid-row: 1/2;
+    grid-column: 1/2;
+    height: 100%;
+}
+.logo-section {
+    align-self: center;
+    grid-row: 1/2;
+    grid-column: 2/3;
+    height: 100%;
+}
+.logo-image {
+    text-align: center;
+}
+.main-page-content {
+    grid-column: 1/4;
+    grid-row: 2/3;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.footer-section {
+    grid-row: 3/4;
+    grid-column: 1/4;
+    height: 100%;
+    background-image: url('./images/Footer.svg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.footer-icons-section {
+    text-align: center;
+    position: relative;
+    top: 50%;
+}

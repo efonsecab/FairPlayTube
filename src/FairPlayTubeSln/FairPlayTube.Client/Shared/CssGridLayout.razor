@@ -1,0 +1,57 @@
+﻿@inherits LayoutComponentBase
+
+<ErrorBoundary>
+    <ChildContent>
+        <div class="main-page-grid">
+            <div class="main-page-header">
+                <div class="nav-bar-section">
+                </div>
+                <div class="logo-section">
+                    <div class="logo-image">
+                    </div>
+                </div>
+            </div>
+            <div class="main-page-content">
+                @Body
+            </div>
+            <div class="footer-section">
+                <div class="footer-icons-section">
+                    <a class="btn btn-outline-primary" style="margin:0;"
+                       @onclick="OnShowCultureSelectorClicked">
+                        <i class="bi bi-globe"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        @if (ShowCultureSelector)
+        {
+            <CustomModal OnCloseButtonClicked="HideCultureSelector" ShowFooter="false">
+                <Content>
+                    <CultureSelector></CultureSelector>
+                </Content>
+            </CustomModal>
+
+        }
+        <BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.TopRight"
+                        Timeout="20"
+                        IconType="IconType.Material" />
+    </ChildContent>
+    <ErrorContent>
+        <div class="mb-3">
+            An error has occured. Our apologies for the inconvenience.
+            You can report the error creating an issue here
+            <a target="_blank" href="https://github.com/efonsecab/FairPlayTube/issues/new?assignees=&labels=&template=bug_report.md&title=">
+                here
+            </a>
+        </div>
+        <div class="mb-3">
+            Error Message: @context.Message
+        </div>
+        @if (context.InnerException is not null)
+        {
+            <div class="mb-3">
+                Inner Message: @context.InnerException.Message
+            </div>
+        }
+    </ErrorContent>
+</ErrorBoundary>
