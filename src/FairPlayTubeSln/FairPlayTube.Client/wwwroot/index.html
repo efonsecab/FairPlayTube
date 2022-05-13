@@ -35,8 +35,17 @@
     <!--Mailchimp popup-->
     <script id="mcjs">!function (c, h, i, m, p) { m = c.createElement(h), p = c.getElementsByTagName(h)[0], m.async = 1, m.src = i, p.parentNode.insertBefore(m, p) }(document, "script", "https://chimpstatic.com/mcjs-connected/js/users/8b82a1556651be6b90abb39cb/16acde5252f05dfbe64b63689.js");</script>
     <!--Mailchimp popup-->
+    <script>
+        function onLoadGoogleAdsError() {
+            alert("This platform is funded by ads. Please disable your Ad Blocker and reload the page");
+        }
+
+        function onLoadGoogleAdsSuccess() {
+            Blazor.start();
+        }
+    </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9882496690289431"
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous" onerror="onLoadGoogleAdsError()" onload="onLoadGoogleAdsSuccess()"></script>
     <script src="_content/Toolbelt.Blazor.TwitterShareButton/script.js"></script>
     <script src="js/files/fileDownloader.js"></script>
     <!--Blazored Toast-->
@@ -69,7 +78,7 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
-    <script src="_framework/blazor.webassembly.js"></script>
+    <script autostart="false" src="_framework/blazor.webassembly.js"></script>
     <script src="_content/Microsoft.Authentication.WebAssembly.Msal/AuthenticationService.js"></script>
     <script src="_content/Microsoft.AspNetCore.Components.Web.Extensions/headManager.js"></script>
     <script>
