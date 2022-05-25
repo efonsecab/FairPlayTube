@@ -56,6 +56,8 @@ namespace FairPlayTube.DataAccess.Models
         [InverseProperty("ApplicationUser")]
         public virtual ApplicationUserStatus ApplicationUserStatus { get; set; }
         [InverseProperty("ApplicationUser")]
+        public virtual ApplicationUserSubscriptionPlan ApplicationUserSubscriptionPlan { get; set; }
+        [InverseProperty("ApplicationUser")]
         public virtual UserVideoRating UserVideoRating { get; set; }
         [InverseProperty("ApplicationUser")]
         public virtual ICollection<ApplicationUserApiRequest> ApplicationUserApiRequest { get; set; }

@@ -25,8 +25,10 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<ApplicationUserFeature> ApplicationUserFeature { get; set; }
         public virtual DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }
         public virtual DbSet<ApplicationUserStatus> ApplicationUserStatus { get; set; }
+        public virtual DbSet<ApplicationUserSubscriptionPlan> ApplicationUserSubscriptionPlan { get; set; }
         public virtual DbSet<Brand> Brand { get; set; }
         public virtual DbSet<BrandVideo> BrandVideo { get; set; }
+        public virtual DbSet<ClientSideErrorLog> ClientSideErrorLog { get; set; }
         public virtual DbSet<Culture> Culture { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
         public virtual DbSet<GatedFeature> GatedFeature { get; set; }
@@ -36,6 +38,7 @@ namespace FairPlayTube.DataAccess.Data
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<Resource> Resource { get; set; }
         public virtual DbSet<RoleRequest> RoleRequest { get; set; }
+        public virtual DbSet<SubscriptionPlan> SubscriptionPlan { get; set; }
         public virtual DbSet<UserExternalMonetization> UserExternalMonetization { get; set; }
         public virtual DbSet<UserFeedback> UserFeedback { get; set; }
         public virtual DbSet<UserFollower> UserFollower { get; set; }
@@ -122,6 +125,21 @@ namespace FairPlayTube.DataAccess.Data
             modelBuilder.Entity<ApplicationUserStatus>(entity =>
             {
                 entity.Property(e => e.ApplicationUserStatusId).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<ApplicationUserSubscriptionPlan>(entity =>
+            {
+                entity.HasOne(d => d.ApplicationUser)
+                    .WithOne(p => p.ApplicationUserSubscriptionPlan)
+                    .HasForeignKey<ApplicationUserSubscriptionPlan>(d => d.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ApplicationUserSubscriptionPlan_ApplicationUser");
+
+                entity.HasOne(d => d.SubscriptionPlan)
+                    .WithMany(p => p.ApplicationUserSubscriptionPlan)
+                    .HasForeignKey(d => d.SubscriptionPlanId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ApplicationUserSubscriptionPlan_SubscriptionPlan");
             });
 
             modelBuilder.Entity<Brand>(entity =>

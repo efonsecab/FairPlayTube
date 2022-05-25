@@ -161,12 +161,20 @@ namespace FairPlayTube
                         user.EmailAddress = emailAddress;
                         user.LastLogIn = DateTimeOffset.UtcNow;
                         await fairplaytubeDatabaseContext.SaveChangesAsync();
+
+                        var userSubscriptionPlan =
+                            fairplaytubeDatabaseContext.ApplicationUserSubscriptionPlan
+                            .Include(p => p.SubscriptionPlan)
+                            .Where(p => p.ApplicationUserId == user.ApplicationUserId).Single();
+                        claimsIdentity.AddClaim(new Claim("SubscriptionPlan",
+                            userSubscriptionPlan.SubscriptionPlan.Name));
                     }
                     else
                     {
                         if (user == null)
                         {
-                            var userRole = await fairplaytubeDatabaseContext.ApplicationRole.FirstAsync(p => p.Name == Common.Global.Constants.Roles.User);
+                            var userRole = await fairplaytubeDatabaseContext.ApplicationRole.SingleAsync(p => p.Name == Common.Global.Constants.Roles.User);
+                            var creatorRole = await fairplaytubeDatabaseContext.ApplicationRole.SingleAsync(p => p.Name == Common.Global.Constants.Roles.Creator);
                             user = new ApplicationUser()
                             {
                                 LastLogIn = DateTimeOffset.UtcNow,
@@ -181,7 +189,29 @@ namespace FairPlayTube
                                 ApplicationUserId = user.ApplicationUserId,
                                 ApplicationRoleId = userRole.ApplicationRoleId
                             });
+                            await fairplaytubeDatabaseContext.ApplicationUserRole.AddAsync(new ApplicationUserRole()
+                            {
+                                ApplicationUserId = user.ApplicationUserId,
+                                ApplicationRoleId = creatorRole.ApplicationRoleId
+                            });
                             await fairplaytubeDatabaseContext.SaveChangesAsync();
+                            var freeSubscriptionPlan =
+                            await fairplaytubeDatabaseContext.SubscriptionPlan
+                            .SingleAsync(p => p.Name == Common.Global.Enums.SubscriptionPlan.Free.ToString());
+                            await fairplaytubeDatabaseContext.ApplicationUserSubscriptionPlan.AddAsync(
+                                new ApplicationUserSubscriptionPlan()
+                                {
+                                    ApplicationUserId = user.ApplicationUserId,
+                                    SubscriptionPlanId = freeSubscriptionPlan.SubscriptionPlanId
+                                });
+                            await fairplaytubeDatabaseContext.SaveChangesAsync();
+                            var userSubscriptionPlan =
+                            fairplaytubeDatabaseContext.ApplicationUserSubscriptionPlan
+                            .Include(p => p.SubscriptionPlan)
+                            .Where(p => p.ApplicationUserId == user.ApplicationUserId)
+                            .Single();
+                            claimsIdentity.AddClaim(new Claim("SubscriptionPlan",
+                                    userSubscriptionPlan.SubscriptionPlan.Name));
                             foreach (var singleRole in user.ApplicationUserRole)
                             {
                                 claimsIdentity.AddClaim(new Claim("Role", singleRole.ApplicationRole.Name));
@@ -197,7 +227,7 @@ namespace FairPlayTube
                             {
                                 await emailService.SendEmailAsync(toEmailAddress:
                                     singleAdminUser.EmailAddress, subject: "FairPlayTube - New User",
-                                    body: 
+                                    body:
                                     $"<p>A new user has been created at: {context.Request.Host}</p>" +
                                     $"<p>Name: {user.FullName}</p>" +
                                     $"<p>Email: {user.EmailAddress}</p>",
@@ -318,6 +348,7 @@ namespace FairPlayTube
             services.AddTransient<VideoJobApplicationService>();
             services.AddTransient<UserRequestService>();
             services.AddTransient<UserMessageService>();
+            services.AddTransient<ClientSideErrorLogService>();
         }
 
         private void ConfigureAzureContentModerator(IServiceCollection services)
@@ -453,7 +484,7 @@ namespace FairPlayTube
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
             LogApiRequests(app);
 
             app.UseEndpoints(endpoints =>

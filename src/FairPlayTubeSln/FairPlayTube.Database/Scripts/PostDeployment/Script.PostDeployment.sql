@@ -163,4 +163,20 @@ IF NOT EXISTS (SELECT * FROM [dbo].[UserRequestType] WHERE [Name] = @USERREQUEST
 BEGIN
     INSERT INTO UserRequestType([UserRequestTypeId],[Name]) VALUES ('2', @USERREQUESTTYPENAME)
 END
---END OF USER REQUEST TYPES 
+--END OF USER REQUEST TYPES
+--START OF SUBSCRIPTION PLANS
+SET IDENTITY_INSERT [dbo].[SubscriptionPlan] ON
+DECLARE @SUBSCRIPTIONPLANNAME NVARCHAR(50) = 'Free'
+IF NOT EXISTS (SELECT * FROM [dbo].[SubscriptionPlan] WHERE [NAME]= @SUBSCRIPTIONPLANNAME)
+BEGIN
+    INSERT INTO SubscriptionPlan([SubscriptionPlanId],[Name],[Description],[MaxAllowedWeeklyVideos]) 
+    VALUES(1,@SUBSCRIPTIONPLANNAME, 'Free Plan', 1)
+END
+SET @SUBSCRIPTIONPLANNAME = 'Unlimited'
+IF NOT EXISTS (SELECT * FROM [dbo].[SubscriptionPlan] WHERE [NAME]= @SUBSCRIPTIONPLANNAME)
+BEGIN
+    INSERT INTO SubscriptionPlan([SubscriptionPlanId],[Name],[Description],[MaxAllowedWeeklyVideos]) 
+    VALUES(99,@SUBSCRIPTIONPLANNAME, 'Unlimited Plan', NULL)
+END
+SET IDENTITY_INSERT [dbo].[SubscriptionPlan] OFF
+--END OF SUBSCRIPTION PLANS

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Localization;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,6 @@ using System.Threading.Tasks;
 namespace FairPlayTube.Client.Pages.Public.Videos
 {
     [Route(Common.Global.Constants.PublicVideosPages.Details)]
-    [Authorize(Roles = Common.Global.Constants.Roles.User)]
     public partial class Details
     {
         [CascadingParameter]
@@ -43,6 +43,8 @@ namespace FairPlayTube.Client.Pages.Public.Videos
         private CreateVideoCommentModel NewCommentModel { get; set; } = new CreateVideoCommentModel();
         private bool ShowAddVideoJobButton { get; set; } = false;
         private bool ShowAvailableJobsButton { get; set; }
+        [Inject]
+        private IJSRuntime JSRuntime { get; set; }
         protected override async Task OnInitializedAsync()
         {
             try
@@ -77,6 +79,14 @@ namespace FairPlayTube.Client.Pages.Public.Videos
             finally
             {
                 IsLoading = false;
+            }
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await this.JSRuntime.InvokeVoidAsync("prepareWidgets");
             }
         }
 

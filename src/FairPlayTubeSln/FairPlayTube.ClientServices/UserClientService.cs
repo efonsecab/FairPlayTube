@@ -2,8 +2,11 @@
 using FairPlayTube.Common.Global;
 using FairPlayTube.Models.CustomHttpResponse;
 using FairPlayTube.Models.Invites;
+using FairPlayTube.Models.SubscriptionPlan;
 using FairPlayTube.Models.UserMessage;
 using FairPlayTube.Models.UserProfile;
+using FairPlayTube.Models.Users;
+using FairPlayTube.Models.UserSubscription;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +50,20 @@ namespace FairPlayTube.ClientServices
             return result;
         }
 
+        public async Task<SubscriptionPlanModel> GetMySubscriptionAsync()
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var result = await authorizedHttpClient.GetFromJsonAsync<SubscriptionPlanModel>(Constants.ApiRoutes.UserController.GetMySubscription);
+            return result;
+        }
+        public async Task<UserSubscriptionStatusModel> GetMySubscriptionStatusAsync()
+        {
+            var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
+            var result = await authorizedHttpClient
+                .GetFromJsonAsync<UserSubscriptionStatusModel>(Constants.ApiRoutes.UserController.GetMySubscriptionStatus);
+            return result;
+        }
+
         public async Task<UserModel[]> ListUsersAsync()
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
@@ -84,13 +101,20 @@ namespace FairPlayTube.ClientServices
                     throw new CustomValidationException(response.ReasonPhrase);
             }
         }
-
         public async Task ValidateInviteCodeAsync(Guid inviteCode)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient.GetAsync(
                 $"{Common.Global.Constants.ApiRoutes.UserController.ValidateUserInviteCode}?userInviteCode={inviteCode}");
             response.EnsureSuccessStatusCode();
+        }
+
+        public async Task<UsageStatisticsModel> GetCreatorsCountAsync()
+        {
+            var anonymousClient = this.HttpClientService.CreateAnonymousClient();
+            var result = await anonymousClient.GetFromJsonAsync<UsageStatisticsModel>(
+                Common.Global.Constants.ApiRoutes.UserController.GetCreatorsCount);
+            return result;
         }
     }
 }

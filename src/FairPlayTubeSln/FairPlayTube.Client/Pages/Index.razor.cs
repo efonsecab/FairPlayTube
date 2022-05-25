@@ -1,6 +1,7 @@
-﻿using FairPlayTube.Client.CustomLocalization.Api;
+﻿using FairPlayTube.ClientServices.CustomLocalization.Api;
 using FairPlayTube.Client.Navigation;
 using FairPlayTube.Client.Services;
+using FairPlayTube.Client.Shared;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Global;
 using FairPlayTube.Common.Localization;
@@ -14,6 +15,7 @@ using Microsoft.JSInterop;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using FairPlayTube.Models.Users;
 
 namespace FairPlayTube.Client.Pages
 {
@@ -35,21 +37,28 @@ namespace FairPlayTube.Client.Pages
         private ToastifyService ToastifyService { get; set; }
         [Inject]
         private IJSRuntime JSRuntime { get; set; }
+        [Inject]
+        private UserClientService UserClientService { get; set; }
         private bool IsLoading { get; set; }
         private bool ShowAvailableJobsButton { get; set; }
         private bool AllowDownload { get; set; } = false;
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+        [CascadingParameter]
+        private Error Error { get; set; }
         public string[] AllBoughVideosIds { get; private set; }
 
         [Parameter]
         public string SearchTerm { get; set; }
         [Inject]
         private NavigationManager NavigationManager { get; set; }
+        private UsageStatisticsModel UsageStatistics { get; set; }
+
         private PageRequestModel CurrentPageRequest = new()
         {
             PageNumber = 1
         };
+
         protected override async Task OnParametersSetAsync()
         {
             await LoadData();
@@ -66,6 +75,7 @@ namespace FairPlayTube.Client.Pages
                 //{
                 //    AllowDownload = true;
                 //}
+                this.UsageStatistics = await this.UserClientService.GetCreatorsCountAsync();
                 PagedItems<VideoInfoModel> pageVideos = null;
                 if (String.IsNullOrWhiteSpace(SearchTerm))
                 {
@@ -91,6 +101,7 @@ namespace FairPlayTube.Client.Pages
             catch (Exception ex)
             {
                 this.ToastifyService.DisplayErrorNotification(ex.Message);
+                await this.Error.ProcessErrorAsync(ex);
             }
             finally
             {
@@ -116,6 +127,7 @@ namespace FairPlayTube.Client.Pages
             catch (Exception ex)
             {
                 this.ToastifyService.DisplayErrorNotification(ex.Message);
+                await this.Error.ProcessErrorAsync(ex);
             }
         }
 
@@ -131,6 +143,7 @@ namespace FairPlayTube.Client.Pages
             catch (Exception ex)
             {
                 ToastifyService.DisplayErrorNotification(ex.Message);
+                await this.Error.ProcessErrorAsync(ex);
             }
         }
 
@@ -147,9 +160,10 @@ namespace FairPlayTube.Client.Pages
                 await LoadData();
                 await JSRuntime.InvokeVoidAsync("scrollToTop");
             }
-            catch
+            catch (Exception ex)
             {
                 this.CurrentPageRequest.PageNumber++;
+                await this.Error.ProcessErrorAsync(ex);
             }
         }
 
@@ -161,9 +175,10 @@ namespace FairPlayTube.Client.Pages
                 await LoadData();
                 await JSRuntime.InvokeVoidAsync("scrollToTop");
             }
-            catch
+            catch (Exception ex)
             {
                 this.CurrentPageRequest.PageNumber--;
+                await this.Error.ProcessErrorAsync(ex);
             }
         }
 
@@ -193,6 +208,10 @@ namespace FairPlayTube.Client.Pages
         public const string WelcomeToTextKey = "WelcomeToText";
         [ResourceKey(defaultValue: "About")]
         public const string AboutTextKey = "AboutText";
+        [ResourceKey(defaultValue: "Trusted By")]
+        public const string TrustedByTextKey = "TrustedByText";
+        [ResourceKey(defaultValue: "Users")]
+        public const string UsersTextKey = "UsersText";
         #endregion Resource Keys
     }
 }

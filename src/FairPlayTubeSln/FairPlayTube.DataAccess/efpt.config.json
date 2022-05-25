@@ -38,11 +38,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ApplicationUserSubscriptionPlan]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Brand]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[BrandVideo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ClientSideErrorLog]",
          "ObjectType": 0
       },
       {
@@ -79,6 +87,10 @@
       },
       {
          "Name": "[dbo].[RoleRequest]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SubscriptionPlan]",
          "ObjectType": 0
       },
       {

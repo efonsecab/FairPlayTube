@@ -147,6 +147,10 @@ namespace FairPlayTube.Controllers
                 throw new CustomValidationException("You muse specify a Source Url");
             if (!uploadVideoModel.UseSourceUrl && String.IsNullOrWhiteSpace(uploadVideoModel.StoredFileName))
                 throw new CustomValidationException("You muse upload a file");
+            if (await this.VideoService.HasReachedWeeklyVideoUploadLimitAsync(cancellationToken:cancellationToken))
+            {
+                throw new CustomValidationException("You are not allowed to upload videos. You have reached your subscription's weekly limit");
+            }
             if (await this.VideoService.UploadVideoAsync(uploadVideoModel, cancellationToken: cancellationToken))
                 return Ok();
             else

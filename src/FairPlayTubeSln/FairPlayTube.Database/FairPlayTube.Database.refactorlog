@@ -273,4 +273,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ApplicationUserApiRequestId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="aadb58f6-e3c9-433a-8ba4-d564383fad00" ChangeDateTime="04/17/2022 11:57:15">
+    <Property Name="ElementName" Value="[dbo].[SubscriptionPlan].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SubscriptionPlan]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SubscriptionPlanId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5818a730-9478-4f4d-92b2-1133343513d1" ChangeDateTime="04/17/2022 12:01:59">
+    <Property Name="ElementName" Value="[dbo].[ApplicationUserSubscriptionPlan].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ApplicationUserSubscriptionPlan]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ApplicationUserSubscriptionPlan" />
+  </Operation>
 </Operations>

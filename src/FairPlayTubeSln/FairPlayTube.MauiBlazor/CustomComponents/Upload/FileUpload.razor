@@ -1,0 +1,39 @@
+﻿<Loading IsLoading="IsLoading"></Loading>
+<p>
+    <label class="form-label">
+        @Localizer[UploadFileTextKey]. Max: @(Common.Global.Constants.UploadLimits.MaxMegabytesAllowed) MB
+        <InputFile class="form-control" OnChange="@OnInputFileChange" multiple accept="video/mp4" />
+    </label>
+</p>
+
+@if (files.Count > 0 && ShouldDisplayFileList)
+{
+    <div class="card">
+        <div class="card-body">
+            <ul>
+                @foreach (var file in files)
+                {
+                    <li>
+                        @Localizer[DetailsTextKey]
+                        <br>
+                        @if (Upload(uploadResults, file.Name, Logger,
+                         out var result))
+                        {
+                            <span>
+                                @Localizer[FileTextKey]: @file.Name
+                                @*Stored File Name: @result.StoredFileName*@
+                            </span>
+                        }
+                        else
+                        {
+                            <span>
+                                @Localizer[ErrorTextKey]:
+                                @result.ErrorCode).
+                            </span>
+                        }
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}

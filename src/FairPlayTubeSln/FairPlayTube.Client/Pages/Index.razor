@@ -6,6 +6,16 @@
 
 <div class="accordion" id="accordionExample">
     <div class="accordion-item">
+        <div class="mb-3">
+            @if (this.UsageStatistics != null)
+            {
+                <p>
+                    <strong>
+                        @Localizer[TrustedByTextKey]: @this.UsageStatistics.CreatorsCount @Localizer[UsersTextKey]
+                    </strong>
+                </p>
+            }
+        </div>
         <h2 class="accordion-header" id="headingOne">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                 @Localizer[AboutTextKey] @Constants.Titles.AppTitle

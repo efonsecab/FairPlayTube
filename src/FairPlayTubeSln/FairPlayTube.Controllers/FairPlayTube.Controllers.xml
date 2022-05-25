@@ -25,6 +25,25 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:FairPlayTube.Controllers.ClientSideErrorLogController">
+            <summary>
+            Handles all the data regarding Client Side Errors
+            </summary>
+        </member>
+        <member name="M:FairPlayTube.Controllers.ClientSideErrorLogController.#ctor(FairPlayTube.Services.ClientSideErrorLogService)">
+            <summary>
+            Initializes <see cref="T:FairPlayTube.Controllers.ClientSideErrorLogController"/>
+            </summary>
+            <param name="clientSideErrorLogService"></param>
+        </member>
+        <member name="M:FairPlayTube.Controllers.ClientSideErrorLogController.AddClientSideError(FairPlayTube.Models.ClientSideErrorLog.CreateClientSideErrorLogModel,System.Threading.CancellationToken)">
+            <summary>
+            Adds a new client side error entry
+            </summary>
+            <param name="createClientSideErrorLogModel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:FairPlayTube.Controllers.FeatureController">
             <summary>
             Handles all of the data related to Features
@@ -198,6 +217,20 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:FairPlayTube.Controllers.UserController.GetMySubscription(System.Threading.CancellationToken)">
+            <summary>
+            Gets the name of the subscription assigned to the Logged In User
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserController.GetMySubscriptionStatus(System.Threading.CancellationToken)">
+            <summary>
+            Get's the Subscription Status for the Logged In User
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="M:FairPlayTube.Controllers.UserController.ListUsers(System.Threading.CancellationToken)">
             <summary>
             List the users in the system
@@ -241,6 +274,13 @@
             Validates a user invite code
             </summary>
             <param name="userInviteCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FairPlayTube.Controllers.UserController.GetCreatorsCount(System.Threading.CancellationToken)">
+            <summary>
+            Gets the total count of creators in the system
+            </summary>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="T:FairPlayTube.Controllers.UserMessageController">

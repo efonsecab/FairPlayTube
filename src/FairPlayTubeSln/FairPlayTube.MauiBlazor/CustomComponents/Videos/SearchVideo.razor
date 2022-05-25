@@ -1,0 +1,9 @@
+﻿<input type="search" class="form-control" @bind-value="@SearchTerm" style="max-width:150px;" />
+<button type="button" class="btn btn-primary" @onclick="@( async ()=> await OnSearchClicked.InvokeAsync(SearchTerm))">
+    <i class="bi bi-search"></i>
+</button>
+@code{
+    [Parameter]
+    public EventCallback<string> OnSearchClicked { get; set; }
+    private string SearchTerm { get; set; }
+}

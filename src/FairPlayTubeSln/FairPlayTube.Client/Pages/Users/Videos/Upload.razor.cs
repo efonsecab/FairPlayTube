@@ -1,12 +1,15 @@
 ﻿using FairPlayTube.Client.Services;
 using FairPlayTube.ClientServices;
 using FairPlayTube.Common.CustomHelpers;
+using FairPlayTube.Common.Global;
 using FairPlayTube.Common.Global.Enums;
 using FairPlayTube.Common.Localization;
 using FairPlayTube.Models.FileUpload;
+using FairPlayTube.Models.UserSubscription;
 using FairPlayTube.Models.Video;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
 using System;
@@ -23,9 +26,13 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         [Inject]
         private VideoClientService VideoClientService { get; set; }
         [Inject]
+        UserClientService UserClientService { get; set; }
+        [Inject]
         private ToastifyService ToastifyService { get; set; }
         [Inject]
         private IStringLocalizer<Upload> Localizer { get; set; }
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
         private UploadVideoModel UploadVideoModel = new();
         private bool IsLoading { get; set; } = false;
         private bool IsSubmitting { get; set; } = false;
@@ -34,15 +41,24 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         public int VideoNameMaxLength { get; set; }
         public int VideoNameRemainingCharacterCount => VideoNameMaxLength - this.UploadVideoModel?.Name?.Length ?? 0;
 
+        private UserSubscriptionStatusModel MySubscriptionStatus { get; set; }
+        private bool IsAllowedToUpload = false;
+        private bool HasReachedMaxAllowedWeeklyUploads { get; set; }
+        private VideoUploadWizardStage UploadWizardStage { get; set; } = VideoUploadWizardStage.FileNameAndDescriptionInput;
+        private bool ShowSubmitButton { get; set; } = true;
         private class Language
         {
             public string Name { get; set; }
             public string Value { get; set; }
         }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            var languageList = (new List<Language> {
+            try
+            {
+                IsLoading = true;
+                await LoadSubscriptionStatusAsync();
+                var languageList = (new List<Language> {
             new Language() { Name="Chinese (Simplified)", Value="zh-Hans" },
             new Language() { Name="English United Kingdom", Value="en-GB"},
             new Language() { Name="English Australia", Value="en-AU" },
@@ -82,23 +98,82 @@ namespace FairPlayTube.Client.Pages.Users.Videos
             new Language() { Name="Swedish", Value="sv-SE" },
             new Language() { Name="Chinese (Cantonese, Traditional)", Value="zh-HK" }
             }).OrderBy(p => p.Name).ToList();
-            languageList.Insert(0, new Language() { Name = "Auto Detect Mult Language", Value = "multi" });
-            languageList.Insert(0, new Language() { Name = "Auto Detect Single Language", Value = "auto" });
-            AvailableLanguages = languageList.ToArray();
-            this.UploadVideoModel.Language = languageList.First().Value;
-            this.VideoNameMaxLength = Convert.ToInt32(
-                DisplayHelper.MaxLengthFor<UploadVideoModel>(p => p.Name));
+                languageList.Insert(0, new Language() { Name = "Auto Detect Mult Language", Value = "multi" });
+                languageList.Insert(0, new Language() { Name = "Auto Detect Single Language", Value = "auto" });
+                AvailableLanguages = languageList.ToArray();
+                this.UploadVideoModel.Language = languageList.First().Value;
+                this.VideoNameMaxLength = Convert.ToInt32(
+                    DisplayHelper.MaxLengthFor<UploadVideoModel>(p => p.Name));
+            }
+            catch (Exception ex)
+            {
+                ToastifyService.DisplayErrorNotification(ex.Message);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
+
+        private async Task LoadSubscriptionStatusAsync()
+        {
+            this.MySubscriptionStatus = await UserClientService.GetMySubscriptionStatusAsync();
+            if (this.MySubscriptionStatus != null)
+            {
+                if (this.MySubscriptionStatus.SubscriptionPlanId == (short)SubscriptionPlan.Unlimited)
+                {
+                    HasReachedMaxAllowedWeeklyUploads = false;
+                    IsAllowedToUpload = true;
+                }
+                else
+                {
+                    if (this.MySubscriptionStatus.UploadedVideosLast7Days < this.MySubscriptionStatus.MaxAllowedWeeklyVideos)
+                    {
+                        HasReachedMaxAllowedWeeklyUploads = false;
+                        IsAllowedToUpload = true;
+                    }
+                    else
+                    {
+                        HasReachedMaxAllowedWeeklyUploads = true;
+                        IsAllowedToUpload = false;
+                    }
+                }
+            }
+        }
+
         private async Task OnValidSubmit()
         {
             try
             {
                 this.IsSubmitting = true;
                 this.IsLoading = true;
-                await this.VideoClientService.UploadVideoAsync(this.UploadVideoModel);
-                this.ToastifyService.DisplaySuccessNotification($"Your video has been uploaded. " +
-                    $"It will take some minutes for it to finish being processed");
-                this.UploadVideoModel = new UploadVideoModel();
+                switch (this.UploadWizardStage)
+                {
+                    case VideoUploadWizardStage.FileNameAndDescriptionInput:
+                        this.UploadWizardStage = VideoUploadWizardStage.FileSourceMode;
+                        break;
+                    case VideoUploadWizardStage.FileSourceMode:
+                        if (!this.UploadVideoModel.UseSourceUrl)
+                            this.ShowSubmitButton = false;
+                        this.UploadWizardStage = VideoUploadWizardStage.FileSourceInput;
+                        break;
+                    case VideoUploadWizardStage.FileSourceInput:
+                        this.ShowSubmitButton = true;
+                        this.UploadWizardStage = VideoUploadWizardStage.VideoLanguageInput;
+                        break;
+                    case VideoUploadWizardStage.VideoLanguageInput:
+                        this.UploadWizardStage=VideoUploadWizardStage.VideoPriceInput;
+                        break;
+                    case VideoUploadWizardStage.VideoPriceInput:
+                        this.UploadWizardStage = VideoUploadWizardStage.VideoVisibilityInput;
+                        break;
+                    case VideoUploadWizardStage.VideoVisibilityInput:
+                        await this.VideoClientService.UploadVideoAsync(this.UploadVideoModel);
+                        this.ToastifyService.DisplaySuccessNotification($"Your video has been uploaded. " +
+                            $"It will take some minutes for it to finish being processed");
+                        this.NavigationManager.NavigateTo(Constants.UserPagesRoutes.MyPendingVideosStatus);
+                        break;
+                }
             }
             catch (Exception ex)
             {
@@ -120,6 +195,7 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         {
             var result = uploadResults.Single();
             this.UploadVideoModel.StoredFileName = result.StoredFileName;
+            this.ShowSubmitButton = true;
         }
 
         private void OnFileSourceModeChanged(ChangeEventArgs e)
@@ -129,15 +205,15 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         }
 
         #region Resource Keys
-        [ResourceKey(defaultValue:"Upload")]
+        [ResourceKey(defaultValue: "Upload")]
         public const string UploadTextKey = "UploadText";
-        [ResourceKey(defaultValue:"Name")]
+        [ResourceKey(defaultValue: "Name")]
         public const string NameTextKey = "NameText";
         [ResourceKey(defaultValue: "Use Url")]
         public const string UseUrlTextKey = "UseUrlText";
         [ResourceKey(defaultValue: "Source Url")]
         public const string SourceUrlTextKey = "SourceUrlText";
-        [ResourceKey(defaultValue:"Video's Language")]
+        [ResourceKey(defaultValue: "Video's Language")]
         public const string VideoLanguageTextKey = "VideoLanguageText";
         [ResourceKey(defaultValue: "Description")]
         public const string DescriptionTextKey = "DescriptionText";
@@ -152,6 +228,18 @@ namespace FairPlayTube.Client.Pages.Users.Videos
         [ResourceKey(defaultValue: "Note: Once uploaded, videos will be visible until they finish processing, it could take up to 10 minutes for small videos. " +
             "The longer the video, the longer the processing time will take")]
         public const string NoteTextKey = "NoteText";
+        [ResourceKey(defaultValue: "Maximum allowed weekly video uploads reached")]
+        public const string MaxAllowedWeeklyVideosReachedTextKey = "MaxAllowedWeeklyVideosReachedText";
         #endregion Resource Keys
+    }
+
+    public enum VideoUploadWizardStage
+    {
+        FileNameAndDescriptionInput = 0,
+        FileSourceMode = 1,
+        FileSourceInput = 2,
+        VideoLanguageInput=3,
+        VideoPriceInput = 5,
+        VideoVisibilityInput=6
     }
 }

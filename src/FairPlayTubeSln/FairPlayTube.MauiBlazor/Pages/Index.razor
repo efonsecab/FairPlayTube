@@ -1,0 +1,67 @@
+﻿<h1>@Localizer[WelcomeToTextKey] @Constants.Titles.AppTitle</h1>
+
+<Loading IsLoading="IsLoading"></Loading>
+
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                @Localizer[AboutTextKey] @Constants.Titles.AppTitle
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="mb-3">
+                    <Card Width="100%">
+                        <CardHeader>
+                            @Localizer[WhatIsFairPlayTubeTitleKey]
+                        </CardHeader>
+                        <CardBody>
+                            @( (MarkupString)Localizer[SystemDescriptionParagraph1Key].Value)
+                            <PayPalDonateButton></PayPalDonateButton>
+                            <p>
+                                @Localizer[StrugglingCreatorsTextKey]
+                            </p>
+                            <p>
+                                @Localizer[CreatorsInMindTextKey]
+                            </p>
+                            <p>@Localizer[ContentConsumersInMindTextKey]</p>
+                            <p>
+                                <strong>
+                                    @Localizer[NotesIssuesTextKey]
+                                    <a href="https://github.com/efonsecab/FairPlayTube/issues/new?assignees=&labels=&template=bug_report.md&title=" target="_blank">@Localizer[ReportBugTextKey]</a>
+                                </strong>
+                            </p>
+                            <p>
+                                @Localizer[VisitRepoTextKey]
+                                <a href="https://github.com/efonsecab/FairPlayTube" target="_blank">https://github.com/efonsecab/FairPlayTube</a>
+                            </p>
+                            <p>
+                                <a href="https://github.com/efonsecab/FairPlayTube/issues?q=is%3Aopen+is%3Aissue+label%3Abug" target="_blank">@Localizer[SeeKnownIssuesTextKey]</a>
+                            </p>
+                        </CardBody>
+                    </Card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (this.PageVideos != null)
+{
+    <FairPlayTube.Components.Videos.VideoList AllVideos="this.PageVideos.Items" OnDownload="OnDownload"
+                                          OnBuyVideoAccess="OnBuyVideoAccess"
+                                          AllowDownload="AllowDownload"
+                                          OnShowYouTubeLatestVideos="OnShowYouTubeLatestVideos"
+                                          ShowAvailableJobsButton="ShowAvailableJobsButton"></FairPlayTube.Components.Videos.VideoList>
+}
+
+@if (CurrentPageRequest.PageNumber > 1)
+{
+    <button type="button" class="btn btn-primary" @onclick="@( async () => await LoadPreviousPageAsync())">Previous Page</button>
+}
+@if (this.PageVideos != null && this.CurrentPageRequest.PageNumber < PageVideos.TotalPages)
+{
+
+    <button type="button" class="btn btn-primary" @onclick="@( async () => await LoadNextPageAsync())">Next Page</button>
+}

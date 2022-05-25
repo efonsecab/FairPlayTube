@@ -12,6 +12,15 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
+        <AuthorizeView>
+            <NotAuthorized>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="/authentication/login" data-bs-toggle="tooltip" data-bs-placement="top">
+                        <i class="bi bi-person-circle"></i>
+                    </NavLink>
+                </li>
+            </NotAuthorized>
+        </AuthorizeView>
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[HomeTextKey]">
                 <i class="bi bi-house-door-fill"></i>
@@ -34,7 +43,7 @@
         </AuthorizeView>
         <AuthorizeView Roles="@Common.Global.Constants.Roles.Creator">
             <Authorized>
-<li class="nav-item px-3">
+                <li class="nav-item px-3">
                     <NavLink class="nav-link" href="@Common.Global.Constants.UserPagesRoutes.UploadVideo" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer[UploadVideoTextKey]">
                         <i class="bi bi-cloud-upload-fill"></i>
                     </NavLink>
@@ -72,10 +81,10 @@
         <AuthorizeView Roles="@Common.Global.Constants.Roles.User">
             <Authorized>
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" 
-                    href="@Common.Global.Constants.UserPagesRoutes.MyConversations" 
-                    data-bs-toggle="tooltip" data-bs-placement="top" 
-                    title="@Localizer[MyConversationsTextKey]">
+                    <NavLink class="nav-link"
+                             href="@Common.Global.Constants.UserPagesRoutes.MyConversations"
+                             data-bs-toggle="tooltip" data-bs-placement="top"
+                             title="@Localizer[MyConversationsTextKey]">
                         <i class="bi bi-chat-text-fill"></i>
                     </NavLink>
                 </li>
