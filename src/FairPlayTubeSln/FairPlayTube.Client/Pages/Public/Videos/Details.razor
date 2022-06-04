@@ -80,11 +80,10 @@
 }
 @if (ShowAdModal)
 {
-    <CustomModal CloseButtonText="Close" OkButtonText="Ok" ShowFooter="false"
-             OnCloseButtonClicked="CloseAdModal" OnOkButtonClicked="CloseAdModal">
-        <Title>Funded by Ads</Title>
+    <CustomModal CloseButtonText="Close" OkButtonText="Ok" ShowFooter="false">
+        <Title>@Localizer[FundedByAdsTitleTextKey]</Title>
         <Content>
-            This website is funded by ads. To avoid waiting, login into your account.
+            @Localizer[FundedByAdsBodyTextKey]
             <FairPlayTube.Components.GoogleAdsense.DisplayResponsiveAd></FairPlayTube.Components.GoogleAdsense.DisplayResponsiveAd>
         </Content>
     </CustomModal>

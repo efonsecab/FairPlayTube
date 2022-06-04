@@ -58,6 +58,8 @@ namespace FairPlayTube.Client.Pages.Public.Videos
                         this.ShowAdModal = true;
                         StateHasChanged();
                         await Task.Delay(TimeSpan.FromSeconds(10));
+                        this.ShowAdModal = false;
+                        StateHasChanged();
                     }
                     IsLoading = true;
                     ShowAvailableJobsButton = FeatureClientService.IsFeatureEnabled(FeatureType.VideoJobSystem);
@@ -88,12 +90,7 @@ namespace FairPlayTube.Client.Pages.Public.Videos
                 IsLoading = false;
             }
         }
-
-        private void CloseAdModal()
-        {
-            ShowAdModal = false;
-            StateHasChanged();
-        }
+        
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -140,6 +137,10 @@ namespace FairPlayTube.Client.Pages.Public.Videos
         public const string OnlyLoggedInCanAddCommentsTextKey = "OnlyLoggedInCanAddCommentsText";
         [ResourceKey(defaultValue: "Comments")]
         public const string CommentsTitleTextKey = "CommentsTitleText";
+        [ResourceKey(defaultValue: "Funded By Ads")]
+        public const string FundedByAdsTitleTextKey = "FundedByAdsTitleText";
+        [ResourceKey(defaultValue: "This website is funded by ads. To avoid waiting, login into your account")]
+        public const string FundedByAdsBodyTextKey = "FundedByAdsBodyText";
         #endregion Resource Keys
     }
 }
