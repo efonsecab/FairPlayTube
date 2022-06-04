@@ -78,3 +78,14 @@
         </div>
     </article>
 }
+@if (ShowAdModal)
+{
+    <CustomModal CloseButtonText="Close" OkButtonText="Ok" ShowFooter="false"
+             OnCloseButtonClicked="CloseAdModal" OnOkButtonClicked="CloseAdModal">
+        <Title>Funded by Ads</Title>
+        <Content>
+            This website is funded by ads. To avoid waiting, login into your account.
+            <FairPlayTube.Components.GoogleAdsense.DisplayResponsiveAd></FairPlayTube.Components.GoogleAdsense.DisplayResponsiveAd>
+        </Content>
+    </CustomModal>
+}

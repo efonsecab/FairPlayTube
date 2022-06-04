@@ -45,21 +45,28 @@ namespace FairPlayTube.Client.Pages.Public.Videos
         private bool ShowAvailableJobsButton { get; set; }
         [Inject]
         private IJSRuntime JSRuntime { get; set; }
+        private bool ShowAdModal { get; set; }
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                IsLoading = true;
-                ShowAvailableJobsButton = FeatureClientService.IsFeatureEnabled(FeatureType.VideoJobSystem);
-                this.NewCommentModel.VideoId = this.VideoId;
-                string baseUrl = this.NavigationManager.BaseUri;
-                var ogThumbnailurl = Constants.ApiRoutes.OpenGraphController.VideoThumbnail.Replace("{videoId}", this.VideoId);
-                this.VideoThumbnailUrl = $"{baseUrl}{ogThumbnailurl}";
-                this.VideoModel = await this.VideoClientService.GetVideoAsync(VideoId);
-                await LoadComments();
                 if (AuthenticationStateTask is not null)
                 {
                     var state = await AuthenticationStateTask;
+                    if (state is not null && state.User is not null && !state.User.Identity.IsAuthenticated)
+                    {
+                        this.ShowAdModal = true;
+                        StateHasChanged();
+                        await Task.Delay(TimeSpan.FromSeconds(10));
+                    }
+                    IsLoading = true;
+                    ShowAvailableJobsButton = FeatureClientService.IsFeatureEnabled(FeatureType.VideoJobSystem);
+                    this.NewCommentModel.VideoId = this.VideoId;
+                    string baseUrl = this.NavigationManager.BaseUri;
+                    var ogThumbnailurl = Constants.ApiRoutes.OpenGraphController.VideoThumbnail.Replace("{videoId}", this.VideoId);
+                    this.VideoThumbnailUrl = $"{baseUrl}{ogThumbnailurl}";
+                    this.VideoModel = await this.VideoClientService.GetVideoAsync(VideoId);
+                    await LoadComments();
                     if (state is not null && state.User is not null && state.User.Identity.IsAuthenticated)
                     {
                         var myVideos = await VideoClientService.GetMyProcessedVideosAsync();
@@ -82,6 +89,11 @@ namespace FairPlayTube.Client.Pages.Public.Videos
             }
         }
 
+        private void CloseAdModal()
+        {
+            ShowAdModal = false;
+            StateHasChanged();
+        }
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)

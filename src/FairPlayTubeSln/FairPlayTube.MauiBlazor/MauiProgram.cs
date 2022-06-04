@@ -24,14 +24,17 @@ namespace FairPlayTube.MauiBlazor
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
-
+            string strAppConfigStreamName = string.Empty;
             builder.Services.AddMauiBlazorWebView();
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
+            strAppConfigStreamName = "FairPlayTube.MauiBlazor.appsettings.Development.json";
+#else
+            strAppConfigStreamName = "FairPlayTube.MauiBlazor.appsettings.json";
 #endif
 
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(MauiProgram)).Assembly;
-            var stream = assembly.GetManifestResourceStream("FairPlayTube.MauiBlazor.appsettings.Development.json");
+            var stream = assembly.GetManifestResourceStream(strAppConfigStreamName);
             builder.Configuration.AddJsonStream(stream);
             var services = builder.Services;
 
