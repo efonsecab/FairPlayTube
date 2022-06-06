@@ -24,6 +24,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace FairPlayTube.Client
 {
@@ -43,12 +44,20 @@ namespace FairPlayTube.Client
             builder.Services.AddScoped<LocalizationMessageHandler>();
 
             builder.Services.AddHttpClient($"{assemblyName}.ServerAPI", client =>
-                client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+                {
+                    client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+                    client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
+                    client.DefaultRequestVersion = HttpVersion.Version20;
+                })
                 .AddHttpMessageHandler<LocalizationMessageHandler>()
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
             builder.Services.AddHttpClient($"{assemblyName}.ServerAPI.Anonymous", client =>
-                client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+            {
+                client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+                client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
+                client.DefaultRequestVersion = HttpVersion.Version20;
+            })
                 .AddHttpMessageHandler<LocalizationMessageHandler>();
 
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
@@ -110,7 +119,7 @@ namespace FairPlayTube.Client
         }
     }
 
-    public class LocalizationMessageHandler: DelegatingHandler
+    public class LocalizationMessageHandler : DelegatingHandler
     {
         protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
         {
