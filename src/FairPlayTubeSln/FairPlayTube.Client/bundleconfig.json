@@ -1,0 +1,32 @@
+[
+  {
+    "outputFileName": "wwwroot/css/app.min.css",
+    "inputFiles": [
+      "wwwroot/css/app.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/azure/video-indexer/vb.widgets.mediator.min.js",
+    "inputFiles": [
+      "wwwroot/js/azure/video-indexer/vb.widgets.mediator.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/files/fileDownloader.min.js",
+    "inputFiles": [
+      "wwwroot/js/files/fileDownloader.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/paypal/paypal.min.js",
+    "inputFiles": [
+      "wwwroot/js/paypal/paypal.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/notifications.min.js",
+    "inputFiles": [
+      "wwwroot/js/notifications.js"
+    ]
+  }
+]
