@@ -57,7 +57,7 @@ namespace FairPlayTube.Client.Pages.Public.Videos
                     {
                         this.ShowAdModal = true;
                         StateHasChanged();
-                        await Task.Delay(TimeSpan.FromSeconds(10));
+                        await Task.Delay(TimeSpan.FromSeconds(3));
                         this.ShowAdModal = false;
                         StateHasChanged();
                     }
