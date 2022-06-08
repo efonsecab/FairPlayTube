@@ -18,6 +18,16 @@
                                 title="@Localizer[InsightsTextKey]">
                                     <i class="bi bi-eye-fill"></i>
                                 </button>
+                                @if (VideoModel.Price > 0 && !VideoModel.IsBought)
+                                {
+                                    <button type="button" class="btn btn-info rounded-circle"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="@Localizer[BuyVideoAccessTextKey]"
+                                @onclick="OnBuyVideoAccessClicked">
+                                        <i class="bi bi-cart-plus-fill"></i>
+                                    </button>
+                                }
                             </Authorized>
                         </AuthorizeView>
                         <MonetizationIconButton OnClicked="@(  () => OnMonetizationIconClicked())">
@@ -28,16 +38,6 @@
                         title="@Localizer[VideoDescriptionTitleKey]">
                             <i class="bi bi-card-text"></i>
                         </button>
-                        @if (VideoModel.Price > 0 && !VideoModel.IsBought)
-                        {
-                            <button type="button" class="btn btn-info rounded-circle"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="@Localizer[BuyVideoAccessTextKey]"
-                        @onclick="OnBuyVideoAccessClicked">
-                                <i class="bi bi-cart-plus-fill"></i>
-                            </button>
-                        }
                         @if (VideoModel.AvailableJobs > 0 && ShowAvailableJobsButton)
                         {
                             <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top"
@@ -138,7 +138,7 @@
                         <li><strong>@Localizer[VisitsTextKey]: @VideoModel.VisitsCount</strong></li>
                         <li><strong>@Localizer[NameTextKey]: </strong>@VideoModel.Name</li>
                         <li><strong>@Localizer[PublisherTextKey]: </strong>@VideoModel.Publisher</li>
-                        <li><strong>@Localizer[PriceTextKey]: </strong>@( $"{Constants.CurrencySymbols.Dollars}{VideoModel.PriceAfterCommission}")</li>
+                        <li><strong>@Localizer[PriceTextKey]: </strong>@($"{Constants.CurrencySymbols.Dollars}{VideoModel.PriceAfterCommission}")</li>
                         <li><strong>@Localizer[DetailsTextKey]: </strong>@((MarkupString)HtmlHelper.FormatHtmlText(VideoModel.Description))</li>
                     </ul>
                 </CardFooter>
@@ -161,6 +161,16 @@
                                     title="@Localizer[InsightsTextKey]">
                                         <i class="bi bi-eye-fill"></i>
                                     </button>
+                                    @if (VideoModel.Price > 0 && !VideoModel.IsBought)
+                                    {
+                                        <button type="button" class="btn btn-info rounded-circle"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="@Localizer[BuyVideoAccessTextKey]"
+                                    @onclick="OnBuyVideoAccessClicked">
+                                            <i class="bi bi-cart-plus-fill"></i>
+                                        </button>
+                                    }
                                 </Authorized>
                             </AuthorizeView>
                             <MonetizationIconButton OnClicked="@(  () => OnMonetizationIconClicked())">
@@ -171,16 +181,6 @@
                             title="@Localizer[VideoDescriptionTitleKey]">
                                 <i class="bi bi-card-text"></i>
                             </button>
-                            @if (VideoModel.Price > 0 && !VideoModel.IsBought)
-                            {
-                                <button type="button" class="btn btn-info rounded-circle"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="@Localizer[BuyVideoAccessTextKey]"
-                            @onclick="OnBuyVideoAccessClicked">
-                                    <i class="bi bi-cart-plus-fill"></i>
-                                </button>
-                            }
                             @if (VideoModel.AvailableJobs > 0 && ShowAvailableJobsButton)
                             {
                                 <button type="button" class="btn btn-info rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top"
@@ -279,7 +279,7 @@
                         <ul class="list-group">
                             <li><strong>@Localizer[NameTextKey]: </strong>@VideoModel.Name</li>
                             <li><strong>@Localizer[PublisherTextKey]: </strong>@VideoModel.Publisher</li>
-                            <li><strong>@Localizer[PriceTextKey]: </strong>@( $"{Constants.CurrencySymbols.Dollars}{VideoModel.PriceAfterCommission}")</li>
+                            <li><strong>@Localizer[PriceTextKey]: </strong>@($"{Constants.CurrencySymbols.Dollars}{VideoModel.PriceAfterCommission}")</li>
                             <li><strong>@Localizer[DetailsTextKey]: </strong>@((MarkupString)HtmlHelper.FormatHtmlText(VideoModel.Description))</li>
                         </ul>
                     </CardFooter>

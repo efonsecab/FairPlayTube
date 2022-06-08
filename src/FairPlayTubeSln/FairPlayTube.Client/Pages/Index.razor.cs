@@ -157,6 +157,8 @@ namespace FairPlayTube.Client.Pages
             try
             {
                 this.CurrentPageRequest.PageNumber--;
+                this.PageVideos = null;
+                StateHasChanged();
                 await LoadData();
                 await JSRuntime.InvokeVoidAsync("scrollToTop");
             }
@@ -172,6 +174,8 @@ namespace FairPlayTube.Client.Pages
             try
             {
                 this.CurrentPageRequest.PageNumber++;
+                this.PageVideos = null;
+                StateHasChanged();
                 await LoadData();
                 await JSRuntime.InvokeVoidAsync("scrollToTop");
             }

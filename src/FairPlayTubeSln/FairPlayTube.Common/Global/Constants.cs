@@ -4,7 +4,7 @@
     {
         public class Paging
         {
-            public const int DefaultPageSize = 9;
+            public const int DefaultPageSize = 2;
         }
         public class ActionsLimits
         {
