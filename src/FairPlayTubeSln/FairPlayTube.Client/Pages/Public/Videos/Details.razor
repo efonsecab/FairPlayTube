@@ -1,25 +1,32 @@
 ﻿@using FairPlayTube.Common.Helpers
-<Meta property="og:url" content="@this.NavigationManager.Uri" />
-<Meta property="og:type" content="website" />
-<Meta property="og:image" content="@VideoThumbnailUrl" />
-<Meta property="og:video" content="@this.NavigationManager.Uri" />
-<Meta property="og:video:secure_url" content="@this.NavigationManager.Uri" />
-<Meta property="og:video:type" content="video/mp4" />
-<Meta property="og:video:width" content="300" />
-<Meta property="og:video:height" content="300" />
-<Meta property="twitter:image" content="@VideoThumbnailUrl" />
-<Meta name="twitter:card" content="summary_large_image" />
-<Meta name="twitter:site" content="@("@FTube2021")" />
-<Meta name="twitter:creator" content="@("@efonsecabcr")" />
+<HeadContent>
+    <meta property="og:url" content="@this.NavigationManager.Uri" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="@VideoThumbnailUrl" />
+    <meta property="og:video" content="@this.NavigationManager.Uri" />
+    <meta property="og:video:secure_url" content="@this.NavigationManager.Uri" />
+    <meta property="og:video:type" content="video/mp4" />
+    <meta property="og:video:width" content="300" />
+    <meta property="og:video:height" content="300" />
+    <meta property="twitter:image" content="@VideoThumbnailUrl" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@("@FTube2021")" />
+    <meta name="twitter:creator" content="@("@efonsecabcr")" />
+    <meta name="twitter:image" content="@VideoThumbnailUrl" />
+    @if (this.VideoModel != null)
+    {
+        <meta name="twitter:description" content="@this.VideoModel.Description" />
+        <meta name="twitter:title" content="@this.VideoModel.Name" />
+        <meta property="og:title" content="@this.VideoModel.Name" />
+        <meta property="og:description" content="@this.VideoModel.Description" />
+        <meta property="twitter:description" content="@this.VideoModel.Description" />
+    }
+</HeadContent>
 
 <Loading IsLoading="IsLoading"></Loading>
 
 @if (this.VideoModel != null)
 {
-    <Meta property="og:title" content="@this.VideoModel.Name" />
-    <Meta property="og:description" content="@this.VideoModel.Description" />
-    <Meta property="twitter:description" content="@this.VideoModel.Description" />
-
     <article>
         <div class="container">
             <div class="mb-3">

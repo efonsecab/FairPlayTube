@@ -25,6 +25,7 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace FairPlayTube.Client
 {
@@ -35,6 +36,7 @@ namespace FairPlayTube.Client
             string assemblyName = "FairPlayTube";
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
+            builder.RootComponents.Add<HeadOutlet>("head::after");
 
             builder.Services.AddBlazoredToast();
             builder.Services.AddSingleton<IStringLocalizerFactory, ApiLocalizerFactory>();
