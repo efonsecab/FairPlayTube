@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebView.Maui;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
+using Polly;
+using Polly.Extensions.Http;
 using System.Globalization;
 using System.Reflection;
 
@@ -61,11 +63,15 @@ namespace FairPlayTube.MauiBlazor
             services.AddHttpClient($"{assemblyName}.ServerAPI", client =>
         client.BaseAddress = new Uri(fairPlayTubeapiAddress))
         .AddHttpMessageHandler<LocalizationMessageHandler>()
-        .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+        .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>()
+        .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
+        .AddPolicyHandler(GetRetryPolicy());
 
             services.AddHttpClient($"{assemblyName}.ServerAPI.Anonymous", client =>
                 client.BaseAddress = new Uri(fairPlayTubeapiAddress))
-                .AddHttpMessageHandler<LocalizationMessageHandler>();
+                .AddHttpMessageHandler<LocalizationMessageHandler>()
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
+                .AddPolicyHandler(GetRetryPolicy());
 
             services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
                 .CreateClient($"{assemblyName}.ServerAPI"));
@@ -82,6 +88,15 @@ namespace FairPlayTube.MauiBlazor
             CultureInfo.DefaultThreadCurrentUICulture = culture;
 
             return builder.Build();
+        }
+
+        static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
+                .WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2,
+                                                                            retryAttempt)));
         }
     }
 
