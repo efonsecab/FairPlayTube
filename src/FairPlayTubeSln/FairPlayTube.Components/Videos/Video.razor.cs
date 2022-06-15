@@ -39,6 +39,9 @@ namespace FairPlayTube.Components.Videos
         [Parameter]
         [EditorRequired]
         public bool ShowAvailableJobsButton { get; set; }
+        [Parameter]
+        [EditorRequired]
+        public bool OpenVideoInNewWindow { get; set; }
         [Inject]
         private IVideoEditAccessTokenProvider VideoEditAccessTokenProvider { get; set; }
         [Inject]

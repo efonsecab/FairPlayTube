@@ -1,29 +1,20 @@
-﻿using Blazored.Toast;
-using FairPlayTube.ClientServices.CustomProviders;
+﻿using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.Components.FacebookButtons;
 using FairPlayTube.Components.GoogleAdsense;
-using FairPlayTube.Models.Validations.Video;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FairPlayTube.ClientServices.Extensions
+namespace FairPlayTube.SharedConfiguration
 {
-    public static class ClientServicesExtensions
+    public static class ServicesSetup
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddCrossPlatformServices(this IServiceCollection services,
+        public static void AddCrossPlatformServices(IServiceCollection services,
             IConfiguration configuration)
         {
             DisplayResponsiveAdConfiguration displayResponsiveAdConfiguration =
@@ -35,17 +26,12 @@ namespace FairPlayTube.ClientServices.Extensions
                 configuration.GetSection(nameof(faceBookLikeButtonConfiguration))
                 .Get<FaceBookLikeButtonConfiguration>();
             services.AddSingleton(faceBookLikeButtonConfiguration);
-
-            services.AddTransient<IVideoEditAccessTokenProvider, VideoEditAccessTokenProvider>();
-
-            services.AddTransient<IVideoEditAccessTokenProvider, VideoEditAccessTokenProvider>();
-
+            
             services.AddSingleton<LocalizationClientService>();
             services.AddTransient<HttpClientService>();
-            services.AddBlazoredToast();
+            //services.AddTransient<ToastifyService>();
             services.AddTransient<VideoClientService>();
             services.AddTransient<UserProfileClientService>();
-
             services.AddTransient<VisitorTrackingClientService>();
             services.AddTransient<UserClientService>();
             services.AddTransient<SearchClientService>();
@@ -53,19 +39,14 @@ namespace FairPlayTube.ClientServices.Extensions
             services.AddTransient<UserYouTubeChannelClientService>();
             services.AddTransient<VideoPlaylistClientService>();
             services.AddTransient<VideoJobClientService>();
+            services.AddTransient<VideoJobApplicationClientService>();
+            services.AddTransient<FeatureClientService>();
+            services.AddTransient<UserRequestClientService>();
+            services.AddTransient<UserMessageClientService>();
+            services.AddTransient<ClientSideErrorLogClientService>();
 
-            return services;
-        }
+            services.AddTransient<IVideoEditAccessTokenProvider, VideoEditAccessTokenProvider>();
 
-        public static void ConfigureModelsLocalizers(this IServiceProvider services)
-        {
-            var localizerFactory = services.GetRequiredService<IStringLocalizerFactory>();
-            UploadVideoModelLocalizer.Localizer =
-                localizerFactory.Create(typeof(UploadVideoModelLocalizer))
-                as IStringLocalizer<UploadVideoModelLocalizer>;
-            VideoJobModelLocalizer.Localizer =
-                localizerFactory.Create(typeof(VideoJobModelLocalizer))
-                as IStringLocalizer<VideoJobModelLocalizer>;
         }
     }
 }

@@ -34,7 +34,13 @@ namespace FairPlayTube.MauiBlazor.Shared
                 authResult = await B2CConstants.PublicClientApp
                     .AcquireTokenSilent(B2CConstants.ApiScopesArray, currentUserAccount)
                     .ExecuteAsync();
-
+                UserState.UserContext = new UserContext()
+                {
+                    AccessToken = authResult.AccessToken,
+                    IsLoggedOn = true,
+                    UserIdentifier = authResult.UniqueId
+                };
+                NavigationManager.NavigateTo("/", true);
                 DisplayBasicTokenInfo(authResult);
                 UpdateSignInState(true);
             }

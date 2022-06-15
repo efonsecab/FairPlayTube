@@ -2,14 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="31" />
 	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true">
-		<activity android:name="microsoft.identity.client.BrowserTabActivity"  android:exported="true">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:scheme="msal110facd2-07c2-4ecd-80e4-aeb3627100cf" android:host="auth" />
-			</intent-filter>
-		</activity>
 	</application>
 	<queries>
 		<package android:name="com.azure.authenticator" />
@@ -29,4 +21,5 @@
 		</intent>
 	</queries>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
 </manifest>

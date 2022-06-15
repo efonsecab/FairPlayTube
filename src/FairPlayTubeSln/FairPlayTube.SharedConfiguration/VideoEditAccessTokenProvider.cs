@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FairPlayTube.Client.CustomProviders
+namespace FairPlayTube.SharedConfiguration
 {
     /// <summary>
     /// Provides the Access Token required to edit videos

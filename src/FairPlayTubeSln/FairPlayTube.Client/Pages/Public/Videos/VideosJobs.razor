@@ -43,7 +43,9 @@
                                                                   ShowYouTubeVideosLink="false"
                                                                   AllowEdit="false"
                                                                   VideoModel="@singleJob.VideoInfo"
-                                                                  ShowAvailableJobsButton="false"></FairPlayTube.Components.Videos.Video>
+                                                                  ShowAvailableJobsButton="false"
+                                                                  OpenVideoInNewWindow="false"
+                                                                  ></FairPlayTube.Components.Videos.Video>
                                 </CardBody>
                                 <CardFooter>
                                     @( DisplayHelper.DisplayFor<VideoJobModel>(p => p.Budget) ): @singleJob.Budget

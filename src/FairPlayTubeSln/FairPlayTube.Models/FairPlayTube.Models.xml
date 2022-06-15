@@ -2051,6 +2051,11 @@
             Azure Video Indexer Video's Account Id
             </summary>
         </member>
+        <member name="P:FairPlayTube.Models.Video.VideoInfoModel.PublicExternalUrl">
+            <summary>
+            Url to use to render the Azure Video Indexer widgets ( not embedded )
+            </summary>
+        </member>
         <member name="P:FairPlayTube.Models.Video.VideoInfoModel.PublicPlayerUrl">
             <summary>
             Url to use to render the Azure Video Indexer Player Widget

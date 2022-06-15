@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FairPlayTube.ClientServices\FairPlayTube.ClientServices.csproj" />
     <ProjectReference Include="..\FairPlayTube.Models\FairPlayTube.Models.csproj" />
   </ItemGroup>
 

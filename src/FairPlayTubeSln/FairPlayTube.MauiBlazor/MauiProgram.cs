@@ -1,11 +1,11 @@
-﻿using FairPlayTube.ClientServices.CustomLocalization;
+﻿using Blazored.Toast;
+using FairPlayTube.ClientServices.CustomLocalization;
 using FairPlayTube.ClientServices.CustomLocalization.Api;
-using FairPlayTube.ClientServices.Extensions;
 using FairPlayTube.MauiBlazor.Authentication;
 using FairPlayTube.MauiBlazor.Features.LogOn;
+using FairPlayTube.SharedConfiguration;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.WebView.Maui;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Polly;
@@ -39,7 +39,7 @@ namespace FairPlayTube.MauiBlazor
             var stream = assembly.GetManifestResourceStream(strAppConfigStreamName);
             builder.Configuration.AddJsonStream(stream);
             var services = builder.Services;
-
+            builder.Services.AddBlazoredToast();
             services.AddSingleton<IStringLocalizerFactory, ApiLocalizerFactory>();
             services.AddSingleton<IStringLocalizer, ApiLocalizer>();
             services.AddLocalization();
@@ -78,11 +78,11 @@ namespace FairPlayTube.MauiBlazor
 
             services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
                 .CreateClient($"{assemblyName}.ServerAPI.Anonymous"));
-            services.AddCrossPlatformServices(builder.Configuration);
+            ServicesSetup.AddCrossPlatformServices(builder.Services, builder.Configuration);
             services.AddLogging();
             services.AddScoped<IErrorBoundaryLogger, CustomBoundaryLogger>();
             var host = builder.Build();
-            host.Services.ConfigureModelsLocalizers();
+            ModelsLocalizationSetup.ConfigureModelsLocalizers(host.Services);
             CultureInfo culture = new("en-US");
             CultureInfo.DefaultThreadCurrentCulture = culture;
             CultureInfo.DefaultThreadCurrentUICulture = culture;

@@ -1,18 +1,11 @@
 using Blazored.Toast;
 using FairPlayTube.Client.CustomClaims;
 using FairPlayTube.ClientServices.CustomLocalization.Api;
-using FairPlayTube.Client.CustomProviders;
 using FairPlayTube.Client.Services;
-using FairPlayTube.ClientServices;
 using FairPlayTube.Common.Configuration;
 using FairPlayTube.Common.Interfaces;
 using FairPlayTube.Components.FacebookButtons;
 using FairPlayTube.Components.GoogleAdsense;
-using FairPlayTube.Models.UserProfile.Localizers;
-using FairPlayTube.Models.UsersRequests.Localizers;
-using FairPlayTube.Models.Validations.Video;
-using FairPlayTube.Models.Validations.VideoJobApplications;
-using FairPlayTube.Models.VideoJobApplications.Localizers;
 using FairPlayTube.SharedConfiguration;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -84,35 +77,8 @@ namespace FairPlayTube.Client
             builder.Services.AddSingleton(azureQnABotConfiguration);
 
 
-            DisplayResponsiveAdConfiguration displayResponsiveAdConfiguration =
-                builder.Configuration.GetSection("DisplayResponsiveAdConfiguration")
-                .Get<DisplayResponsiveAdConfiguration>();
-            builder.Services.AddSingleton(displayResponsiveAdConfiguration);
-
-            FaceBookLikeButtonConfiguration faceBookLikeButtonConfiguration =
-                builder.Configuration.GetSection(nameof(faceBookLikeButtonConfiguration))
-                .Get<FaceBookLikeButtonConfiguration>();
-            builder.Services.AddSingleton(faceBookLikeButtonConfiguration);
-
-            builder.Services.AddTransient<IVideoEditAccessTokenProvider, VideoEditAccessTokenProvider>();
-
-            builder.Services.AddSingleton<LocalizationClientService>();
-            builder.Services.AddTransient<HttpClientService>();
             builder.Services.AddTransient<ToastifyService>();
-            builder.Services.AddTransient<VideoClientService>();
-            builder.Services.AddTransient<UserProfileClientService>();
-            builder.Services.AddTransient<VisitorTrackingClientService>();
-            builder.Services.AddTransient<UserClientService>();
-            builder.Services.AddTransient<SearchClientService>();
-            builder.Services.AddTransient<VideoCommentClientService>();
-            builder.Services.AddTransient<UserYouTubeChannelClientService>();
-            builder.Services.AddTransient<VideoPlaylistClientService>();
-            builder.Services.AddTransient<VideoJobClientService>();
-            builder.Services.AddTransient<VideoJobApplicationClientService>();
-            builder.Services.AddTransient<FeatureClientService>();
-            builder.Services.AddTransient<UserRequestClientService>();
-            builder.Services.AddTransient<UserMessageClientService>();
-            builder.Services.AddTransient<ClientSideErrorLogClientService>();
+            ServicesSetup.AddCrossPlatformServices(builder.Services, builder.Configuration);
 
             var host = builder.Build();
             ModelsLocalizationSetup.ConfigureModelsLocalizers(host.Services);
