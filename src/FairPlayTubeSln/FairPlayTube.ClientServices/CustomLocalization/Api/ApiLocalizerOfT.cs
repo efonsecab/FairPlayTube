@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using FairPlayTube.Common.Localization;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,7 +51,33 @@ namespace FairPlayTube.ClientServices.CustomLocalization.Api
         private string GetString(string name)
         {
             string typeName = typeof(T).FullName;
-            return _localizationClientService.GetString(typeName, name);
+            var result = _localizationClientService.GetString(typeName, name);
+            if (String.IsNullOrWhiteSpace(result))
+            {
+                var singleTypeToCheck = typeof(T);
+                string typeFullName = singleTypeToCheck.FullName;
+                var fields = singleTypeToCheck.GetFields(
+                    BindingFlags.Public |
+                    BindingFlags.Static |
+                    BindingFlags.FlattenHierarchy
+                    );
+                foreach (var singleField in fields)
+                {
+                    var resourceKeyAttributes =
+                        singleField.GetCustomAttributes<ResourceKeyAttribute>();
+                    if (resourceKeyAttributes != null && resourceKeyAttributes.Any())
+                    {
+                        ResourceKeyAttribute keyAttribute = resourceKeyAttributes.Single();
+                        var defaultValue = keyAttribute.DefaultValue;
+                        string key = singleField.GetRawConstantValue().ToString();
+                        if (key == name)
+                        {
+                            return defaultValue;
+                        }
+                    }
+                }
+            }
+            return result;
         }
     }
 }
