@@ -17,7 +17,7 @@
                             @Localizer[WhatIsFairPlayTubeTitleKey]
                         </CardHeader>
                         <CardBody>
-                            @( (MarkupString)Localizer[SystemDescriptionParagraph1Key].Value)
+                            @((MarkupString)Localizer[SystemDescriptionParagraph1Key].Value)
                             <PayPalDonateButton></PayPalDonateButton>
                             <p>
                                 @Localizer[StrugglingCreatorsTextKey]
@@ -53,9 +53,8 @@
                                           OnBuyVideoAccess="OnBuyVideoAccess"
                                           AllowDownload="AllowDownload"
                                           OnShowYouTubeLatestVideos="OnShowYouTubeLatestVideos"
-                                          ShowAvailableJobsButton="ShowAvailableJobsButton"
-                                          OpenVideosInNewWindow="true"
-    ></FairPlayTube.Components.Videos.VideoList>
+                                          ShowAvailableJobsButton="ShowAvailableJobsButton">
+    </FairPlayTube.Components.Videos.VideoList>
 }
 
 @if (CurrentPageRequest.PageNumber > 1)

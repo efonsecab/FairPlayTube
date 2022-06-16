@@ -116,21 +116,10 @@
                             }
                             else
                             {
-                                <i class="bi bi-play-circle" style="cursor:pointer;" @onclick="@( () => ShowVideoPlayer() )">
-                                    <span>Play</span>
-                                </i>
-                                @if (OpenVideoInNewWindow)
-                                {
-                                    <a href="@VideoModel.PublicExternalUrl" target="_blank">
-                                        Open External 0
-                                    </a>
-                                }
-                                else
-                                {
-                                    <img class="img-thumbnail" src="@VideoModel.ThumbnailUrl"
+                                <a class="bi bi-play-circle" href="@VideoModel.PublicExternalUrl" target="_blank">Play externally</a>
+                                <img class="img-thumbnail" src="@VideoModel.ThumbnailUrl"
                      style="cursor:pointer; width:100%;"
                      @onclick="@( () => ShowVideoPlayer() )" />
-                                }
                             }
                         }
                         else
@@ -267,22 +256,10 @@
                                 }
                                 else
                                 {
-                                    <i class="bi bi-play-circle" style="cursor:pointer;" @onclick="@( () => ShowVideoPlayer() )">
-                                        <span>Play</span>
-                                    </i>
-                                    @if (OpenVideoInNewWindow)
-                                    {
-                                        <a href="@this.VideoModel.PublicExternalUrl"
-                       target="_blank">
-                                            Open External 1
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <img class="img-thumbnail" src="@VideoModel.ThumbnailUrl"
+                                    <a class="bi bi-play-circle" href="@VideoModel.PublicExternalUrl" target="_blank">Play externally</a>
+                                    <img class="img-thumbnail" src="@VideoModel.ThumbnailUrl"
                          style="cursor:pointer; width:100%;"
                          @onclick="@( () => ShowVideoPlayer() )" />
-                                    }
                                 }
                             }
                             else
