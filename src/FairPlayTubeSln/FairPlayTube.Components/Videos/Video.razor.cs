@@ -55,7 +55,8 @@ namespace FairPlayTube.Components.Videos
         {
             if (AllowEdit)
             {
-                this.EditAccessToken = await this.VideoEditAccessTokenProvider.GetVideoEditAccessToken(VideoModel.VideoId);
+                this.EditAccessToken = await this.VideoEditAccessTokenProvider
+                    .GetVideoEditAccessTokenAsync(VideoModel.AccountId,VideoModel.VideoId);
                 this.VideoModel.EditAccessToken = this.EditAccessToken;
             }
             this.ShowInsights = true;

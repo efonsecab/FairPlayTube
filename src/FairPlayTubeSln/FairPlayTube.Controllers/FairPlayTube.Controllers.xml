@@ -453,10 +453,11 @@
             <param name="mapper"></param>
             <param name="currentUserProvider"></param>
         </member>
-        <member name="M:FairPlayTube.Controllers.VideoController.DeleteVideo(System.String,System.Threading.CancellationToken)">
+        <member name="M:FairPlayTube.Controllers.VideoController.DeleteVideo(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Allows to delete a video
             </summary>
+            <param name="accountId"></param>
             <param name="videoId"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
@@ -499,10 +500,11 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:FairPlayTube.Controllers.VideoController.GetVideoEditAccessToken(System.String,System.Threading.CancellationToken)">
+        <member name="M:FairPlayTube.Controllers.VideoController.GetVideoEditAccessToken(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Gets a given video access token to enable edit mode in the insights widget
             </summary>
+            <param name="accountId"></param>
             <param name="videoId"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
@@ -569,18 +571,20 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:FairPlayTube.Controllers.VideoController.CreateCustomRenderingProject(FairPlayTube.Models.Video.ProjectModel,System.Threading.CancellationToken)">
+        <member name="M:FairPlayTube.Controllers.VideoController.CreateCustomRenderingProject(System.String,FairPlayTube.Models.Video.ProjectModel,System.Threading.CancellationToken)">
             <summary>
             Creates a new custom rendering project
             </summary>
+            <param name="accountId"></param>
             <param name="projectModel"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:FairPlayTube.Controllers.VideoController.DownloadVideo(System.String,System.Threading.CancellationToken)">
+        <member name="M:FairPlayTube.Controllers.VideoController.DownloadVideo(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Download the source file for the specified video id
             </summary>
+            <param name="accountId"></param>
             <param name="videoId"></param>
             <param name="cancellationToken"></param>
             <returns></returns>

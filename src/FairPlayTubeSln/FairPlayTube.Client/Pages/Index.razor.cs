@@ -113,7 +113,7 @@ namespace FairPlayTube.Client.Pages
         {
             try
             {
-                var result = await this.VideoClientService.DownloadVideoAsync(videoInfoModel.VideoId);
+                var result = await this.VideoClientService.DownloadVideoAsync(videoInfoModel.AccountId,videoInfoModel.VideoId);
                 await JSRuntime.InvokeVoidAsync(
                "downloadFromByteArray",
                new

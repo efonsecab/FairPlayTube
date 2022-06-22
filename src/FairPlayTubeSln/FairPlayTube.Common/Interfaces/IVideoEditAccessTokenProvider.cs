@@ -8,6 +8,6 @@ namespace FairPlayTube.Common.Interfaces
 {
     public interface IVideoEditAccessTokenProvider
     {
-        Task<string> GetVideoEditAccessToken(string videoId);
+        Task<string> GetVideoEditAccessTokenAsync(string accountId,string videoId);
     }
 }

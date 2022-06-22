@@ -25,11 +25,12 @@ namespace FairPlayTube.SharedConfiguration
         /// <summary>
         /// Returns the access token required to edit the given video
         /// </summary>
+        /// <param name="accountId"></param>
         /// <param name="videoId"></param>
         /// <returns></returns>
-        public async Task<string> GetVideoEditAccessToken(string videoId)
+        public async Task<string> GetVideoEditAccessTokenAsync(string accountId,string videoId)
         {
-            return await this.VideoClientService.GetVideoEditAccessTokenAsync(videoId);
+            return await this.VideoClientService.GetVideoEditAccessTokenAsync(accountId,videoId);
         }
     }
 }
