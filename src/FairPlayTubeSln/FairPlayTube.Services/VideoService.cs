@@ -43,7 +43,6 @@ namespace FairPlayTube.Services
         public VideoService(AzureBlobStorageService azureBlobStorageService,
             DataStorageConfiguration dataStorageConfiguration, ICurrentUserProvider currentUserProvider,
             FairplaytubeDatabaseContext fairplaytubeDatabaseContext,
-            AzureVideoIndexerConfiguration azureVideoIndexerConfiguration,
             CustomHttpClient customHttpClient,
             IHubContext<NotificationHub, INotificationHub> hubContext,
             EmailService emailService,
@@ -54,7 +53,6 @@ namespace FairPlayTube.Services
             this.DataStorageConfiguration = dataStorageConfiguration;
             this.CurrentUserProvider = currentUserProvider;
             this.FairplaytubeDatabaseContext = fairplaytubeDatabaseContext;
-            this.AzureVideoIndexerConfiguration = azureVideoIndexerConfiguration;
             this.CustomHttpClient = customHttpClient;
             this.HubContext = hubContext;
             this.EmailService = emailService;
@@ -338,9 +336,11 @@ namespace FairPlayTube.Services
             await this.FairplaytubeDatabaseContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<string[]> GetDatabaseProcessingVideosIdsAsync(CancellationToken cancellationToken)
+        public async Task<string[]> GetDatabaseProcessingVideosIdsAsync(string accountId,CancellationToken cancellationToken)
         {
-            return await this.FairplaytubeDatabaseContext.VideoInfo.Where(p => p.VideoIndexStatusId ==
+            return await this.FairplaytubeDatabaseContext.VideoInfo.Where(p => 
+            p.AccountId.ToString() == accountId &&
+            p.VideoIndexStatusId ==
             (short)Common.Global.Enums.VideoIndexStatus.Processing)
                 .Select(p => p.VideoId).ToArrayAsync(cancellationToken: cancellationToken);
         }

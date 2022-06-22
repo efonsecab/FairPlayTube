@@ -136,7 +136,7 @@ namespace FairPlayTube.Services.BackgroundServices
         private async Task CheckProcessingVideosAsync(string accountId,VideoService videoService, FairplaytubeDatabaseContext fairplaytubeDatabaseContext, CancellationToken stoppingToken)
         {
             this.Logger?.LogInformation("Checking processing videos");
-            var processingInDB = await videoService.GetDatabaseProcessingVideosIdsAsync(stoppingToken);
+            var processingInDB = await videoService.GetDatabaseProcessingVideosIdsAsync(accountId,stoppingToken);
             string message = $"{processingInDB.Length} videos marked as processing In DB";
             this.Logger?.LogInformation(message);
             if (processingInDB.Length > 0)
