@@ -67,11 +67,11 @@ namespace FairPlayTube.ClientServices
             }
         }
 
-        public async Task<string> GetVideoEditAccessTokenAsync(string videoId)
+        public async Task<string> GetVideoEditAccessTokenAsync(string accountId,string videoId)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             return await authorizedHttpClient.GetStringAsync($"{ApiRoutes.VideoController.GetVideoEditAccessToken}" +
-                $"?videoId={videoId}");
+                $"?accountId={accountId}&videoId={videoId}");
         }
 
         public async Task<GlobalKeywordModel[]> ListAllKeywordsAsync()
@@ -127,11 +127,11 @@ namespace FairPlayTube.ClientServices
             return result;
         }
 
-        public async Task DeleteVideoAsync(string videoId)
+        public async Task DeleteVideoAsync(string accountId,string videoId)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var response = await authorizedHttpClient.PostAsync(
-                $"{ApiRoutes.VideoController.DeleteVideo}?videoId={videoId}", null);
+                $"{ApiRoutes.VideoController.DeleteVideo}?accountId={accountId}&videoId={videoId}", null);
             if (!response.IsSuccessStatusCode)
             {
                 ProblemHttpResponse problemHttpResponse = await response.Content.ReadFromJsonAsync<ProblemHttpResponse>();
@@ -142,11 +142,11 @@ namespace FairPlayTube.ClientServices
             }
         }
 
-        public async Task<DownloadVideoModel> DownloadVideoAsync(string videoId)
+        public async Task<DownloadVideoModel> DownloadVideoAsync(string accountId,string videoId)
         {
             var authorizedHttpClient = this.HttpClientService.CreateAuthorizedClient();
             var result = await authorizedHttpClient.GetFromJsonAsync<DownloadVideoModel>(
-                $"{ApiRoutes.VideoController.DownloadVideo}?videoId={videoId}");
+                $"{ApiRoutes.VideoController.DownloadVideo}?accountId={accountId}&videoId={videoId}");
             return result;
         }
 

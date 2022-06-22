@@ -53,12 +53,13 @@ namespace FairPlayTube.Controllers
         /// <summary>
         /// Allows to delete a video
         /// </summary>
+        /// <param name="accountId"></param>
         /// <param name="videoId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
-        public async Task<ActionResult> DeleteVideo(string videoId, CancellationToken cancellationToken)
+        public async Task<ActionResult> DeleteVideo(string accountId,string videoId, CancellationToken cancellationToken)
         {
             var userObjectId = this.CurrentUserProvider.GetObjectId();
 
@@ -67,7 +68,7 @@ namespace FairPlayTube.Controllers
             if (!isVideoOwner)
                 throw new CustomValidationException($"Delete denied. You are not an owner of this video");
 
-            if (await VideoService.DeleteVideoAsync(userAzureAdB2cObjectId: userObjectId, videoId: videoId, cancellationToken))
+            if (await VideoService.DeleteVideoAsync(accountId,userAzureAdB2cObjectId: userObjectId, videoId: videoId, cancellationToken))
                 return Ok();
             else
                 throw new CustomValidationException("An error occurred trying to delete your video");
@@ -176,19 +177,20 @@ namespace FairPlayTube.Controllers
         /// <summary>
         /// Gets a given video access token to enable edit mode in the insights widget
         /// </summary>
+        /// <param name="accountId"></param>
         /// <param name="videoId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
-        public async Task<string> GetVideoEditAccessToken(string videoId, CancellationToken cancellationToken)
+        public async Task<string> GetVideoEditAccessToken(string accountId, string videoId, CancellationToken cancellationToken)
         {
             var azureAdB2cobjectId = this.CurrentUserProvider.GetObjectId();
             bool isVideoOwner = await VideoService.IsVideoOwnerAsync(videoId: videoId, azureAdB2cobjectId: azureAdB2cobjectId,
                 cancellationToken: cancellationToken);
             if (!isVideoOwner)
                 throw new CustomValidationException("You are not allowed to edit this video");
-            string accessToken = await this.VideoService.GetVideoEditAccessTokenAsync(videoId: videoId);
+            string accessToken = await this.VideoService.GetVideoEditAccessTokenAsync(accountId:accountId,videoId: videoId);
             return accessToken;
         }
 
@@ -300,13 +302,18 @@ namespace FairPlayTube.Controllers
             if (processingVideos != null && processingVideos.Length > 0)
             {
                 var processingVideosIds = processingVideos.Select(p => p.VideoId).ToArray();
-                var processingVideosStatuses = await VideoService.GetVideoIndexerStatusAsync(processingVideosIds, cancellationToken);
-                result.AddRange(processingVideosStatuses.results.Select(p => new VideoStatusModel()
+                var accountIds = processingVideos.Select(p => p.AccountId.ToString()).Distinct();
+                foreach (var singleAccountId in accountIds)
                 {
-                    Name = p.name,
-                    Status = p.state,
-                    ProcessingProgress = p.processingProgress
-                }));
+                    var processingVideosStatuses = await VideoService
+                        .GetVideoIndexerStatusAsync(singleAccountId,processingVideosIds, cancellationToken);
+                    result.AddRange(processingVideosStatuses.results.Select(p => new VideoStatusModel()
+                    {
+                        Name = p.name,
+                        Status = p.state,
+                        ProcessingProgress = p.processingProgress
+                    }));
+                }
             }
             return result;
         }
@@ -343,13 +350,16 @@ namespace FairPlayTube.Controllers
         /// <summary>
         /// Creates a new custom rendering project
         /// </summary>
+        /// <param name="accountId"></param>
         /// <param name="projectModel"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         [FeatureGate(FeatureType.PaidFeature)]
-        public async Task<ProjectModel> CreateCustomRenderingProject(ProjectModel projectModel, CancellationToken cancellationToken)
+        public async Task<ProjectModel> CreateCustomRenderingProject(
+            string accountId,
+            ProjectModel projectModel, CancellationToken cancellationToken)
         {
             var userObjectId = this.CurrentUserProvider.GetObjectId();
             var allVideoIds = projectModel.Videos.Select(p => p.VideoId).ToArray();
@@ -357,22 +367,24 @@ namespace FairPlayTube.Controllers
                 .IsVideosOwnerAsync(videosIds: allVideoIds, azureAdB2cobjectId: userObjectId, cancellationToken: cancellationToken);
             if (!isVideosOwner)
                 throw new CustomValidationException("Access denied. User does not own all of the specified videos");
-            var result = await this.VideoService.CreateCustomRenderingProjectAsync(projectModel, cancellationToken);
+            var result = await this.VideoService.CreateCustomRenderingProjectAsync(
+                accountId,projectModel, cancellationToken);
             return result;
         }
 
         /// <summary>
         /// Download the source file for the specified video id
         /// </summary>
+        /// <param name="accountId"></param>
         /// <param name="videoId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
         [Authorize(Roles = Common.Global.Constants.Roles.User)]
         [FeatureGate(FeatureType.PaidFeature)]
-        public async Task<DownloadVideoModel> DownloadVideo(string videoId, CancellationToken cancellationToken)
+        public async Task<DownloadVideoModel> DownloadVideo(string accountId,string videoId, CancellationToken cancellationToken)
         {
-            var videoBytes = await this.VideoService.DownloadVideoAsync(videoId, cancellationToken);
+            var videoBytes = await this.VideoService.DownloadVideoAsync(accountId,videoId, cancellationToken);
             return new DownloadVideoModel()
             {
                 VideoId = videoId,

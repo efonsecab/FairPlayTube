@@ -395,11 +395,20 @@ namespace FairPlayTube
 
         private void ConfigureAzureVideoIndexer(IServiceCollection services)
         {
-            AzureVideoIndexerConfiguration azureVideoIndexerConfiguration =
-                Configuration.GetSection($"AzureConfiguration:{nameof(AzureVideoIndexerConfiguration)}")
-                .Get<AzureVideoIndexerConfiguration>();
-            services.AddSingleton(azureVideoIndexerConfiguration);
-            services.AddTransient<AzureVideoIndexerService>();
+            AzureVideoIndexerConfiguration[] azureVideoIndexerConfigurations =
+                Configuration.GetSection(nameof(AzureVideoIndexerConfiguration))
+                .Get<AzureVideoIndexerConfiguration[]>();
+            foreach (var singleViConfig in azureVideoIndexerConfigurations)
+            {
+                services.AddTransient<AzureVideoIndexerService>(sp => 
+                {
+                    return new AzureVideoIndexerService(
+                        logger: sp.GetRequiredService<ILogger<AzureVideoIndexerService>>(),
+                        azureVideoIndexerConfiguration: singleViConfig,
+                        customHttpClient: sp.GetRequiredService<CustomHttpClient>());
+                });
+            }
+            services.AddTransient<VideoIndexerService>();
         }
 
         private void ConfigureAzureBlobStorage(IServiceCollection services)
