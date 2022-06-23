@@ -36,7 +36,9 @@ namespace FairPlayTube.Services.BackgroundServices
             var videoIndexerAccountsIds = videoIndexerService.GetAllAccountIds();
             var videoIndexerBaseCallbackUrl = config["VideoIndexerCallbackUrl"];
             var videoIndexerCallbackUrl = $"{videoIndexerBaseCallbackUrl}/api/AzureVideoIndexer/OnVideoIndexed";
-            var indexingPreset = "Advanced"; //TODO: Temporaily set to show capabilities, later this needs to has business logic
+            //TODO: Temporaily set to show capabilities, later this needs to has business logic
+            //Allowed values: "Default", "Advanced"
+            var indexingPreset = "Default";
             while (!stoppingToken.IsCancellationRequested)
             {
                 foreach (var singleVideoIndexerAccountId in videoIndexerAccountsIds)

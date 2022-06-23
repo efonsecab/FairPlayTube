@@ -301,18 +301,26 @@ namespace FairPlayTube.Controllers
             }));
             if (processingVideos != null && processingVideos.Length > 0)
             {
-                var processingVideosIds = processingVideos.Select(p => p.VideoId).ToArray();
-                var accountIds = processingVideos.Select(p => p.AccountId.ToString()).Distinct();
-                foreach (var singleAccountId in accountIds)
+                var processingVideosGroupedByAccount = processingVideos
+                    .GroupBy(p => p.AccountId.ToString().ToLower());
+                foreach (var singleAccountGroup in processingVideosGroupedByAccount)
                 {
-                    var processingVideosStatuses = await VideoService
-                        .GetVideoIndexerStatusAsync(singleAccountId,processingVideosIds, cancellationToken);
-                    result.AddRange(processingVideosStatuses.results.Select(p => new VideoStatusModel()
+                    try
                     {
-                        Name = p.name,
-                        Status = p.state,
-                        ProcessingProgress = p.processingProgress
-                    }));
+                        var processingVideosIds = singleAccountGroup.Select(p => p.VideoId).ToArray();
+                        var processingVideosStatuses = await VideoService
+                            .GetVideoIndexerStatusAsync(singleAccountGroup.Key.ToLower(), processingVideosIds, cancellationToken);
+                        result.AddRange(processingVideosStatuses.results.Select(p => new VideoStatusModel()
+                        {
+                            Name = p.name,
+                            Status = p.state,
+                            ProcessingProgress = p.processingProgress
+                        }));
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                 }
             }
             return result;
