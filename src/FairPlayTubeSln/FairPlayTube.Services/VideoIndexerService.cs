@@ -18,12 +18,12 @@ namespace FairPlayTube.Services
 
         public AzureVideoIndexerService GetByAccountId(string accountId)
         {
-            return this.AzureVideoIndexerServices.Single(p => p.AccountId == accountId);
+            return this.AzureVideoIndexerServices.Single(p => p.AccountId.ToLower() == accountId.ToLower());
         }
 
         public string[] GetAllAccountIds()
         {
-            return this.AzureVideoIndexerServices.Select(p => p.AccountId).ToArray();
+            return this.AzureVideoIndexerServices.Select(p => p.AccountId.ToLower()).ToArray();
         }
     }
 }
