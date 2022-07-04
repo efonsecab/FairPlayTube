@@ -76,8 +76,12 @@ namespace FairPlayTube.Services.BackgroundServices
                         }
                         try
                         {
-                            var allVideoIndexerPersons = await videoService.GetAllPersonsAsync(azureVideoIndexerService.AccountId,stoppingToken);
-                            await videoService.SavePersonsAsync(azureVideoIndexerService.AccountId, personsModels: allVideoIndexerPersons, cancellationToken: stoppingToken);
+                            //Fixes issue: "Trial accounts have limited access to face identification-related models. Create an account with an Azure subscription https://docs.microsoft.com/en-gb/azure/azure-video-indexer/create-account-portal"
+                            if (azureVideoIndexerService.Location.ToLower() != "trial")
+                            {
+                                var allVideoIndexerPersons = await videoService.GetAllPersonsAsync(azureVideoIndexerService.AccountId, stoppingToken);
+                                await videoService.SavePersonsAsync(azureVideoIndexerService.AccountId, personsModels: allVideoIndexerPersons, cancellationToken: stoppingToken);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -135,17 +139,17 @@ namespace FairPlayTube.Services.BackgroundServices
             }
         }
 
-        private async Task CheckProcessingVideosAsync(string accountId,VideoService videoService, FairplaytubeDatabaseContext fairplaytubeDatabaseContext, CancellationToken stoppingToken)
+        private async Task CheckProcessingVideosAsync(string accountId, VideoService videoService, FairplaytubeDatabaseContext fairplaytubeDatabaseContext, CancellationToken stoppingToken)
         {
             this.Logger?.LogInformation("Checking processing videos");
-            var processingInDB = await videoService.GetDatabaseProcessingVideosIdsAsync(accountId,stoppingToken);
+            var processingInDB = await videoService.GetDatabaseProcessingVideosIdsAsync(accountId, stoppingToken);
             string message = $"{processingInDB.Length} videos marked as processing In DB";
             this.Logger?.LogInformation(message);
             if (processingInDB.Length > 0)
             {
 
                 this.Logger?.LogInformation("Retrieving videos status in Azure Video Indexer");
-                var videosIndex = await videoService.GetVideoIndexerStatusAsync(accountId,processingInDB, stoppingToken);
+                var videosIndex = await videoService.GetVideoIndexerStatusAsync(accountId, processingInDB, stoppingToken);
                 if (videosIndex.results.Length > 0)
                 {
                     var indexCompleteVideos = videosIndex.results.Where(p =>
