@@ -25,10 +25,13 @@ namespace FairPlayTube.Services
                 .Include(p => p.VideoJob)
                 .Include(p => p.ApplicationUser)
                 .Where(p =>
-                p.Description.Contains(searchTerm) || p.Name.Contains(searchTerm)
-                && (p.VideoIndexKeyword.Any(k => k.Keyword == searchTerm)
-                || p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed
-                && p.VideoVisibilityId == (short)Common.Global.Enums.VideoVisibility.Public));
+                (p.VideoIndexStatusId == (short)Common.Global.Enums.VideoIndexStatus.Processed)
+                && 
+                (p.Description.Contains(searchTerm) || 
+                p.Name.Contains(searchTerm) && 
+                (p.VideoIndexKeyword.Any(k => k.Keyword == searchTerm)
+                && p.VideoVisibilityId == 
+                (short)Common.Global.Enums.VideoVisibility.Public)));
             return result;
         }
     }
