@@ -25,7 +25,7 @@
     <PackageReference Include="PTI.Microservices.Library.AzureContentModerator" Version="2.0.0.1-preview" />
     <PackageReference Include="PTI.Microservices.Library.AzureTextAnalytics" Version="2.0.0.2-preview" />
     <PackageReference Include="PTI.Microservices.Library.AzureTranslator" Version="2.0.0.2-preview" />
-    <PackageReference Include="PTI.Microservices.Library.AzureVideoIndexer" Version="6.0.0.1-preview" />
+    <PackageReference Include="PTI.Microservices.Library.AzureVideoIndexer" Version="6.0.0.2-preview" />
     <PackageReference Include="PTI.Microservices.Library.IpData" Version="2.0.0.1-preview" />
     <PackageReference Include="PTI.Microservices.Library.IpStack" Version="2.0.0.1-preview" />
     <PackageReference Include="PTI.Microservices.Library.PayPal" Version="2.0.0.2-preview" />

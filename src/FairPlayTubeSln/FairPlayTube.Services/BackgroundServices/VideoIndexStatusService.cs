@@ -33,7 +33,7 @@ namespace FairPlayTube.Services.BackgroundServices
             var videoIndexerService = scope.ServiceProvider.GetRequiredService<VideoIndexerService>();
             FairplaytubeDatabaseContext fairplaytubeDatabaseContext = scope.ServiceProvider.GetRequiredService<FairplaytubeDatabaseContext>();
             var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-            var videoIndexerAccountsIds = videoIndexerService.GetAllAccountIds(includeDisabledForIndexing:false);
+            var videoIndexerAccountsIds = videoIndexerService.GetAllAccountIds(includeDisabledForIndexing: false);
             var videoIndexerBaseCallbackUrl = config["VideoIndexerCallbackUrl"];
             var videoIndexerCallbackUrl = $"{videoIndexerBaseCallbackUrl}/api/AzureVideoIndexer/OnVideoIndexed";
             //TODO: Temporaily set to show capabilities, later this needs to has business logic
@@ -52,17 +52,22 @@ namespace FairPlayTube.Services.BackgroundServices
                         (short)Common.Global.Enums.VideoIndexStatus.Pending)
                             .OrderBy(p => p.VideoInfoId)
                             .Take(50);
-                        foreach (var singleVideo in pendingIndexingVideos)
+                        Guid personModelId = Guid.Empty;
+                        if (azureVideoIndexerService.Location.ToLower() != "trial")
                         {
                             var allPersonModels = await azureVideoIndexerService.GetAllPersonModelsAsync(stoppingToken);
                             var defaultPersonModel = allPersonModels.Single(p => p.isDefault == true);
+                            personModelId = Guid.Parse(defaultPersonModel.id);
+                        }
+                        foreach (var singleVideo in pendingIndexingVideos)
+                        {
                             stoppingToken.ThrowIfCancellationRequested();
                             string encodedName = HttpUtility.UrlEncode(singleVideo.Name);
                             string encodedDescription = HttpUtility.UrlEncode(singleVideo.Description);
                             var indexVideoResponse =
                             await azureVideoIndexerService.UploadVideoAsync(new Uri(singleVideo.VideoBloblUrl),
                                 encodedName, encodedDescription, singleVideo.FileName,
-                                personModelId: Guid.Parse(defaultPersonModel.id), privacy: AzureVideoIndexerService.VideoPrivacy.Public,
+                                personModelId: personModelId, privacy: AzureVideoIndexerService.VideoPrivacy.Public,
                                 callBackUri: new Uri(videoIndexerCallbackUrl),
                                 language: singleVideo.VideoLanguageCode,
                                 indexingPreset: indexingPreset,
