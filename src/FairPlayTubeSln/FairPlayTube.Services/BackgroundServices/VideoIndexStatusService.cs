@@ -33,7 +33,7 @@ namespace FairPlayTube.Services.BackgroundServices
             var videoIndexerService = scope.ServiceProvider.GetRequiredService<VideoIndexerService>();
             FairplaytubeDatabaseContext fairplaytubeDatabaseContext = scope.ServiceProvider.GetRequiredService<FairplaytubeDatabaseContext>();
             var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-            var videoIndexerAccountsIds = videoIndexerService.GetAllAccountIds();
+            var videoIndexerAccountsIds = videoIndexerService.GetAllAccountIds(includeDisabledForIndexing:false);
             var videoIndexerBaseCallbackUrl = config["VideoIndexerCallbackUrl"];
             var videoIndexerCallbackUrl = $"{videoIndexerBaseCallbackUrl}/api/AzureVideoIndexer/OnVideoIndexed";
             //TODO: Temporaily set to show capabilities, later this needs to has business logic

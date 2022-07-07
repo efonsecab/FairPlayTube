@@ -395,9 +395,10 @@ namespace FairPlayTube
 
         private void ConfigureAzureVideoIndexer(IServiceCollection services)
         {
-            AzureVideoIndexerConfiguration[] azureVideoIndexerConfigurations =
-                Configuration.GetSection(nameof(AzureVideoIndexerConfiguration))
-                .Get<AzureVideoIndexerConfiguration[]>();
+            ExtendedAzureVideoIndexerConfiguration[] azureVideoIndexerConfigurations =
+                Configuration.GetSection(nameof(ExtendedAzureVideoIndexerConfiguration))
+                .Get<ExtendedAzureVideoIndexerConfiguration[]>();
+            services.AddSingleton(azureVideoIndexerConfigurations);
                 services.AddTransient<AzureVideoIndexerService[]>(sp => 
                 {
                     return azureVideoIndexerConfigurations

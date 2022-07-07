@@ -121,7 +121,7 @@ namespace FairPlayTube.Services
         public async Task<List<VideoInfo>> SearchVideosByPersonNameAsync(string personName, CancellationToken cancellationtoken)
         {
             List<VideoInfo> result = new();
-            var videoIndexerAccountIds = this.VideoIndexerService.GetAllAccountIds();
+            var videoIndexerAccountIds = this.VideoIndexerService.GetAllAccountIds(includeDisabledForIndexing:false);
             foreach (var singleVideoIndexerAccountId in videoIndexerAccountIds)
             {
                 var azureVideoIndexerService = this.VideoIndexerService.GetByAccountId(singleVideoIndexerAccountId);
@@ -550,7 +550,7 @@ namespace FairPlayTube.Services
         private async Task<(string accountId, string location)>
             GetMostSuitableVideoIndexerServerConfigurationAsync()
         {
-            var allAccountsIds = this.VideoIndexerService.GetAllAccountIds();
+            var allAccountsIds = this.VideoIndexerService.GetAllAccountIds(includeDisabledForIndexing:false);
             var usedAccountsIds = await this.FairplaytubeDatabaseContext.VideoInfo.AsNoTracking()
                 .Select(p => p.AccountId.ToString().ToLower()).Distinct().ToArrayAsync();
             var accountsWithoutVideos = allAccountsIds.Except(usedAccountsIds);

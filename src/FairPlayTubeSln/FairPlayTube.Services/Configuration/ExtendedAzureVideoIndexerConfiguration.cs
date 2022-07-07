@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace FairPlayTube.Services.Configuration
 {
 
-    public class VideoIndexerServersConfiguration
+    public class ExtendedAzureVideoIndexerConfiguration: AzureVideoIndexerConfiguration
     {
-        public AzureVideoIndexerConfiguration[] AzureVideoIndexerConfiguration { get; set; }
+        public bool IsDisabledForIndexing { get; set; }
     }
 }

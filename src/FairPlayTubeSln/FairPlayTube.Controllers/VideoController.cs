@@ -41,8 +41,11 @@ namespace FairPlayTube.Controllers
         /// <param name="videoCommentService"></param>
         /// <param name="mapper"></param>
         /// <param name="currentUserProvider"></param>
-        public VideoController(VideoService videoService, VideoCommentService videoCommentService,
-            IMapper mapper, ICurrentUserProvider currentUserProvider)
+        public VideoController(
+            VideoService videoService, 
+            VideoCommentService videoCommentService,
+            IMapper mapper, 
+            ICurrentUserProvider currentUserProvider)
         {
             this.VideoService = videoService;
             this.Mapper = mapper;
